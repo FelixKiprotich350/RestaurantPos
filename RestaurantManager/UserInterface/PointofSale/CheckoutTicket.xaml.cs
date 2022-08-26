@@ -36,6 +36,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void Button_RefreshTicketsList_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -47,6 +48,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void RefreshTicketList()
         {
             try
@@ -66,8 +68,14 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                decimal total = 0;
+                var a = Datagrid_TicketItems.Items.Cast<OrderItem>().ToList();
+                foreach (OrderItem x in a)
+                {
+                    total += x.Price * x.Quantity;
+                }
                 var dt = new System.Data.DataTable();
-                PaymentsUI T = new PaymentsUI(55, dt);
+                PaymentsUI T = new PaymentsUI(total, dt);
                 if (T.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     dt = T.PassedDt;
