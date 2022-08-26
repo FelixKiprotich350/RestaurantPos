@@ -1,0 +1,53 @@
+﻿<Application x:Class="RestaurantPos.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RestaurantPos"
+             StartupUri="MainWindow.xaml" Startup="Application_Startup" ShutdownMode="OnMainWindowClose">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml"/> 
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="DefaultCancelButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Background" Value="#FF783033" />
+                <Setter Property="Foreground" Value="White" /> 
+            </Style>
+            <Style x:Key="DefaultAcceptButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Background" Value="#FF054B15" />
+                <Setter Property="Foreground" Value="White" /> 
+            </Style> 
+            <Style x:Key="DefaultInfoButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="BorderThickness" Value="1" /> 
+                <Setter Property="Foreground" Value="White" /> 
+            </Style>
+            <Style TargetType="GroupBox" >
+                <Setter Property="BorderThickness" Value="1" />  
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="LightSteelBlue"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="TextboxReadonly" TargetType="TextBox">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="LightSteelBlue"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
