@@ -1,7 +1,9 @@
 ﻿
 using MySql.Data.MySqlClient;
 using RestaurantManager;
+using RestaurantManager.BusinessModels.Payments;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -12,13 +14,13 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         //255, 255, 192
         private static decimal GrossAmount;
-        public  DataTable PassedDt;
+        public List<PaymentMethod> Payments;
         
-        public PaymentsUI(decimal TotalAmount, DataTable Dt)
+        public PaymentsUI(decimal TotalAmount, List<PaymentMethod> pm)
         {
             this.InitializeComponent();
             GrossAmount = TotalAmount;
-            this.PassedDt = Dt;
+            this.Payments = pm;
         }
 
         #region
@@ -290,7 +292,6 @@ namespace RestaurantManager.UserInterface.PointofSale
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Complete Transaction";
-            this.TopMost = true; 
             this.Enter += new System.EventHandler(this.Transactions_Enter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Control_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.Payments_Gridview)).EndInit();
@@ -367,7 +368,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             if (MessageBox.Show("Are you sure you want to Quit ?", "MessageBox", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                this.PassedDt.Rows.Clear();
+                this.Payments.Clear();
                 base.Close();
             }
         }
@@ -380,32 +381,39 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     base.DialogResult = DialogResult.No;
                     MessageBox.Show("Insufficient Amount Paid !!", "Transaction Response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
-                else
+                int count = this.Payments_Gridview.Rows.Count;
+                int num2 = 0;
+                int num3 = 0;
+                while (true)
                 {
-                    int count = this.Payments_Gridview.Rows.Count;
-                    int num2 = 0;
-                    int num3 = 0;
-                    while (true)
+                    if (num3 >= count)
                     {
-                        if (num3 >= count)
-                        {
-                            base.DialogResult = (num2 <= 0) ? DialogResult.OK : DialogResult.Cancel;
-                            base.Close();
-                            break;
-                        }
-                        try
-                        {
-                            object[] values = new object[] { this.Payments_Gridview.Rows[num3].Cells[0].Value.ToString(), this.Payments_Gridview.Rows[num3].Cells[1].Value.ToString(), this.Payments_Gridview.Rows[num3].Cells[2].Value.ToString(), this.Payments_Gridview.Rows[num3].Cells[3].Value.ToString(), this.Txt_AmountPaidTotal.Text, this.Txt_Balance.Text };
-                            this.PassedDt.Rows.Add(values);
-                        }
-                        catch (Exception exception1)
-                        {
-                            num2 = 1;
-                            MessageBox.Show(exception1.Message, "ERROR MESSAGE", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                        }
-                        num3++;
+                        this.DialogResult = (num2 <= 0) ? DialogResult.OK : DialogResult.Cancel;
+                        this.Close();
+                        break;
                     }
+                    try
+                    {
+                        PaymentMethod p = new PaymentMethod
+                        {
+                            PaymentMethodName = Payments_Gridview.Rows[num3].Cells[0].Value.ToString(),
+                            Amount = Convert.ToDecimal(Payments_Gridview.Rows[num3].Cells[1].Value.ToString()),
+                            PrimaryRefference = Payments_Gridview.Rows[num3].Cells[2].Value.ToString(),
+                            SecondaryRefference = Payments_Gridview.Rows[num3].Cells[3].Value.ToString()
+                        };
+                        this.Payments.Add(p);
+                    }
+                    catch (Exception exception1)
+                    {
+                        num2 = 1;
+                        MessageBox.Show(exception1.Message, "ERROR MESSAGE", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        break;
+                    }
+                    
+                    
+                    num3++;
                 }
             }
             catch (Exception exception3)

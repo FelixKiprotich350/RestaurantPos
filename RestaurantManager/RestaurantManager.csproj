@@ -148,6 +148,9 @@
     <Compile Include="BusinessModels\OrderTicket\OrderMaster.cs" />
     <Compile Include="BusinessModels\Navigation\Level1menu.cs" />
     <Compile Include="BusinessModels\Navigation\NavigationMenu.cs" />
+    <Compile Include="BusinessModels\Payments\TicketPaymentItem.cs" />
+    <Compile Include="BusinessModels\Payments\TicketPaymentMaster.cs" />
+    <Compile Include="BusinessModels\Payments\PaymentMethod.cs" />
     <Compile Include="BusinessModels\Security\PermissionMaster.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
     <Compile Include="BusinessModels\Security\UserPermission.cs" />
@@ -169,6 +172,10 @@
     <Compile Include="Migrations\202208261024241_62728y.cs" />
     <Compile Include="Migrations\202208261024241_62728y.designer.cs">
       <DependentUpon>202208261024241_62728y.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208261600167_2222.cs" />
+    <Compile Include="Migrations\202208261600167_2222.designer.cs">
+      <DependentUpon>202208261600167_2222.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -304,6 +311,9 @@
     <EmbeddedResource Include="Migrations\202208261024241_62728y.resx">
       <DependentUpon>202208261024241_62728y.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208261600167_2222.resx">
+      <DependentUpon>202208261600167_2222.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -332,7 +342,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="ImageResources\icons8-refresh.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageResources\icons8-close.png" />
   </ItemGroup>

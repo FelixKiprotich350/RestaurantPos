@@ -88,7 +88,7 @@ namespace RestaurantManager
         {
             using (var a = new PosDbContext())
             {
-                a.Database.Initialize(true);
+                a.Database.Initialize(true); 
                // a.ProductCategory.ToList();
             }
         }
