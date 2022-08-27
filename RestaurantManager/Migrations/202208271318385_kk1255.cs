@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class op : DbMigration
+    public partial class kk1255 : DbMigration
     {
         public override void Up()
         {

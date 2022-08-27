@@ -29,8 +29,8 @@ namespace RestaurantManager
     /// MainWindow.xam
     /// </summary>
     public partial class MainWindow : Window
-    {  
-        PermissionMaster pm = new PermissionMaster();
+    {
+        readonly PermissionMaster pm = new PermissionMaster();
         public MainWindow()
         {
             InitializeComponent();

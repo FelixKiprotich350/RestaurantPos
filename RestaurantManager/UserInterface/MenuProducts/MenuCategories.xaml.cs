@@ -176,8 +176,10 @@ namespace RestaurantManager.UserInterface.MenuProducts
         {
             try
             {
-                AddnewCategory a = new AddnewCategory();
-                a.Topmost = true;
+                AddnewCategory a = new AddnewCategory
+                {
+                    Topmost = true
+                };
                 if (!(bool)a.ShowDialog())
                 {
                     return;

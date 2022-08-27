@@ -19,7 +19,7 @@ namespace RestaurantManager.BusinessModels.PointofSale
         [MaxLength(100)]
         public string OrderID { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(200)]
         public string ItemName { get; set; }
         [Required]
         public int Quantity { get; set; }

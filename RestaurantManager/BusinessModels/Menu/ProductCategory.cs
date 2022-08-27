@@ -17,7 +17,7 @@ namespace RestaurantManager.BusinessModels.Menu
         [MaxLength(100)]
         public string CategoryGuid { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(200)]
         public string CategoryName { get; set; }
         [Required] 
         public DateTime CreationDate { get; set; }

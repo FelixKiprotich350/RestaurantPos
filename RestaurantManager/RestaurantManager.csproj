@@ -165,33 +165,13 @@
     <Compile Include="Migrations\202208250839353_InitialCreate.designer.cs">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208250840202_f.cs" />
-    <Compile Include="Migrations\202208250840202_f.designer.cs">
-      <DependentUpon>202208250840202_f.cs</DependentUpon>
+    <Compile Include="Migrations\202208271254039_kk125.cs" />
+    <Compile Include="Migrations\202208271254039_kk125.designer.cs">
+      <DependentUpon>202208271254039_kk125.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208261024241_62728y.cs" />
-    <Compile Include="Migrations\202208261024241_62728y.designer.cs">
-      <DependentUpon>202208261024241_62728y.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208261600167_2222.cs" />
-    <Compile Include="Migrations\202208261600167_2222.designer.cs">
-      <DependentUpon>202208261600167_2222.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208262154071_o.cs" />
-    <Compile Include="Migrations\202208262154071_o.designer.cs">
-      <DependentUpon>202208262154071_o.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208262156143_op.cs" />
-    <Compile Include="Migrations\202208262156143_op.designer.cs">
-      <DependentUpon>202208262156143_op.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208271139367_kk.cs" />
-    <Compile Include="Migrations\202208271139367_kk.designer.cs">
-      <DependentUpon>202208271139367_kk.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208271149343_kk1.cs" />
-    <Compile Include="Migrations\202208271149343_kk1.designer.cs">
-      <DependentUpon>202208271149343_kk1.cs</DependentUpon>
+    <Compile Include="Migrations\202208271318385_kk1255.cs" />
+    <Compile Include="Migrations\202208271318385_kk1255.designer.cs">
+      <DependentUpon>202208271318385_kk1255.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -349,26 +329,11 @@
     <EmbeddedResource Include="Migrations\202208250839353_InitialCreate.resx">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208250840202_f.resx">
-      <DependentUpon>202208250840202_f.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208271254039_kk125.resx">
+      <DependentUpon>202208271254039_kk125.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208261024241_62728y.resx">
-      <DependentUpon>202208261024241_62728y.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208261600167_2222.resx">
-      <DependentUpon>202208261600167_2222.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208262154071_o.resx">
-      <DependentUpon>202208262154071_o.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208262156143_op.resx">
-      <DependentUpon>202208262156143_op.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208271139367_kk.resx">
-      <DependentUpon>202208271139367_kk.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208271149343_kk1.resx">
-      <DependentUpon>202208271149343_kk1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208271318385_kk1255.resx">
+      <DependentUpon>202208271318385_kk1255.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -409,6 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageResources\Restaurant-Logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ImageResources\img3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />

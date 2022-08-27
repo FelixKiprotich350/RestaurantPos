@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RestaurantManager.BusinessModels.Menu;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,78 @@ namespace RestaurantManager.UserInterface.MenuProducts
         public MenuProducts()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var db = new PosDbContext())
+                {
+                    Datagrid_ProductItems.ItemsSource = db.MenuProductItem.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        
+
+        private void Textbox_SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                TextBox t = (TextBox)sender;
+                string filter = t.Text;
+                if (Datagrid_ProductItems.ItemsSource==null)
+                {
+                    return;
+                }
+                ICollectionView cv = CollectionViewSource.GetDefaultView(Datagrid_ProductItems.ItemsSource);
+                if (filter == "")
+                    cv.Filter = null;
+                else
+                {
+                    cv.Filter = o =>
+                    {
+                        MenuProductItem p = o as MenuProductItem;
+                        return p.ProductName.ToLower().Contains(filter.ToLower());
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_NewProduct_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NewMenuProduct nmp = new NewMenuProduct();
+                if (nmp.ShowDialog() == false)
+                {
+                    return;
+                }
+                decimal price = 0;
+                string category = ""; 
+                ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
+                category = productCategory.CategoryGuid;
+                using (var db = new PosDbContext())
+                {
+                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available", Price = price, CategoryGuid = category });
+                    db.SaveChanges();
+                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
+
         }
     }
 }

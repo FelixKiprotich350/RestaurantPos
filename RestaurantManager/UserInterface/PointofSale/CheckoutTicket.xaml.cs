@@ -208,6 +208,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
- 
+
+        private void Page_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
