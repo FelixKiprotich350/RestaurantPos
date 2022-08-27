@@ -177,10 +177,27 @@
     <Compile Include="Migrations\202208261600167_2222.designer.cs">
       <DependentUpon>202208261600167_2222.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208262154071_o.cs" />
+    <Compile Include="Migrations\202208262154071_o.designer.cs">
+      <DependentUpon>202208262154071_o.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208262156143_op.cs" />
+    <Compile Include="Migrations\202208262156143_op.designer.cs">
+      <DependentUpon>202208262156143_op.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MenuProducts\MenuCategories.xaml.cs">
+      <DependentUpon>MenuCategories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MenuProducts\MenuProducts.xaml.cs">
+      <DependentUpon>MenuProducts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MenuProducts\NewMenuProduct.xaml.cs">
+      <DependentUpon>NewMenuProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\CardPayment.cs">
       <SubType>Form</SubType>
@@ -240,6 +257,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserInterface\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\MenuProducts\MenuCategories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\MenuProducts\MenuProducts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\MenuProducts\NewMenuProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208261600167_2222.resx">
       <DependentUpon>202208261600167_2222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208262154071_o.resx">
+      <DependentUpon>202208262154071_o.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208262156143_op.resx">
+      <DependentUpon>202208262156143_op.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

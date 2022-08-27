@@ -36,12 +36,19 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Buton_Subtract_Click(object sender, RoutedEventArgs e)
         {
-            int a = Convert.ToInt32(TextBox_Quantity.Text);
-            if (a <= 1)
+            try
             {
-                return;
+                int a = Convert.ToInt32(TextBox_Quantity.Text);
+                if (a <= 1)
+                {
+                    return;
+                }
+                TextBox_Quantity.Text = (a - 1).ToString();
             }
-            TextBox_Quantity.Text = (a - 1).ToString();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Button_Close_Click(object sender, RoutedEventArgs e)

@@ -63,8 +63,6 @@ namespace RestaurantManager
             try
             {
                 InitializeDb();
-                
-
             }
             catch (Exception ex)
             {
@@ -72,10 +70,10 @@ namespace RestaurantManager
                 if (MessageBox.Show("Do you want to configure the server now?", "Server Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     InitialServerConfiguration isc = new InitialServerConfiguration();
-                   bool? feed= isc.ShowDialog();
+                    bool? feed = isc.ShowDialog();
                     if ((bool)feed)
                     {
-                        Window_Loaded(this,new RoutedEventArgs());
+                        Window_Loaded(this, new RoutedEventArgs());
                     }
                 }
             }

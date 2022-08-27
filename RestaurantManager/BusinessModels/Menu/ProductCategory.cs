@@ -19,6 +19,8 @@ namespace RestaurantManager.BusinessModels.Menu
         [Required]
         [MaxLength(100)]
         public string CategoryName { get; set; }
+        [Required] 
+        public DateTime CreationDate { get; set; }
         [NotMapped]
         public List<MenuProductItem> MenuItems { get; set; }
 

@@ -81,13 +81,13 @@
             </Grid>
             <Grid Grid.Row="2">
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
+                <UniformGrid Columns="4" Rows="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
 
                     <Button Content="Select Ticket" Margin="10,0"/>
                     <Button Content="Table" Margin="10,0"/>
                     <Button Content="Customer" Margin="10,0"/>
                     <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click"/>
-                </StackPanel>
+                </UniformGrid>
             </Grid>
 
         </Grid>

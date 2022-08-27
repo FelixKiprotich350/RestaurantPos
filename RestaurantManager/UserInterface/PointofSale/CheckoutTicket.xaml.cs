@@ -2,6 +2,7 @@
 using RestaurantManager.BusinessModels.PointofSale;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 RefreshTicketList();
-                MessageBox.Show("Done", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Done. Refresh Complete", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -111,9 +112,28 @@ namespace RestaurantManager.UserInterface.PointofSale
                 };
                 using (var db=new PosDbContext())
                 {
-                    db.TicketPaymentMaster.Add(tpm);
+                    using (DbContextTransaction tr = db.Database.BeginTransaction())
+                    {
 
-                    db.SaveChanges(); 
+                        var result = db.OrderMaster.FirstOrDefault(b => b.OrderNo == tpm.TicketNo);
+                        if (result != null)
+                        {
+                            result.OrderStatus = "Completed";
+                            result.PaymentDate = ErpShared.CurrentDate();
+                            int x = db.SaveChanges();
+                            if (x != 1)
+                            {
+                                tr.Rollback();
+                            }
+                        }
+
+                        db.TicketPaymentMaster.Add(tpm);
+                        db.SaveChanges();
+                        tr.Commit();
+                        MessageBox.Show("Successfuly Saved", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Button_Discard_Click(new object(), new RoutedEventArgs());
+                        RefreshTicketList();
+                    }
                 }
             }
             catch (Exception ex)

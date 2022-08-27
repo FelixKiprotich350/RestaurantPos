@@ -23,7 +23,7 @@
                 <Button x:Name="Buton_Subtract" Style="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="70" Content="-" FontSize="32" FontWeight="Bold" Click="Buton_Subtract_Click" />
             </Grid>
             <Grid Grid.Column="1">
-                <TextBox x:Name="TextBox_Quantity" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBox x:Name="TextBox_Quantity" IsReadOnly="True" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Grid>
             <Grid Grid.Column="2">
                 <Button x:Name="Buton_Add" Style="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="70" Content="+" FontSize="32" FontWeight="Bold" Click="Buton_Add_Click" />

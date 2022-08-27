@@ -1,4 +1,5 @@
-﻿using RestaurantManager.UserInterface.PointofSale;
+﻿using RestaurantManager.UserInterface.MenuProducts;
+using RestaurantManager.UserInterface.PointofSale;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -34,19 +35,16 @@ namespace RestaurantManager.BusinessModels.Security
                 List<PermissionMaster> p = new List<PermissionMaster>();
                 p.Add(new PermissionMaster() { PermissionGuid = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new NewOrder() });
                 p.Add(new PermissionMaster() { PermissionGuid = "A2", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Checkout Ticket", PermissionLevel = "1", PageClass = new CheckoutTicket() });
-                p.Add(new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1" });
-                p.Add(new PermissionMaster() { PermissionGuid = "A4", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1" });
-                p.Add(new PermissionMaster() { PermissionGuid = "A5", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1" });
-                p.Add(new PermissionMaster() { PermissionGuid = "A6", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1" });
+                p.Add(new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new object() });
+                p.Add(new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() });
+                p.Add(new PermissionMaster() { PermissionGuid = "C2", ParentModule = "C", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() });
                 return p;
             }
             catch (Exception ex)
             {
-
                 return null;
                 throw ex;
             }
         }
-
     }
 }
