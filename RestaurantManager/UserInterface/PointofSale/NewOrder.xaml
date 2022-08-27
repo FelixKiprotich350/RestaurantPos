@@ -61,13 +61,13 @@
                 <Grid Grid.Column="0">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Label Content="Customer Information" HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="Customer Information" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel> 
                 </Grid>
                 <Grid Grid.Column="1">
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Label Content="Table " HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="Customer Information" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel> 
                 </Grid>
                 <Grid Grid.Column="2">

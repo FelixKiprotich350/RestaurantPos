@@ -14,7 +14,7 @@ namespace RestaurantManager.BusinessModels.Menu
          
         //properties
         [Key]
-        [MaxLength(20)]
+        [MaxLength(100)]
         public string CategoryGuid { get; set; }
         [Required]
         [MaxLength(100)]

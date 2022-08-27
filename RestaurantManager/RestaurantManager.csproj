@@ -185,10 +185,21 @@
     <Compile Include="Migrations\202208262156143_op.designer.cs">
       <DependentUpon>202208262156143_op.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208271139367_kk.cs" />
+    <Compile Include="Migrations\202208271139367_kk.designer.cs">
+      <DependentUpon>202208271139367_kk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208271149343_kk1.cs" />
+    <Compile Include="Migrations\202208271149343_kk1.designer.cs">
+      <DependentUpon>202208271149343_kk1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MenuProducts\AddnewCategory.xaml.cs">
+      <DependentUpon>AddnewCategory.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\MenuProducts\MenuCategories.xaml.cs">
       <DependentUpon>MenuCategories.xaml</DependentUpon>
@@ -257,6 +268,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserInterface\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\MenuProducts\AddnewCategory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -348,6 +363,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208262156143_op.resx">
       <DependentUpon>202208262156143_op.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208271139367_kk.resx">
+      <DependentUpon>202208271139367_kk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208271149343_kk1.resx">
+      <DependentUpon>202208271149343_kk1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

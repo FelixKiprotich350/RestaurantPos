@@ -10,7 +10,7 @@ namespace RestaurantManager.BusinessModels.Menu
     public class MenuProductItem
     { 
         [Key]
-        [MaxLength(20)]
+        [MaxLength(100)]
         public string ProductGuid { get; set; } 
         [Required]
         [MaxLength(100)]

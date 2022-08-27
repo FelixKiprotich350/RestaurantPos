@@ -159,15 +159,14 @@ namespace RestaurantManager
                 string tag = a.Tag.ToString();
                 if (tag != "")
                 {
-                    Category_Submenu.ItemsSource = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag).ToList();
-                    Label l = new Label();
-                    l.Content = a.Content;
-                    l.HorizontalAlignment = HorizontalAlignment.Center;
-                    l.HorizontalContentAlignment = HorizontalAlignment.Center;
-                                         l.VerticalContentAlignment = VerticalAlignment.Center;
-                    l.FontWeight = FontWeights.Bold;
-                    l.FontSize = 20;
-                    Frame1.Content = l ;
+                    var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag).ToList();
+                    Category_Submenu.ItemsSource = subitems;
+                    if (subitems.Count <= 0)
+                    {
+                        Frame1.Content = "";
+                        return;
+                    }
+                    Frame1.Content = subitems[0].PageClass;
                 }
                 else
                 {
@@ -221,7 +220,11 @@ namespace RestaurantManager
 
         private void Image_Close_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            if (MessageBox.Show("Are you sure you want to EXIT ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question,MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
+            
         }
 
         private void Image_Minimize_MouseUp(object sender, MouseButtonEventArgs e)
