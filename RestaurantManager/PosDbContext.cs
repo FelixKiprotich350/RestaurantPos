@@ -19,8 +19,9 @@ namespace RestaurantManager
     {
         public PosDbContext() : base("Server=LAPTOP-FELIX;Database=myDataBase;User Id=sa;Password=1234;")
         { 
+            //this.Database.CommandTimeout=10; 
             this.Database.CreateIfNotExists(); 
-
+            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

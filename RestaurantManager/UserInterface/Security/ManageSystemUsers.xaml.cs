@@ -24,5 +24,31 @@ namespace RestaurantManager.UserInterface.Security
         {
             InitializeComponent();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RefreshCategories();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void RefreshCategories()
+        {
+            try
+            {
+                using (var db = new PosDbContext())
+                {
+                    Datagrid_UsersList.ItemsSource = db.PosUser.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

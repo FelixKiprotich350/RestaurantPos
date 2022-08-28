@@ -27,7 +27,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class NewOrder : Page
     {
-        Random R = new Random();
+        readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
         public NewOrder()
         {
@@ -177,14 +177,14 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                string ordno = DateTime.Now.ToString("ddmmyyyy")+ "-" + R.Next(0, 999).ToString();
+                string ordno = ErpShared.CurrentDate().ToString("ddmmyyyy")+ "-" + R.Next(0, 999).ToString();
                 OrderMaster om = new OrderMaster
                 {
                     OrderGuid = Guid.NewGuid().ToString(),
-                    OrderDate = DateTime.Now,
+                    OrderDate = ErpShared.CurrentDate(),
                     OrderStatus = "Pending",
                     User = "Felix",
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = ErpShared.CurrentDate(),
                     OrderNo = ordno
                 };
                 foreach (var a in OrderItems)
