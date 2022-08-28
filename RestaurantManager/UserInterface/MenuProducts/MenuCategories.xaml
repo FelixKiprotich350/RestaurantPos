@@ -21,7 +21,7 @@
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="#FFFF8181">
-                <Label Content="Menu Categories" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+                <Label Content="Menu Categories" FontWeight="Bold" Foreground="White" FontSize="20" HorizontalAlignment="Center"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ListView x:Name="ListView_Categories" SelectionChanged="ListView_Categories_SelectionChanged">
@@ -52,7 +52,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Background="#FFFF8181">
-                    <Label Content="Manage Category" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+                    <Label Content="Manage Category" FontWeight="Bold" Foreground="White" FontSize="20" HorizontalAlignment="Center"/>
                 </Grid>
                 <Grid Grid.Row="1" >
                     <Grid.RowDefinitions>
@@ -84,7 +84,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Center" Background="#FFFF8181">
-                    <Label Content="Category Items" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+                    <Label Content="Category Items" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="#DDFFFFFF"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <ListView x:Name="ListView_SelectedCategoryItems">

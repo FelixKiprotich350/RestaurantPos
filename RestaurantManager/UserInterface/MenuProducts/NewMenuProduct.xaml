@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.MenuProducts"
       mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
-      Height="250" Width="400" Loaded="Window_Loaded"
+      Height="250" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
       Title="Add new Product">
 
     <Grid Margin="20,0">

@@ -31,10 +31,7 @@ namespace RestaurantManager.UserInterface.MenuProducts
         {
             try
             {
-                using (var db = new PosDbContext())
-                {
-                    Datagrid_ProductItems.ItemsSource = db.MenuProductItem.ToList();
-                }
+                RefreshMenuProducts();
             }
             catch (Exception ex)
             {
@@ -84,11 +81,17 @@ namespace RestaurantManager.UserInterface.MenuProducts
                 string category = ""; 
                 ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
                 category = productCategory.CategoryGuid;
+                if (!decimal.TryParse(nmp.Textbox_Price.Text.Trim(), out price))
+                {
+                    MessageBox.Show("The Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 using (var db = new PosDbContext())
                 {
                     db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available", Price = price, CategoryGuid = category });
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    RefreshMenuProducts();
                 }
             }
             catch (Exception ex)
@@ -97,6 +100,26 @@ namespace RestaurantManager.UserInterface.MenuProducts
             }
            
 
+        }
+        private void RefreshMenuProducts()
+        {
+            try
+            {
+                using (var db = new PosDbContext())
+                {
+                    Datagrid_ProductItems.ItemsSource = db.MenuProductItem.ToList();
+                }
+                TextBox_ProductsCount.Text = Datagrid_ProductItems.Items.Count.ToString() ;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Button_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshMenuProducts();
+            MessageBox.Show("Refresh Success. Done.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

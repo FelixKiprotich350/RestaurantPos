@@ -25,8 +25,7 @@ namespace RestaurantManager.BusinessModels.Menu
         public string AvailabilityStatus { get; set; }
         [Required]  
         public decimal Price { get; set; }
-        //properties not mapped
-        [Required]
+        //properties not mapped 
         [MaxLength(100)]
         [NotMapped]
         public string CategoryName { get; set; }

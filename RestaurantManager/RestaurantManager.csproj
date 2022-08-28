@@ -165,13 +165,9 @@
     <Compile Include="Migrations\202208250839353_InitialCreate.designer.cs">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208271254039_kk125.cs" />
-    <Compile Include="Migrations\202208271254039_kk125.designer.cs">
-      <DependentUpon>202208271254039_kk125.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208271318385_kk1255.cs" />
-    <Compile Include="Migrations\202208271318385_kk1255.designer.cs">
-      <DependentUpon>202208271318385_kk1255.cs</DependentUpon>
+    <Compile Include="Migrations\202208271814522_A.cs" />
+    <Compile Include="Migrations\202208271814522_A.designer.cs">
+      <DependentUpon>202208271814522_A.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -329,11 +325,8 @@
     <EmbeddedResource Include="Migrations\202208250839353_InitialCreate.resx">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208271254039_kk125.resx">
-      <DependentUpon>202208271254039_kk125.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208271318385_kk1255.resx">
-      <DependentUpon>202208271318385_kk1255.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208271814522_A.resx">
+      <DependentUpon>202208271814522_A.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

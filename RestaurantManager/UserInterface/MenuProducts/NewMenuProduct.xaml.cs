@@ -21,6 +21,7 @@ namespace RestaurantManager.UserInterface.MenuProducts
     /// </summary>
     public partial class NewMenuProduct : Window
     {
+        bool returnvalue = false;
         public NewMenuProduct()
         {
             InitializeComponent();
@@ -30,20 +31,24 @@ namespace RestaurantManager.UserInterface.MenuProducts
         {
             try
             {
-                decimal price = 0;
-                string category = "";
-                if (Combobox_Category.SelectedItem == null)
+                decimal price = 0; 
+                if (Textbox_ProductName.Text.Trim() == "")
                 {
+                    MessageBox.Show("Enter the name of the Product.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                ProductCategory productCategory = (ProductCategory)Combobox_Category.SelectedItem;
-                category = productCategory.CategoryGuid;
-                using (var db = new PosDbContext())
+                if (Combobox_Category.SelectedItem == null)
                 {
-                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = Textbox_ProductName.Text, AvailabilityStatus = "Available", Price = price, CategoryGuid = category });
-                    db.SaveChanges();
-                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Select Category", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                } 
+                if (!decimal.TryParse(Textbox_Price.Text.Trim(), out price))
+                {
+                    MessageBox.Show("The Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
                 }
+                returnvalue = true;
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -64,6 +69,11 @@ namespace RestaurantManager.UserInterface.MenuProducts
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DialogResult = returnvalue;
         }
     }
 }

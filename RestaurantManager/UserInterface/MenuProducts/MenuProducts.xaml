@@ -9,12 +9,12 @@
       Title="MenuProducts">
 
     <Grid>
-       
+
         <Grid Grid.Column="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/> 
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
@@ -47,19 +47,20 @@
                             <Setter Property="Height" Value="40"/>
                             <Setter Property="FontSize" Value="20"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="2"/>
                         </Style>
                     </DataGrid.Resources>
                 </DataGrid>
 
-            </Grid> 
+            </Grid>
             <Grid Grid.Row="2">
                 <UniformGrid Columns="3" VerticalAlignment="Center">
-                    <Button x:Name="Button_NewProduct" Content="New Product" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="20" Click="Button_NewProduct_Click"  />
+                    <Button x:Name="Button_NewProduct" Content="New Product" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Click="Button_NewProduct_Click"  />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">
                         <Label Content="Total :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox Text="0" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>
+                        <TextBox x:Name="TextBox_ProductsCount" Text="0" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>
                     </StackPanel>
-                    <Button x:Name="Button_Refresh" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="20" />
+                    <Button x:Name="Button_Refresh" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Click="Button_Refresh_Click" />
                 </UniformGrid>
             </Grid>
         </Grid>
