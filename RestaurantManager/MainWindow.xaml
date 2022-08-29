@@ -107,7 +107,7 @@
                         </Grid>
                         <Border Grid.Row="1" BorderThickness="0" BorderBrush="Black" CornerRadius="4" Margin="5" >
 
-                            <Frame Name="Frame1" Background="White" NavigationUIVisibility="Hidden" Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                            <Frame Name="Frame1" Background="White" NavigationUIVisibility="Hidden" Margin="5,5,5,28" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                         </Border>
                     </Grid>
                 </Grid>

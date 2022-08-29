@@ -22,7 +22,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class Login : Window
     {
-        PermissionMaster Pm = new PermissionMaster();
+        readonly PermissionMaster Pm = new PermissionMaster();
         public Login()
         {
             InitializeComponent();
@@ -33,34 +33,32 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                if (Textbox_Username.Text != "" && Password_Box.Password != "")
+                if (Textbox_Username.Text != "" )
                 {
                     PosUser user = null;
                     using (var db = new PosDbContext())
                     {
-                        if (db.PosUser.Where(a => a.Username.ToString() == Textbox_Username.Text.Trim()).Count() > 0)
+                        if (db.PosUser.Where(a => a.UserPIN.ToString() == Textbox_Username.Text.Trim()).Count() > 0)
                         {
-                            user = db.PosUser.Where(a => a.Username.ToString() == Textbox_Username.Text.Trim()).First();
+                            user = db.PosUser.Where(a => a.UserPIN.ToString() == Textbox_Username.Text.Trim()).First();
                         }
                         else
                         {
                             return;
                         }
                     }
+                    List<string> raw = new List<string>();
                     //raw permissions
-                    using (var db = new PosDbContext())
-                    {
-                        user.User_Permissions_raw = db.UserPermission.Where(a => a.UserGuid == user.UserGuid).ToList();
-                    }
+                    raw = user.UserRights.Split(',').Where(a => a.Trim() != "").ToList();
                     //final permissions
-                    if (user.User_Permissions_raw.Count > 0)
+                    if (raw.Count > 0)
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
-                        foreach (var a in user.User_Permissions_raw)
+                        foreach (var a in raw)
                         {
-                            if (Pm.GetAllPermissions().Where(b => b.PermissionGuid == a.ParentPermissionGuid).Count() > 0)
+                            if (Pm.GetAllPermissions().Where(b => b.PermissionGuid == a).Count() > 0)
                             {
-                                user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionGuid == a.ParentPermissionGuid).First());
+                                user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionGuid == a).First());
                             }
                         }
                     }

@@ -31,8 +31,8 @@ namespace RestaurantManager
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
         //pos user & security
-        public DbSet<PosUser> PosUser { get; set; }
-        public DbSet<UserPermission> UserPermission { get; set; }
+        public DbSet<PosUser> PosUser { get; set; } 
+        public DbSet<UserRole> UserRoles { get; set; }
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }

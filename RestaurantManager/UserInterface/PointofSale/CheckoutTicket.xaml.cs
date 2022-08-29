@@ -104,7 +104,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     PaymentMasterGuid = Guid.NewGuid().ToString(),
                     TicketNo = TextBlock_TicketNo.Text,
-                    PosUser = ErpShared.CurrentUser.Username.ToString(),
+                    PosUser = ErpShared.CurrentUser.UserPIN.ToString(),
                     TotalAmountPaid = 0,
                     TotalAmountCharged = total,
                     TicketBalanceReturned = 0,

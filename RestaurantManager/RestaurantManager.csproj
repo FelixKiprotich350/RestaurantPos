@@ -152,8 +152,8 @@
     <Compile Include="BusinessModels\Payments\TicketPaymentMaster.cs" />
     <Compile Include="BusinessModels\Payments\PaymentMethod.cs" />
     <Compile Include="BusinessModels\Security\PermissionMaster.cs" />
+    <Compile Include="BusinessModels\Security\UserRoles.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
-    <Compile Include="BusinessModels\Security\UserPermission.cs" />
     <Compile Include="ErpShared.cs" />
     <Compile Include="InitialServerConfiguration.xaml.cs">
       <DependentUpon>InitialServerConfiguration.xaml</DependentUpon>
@@ -165,12 +165,27 @@
     <Compile Include="Migrations\202208250839353_InitialCreate.designer.cs">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208271814522_A.cs" />
-    <Compile Include="Migrations\202208271814522_A.designer.cs">
-      <DependentUpon>202208271814522_A.cs</DependentUpon>
+    <Compile Include="Migrations\202208281956383_M1.cs" />
+    <Compile Include="Migrations\202208281956383_M1.designer.cs">
+      <DependentUpon>202208281956383_M1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208282145096_M2.cs" />
+    <Compile Include="Migrations\202208282145096_M2.designer.cs">
+      <DependentUpon>202208282145096_M2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208282151586_M3.cs" />
+    <Compile Include="Migrations\202208282151586_M3.designer.cs">
+      <DependentUpon>202208282151586_M3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208282158138_M4.cs" />
+    <Compile Include="Migrations\202208282158138_M4.designer.cs">
+      <DependentUpon>202208282158138_M4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
+    <Compile Include="UserInterface\GeneralSettings\TablesEntities.xaml.cs">
+      <DependentUpon>TablesEntities.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -228,6 +243,9 @@
     <Compile Include="UserInterface\Security\ManageSystemUsers.xaml.cs">
       <DependentUpon>ManageSystemUsers.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Security\SelectRightsForRole.xaml.cs">
+      <DependentUpon>SelectRightsForRole.xaml</DependentUpon>
+    </Compile>
     <Page Include="InitialServerConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -240,6 +258,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UserInterface\GeneralSettings\TablesEntities.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -300,6 +322,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Security\SelectRightsForRole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -318,8 +344,17 @@
     <EmbeddedResource Include="Migrations\202208250839353_InitialCreate.resx">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208271814522_A.resx">
-      <DependentUpon>202208271814522_A.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208281956383_M1.resx">
+      <DependentUpon>202208281956383_M1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208282145096_M2.resx">
+      <DependentUpon>202208282145096_M2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208282151586_M3.resx">
+      <DependentUpon>202208282151586_M3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208282158138_M4.resx">
+      <DependentUpon>202208282158138_M4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

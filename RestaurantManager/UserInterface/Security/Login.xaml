@@ -18,10 +18,6 @@
                 <Label Width="80" Content="Username : " VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
                 <TextBox x:Name="Textbox_Username" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
             </StackPanel>
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,0">
-                <Label Width="80" Content="Password : " VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
-                <PasswordBox x:Name="Password_Box" Width="150" BorderThickness="1" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center" Height="23" Background="White"/>
-            </StackPanel>
             
             <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,5">
                 <Button x:Name="Button_Exit" Content="Exit" Margin="0,0,10,0" Background="#FFD83F37" BorderThickness="0" Click="Button_Exit_Click" IsCancel="True"/>

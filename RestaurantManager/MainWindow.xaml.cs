@@ -130,8 +130,7 @@ namespace RestaurantManager
                 if (ErpShared.CurrentUser == null)
                 {
                     Login l = new Login();
-                    l.Textbox_Username.Text = "1234";
-                    l.Password_Box.Password = "1234";
+                    l.Textbox_Username.Text = "1234"; 
                     // l.Button_Login_Click(new object(), new RoutedEventArgs());
                     bool? response = l.ShowDialog();
                     if (response != null && response == true)
