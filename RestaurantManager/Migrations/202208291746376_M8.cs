@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class M3 : DbMigration
+    public partial class M8 : DbMigration
     {
         public override void Up()
         {
-            AlterColumn("dbo.PosUser", "UserIsDeleted", c => c.Boolean(nullable: false));
+            RenameTable(name: "dbo.ClientInfo", newName: "ClientInfoDetails");
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.PosUser", "UserIsDeleted", c => c.String(nullable: false, maxLength: 100));
+            RenameTable(name: "dbo.ClientInfoDetails", newName: "ClientInfo");
         }
     }
 }

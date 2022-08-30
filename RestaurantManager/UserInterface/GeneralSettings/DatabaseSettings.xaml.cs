@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace RestaurantManager.UserInterface.GeneralSettings
 {
     /// <summary>
-    /// Interaction logic for TablesEntities.xaml
+    /// Interaction logic for DatabaseSettings.xaml
     /// </summary>
-    public partial class TablesEntities : Page
+    public partial class DatabaseSettings : Page
     {
-        public TablesEntities()
+        public DatabaseSettings()
         {
             InitializeComponent();
-        }
-
-        private void Button_Save_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

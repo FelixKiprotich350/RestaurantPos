@@ -4,25 +4,97 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="Login" Height="200" Width="300" ResizeMode="NoResize" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" Loaded="Window_Loaded"
+        AllowsTransparency="True" UseLayoutRounding="True"
+        Title="Login" Height="500" Width="800"  ResizeMode="NoResize" Background="#00000000" OpacityMask="White">
     <Window.Resources>
-        <Style TargetType="TextBox">
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="Black"/>
-        </Style>
+        
+        <Style x:Key="Number_Button" TargetType="Button" BasedOn="{StaticResource Number_Button}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/> 
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style> 
     </Window.Resources>
-    <Grid >
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Label Width="80" Content="Username : " VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
-                <TextBox x:Name="Textbox_Username" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
-            </StackPanel>
-            
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,5">
-                <Button x:Name="Button_Exit" Content="Exit" Margin="0,0,10,0" Background="#FFD83F37" BorderThickness="0" Click="Button_Exit_Click" IsCancel="True"/>
-                <Button x:Name="Button_Login" Content="Login" Margin="20,0,0,0" Background="#FF076807" Width="100" Click="Button_Login_Click" IsDefault="True"/>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+
+    <Border CornerRadius="16" Background="White" Padding="16">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" UseLayoutRounding="True">
+                    <Image Source="/RestaurantManager;component/ImageResources/laxco pos.png" Width="240" Height="240" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Label Content="ENTER PIN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FF8A151B"/>
+                    </Grid>
+                <Border Grid.Row="1" CornerRadius="8" Padding="8" BorderThickness="1" BorderBrush="#FF8A151B" Background="#FFFFF9EF" >
+                    <Grid >
+                        <DockPanel LastChildFill="True" >
+
+                            <Border DockPanel.Dock="Right" Margin="12,0,0,0"  Padding="8" CornerRadius="16" Background="#FF8A151B" VerticalAlignment="Center">
+                                <Button Height="16" Width="16">
+                                    <Button.Background>
+                                        <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/icons8-close.png"/>
+                                    </Button.Background>
+                                </Button>
+                            </Border>
+
+                            <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" PasswordChar="*" />
+                        </DockPanel>
+                    </Grid>
+                </Border>
+                <Grid Grid.Row="2">
+                        <UniformGrid Columns="3" Rows="4" Margin="0,5,0,0">
+                        <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_1" Content="1" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_2" Content="2" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_3" Content="3" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_4" Content="4" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_5" Content="5" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_6" Content="6" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                            <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_7" Content="7" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                        <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_8" Content="8" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                        <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_9" Content="9" FontWeight="Bold" FontSize="20"  />
+                        </Border>
+                        <Border Background="#FF8A151B" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_Cancel" Content="Cancel"   Click="Button_Exit_Click" BorderBrush="White" Foreground="White" FontWeight="Bold" />
+                        </Border>
+                        <Border Background="#FFF29400" CornerRadius="8" Margin="4">
+                            <Button x:Name="Button_0" Content="0" FontWeight="Bold" FontSize="20"   />
+                        </Border>
+                        <Border  CornerRadius="8" Margin="4" Background="#FF076807">
+                            <Button x:Name="Button_Login" Content="Login"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
+                        </Border> 
+                        </UniformGrid>
+
+                    </Grid>
+
+                </Grid>
+            </Grid> 
+    </Border>
 </Window>

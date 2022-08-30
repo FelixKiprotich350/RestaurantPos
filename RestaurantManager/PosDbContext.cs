@@ -11,6 +11,7 @@ using RestaurantManager.BusinessModels;
 using RestaurantManager.BusinessModels.Menu;
 using RestaurantManager.BusinessModels.Security;
 using RestaurantManager.BusinessModels.Payments;
+using RestaurantManager.BusinessModels.GeneralSettings;
 
 namespace RestaurantManager
 {
@@ -39,6 +40,9 @@ namespace RestaurantManager
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }
+        //settings
+        public DbSet<ClientInfoDetails> ClientInfo { get; set; }
+        public DbSet<TableEntity> TableEntity { get; set; }
     }
      
 }

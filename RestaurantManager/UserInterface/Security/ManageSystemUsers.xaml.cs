@@ -108,7 +108,7 @@ namespace RestaurantManager.UserInterface.Security
                         UserGuid = Guid.NewGuid().ToString(),
                         UserPIN = Rand.Next(1000, 9999),
                         UserFullName = Textbox_UserFullName.Text,
-                        UserRole = ((UserRole)ComboBox_Roles.SelectedItem).RoleGuid,
+                        UserRole = ((UserRole)ComboBox_Roles.SelectedItem).RoleName,
                         RegistrationDate = ErpShared.CurrentDate(),
                         LastLoginDate = ErpShared.CurrentDate(),
                         UserRights = rights,

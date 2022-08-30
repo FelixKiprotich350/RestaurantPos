@@ -36,76 +36,36 @@ namespace RestaurantManager
         public MainWindow()
         {
             InitializeComponent();
-            TextBox_Date.Text = ErpShared.CurrentDate().ToLongDateString();
-            Button_Login.Visibility = Visibility.Visible;
-            StackPanel_LoggedinUserDetails.Visibility = Visibility.Collapsed;
-            GridMenu.Visibility = Visibility.Collapsed;
-            Textbox_LoggedinUserName.Text = "";
-
+            TextBox_Date.Text = ErpShared.CurrentDate().ToLongDateString();  
+            Frame1.Content = new HomePage();
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                try
-                {
-                    InitializeDb();
-                }
-                catch (System.Data.SqlClient.SqlException ex1)
-                {
-                    if (ex1.Message.ToLower().Contains("a network-related or instance-specific"))// error occured
-                    {
-                        if (MessageBox.Show(ex1.Message + "\n\nDo you want to configure the server now?", "Server Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                        {
-                            InitialServerConfiguration isc = new InitialServerConfiguration();
-                            isc.ShowDialog();
-                            MessageBox.Show("The application will shut down.\n\nKindly restart the application for the changes to apply.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                             
-                        }
-                        App.Current.Shutdown();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                SetupUIForUser(false);
-
-                Frame1.Content = new HomePage();
+                ErpShared.Main_Window = this;
+                SetupUIForUser(true);
             }
             catch (Exception ex)
             {
-                string help = "\nKindly contact support for HELP!";
+                string help = "\nKindly contact Technical Support Team for HELP!";
                 MessageBox.Show(ex.Message + help, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void InitializeDb()
-        {
-            using (var a = new PosDbContext())
-            {
-                a.Database.Initialize(true); 
-               // a.ProductCategory.ToList();
-            }
-        }
+         
 
         private void SetupUIForUser(bool UserLoggedIn)
         { 
             if (UserLoggedIn)
             {
-                SetupMenu();
-                Button_Login.Visibility = Visibility.Collapsed;
-                StackPanel_LoggedinUserDetails.Visibility = Visibility.Visible;
-                GridMenu.Visibility = Visibility.Visible;
+                SetupMenu();  
                 Textbox_LoggedinUserName.Text = ErpShared.CurrentUser.UserFullName;
             }
             else
             {
-                Button_Login.Visibility = Visibility.Visible;
-                StackPanel_LoggedinUserDetails.Visibility = Visibility.Collapsed;
-                GridMenu.Visibility = Visibility.Collapsed;
-                Textbox_LoggedinUserName.Text = "";
+                this.Close();
             }
 
         }
@@ -122,37 +82,7 @@ namespace RestaurantManager
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Button_Login_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (ErpShared.CurrentUser == null)
-                {
-                    Login l = new Login();
-                    l.Textbox_Username.Text = "1234"; 
-                    // l.Button_Login_Click(new object(), new RoutedEventArgs());
-                    bool? response = l.ShowDialog();
-                    if (response != null && response == true)
-                    {
-                        if (ErpShared.CurrentUser == null)
-                        {
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                SetupUIForUser(true);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+ 
         private void StackPanel_Home_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Frame1.Content = new HomePage();
@@ -246,9 +176,9 @@ namespace RestaurantManager
                 if (MessageBox.Show("Are you sure you want to logout ?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question,MessageBoxResult.No)==MessageBoxResult.Yes)
                 {
                     ErpShared.CurrentUser = null;
-                    Frame1.Content = new HomePage();
-                    Category_Submenu.ItemsSource = null;
-                    SetupUIForUser(false);
+                    Login Login = new Login();
+                    Login.Show();
+                    this.Close();
                 }
             }
             catch (Exception ex)
@@ -262,7 +192,6 @@ namespace RestaurantManager
             Frame1.Content = new HomePage();
             Category_Submenu.ItemsSource = null;
         }
-
-       
+ 
     }
 }

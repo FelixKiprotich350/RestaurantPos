@@ -33,14 +33,15 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                if (Textbox_Username.Text != "" )
+                MainWindow m = new MainWindow();
+                if (PasswordBox_UserPin.Password != "" )
                 {
                     PosUser user = null;
                     using (var db = new PosDbContext())
                     {
-                        if (db.PosUser.Where(a => a.UserPIN.ToString() == Textbox_Username.Text.Trim()).Count() > 0)
+                        if (db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).Count() > 0)
                         {
-                            user = db.PosUser.Where(a => a.UserPIN.ToString() == Textbox_Username.Text.Trim()).First();
+                            user = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
                         }
                         else
                         {
@@ -63,7 +64,10 @@ namespace RestaurantManager.UserInterface.Security
                         }
                     }
                     ErpShared.CurrentUser = user;
-                    this.DialogResult = true;
+                    //this.DialogResult = true;
+                    m.Show();
+                    this.Close();
+                    
                 }
                 else
                 {
@@ -78,7 +82,53 @@ namespace RestaurantManager.UserInterface.Security
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            this.Close();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                try
+                {
+                      InitializeDb();
+                    PasswordBox_UserPin.Focus();
+                }
+                catch (System.Data.SqlClient.SqlException ex1)
+                {
+                    if (ex1.Message.ToLower().Contains("a network-related or instance-specific"))// error occured
+                    {
+                        if (MessageBox.Show(ex1.Message + "\n\nDo you want to configure the server now?", "Server Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        {
+                            InitialServerConfiguration isc = new InitialServerConfiguration();
+                            isc.ShowDialog();
+                            MessageBox.Show("The application will shut down.\n\nKindly restart the application for the changes to apply.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        }
+                        App.Current.Shutdown();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                } 
+
+            }
+            catch (Exception ex)
+            {
+                string help = "\nKindly contact Developer for HELP!";
+                MessageBox.Show(ex.Message + help, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void InitializeDb()
+        {
+            using (var a = new PosDbContext())
+            {
+                a.Database.Initialize(true);
+                // a.ProductCategory.ToList();
+            }
+        }
+
     }
 }

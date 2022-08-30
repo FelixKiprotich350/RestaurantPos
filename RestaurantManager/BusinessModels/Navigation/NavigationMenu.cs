@@ -19,7 +19,7 @@ namespace RestaurantManager.BusinessModels.Navigation
                 new Level1menu() { GroupName = "Accounts", GroupCode = "C", GroupIcon = "Book" },
                 new Level1menu() { GroupName = "Products", GroupCode = "D", GroupIcon = "CurrencyUsd" },
                 new Level1menu() { GroupName = "Reports", GroupCode = "E", GroupIcon = "Hotel" },
-                new Level1menu() { GroupName = "Management", GroupCode = "F", GroupIcon = "People" },
+                new Level1menu() { GroupName = "Settings", GroupCode = "F", GroupIcon = "People" },
                 new Level1menu() { GroupName = "Security", GroupCode = "G", GroupIcon = "Key" }
             };
         }

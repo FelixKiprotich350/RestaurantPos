@@ -66,7 +66,18 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-     
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ErpShared.Main_Window.Frame1.Content = new UserInterface.PointofSale.NewOrder();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+         
     }
 }

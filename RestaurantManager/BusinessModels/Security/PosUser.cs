@@ -24,6 +24,7 @@ namespace RestaurantManager.BusinessModels.Security
         [Column(Order = 2)]
         public string UserFullName { get; set; }
         [Required]
+        [Index]
         [MaxLength(100)]
         [Column(Order = 3)]
         public string UserRole { get; set; }

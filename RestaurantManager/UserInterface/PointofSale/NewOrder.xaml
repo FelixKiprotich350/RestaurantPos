@@ -6,130 +6,143 @@
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale" xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="New Order">
+      Title="New Order" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Grid  Grid.Column="0">
-            <Grid.RowDefinitions>
+        <Border Grid.Column="0" CornerRadius="12" Background="White" Padding="12">
+            <Grid  >
+                <Grid.RowDefinitions>
 
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="80"/>
-                <RowDefinition Height="100"/>
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <DataGrid    x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_OrderItems_MouseUp" >
+                <Grid Grid.Row="0">
+                    <DataGrid    x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_OrderItems_MouseUp" >
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
-                        <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="100" CanUserSort="False" IsReadOnly="True"/>
-                        <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                    </DataGrid.Columns>
-                    <DataGrid.Resources>
-                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#FF6C6A6A" />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Padding" Value="2" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                        <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                            <Setter Property="Height" Value="50"/>
-                            <Setter Property="FontSize" Value="20"/> 
-                            <Setter Property="VerticalAlignment" Value="Center"/> 
-                        </Style>
-                    </DataGrid.Resources>
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
+                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="100" CanUserSort="False" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="100" CanUserSort="False"/>
+                        </DataGrid.Columns>
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#FF6C6A6A" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Padding" Value="2" />
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="Height" Value="30" />
+                            </Style>
+                            <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
+                    </DataGrid>
 
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="4*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Label Content="Customer Information" HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </StackPanel> 
                 </Grid>
-                <Grid Grid.Column="1">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Label Content="Table " HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </StackPanel> 
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Customer Information" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Table " HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="None" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel>
+                            <Label Content="Total Amount " HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <Border CornerRadius="24" Background="#00000000" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBox x:Name="Textbox_TotalAmount"  MinWidth="200" Height="50" FontSize="32" HorizontalContentAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" TextOptions.TextFormattingMode="Display" HorizontalAlignment="Center" IsReadOnly="True" BorderThickness="0"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
-                <Grid Grid.Column="2">
-                    <StackPanel>
-                        <Label Content="Total Amount " HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Border CornerRadius="24" Background="#00000000" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBox x:Name="Textbox_TotalAmount"  MinWidth="200" Height="50" FontSize="32" HorizontalContentAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" TextOptions.TextFormattingMode="Display" HorizontalAlignment="Center" IsReadOnly="True"/>
+                <Grid Grid.Row="2">
+
+                    <UniformGrid Margin="0,8,0,8" Columns="4" Rows="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                        <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button Content="Select Ticket" Margin="10,0"/>
                         </Border>
-                    </StackPanel> 
+                        <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button Content="Table" Margin="10,0"/>
+                        </Border>
+                        <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button Content="Customer" Margin="10,0"/>
+                        </Border>
+                        <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click"/>
+                        </Border>
+
+                    </UniformGrid>
+                </Grid>
+
+            </Grid>
+        </Border>
+        <Border Grid.Column="2" CornerRadius="12" Background="White" Padding="12">
+
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Label Content="Products Menu" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" />
+                </Grid>
+                <Grid Grid.Row="1" >
+                    <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding MenuCategories}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
+                        <ListView.ItemTemplate>
+                            <DataTemplate >
+                                <Expander  Tag="{Binding GroupCode}"   Name="myExpander"  HorizontalAlignment="Stretch" 
+                                           Foreground="Black" IsExpanded="False" OverridesDefaultStyle="True"  
+                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="-10" ScrollViewer.CanContentScroll="False"  FontWeight="Normal" Background="White" >
+                                    <Expander.Header>
+                                        <Label  Content="{Binding CategoryName}" Foreground="Black" Padding="5"    FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="20"/>
+
+                                    </Expander.Header>
+                                    <Grid   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ScrollViewer.CanContentScroll="False">
+                                        <ListView      ItemsSource="{Binding MenuItems}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" VerticalContentAlignment="Stretch" SelectionChanged="ListView_SelectionChanged"  >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Height="Auto" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FFFFE4BA">
+                                                        <TextBlock Tag="{Binding ProductGuid}" Margin="8"  Text="{Binding ProductName}" 
+                                                       VerticalAlignment="Center" 
+                                                       Foreground="Black" HorizontalAlignment="Center" FontWeight="Normal" FontSize="16"  />
+                                                    </Border>
+
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </Expander>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="2">
-
-                <UniformGrid Columns="4" Rows="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0">
-
-                    <Button Content="Select Ticket" Margin="10,0"/>
-                    <Button Content="Table" Margin="10,0"/>
-                    <Button Content="Customer" Margin="10,0"/>
-                    <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click"/>
-                </UniformGrid>
-            </Grid>
-
-        </Grid>
-
-        <Grid Grid.Column="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="Products Menu" FontWeight="Bold" FontSize="18" />
-            </Grid>
-            <Grid Grid.Row="1" >
-                <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding MenuCategories}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
-                    <ListView.ItemTemplate>
-                        <DataTemplate >
-                            <Expander  Tag="{Binding GroupCode}"   Name="myExpander"  HorizontalAlignment="Stretch" 
-                                           Foreground="Black" IsExpanded="False" OverridesDefaultStyle="True"  
-                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="-10" ScrollViewer.CanContentScroll="False"  FontWeight="Normal" Background="#FFFF8181" >
-                                <Expander.Header>
-                                    <Label  Content="{Binding CategoryName}" Foreground="White" Padding="5"    FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="20"/>
-
-                                </Expander.Header>
-                                <Grid   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ScrollViewer.CanContentScroll="False">
-                                    <ListView      ItemsSource="{Binding MenuItems}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" VerticalContentAlignment="Stretch" SelectionChanged="ListView_SelectionChanged"  >
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Height="50" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FF80E68E">
-                                                    <TextBlock Tag="{Binding ProductGuid}"  Text="{Binding ProductName}" 
-                                                       VerticalAlignment="Center" 
-                                                       Foreground="Black" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"  />
-                                                </Border>
-
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
-                            </Expander>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        </Grid>
+        </Border>
     </Grid>
 </Page>

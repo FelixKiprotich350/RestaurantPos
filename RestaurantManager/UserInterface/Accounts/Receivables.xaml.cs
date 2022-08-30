@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.GeneralSettings
+namespace RestaurantManager.UserInterface.Accounts
 {
     /// <summary>
-    /// Interaction logic for TablesEntities.xaml
+    /// Interaction logic for Receivables.xaml
     /// </summary>
-    public partial class TablesEntities : Page
+    public partial class Receivables : Page
     {
-        public TablesEntities()
+        public Receivables()
         {
             InitializeComponent();
-        }
-
-        private void Button_Save_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

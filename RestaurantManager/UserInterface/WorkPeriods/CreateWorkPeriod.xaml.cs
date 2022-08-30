@@ -13,21 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.GeneralSettings
+namespace RestaurantManager.UserInterface.WorkPeriods
 {
     /// <summary>
-    /// Interaction logic for TablesEntities.xaml
+    /// Interaction logic for CreateWorkPeriod.xaml
     /// </summary>
-    public partial class TablesEntities : Page
+    public partial class CreateWorkPeriod : Page
     {
-        public TablesEntities()
+        public CreateWorkPeriod()
         {
             InitializeComponent();
-        }
-
-        private void Button_Save_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

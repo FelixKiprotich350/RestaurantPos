@@ -7,14 +7,42 @@
       xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1120"
-      Title="HomePage" Loaded="Page_Loaded">
-
+      Title="HomePage" Loaded="Page_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+   
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-           
-            <Image Width="200" Height="200" Source="/RestaurantManager;component/ImageResources/Restaurant-Logo.ico" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            
-        </StackPanel>
-        
+        <UniformGrid Rows="2" Columns="3" Margin="64,64">
+
+            <Button Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/point of sale.png"/>
+                </Button.Background>
+            </Button>
+            <Button  Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" IsEnabled="False" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/work-period.png"/>
+                </Button.Background>
+                
+            </Button>
+            <Button Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/Accounts.png"/>
+                </Button.Background>
+            </Button>
+            <Button Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/menu.png"/>
+                </Button.Background>
+            </Button>
+            <Button Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/security.png"/>
+                </Button.Background>
+            </Button>
+            <Button Height="Auto" Margin="12,32,12,32"  Style="{StaticResource HomePageButton}">
+                <Button.Background>
+                    <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/reports.png"/>
+                </Button.Background>
+            </Button>
+        </UniformGrid>
     </Grid>
 </Page>
