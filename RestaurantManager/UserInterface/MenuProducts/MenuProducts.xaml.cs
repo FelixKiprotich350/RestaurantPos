@@ -77,11 +77,10 @@ namespace RestaurantManager.UserInterface.MenuProducts
                 {
                     return;
                 }
-                decimal price = 0;
-                string category = ""; 
+                string category = "";
                 ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
                 category = productCategory.CategoryGuid;
-                if (!decimal.TryParse(nmp.Textbox_Price.Text.Trim(), out price))
+                if (!decimal.TryParse(nmp.Textbox_Price.Text.Trim(), out decimal price))
                 {
                     MessageBox.Show("The Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;

@@ -41,12 +41,14 @@ namespace RestaurantManager.UserInterface.GeneralSettings
         {
             try
             {
-                TableEntity t = new TableEntity();
-                t.TableGuid = Guid.NewGuid().ToString();
-                t.TableName = Textbox_UserFullName.Text;
-                t.TableStatus = "Available";
-                t.IsDeleted = false;
-                t.RegistrationDate = ErpShared.CurrentDate();
+                TableEntity t = new TableEntity
+                {
+                    TableGuid = Guid.NewGuid().ToString(),
+                    TableName = Textbox_UserFullName.Text,
+                    TableStatus = "Available",
+                    IsDeleted = false,
+                    RegistrationDate = ErpShared.CurrentDate()
+                };
                 using (var db = new PosDbContext())
                 {
                     db.TableEntity.Add(t);

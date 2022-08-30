@@ -81,7 +81,7 @@
                             </ListView>
                         </Grid>
                         <Grid Grid.Row="2" VerticalAlignment="Center"  Margin="5">
-                            <Button x:Name="Btn_Logout" Content="Logout"  Margin="5" FontWeight="Normal"  FontSize="20" Click="Btn_Logout_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"  />
+                            <Button x:Name="Btn_Logout" Content="Logout"  Margin="5" FontWeight="Normal" Background="Red"  FontSize="20" Click="Btn_Logout_Click" VerticalAlignment="Center"  />
                         </Grid>
                     </Grid>
                     <Grid x:Name="MainGrid" >
@@ -92,7 +92,7 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"   >
+                            <Grid Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center"   >
 
                                 <ItemsControl x:Name="Category_Submenu" >
                                     <ItemsControl.ItemTemplate>
@@ -102,7 +102,7 @@
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Left" />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>

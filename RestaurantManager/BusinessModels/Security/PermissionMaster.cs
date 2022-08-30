@@ -2,6 +2,7 @@
 using RestaurantManager.UserInterface.GeneralSettings;
 using RestaurantManager.UserInterface.MenuProducts;
 using RestaurantManager.UserInterface.PointofSale;
+using RestaurantManager.UserInterface.PosReports;
 using RestaurantManager.UserInterface.Security;
 using RestaurantManager.UserInterface.WorkPeriods;
 using System;
@@ -45,13 +46,14 @@ namespace RestaurantManager.BusinessModels.Security
                     new PermissionMaster() { PermissionGuid = "A2", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Checkout Ticket", PermissionLevel = "1", PageClass = new CheckoutTicket() },
                     new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new object() },
                     //Work periods
-                    new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
+                    new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Work Periods", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
                     //Accounts
-                    new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Receivables() },
-                    new PermissionMaster() { PermissionGuid = "C2", ParentModule = "C", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Receivables() },
+                    new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "General Accounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Receivables() },
                     //products
                    new PermissionMaster() { PermissionGuid = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() },
                     new PermissionMaster() { PermissionGuid = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
+                    //reports
+                    new PermissionMaster() { PermissionGuid = "E2", ParentModule = "E", PermissionShortName = "Reports", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                     //settings
                     new PermissionMaster() { PermissionGuid = "F1", ParentModule = "F", PermissionShortName = "Tables", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new TablesEntities() },
                     new PermissionMaster() { PermissionGuid = "F2", ParentModule = "F", PermissionShortName = "Client Info", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ClientInfo() },
