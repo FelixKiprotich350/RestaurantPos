@@ -13,72 +13,53 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <Style   TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <!--<Style   TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Padding" Value="4" />
                 <Setter Property="Background" Value="#FF8A151B" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Template" Value="{DynamicResource RoundedButtonTemplate }" /> 
 
-            </Style>
-            <Style x:Key="Test_Accept"  TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Background" Value="Green" />
-                <Setter Property="Foreground" Value="White" /> 
-                <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{DynamicResource RoundedButtonTemplate }" /> 
+            </Style>-->
 
-            </Style>
-            <Style x:Key="Test_Cancel"  TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Background" Value="Red" />
-                <Setter Property="Foreground" Value="White" /> 
-                <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{DynamicResource RoundedButtonTemplate }" /> 
-
-            </Style>
-
-            <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="{x:Type Button}" >
-                <Border x:Name="border"  CornerRadius="12"  Cursor="Hand"  SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
-                    <ContentPresenter x:Name="contentPresenter"  ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                </Border> 
-                <ControlTemplate.Triggers>
-                    <Trigger Property="IsDefaulted" Value="True">
-                        <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                    </Trigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <!--<Setter Property="Background" TargetName="border" Value="black"/>-->
-                        <Setter Property="Background" TargetName="border" Value="Transparent"/>
-                        <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
-                    </Trigger>
-                    <Trigger Property="IsPressed" Value="True">
-                        <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
-                        <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
-                    </Trigger>
-                    <Trigger Property="ToggleButton.IsChecked" Value="True">
-                        <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
-                        <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
-                    </Trigger>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
-                        <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
-                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
-                    </Trigger>
-                </ControlTemplate.Triggers>
-            </ControlTemplate>
-            <Style x:Key="HomePageButton1" TargetType="Button">
-                <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Style   TargetType="Button" >
+                <Setter Property="OverridesDefaultStyle" Value="True" /> 
                 <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="Background" Value="Blue" />
-                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                <Setter Property="Template">
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="Margin" Value="2" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="#FF8A151B" />
+                <Setter Property="Template" >
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Name="border" 
-                   Background="{TemplateBinding Background}" 
-                   CornerRadius="16">
-                                <ContentPresenter HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}"    >
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="Auto" Width="Auto"  />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter
+                Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="transform"></ScaleTransform>
+                    </Setter.Value>
+                </Setter> 
+            </Style>
+            
+            <Style  x:Key="Button_Accept" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="#FF076807" />
+                                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="Auto" Width="Auto"  />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
@@ -88,7 +69,43 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter
+                Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="transform"></ScaleTransform>
+                    </Setter.Value>
+                </Setter> 
             </Style>
+            
+            <Style  x:Key="Button_Cancel" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="8" /> 
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="#FFF29400" />
+                                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="{TemplateBinding Height}" Width="Auto"  />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.3" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter
+                Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="transform"></ScaleTransform>
+                    </Setter.Value>
+                </Setter> 
+            </Style>
+            
             <Style x:Key="HomePageButton" TargetType="Button">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -152,15 +169,47 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
+            
+            <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="{x:Type Button}" >
+                <Border x:Name="border"  CornerRadius="12"  Cursor="Hand"  SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+                    <ContentPresenter x:Name="contentPresenter"  ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </Border> 
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsDefaulted" Value="True">
+                        <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <!--<Setter Property="Background" TargetName="border" Value="black"/>-->
+                        <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                        <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                        <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked" Value="True">
+                        <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                        <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                        <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                        <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
             <Style TargetType="GroupBox" >
-                <Setter Property="BorderThickness" Value="1" />  
+                <Setter Property="BorderThickness" Value="1" />
             </Style>
+            
             <Style TargetType="TextBox">
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="BorderBrush" Value="LightSteelBlue"/>
                 <Setter Property="Height" Value="28"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
             </Style> 
+            
             <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="BorderBrush" Value="Gray"/>

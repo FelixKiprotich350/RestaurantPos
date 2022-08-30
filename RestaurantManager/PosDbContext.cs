@@ -12,6 +12,7 @@ using RestaurantManager.BusinessModels.Menu;
 using RestaurantManager.BusinessModels.Security;
 using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.GeneralSettings;
+using RestaurantManager.BusinessModels.WorkPeriod;
 
 namespace RestaurantManager
 {
@@ -37,6 +38,7 @@ namespace RestaurantManager
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }

@@ -34,7 +34,7 @@
             </Grid>
             <Grid Grid.Row="2">
                 <UniformGrid Columns="2" Rows="1" VerticalAlignment="Center">
-                    <Button x:Name="Button_NewCategory" Content="New Category" Width="150" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Click="Button_NewCategory_Click"/>
+                    <Button x:Name="Button_NewCategory"  Content="New Category" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Click="Button_NewCategory_Click" FontSize="16"/>
                     <Button x:Name="Button_Refresh" Content="Refresh" Height="40" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" Click="Button_Refresh_Click"/>
                 </UniformGrid> 
             </Grid>

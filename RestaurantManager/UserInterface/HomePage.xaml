@@ -17,7 +17,7 @@
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/point of sale.png"/>
                 </Button.Background>
             </Button>
-            <Button  Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" IsEnabled="False" >
+            <Button  Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" IsEnabled="True" >
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/work-period.png"/>
                 </Button.Background>

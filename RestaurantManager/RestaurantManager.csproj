@@ -156,6 +156,7 @@
     <Compile Include="BusinessModels\Security\PermissionMaster.cs" />
     <Compile Include="BusinessModels\Security\UserRoles.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
+    <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
     <Compile Include="ErpShared.cs" />
     <Compile Include="InitialServerConfiguration.xaml.cs">
       <DependentUpon>InitialServerConfiguration.xaml</DependentUpon>
@@ -167,21 +168,9 @@
     <Compile Include="Migrations\202208250839353_InitialCreate.designer.cs">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208282158138_M4.cs" />
-    <Compile Include="Migrations\202208282158138_M4.designer.cs">
-      <DependentUpon>202208282158138_M4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208290735594_M5.cs" />
-    <Compile Include="Migrations\202208290735594_M5.designer.cs">
-      <DependentUpon>202208290735594_M5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208291721571_M7.cs" />
-    <Compile Include="Migrations\202208291721571_M7.designer.cs">
-      <DependentUpon>202208291721571_M7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208291746376_M8.cs" />
-    <Compile Include="Migrations\202208291746376_M8.designer.cs">
-      <DependentUpon>202208291746376_M8.cs</DependentUpon>
+    <Compile Include="Migrations\202208301336129_M11.cs" />
+    <Compile Include="Migrations\202208301336129_M11.designer.cs">
+      <DependentUpon>202208301336129_M11.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -388,17 +377,8 @@
     <EmbeddedResource Include="Migrations\202208250839353_InitialCreate.resx">
       <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208282158138_M4.resx">
-      <DependentUpon>202208282158138_M4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208290735594_M5.resx">
-      <DependentUpon>202208290735594_M5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208291721571_M7.resx">
-      <DependentUpon>202208291721571_M7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208291746376_M8.resx">
-      <DependentUpon>202208291746376_M8.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208301336129_M11.resx">
+      <DependentUpon>202208301336129_M11.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -25,10 +25,9 @@ namespace RestaurantManager.BusinessModels.GeneralSettings
         [Column(Order = 2)]
         public string TableStatus { get; set; }
         [Required]
-        [Index]
-        [MaxLength(100)]
+        [Index] 
         [Column(Order = 3)]
-        public string IsDeleted { get; set; } 
+        public bool IsDeleted { get; set; } 
         [Required]
         [Column(Order = 4)]
         public DateTime RegistrationDate { get; set; }

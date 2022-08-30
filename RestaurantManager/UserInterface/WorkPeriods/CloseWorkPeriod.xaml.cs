@@ -18,11 +18,21 @@ namespace RestaurantManager.UserInterface.WorkPeriods
     /// <summary>
     /// Interaction logic for CloseWorkPeriod.xaml
     /// </summary>
-    public partial class CloseWorkPeriod : Page
+    public partial class CloseWorkPeriod : Window
     {
         public CloseWorkPeriod()
         {
             InitializeComponent();
+        }
+
+        private void Button_Accept_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+        }
+
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

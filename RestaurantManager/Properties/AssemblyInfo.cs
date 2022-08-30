@@ -8,12 +8,12 @@ using System.Windows;
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
 [assembly: AssemblyTitle("RestaurantManager")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Restaurant Point of Sale - suitable for all-size restaurants and hotels.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Laxco Incorporation")]
 [assembly: AssemblyProduct("RestaurantManager")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Laxco")]
 [assembly: AssemblyCulture("")]
 
 // Definir ComVisible como false torna os tipos neste assembly invisíveis

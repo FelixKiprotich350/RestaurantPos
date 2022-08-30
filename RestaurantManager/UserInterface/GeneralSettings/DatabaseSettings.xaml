@@ -10,12 +10,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Label Content="Database Management" FontSize="16" HorizontalAlignment="Center"/>
+            <Label Content="Database Management" FontSize="16" HorizontalAlignment="Left"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -34,12 +34,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Button  Content="Test" HorizontalAlignment="Center" Width="100"/>
-                            </Border>
-                            <Border Grid.Column="1" CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                                <Button  Content="Save" Margin="0" Width="100" HorizontalAlignment="Center"/>
-                            </Border>
+                            <Button  Content="Test" HorizontalAlignment="Center" Width="100"/>
+
+                            <Button Grid.Column="1"  Content="Save" Margin="2" Width="100" HorizontalAlignment="Center"/>
+
                         </Grid>
                         <StackPanel>
                             <Grid Background="#FFFF8181">
@@ -67,7 +65,7 @@
                                 <Button  Content="Select Folder" HorizontalAlignment="Center" Width="100" Padding="8,4"/>
                             </Border>
                             <Border Grid.Column="1" CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Button  Content="Backup" HorizontalAlignment="Center" Margin="20,0,0,0" Width="100"/>
+                                <Button  Content="Backup" Margin="0" Width="100" HorizontalAlignment="Center"/>
                             </Border>
                         </Grid>
                         <StackPanel>
@@ -89,12 +87,10 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Button  Content="Select File" HorizontalAlignment="Center" Width="100"/>
-                            </Border>
-                            <Border Grid.Column="1" CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Button  Content="Restore" HorizontalAlignment="Center" Margin="20,0,0,0" Width="100"/>
-                            </Border>
+                            <Button Grid.Column="0" Content="Select File" HorizontalAlignment="Center" Width="100"/>
+
+                            <Button Grid.Column="1"  Content="Restore" HorizontalAlignment="Center" Margin="2" Width="100"/>
+
 
                         </Grid>
                         <StackPanel>

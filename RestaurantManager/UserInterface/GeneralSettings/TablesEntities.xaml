@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.GeneralSettings"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TablesEntities" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 
@@ -25,13 +25,13 @@
                     <TextBlock Text="Registered Tables" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
+                    <DataGrid x:Name="Datagrid_Tables" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
 
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
                             <DataGridTextColumn Binding="{Binding TableGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding UserFullName}"  Header="Table Name" IsReadOnly="True" Width="200" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding UserRole}"  Header="Table Status" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding TableName}"  Header="Table Name" IsReadOnly="True" Width="200" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding TableStatus}"  Header="Table Status" IsReadOnly="True" Width="150" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Registration Date" IsReadOnly="True" Width="170" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
@@ -48,9 +48,14 @@
 
                 </Grid>
                 <Grid Grid.Row="2" >
-                    <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <Button Content="Refresh" HorizontalAlignment="Center" Margin="0"/>
-                    </Border>
+                    <UniformGrid Rows="1" Columns="2">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <Label Content="Total"/>
+                            <TextBox x:Name="TextBox_TotalCount" VerticalAlignment="Center" Height="Auto" Width="100"/>
+                        </StackPanel>
+                        <Button Content="Refresh"  Padding="8"  HorizontalAlignment="Center" FontSize="16" VerticalAlignment="Center" />
+
+                    </UniformGrid>
                 </Grid>
             </Grid>
         </Border>
@@ -76,14 +81,16 @@
                         <StackPanel Orientation="Vertical">
                             <Label Content="Name"/>
                             <TextBox x:Name="Textbox_UserFullName" Margin="5"/>
+                        
+                            <Label Content="Status"/>
+                            <TextBox x:Name="Textbox_Status" IsReadOnlyCaretVisible="False" IsReadOnly="True" Text="Available" Margin="5"/>
                         </StackPanel>
                     </Grid>
                    
                 </Grid>
                 <Grid Grid.Row="2" >
-                    <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <Button x:Name="Button_Save" Content="Save" Margin="0" Width="80" Click="Button_Save_Click" HorizontalAlignment="Center"/>
-                    </Border> 
+                    <Button x:Name="Button_Save" Content="Save" Padding="8"  Click="Button_Save_Click" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
                 </Grid>
             </Grid>
         </Border>

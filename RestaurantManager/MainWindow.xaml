@@ -81,9 +81,7 @@
                             </ListView>
                         </Grid>
                         <Grid Grid.Row="2" VerticalAlignment="Center"  Margin="5">
-                            <Border CornerRadius="8" Background="#FF8A151B">
-                                <Button x:Name="Btn_Logout" Content="Logout"  Margin="5" FontWeight="Normal"  FontSize="20" Click="Btn_Logout_Click" VerticalAlignment="Center" HorizontalAlignment="Center"  />
-                            </Border>
+                            <Button x:Name="Btn_Logout" Content="Logout"  Margin="5" FontWeight="Normal"  FontSize="20" Click="Btn_Logout_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"  />
                         </Grid>
                     </Grid>
                     <Grid x:Name="MainGrid" >
@@ -94,14 +92,12 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" HorizontalAlignment="Center"   >
+                            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"   >
 
                                 <ItemsControl x:Name="Category_Submenu" >
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <Button Tag="{Binding PermissionGuid}"  Content="{Binding PermissionShortName}"  BorderThickness="0" Click="Button_CategoryPermissionItem_Click" />
-                                            </Border>
+                                            <Button Tag="{Binding PermissionGuid}" Margin="5,-2,5,0"  Content="{Binding PermissionShortName}" Click="Button_CategoryPermissionItem_Click" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>

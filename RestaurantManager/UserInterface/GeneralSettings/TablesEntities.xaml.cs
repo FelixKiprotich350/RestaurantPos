@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.BusinessModels.GeneralSettings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,10 +25,58 @@ namespace RestaurantManager.UserInterface.GeneralSettings
         {
             InitializeComponent();
         }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                RefreshMenuProducts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         private void Button_Save_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                TableEntity t = new TableEntity();
+                t.TableGuid = Guid.NewGuid().ToString();
+                t.TableName = Textbox_UserFullName.Text;
+                t.TableStatus = "Available";
+                t.IsDeleted = false;
+                t.RegistrationDate = ErpShared.CurrentDate();
+                using (var db = new PosDbContext())
+                {
+                    db.TableEntity.Add(t);
+                    db.SaveChanges();
+                    MessageBox.Show("Success. Table Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    RefreshMenuProducts();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
+        private void RefreshMenuProducts()
+        {
+            try
+            {
+                using (var db = new PosDbContext())
+                {
+                    Datagrid_Tables.ItemsSource = db.TableEntity.ToList();
+                }
+                TextBox_TotalCount.Text = Datagrid_Tables.Items.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+       
     }
 }

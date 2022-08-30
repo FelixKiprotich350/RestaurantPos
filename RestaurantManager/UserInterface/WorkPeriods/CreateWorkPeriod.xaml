@@ -1,33 +1,40 @@
-﻿<Page x:Class="RestaurantManager.UserInterface.WorkPeriods.CreateWorkPeriod"
+﻿<Window x:Class="RestaurantManager.UserInterface.WorkPeriods.CreateWorkPeriod"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.WorkPeriods"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="CreateWorkPeriod">
+      mc:Ignorable="d" Height="300" Width="400" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+      d:DesignHeight="400" d:DesignWidth="400"
+      Title="Create Work Period">
 
-    <Grid>
-        <Border  CornerRadius="12,0,0,12"  Background="White">
-            <Grid Margin="12" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0"  Background="#FF80E68E" Margin="0">
-                    <TextBlock Text="Create Work Periods" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
-                </Grid>
-                <Grid Grid.Row="1">
-                    
-                </Grid>
-                <Grid Grid.Row="2" >
-                    <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <Button Content="Refresh" HorizontalAlignment="Center" Margin="0"/>
-                    </Border>
-                </Grid>
-            </Grid>
-        </Border>
+    <Grid Margin="2" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/> 
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+       
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions> 
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Work Period Name" />
+            <TextBox x:Name="Textbox_PeriodName" Grid.Row="1"/>
+            <Label Grid.Row="2" Content="Description" />
+            <TextBox x:Name="Textbox_Description" Grid.Row="3"/>
+            <Label Grid.Row="4" Content="Opening Date" />
+            <TextBox Grid.Row="5"/>
+        </Grid>
+        <Grid Grid.Row="2" >
+            <UniformGrid Rows="1" Margin="0,8,0,8">
+                <Button x:Name="Button_Cancel" Style="{StaticResource Button_Cancel}" IsCancel="True" Content="Cancel" Padding="8" HorizontalAlignment="Center" Click="Button_Cancel_Click"  />
+                <Button x:Name="Button_Create" Style="{StaticResource Button_Accept}" IsDefault="True"  Content="Create" Padding="8" HorizontalAlignment="Center" Click="Button_Create_Click" />
+            </UniformGrid>
+        </Grid>
     </Grid>
-</Page>
+</Window>

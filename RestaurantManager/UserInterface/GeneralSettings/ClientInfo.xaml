@@ -95,9 +95,10 @@
 
                 </Grid>
                 <Grid Grid.Row="2" >
-                    <Border CornerRadius="8" Margin="8" Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                        <Button x:Name="Button_Save" Content="Save" HorizontalAlignment="Center" Margin="0" Width="100"/>
-                    </Border>
+                    <Button x:Name="Button_Save" Content="Save" HorizontalAlignment="Center" Height="Auto" Width="100" FontSize="16" />
+
+                    <!--<Border CornerRadius="8"  Background="#FF8A151B" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                    </Border>-->
                 </Grid>
             </Grid>
         </Border>
