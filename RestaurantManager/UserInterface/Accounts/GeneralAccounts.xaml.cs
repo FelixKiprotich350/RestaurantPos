@@ -18,16 +18,16 @@ namespace RestaurantManager.UserInterface.Accounts
     /// <summary>
     /// Interaction logic for Receivables.xaml
     /// </summary>
-    public partial class Receivables : Page
+    public partial class GeneralAccounts : Page
     {
-        public Receivables()
+        public GeneralAccounts()
         {
             InitializeComponent();
         }
 
         private void Button_Cash_Click(object sender, RoutedEventArgs e)
-        {
-            Label_SelectedAccountHeader.Content = "Cash Payments";
+        { 
+
         }
 
         private void Button_Voucher_Click(object sender, RoutedEventArgs e)

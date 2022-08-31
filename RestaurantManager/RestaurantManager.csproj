@@ -178,8 +178,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
-    <Compile Include="UserInterface\Accounts\Receivables.xaml.cs">
-      <DependentUpon>Receivables.xaml</DependentUpon>
+    <Compile Include="UserInterface\Accounts\GeneralAccounts.xaml.cs">
+      <DependentUpon>GeneralAccounts.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GeneralSettings\ClientInfo.xaml.cs">
       <DependentUpon>ClientInfo.xaml</DependentUpon>
@@ -289,7 +289,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserInterface\Accounts\Receivables.xaml">
+    <Page Include="UserInterface\Accounts\GeneralAccounts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

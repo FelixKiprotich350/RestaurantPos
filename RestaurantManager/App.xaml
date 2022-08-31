@@ -200,7 +200,7 @@
             </ControlTemplate>
 
             <Style TargetType="GroupBox" >
-                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderThickness" Value="0" />
             </Style>
             
             <Style TargetType="TextBox">
