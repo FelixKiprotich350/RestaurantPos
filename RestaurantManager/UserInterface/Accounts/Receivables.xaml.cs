@@ -24,5 +24,25 @@ namespace RestaurantManager.UserInterface.Accounts
         {
             InitializeComponent();
         }
+
+        private void Button_Cash_Click(object sender, RoutedEventArgs e)
+        {
+            Label_SelectedAccountHeader.Content = "Cash Payments";
+        }
+
+        private void Button_Voucher_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Cards_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Mpesa_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

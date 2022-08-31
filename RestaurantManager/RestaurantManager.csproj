@@ -238,6 +238,21 @@
     <Compile Include="UserInterface\PosReports\MasterReports.xaml.cs">
       <DependentUpon>MasterReports.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PosReports\PaymentsReport.xaml.cs">
+      <DependentUpon>PaymentsReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\SalesAnalysis.xaml.cs">
+      <DependentUpon>SalesAnalysis.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\SalesReport.xaml.cs">
+      <DependentUpon>SalesReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\TicketsReports.xaml.cs">
+      <DependentUpon>TicketsReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\UsersReport.xaml.cs">
+      <DependentUpon>UsersReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Security\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
@@ -338,6 +353,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PosReports\PaymentsReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\SalesAnalysis.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\SalesReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\TicketsReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\UsersReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Security\ChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -432,9 +467,6 @@
     <Resource Include="ImageResources\img3.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\pos-landing-page.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ImageResources\Accounts.png" />
     <Resource Include="ImageResources\menu.png" />
     <Resource Include="ImageResources\point of sale.png" />
@@ -448,9 +480,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ImageResources\laxco pos.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageResources\pos logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pos logo.ico" />

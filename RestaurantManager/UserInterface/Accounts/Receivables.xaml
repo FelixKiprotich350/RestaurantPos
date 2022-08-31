@@ -44,7 +44,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60"/>
+                            <Button x:Name="Button_Cash" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60" Click="Button_Cash_Click"/>
 
                         </Grid>
                         </Grid>
@@ -66,7 +66,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60"/>
+                            <Button x:Name="Button_Mpesa" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60" Click="Button_Mpesa_Click"/>
 
                         </Grid>
                     </Grid>
@@ -88,7 +88,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60"/>
+                            <Button x:Name="Button_Cards" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60" Click="Button_Cards_Click"/>
 
                         </Grid>
                     </Grid>
@@ -110,7 +110,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60"/>
+                            <Button x:Name="Button_Voucher" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Accept}" Content="View" Width="60" Click="Button_Voucher_Click"/>
 
                         </Grid>
                     </Grid>
@@ -135,7 +135,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Label x:Name="Label_SelectedAccountHeader" Content=""/>
+                    <Label x:Name="Label_SelectedAccountHeader" Content="" FontSize="20" FontWeight="Bold"/>
                     <Grid Grid.Row="1">
                         <ListView Style="{x:Null}" BorderThickness="0,1,0,0" BorderBrush="#FF9A9B9E">
                             <ListView.ItemTemplate>

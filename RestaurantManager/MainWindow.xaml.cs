@@ -104,6 +104,7 @@ namespace RestaurantManager
                         return;
                     }
                     Frame1.Content = subitems[0].PageClass;
+                    Category_Submenu.Visibility = Visibility.Visible;
                 }
                 else
                 {
