@@ -39,7 +39,7 @@
                                 </Button>
                             </Border>
 
-                            <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" PasswordChar="*" PreviewTextInput="PasswordBox_UserPin_PreviewTextInput" />
+                            <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" PasswordChar="*" PreviewTextInput="PasswordBox_UserPin_PreviewTextInput" MaxLength="4" />
                         </DockPanel>
                     </Grid>
                 </Border>
@@ -55,7 +55,7 @@
                         <Button x:Name="Button_8" Content="8"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_8_Click"  />
                         <Button x:Name="Button_9" Content="9"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_9_Click"  />
                          <Button x:Name="Button_Cancel" Background="#FF8A151B" Content="Cancel" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Exit_Click" />
-                        <Button x:Name="Button_0" Background="#FFF29400" Content="0" FontWeight="Bold" FontSize="20" Click="Button_0_Click"  />
+                        <Button x:Name="Button_0" Content="0" Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_0_Click"  />
                         <Button x:Name="Button_Login" Content="Login" Background="#FF076807"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
  
                         </UniformGrid>

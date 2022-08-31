@@ -343,6 +343,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
             base.ActiveControl = this.Btn_CompleteTransaction;
         }
+
         private void Btn_Mpesa_Click(object sender, EventArgs e)
         {
             try
@@ -396,12 +397,14 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                     try
                     {
+                        string secondary = Payments_Gridview.Rows[num3].Cells[3].Value.ToString();
+                        string primary = Payments_Gridview.Rows[num3].Cells[2].Value.ToString();
                         PaymentMethod p = new PaymentMethod
                         {
                             PaymentMethodName = Payments_Gridview.Rows[num3].Cells[0].Value.ToString(),
                             Amount = Convert.ToDecimal(Payments_Gridview.Rows[num3].Cells[1].Value.ToString()),
-                            PrimaryRefference = Payments_Gridview.Rows[num3].Cells[2].Value.ToString(),
-                            SecondaryRefference = Payments_Gridview.Rows[num3].Cells[3].Value.ToString()
+                            PrimaryRefference = primary != "" ? primary : "None",
+                            SecondaryRefference = secondary != "" ? secondary : "None"
                         };
                         this.Payments.Add(p);
                     }
@@ -517,7 +520,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
             }
         }
-
+        
         private void InputAmountPaid(object sender, KeyPressEventArgs e)
         {
             e.Handled = !(((e.KeyChar.ToString() == ".") || char.IsControl(e.KeyChar)) || char.IsNumber(e.KeyChar));
@@ -562,7 +565,6 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
  
-
         private void Txt_AmountPaidTotal_TextChanged(object sender, EventArgs e)
         {
             try

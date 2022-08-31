@@ -176,6 +176,10 @@
     <Compile Include="Migrations\202208301336129_M11.designer.cs">
       <DependentUpon>202208301336129_M11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202208311845183_13.cs" />
+    <Compile Include="Migrations\202208311845183_13.designer.cs">
+      <DependentUpon>202208311845183_13.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\Accounts\GeneralAccounts.xaml.cs">
@@ -425,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202208301336129_M11.resx">
       <DependentUpon>202208301336129_M11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208311845183_13.resx">
+      <DependentUpon>202208311845183_13.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

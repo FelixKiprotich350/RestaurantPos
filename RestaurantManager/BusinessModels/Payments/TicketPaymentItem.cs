@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.BusinessModels.Payments
 {
-    public class TicketPaymentItem  
+    public class TicketPaymentItem
     {
         [Key]
         [MaxLength(100)]
@@ -24,10 +24,17 @@ namespace RestaurantManager.BusinessModels.Payments
         [MaxLength(100)]
         public string Method { get; set; }
         [Required]
+        public DateTime PaymentDate { get; set; }
+        [Required]
         [MaxLength(100)]
-        public string MethodRefference { get; set; }
+        public string PrimaryRefference { get; set; }
         [Required]
         [MaxLength(500)]
-        public string Description { get; set; }
+        public string SecondaryRefference { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string ReceivingUsername { get; set; }
+
     }
 }

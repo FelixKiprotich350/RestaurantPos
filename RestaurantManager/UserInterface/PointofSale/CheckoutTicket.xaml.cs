@@ -72,6 +72,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                DateTime Tdate = ErpShared.CurrentDate();
                 if (TextBlock_TicketNo.Text == "")
                 {
                     MessageBox.Show("Select a Ticket to CheckOut!", "Message Box", MessageBoxButton.OK);
@@ -100,16 +101,40 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     pm = T.Payments;
                 }
+                if (pm.Count <= 0)
+                {
+                    MessageBox.Show("No payments Found!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                    return;
+                }
+               
                 TicketPaymentMaster tpm = new TicketPaymentMaster
                 {
                     PaymentMasterGuid = Guid.NewGuid().ToString(),
                     TicketNo = TextBlock_TicketNo.Text,
-                    PosUser = ErpShared.CurrentUser.UserPIN.ToString(),
-                    TotalAmountPaid = 0,
+                    PosUser = ErpShared.CurrentUser.UserName.ToString(),
+                    TotalAmountPaid = pm.Sum(b=>b.Amount),
                     TotalAmountCharged = total,
                     TicketBalanceReturned = 0,
-                    PaymentDate = ErpShared.CurrentDate()
+                    PaymentDate = Tdate
                 };
+                List<TicketPaymentItem> tpi = new List<TicketPaymentItem>();
+                foreach (PaymentMethod p in pm)
+                {
+                    TicketPaymentItem t = new TicketPaymentItem
+                    {
+                        PaymentGuid = Guid.NewGuid().ToString(),
+                        ParentOrderNo = TextBlock_TicketNo.Text,
+                        ParentPaymasterGuid = tpm.PaymentMasterGuid,
+                        PrimaryRefference = p.PaymentMethodName,
+                        Method = p.PaymentMethodName,
+                        AmountPaid = p.Amount,
+                        PaymentDate = Tdate,
+                        ReceivingUsername = ErpShared.CurrentUser.UserName,
+                        SecondaryRefference = p.SecondaryRefference
+                    };
+                    tpi.Add(t);
+                }
                 using (var db=new PosDbContext())
                 {
                     using (DbContextTransaction tr = db.Database.BeginTransaction())
@@ -126,7 +151,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 tr.Rollback();
                             }
                         }
-
+                        db.TicketPaymentItem.AddRange(tpi);
                         db.TicketPaymentMaster.Add(tpm);
                         db.SaveChanges();
                         tr.Commit();

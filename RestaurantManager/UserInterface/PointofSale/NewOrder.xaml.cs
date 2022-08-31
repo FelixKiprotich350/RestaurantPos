@@ -29,6 +29,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
+
         public NewOrder()
         {
             InitializeComponent();
@@ -53,7 +54,6 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-     
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -160,6 +160,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void ResetForm()
         {
             try
@@ -183,7 +184,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderGuid = Guid.NewGuid().ToString(),
                     OrderDate = ErpShared.CurrentDate(),
                     OrderStatus = "Pending",
-                    User = "Felix",
+                    User =  ErpShared.CurrentUser.UserName,
                     PaymentDate = ErpShared.CurrentDate(),
                     OrderNo = ordno
                 };
@@ -208,4 +209,5 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
     }
+
 }

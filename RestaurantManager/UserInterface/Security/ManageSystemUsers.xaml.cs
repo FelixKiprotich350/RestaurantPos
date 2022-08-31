@@ -107,12 +107,13 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         UserGuid = Guid.NewGuid().ToString(),
                         UserPIN = Rand.Next(1000, 9999),
+                        UserName = Textbox_UserFullName.Text.Split(',')[0] + Rand.Next(100, 9999),
                         UserFullName = Textbox_UserFullName.Text,
                         UserRole = ((UserRole)ComboBox_Roles.SelectedItem).RoleName,
                         RegistrationDate = ErpShared.CurrentDate(),
                         LastLoginDate = ErpShared.CurrentDate(),
                         UserRights = rights,
-                        UserWorkingStatus="Active",
+                        UserWorkingStatus = "Active",
                         UserIsDeleted = false
                     };
                     db.PosUser.Add(user);

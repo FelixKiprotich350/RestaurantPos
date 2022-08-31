@@ -81,7 +81,8 @@ namespace RestaurantManager.UserInterface.Security
                         }
                         else
                         {
-                            MessageBox.Show(this, "The User PIN does not exist!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show(this, "The User PIN is Wrong!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            PasswordBox_UserPin.Password = "";
                             return;
                         }
                     }

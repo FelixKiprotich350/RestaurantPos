@@ -98,12 +98,10 @@
                 </Grid>
                 <Grid Grid.Row="3">
                     <UniformGrid Columns="2" VerticalAlignment="Center" Margin="8">
-                        <Border CornerRadius="8" Margin="8" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Stretch" Padding="8">
-                            <Button x:Name="Button_Discard" Content="Discard" HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Height="Auto" FontWeight="Bold" FontSize="20" Click="Button_Discard_Click" />
-                        </Border>
-                        <Border CornerRadius="8" Margin="8" Background="#FF076807" HorizontalAlignment="Center" VerticalAlignment="Stretch" Padding="8">
-                            <Button x:Name="Button_CheckoutTicket" Content="Checkout" HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Height="Auto" FontWeight="Bold" FontSize="20" Click="Button_CheckoutTicket_Click"/>
-                        </Border>
+                        <Button x:Name="Button_Discard" Content="Discard" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_Discard_Click" />
+
+                        <Button x:Name="Button_CheckoutTicket" Content="Checkout" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_CheckoutTicket_Click"/>
+
                     </UniformGrid>
                 </Grid>
             </Grid>

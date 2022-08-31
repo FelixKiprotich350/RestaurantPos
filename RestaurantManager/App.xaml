@@ -39,12 +39,45 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter
-                Property="RenderTransform">
+                <Setter  Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform x:Name="transform"></ScaleTransform>
                     </Setter.Value>
-                </Setter> 
+                </Setter>
+                <Style.Triggers>
+                    <EventTrigger
+                    RoutedEvent="MouseEnter">
+                        <BeginStoryboard
+                            Name="zoomIn">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger
+                    RoutedEvent="MouseLeave">
+                        <BeginStoryboard
+                        Name="zoomOut">
+                            <Storyboard>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
             </Style>
             
             <Style  x:Key="Button_Accept" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
@@ -98,15 +131,48 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter
-                Property="RenderTransform">
+                <Setter  Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform x:Name="transform"></ScaleTransform>
                     </Setter.Value>
-                </Setter> 
+                </Setter>
+                <Style.Triggers>
+                    <EventTrigger
+                    RoutedEvent="MouseEnter">
+                        <BeginStoryboard
+                            Name="zoomIn">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger
+                    RoutedEvent="MouseLeave">
+                        <BeginStoryboard
+                        Name="zoomOut">
+                            <Storyboard>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
             </Style>
             
-            <Style x:Key="HomePageButton" TargetType="Button">
+            <Style x:Key="HomePageButton" TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Background" Value="Blue" />
@@ -128,8 +194,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter
-                Property="RenderTransform">
+                <Setter  Property="RenderTransform">
                     <Setter.Value>
                         <ScaleTransform x:Name="transform"></ScaleTransform>
                     </Setter.Value>
@@ -142,11 +207,11 @@
                             <Storyboard>
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                    To="0.95"
+                                    To="0.96"
                                     Duration="00:00:00.25"></DoubleAnimation>
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                    To="0.95"
+                                    To="0.96"
                                     Duration="00:00:00.25"></DoubleAnimation>
                             </Storyboard>
                         </BeginStoryboard>
@@ -200,7 +265,8 @@
             </ControlTemplate>
 
             <Style TargetType="GroupBox" >
-                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Margin" Value="5,5,5,5" />
             </Style>
             
             <Style TargetType="TextBox">
