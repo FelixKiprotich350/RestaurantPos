@@ -33,6 +33,7 @@ namespace RestaurantManager
     public partial class MainWindow : Window
     {
         readonly PermissionMaster pm = new PermissionMaster();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,6 +46,8 @@ namespace RestaurantManager
         {
             try
             {
+             
+                //TextBox_InstitutionTitle.Text = ErpShared.ClientInfo.ClientTitle;
                 ErpShared.Main_Window = this;
                 SetupUIForUser(true);
             }

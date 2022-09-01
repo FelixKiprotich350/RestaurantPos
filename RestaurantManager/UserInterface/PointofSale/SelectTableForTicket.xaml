@@ -1,0 +1,45 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.PointofSale.SelectTableForTicket"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow" Loaded="Window_Loaded"
+        Title="Select Table" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Selected Table"/>
+                <TextBox x:Name="Textbox_TableSelected" Height="Auto" Width="300"  />
+                <Button Content="Clear" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ItemsControl x:Name="TablesList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding TableName}" Style="{x:Null}" Margin="4" Click="Button_Click"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Columns="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+            </ItemsControl>
+        </Grid>
+        <Grid Grid.Row="2" VerticalAlignment="Center">
+            <UniformGrid Rows="1" Columns="2" >
+                <Button x:Name="Button_Cancel" Style="{StaticResource Button_Cancel}" Content="Cancel" Margin="4" Height="Auto" Width="100" Click="Button_Cancel_Click" IsCancel="True"/>
+                <Button x:Name="Button_Accept" Style="{StaticResource Button_Accept}" Content="Accept" Height="Auto" Width="100" Click="Button_Accept_Click" IsDefault="True"/>
+            </UniformGrid>
+        </Grid>
+        
+    </Grid>
+</Window>

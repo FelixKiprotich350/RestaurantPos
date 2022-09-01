@@ -33,13 +33,14 @@ namespace RestaurantManager.UserInterface.PointofSale
         public NewOrder()
         {
             InitializeComponent();
-            OrderItems = new ObservableCollection<OrderItem>();
+            OrderItems = new ObservableCollection<OrderItem>(); 
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+                
                 using (var b = new PosDbContext())
                 {
                     var a = b.ProductCategory.ToList();
@@ -167,6 +168,8 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 OrderItems.Clear();
                 Textbox_TotalAmount.Text = "0.00";
+                Label_Table.Content = "";
+                LabelCustomerName.Content = "";
             }
             catch (Exception ex)
             {
@@ -183,8 +186,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     OrderGuid = Guid.NewGuid().ToString(),
                     OrderDate = ErpShared.CurrentDate(),
+                    CustomerName = LabelCustomerName.Content.ToString(),
+                    TicketTable = Label_Table.Content.ToString(),
                     OrderStatus = "Pending",
-                    User =  ErpShared.CurrentUser.UserName,
+                    UserServing =  ErpShared.CurrentUser.UserName,
                     PaymentDate = ErpShared.CurrentDate(),
                     OrderNo = ordno
                 };
@@ -207,6 +212,20 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Button_SelectTable_Click(object sender, RoutedEventArgs e)
+        {
+            SelectTableForTicket st = new SelectTableForTicket();
+            st.ShowDialog();
+            Label_Table.Content = st.SelectedTable;
+        }
+
+        private void Button_SelectCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            SelectCustomerName sc = new SelectCustomerName();
+            sc.ShowDialog();
+            LabelCustomerName.Content = sc.CustomerName;
         }
     }
 

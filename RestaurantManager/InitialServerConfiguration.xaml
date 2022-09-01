@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager"
-        mc:Ignorable="d"
-        Title="Initial Server Configuration" Height="200" Width="300">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="Server Configuration" Height="180" Width="300">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="50"/>
@@ -13,28 +13,30 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Foreground" Value="Black"/>
         </Style>
-        <Style TargetType="StackPanel" >
-            <Setter Property="Height" Value="100"/>
-        </Style>
+        
     </Window.Resources>
     <Grid >
-        <StackPanel Style="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Label Width="100" Content="Server IP" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
-                <TextBox x:Name="Textbox_ServerIP" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
-            </StackPanel>
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Label Width="100" Content="Server Port" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
-                <TextBox x:Name="Textbox_ServerPort" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
-            </StackPanel>
-            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Label Width="100" Content="Password" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
-                <TextBox x:Name="Textbox_ServerPassword" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
-            </StackPanel>
-                        <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,5">
-                <Button x:Name="Button_Exit" Content="Exit" Margin="0,0,10,0" Background="#FFD83F37" BorderThickness="0"  IsCancel="True" Click="Button_Exit_Click"/>
-                <Button x:Name="Button_Test" Content="Test" Margin="20,0,0,0" Background="#FF076807" Width="100"  IsDefault="True" Click="Button_Test_Click"/>
-            </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label Width="100" Content="Server IP" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
+            <TextBox x:Name="Textbox_ServerIP" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
         </StackPanel>
+        <StackPanel Grid.Row="1" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label Width="100" Content="Server Port" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
+            <TextBox x:Name="Textbox_ServerPort" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Label Width="100" Content="Password" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tw Cen MT" FontSize="16"/>
+            <TextBox x:Name="Textbox_ServerPassword" Width="150" BorderBrush="#FF076807" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Tw Cen MT" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25"/>
+        </StackPanel>
+        <UniformGrid Grid.Row="3" Rows="1" Columns="2" VerticalAlignment="Center" Margin="0,10,0,5">
+            <Button x:Name="Button_Exit" Content="Exit" Style="{StaticResource Button_Cancel}"  IsCancel="True" Click="Button_Exit_Click" HorizontalAlignment="Center" Width="100" Height="Auto"/>
+            <Button x:Name="Button_Test" Content="Test"  Style="{StaticResource Button_Accept}"   IsDefault="True" Click="Button_Test_Click" HorizontalAlignment="Center" Width="100"/>
+        </UniformGrid>
     </Grid>
 </Window>

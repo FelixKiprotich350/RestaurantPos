@@ -20,11 +20,17 @@ namespace RestaurantManager.BusinessModels.PointofSale
         [MaxLength(100)]
         public string OrderNo { get; set; }
         [Required]
-        [MaxLength(20)]
+        [MaxLength(100)]
         public string OrderStatus { get; set; }
+      
+        [MaxLength(200)]
+        public string CustomerName { get; set; }
+       
+        [MaxLength(100)]
+        public string TicketTable { get; set; }
         [Required]
         [MaxLength(100)]
-        public string User { get; set; }
+        public string UserServing { get; set; }
         [Required]
         public DateTime OrderDate { get; set; }
         [Required]

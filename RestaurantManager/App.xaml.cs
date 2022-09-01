@@ -17,7 +17,10 @@ namespace RestaurantManager
      
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose; 
+            //preloader
+            //configure firstrun client info and user
+            //initializedbb
         }
     }
 }

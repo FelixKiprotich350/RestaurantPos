@@ -168,22 +168,21 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208250839353_InitialCreate.cs" />
-    <Compile Include="Migrations\202208250839353_InitialCreate.designer.cs">
-      <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202209011456487_InitialCreate.cs" />
+    <Compile Include="Migrations\202209011456487_InitialCreate.designer.cs">
+      <DependentUpon>202209011456487_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202208301336129_M11.cs" />
-    <Compile Include="Migrations\202208301336129_M11.designer.cs">
-      <DependentUpon>202208301336129_M11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202208311845183_13.cs" />
-    <Compile Include="Migrations\202208311845183_13.designer.cs">
-      <DependentUpon>202208311845183_13.cs</DependentUpon>
+    <Compile Include="Migrations\202209011457572_1.cs" />
+    <Compile Include="Migrations\202209011457572_1.designer.cs">
+      <DependentUpon>202209011457572_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\Accounts\GeneralAccounts.xaml.cs">
       <DependentUpon>GeneralAccounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml.cs">
+      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\GeneralSettings\ClientInfo.xaml.cs">
       <DependentUpon>ClientInfo.xaml</DependentUpon>
@@ -221,6 +220,12 @@
     <Compile Include="UserInterface\PointofSale\EditOrderItemQuantity.xaml.cs">
       <DependentUpon>EditOrderItemQuantity.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
+      <DependentUpon>EditTicket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\ManageTickets.xaml.cs">
+      <DependentUpon>ManageTickets.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\MpesaPayment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +243,15 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\PaymentsUI.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\SelectCustomerName.xaml.cs">
+      <DependentUpon>SelectCustomerName.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\SelectTableForTicket.xaml.cs">
+      <DependentUpon>SelectTableForTicket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\SelectTicketToEdit.xaml.cs">
+      <DependentUpon>SelectTicketToEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\MasterReports.xaml.cs">
       <DependentUpon>MasterReports.xaml</DependentUpon>
@@ -257,6 +271,9 @@
     <Compile Include="UserInterface\PosReports\UsersReport.xaml.cs">
       <DependentUpon>UsersReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Security\AdminFirstTimeChangePassword.xaml.cs">
+      <DependentUpon>AdminFirstTimeChangePassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Security\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
@@ -268,6 +285,9 @@
     </Compile>
     <Compile Include="UserInterface\Security\ManageSystemUsers.xaml.cs">
       <DependentUpon>ManageSystemUsers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Security\MyProfile.cs">
+      <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\SelectRightsForRole.xaml.cs">
       <DependentUpon>SelectRightsForRole.xaml</DependentUpon>
@@ -294,6 +314,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserInterface\Accounts\GeneralAccounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -337,6 +361,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\EditTicket.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PointofSale\ManageTickets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\PointofSale\NewOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -350,6 +382,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\PointofSale\ReserveTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PointofSale\SelectCustomerName.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PointofSale\SelectTableForTicket.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PointofSale\SelectTicketToEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -377,6 +421,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Security\AdminFirstTimeChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Security\ChangePassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -390,6 +438,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\Security\ManageSystemUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Security\MyProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -424,14 +476,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202208250839353_InitialCreate.resx">
-      <DependentUpon>202208250839353_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209011456487_InitialCreate.resx">
+      <DependentUpon>202209011456487_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208301336129_M11.resx">
-      <DependentUpon>202208301336129_M11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202208311845183_13.resx">
-      <DependentUpon>202208311845183_13.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209011457572_1.resx">
+      <DependentUpon>202209011457572_1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RestaurantManager.BusinessModels.Security; 
-using System.Windows; 
+using System.Windows;
+using RestaurantManager.BusinessModels.GeneralSettings;
 
 namespace RestaurantManager
 {
@@ -15,6 +16,7 @@ namespace RestaurantManager
             return DateTime.Now;
         }
         public static MainWindow Main_Window = null;
+        public static ClientInfoDetails ClientInfo = null;
         public static PosUser CurrentUser = null;
         public static string DbConnectionstring = "server=127.0.0.1;user=root;password=toor;port=3306;database=restpos"; 
         public enum StudentStatuses

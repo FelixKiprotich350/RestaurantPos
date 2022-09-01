@@ -19,7 +19,9 @@ namespace RestaurantManager
     //[DbConfigurationType(typeof(MySqlEFConfiguration))] 
     class PosDbContext : DbContext
     {
-        public PosDbContext() : base("Server=LAPTOP-FELIX;Database=myDataBase;User Id=sa;Password=1234;")
+        //server=localhost;port=3306;database=restpos;uid=root;password=toor
+        //Server=LAPTOP-FELIX;Database=myDataBase;User Id=sa;Password=1234;
+        public PosDbContext() : base("Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;")
         { 
             //this.Database.CommandTimeout=10; 
             this.Database.CreateIfNotExists(); 

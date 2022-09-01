@@ -86,7 +86,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(12, 244);
+            this.label12.Location = new System.Drawing.Point(12, 236);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(179, 31);
             this.label12.TabIndex = 24;
@@ -105,7 +105,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             // Txt_AmountPaidTotal
             // 
             this.Txt_AmountPaidTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_AmountPaidTotal.Location = new System.Drawing.Point(292, 244);
+            this.Txt_AmountPaidTotal.Location = new System.Drawing.Point(292, 236);
             this.Txt_AmountPaidTotal.Multiline = true;
             this.Txt_AmountPaidTotal.Name = "Txt_AmountPaidTotal";
             this.Txt_AmountPaidTotal.ReadOnly = true;
@@ -119,7 +119,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             // Txt_Balance
             // 
             this.Txt_Balance.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Balance.Location = new System.Drawing.Point(292, 294);
+            this.Txt_Balance.Location = new System.Drawing.Point(292, 296);
             this.Txt_Balance.Name = "Txt_Balance";
             this.Txt_Balance.ReadOnly = true;
             this.Txt_Balance.Size = new System.Drawing.Size(268, 45);

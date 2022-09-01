@@ -85,13 +85,32 @@ namespace RestaurantManager.UserInterface.Security
                             PasswordBox_UserPin.Password = "";
                             return;
                         }
+                        if (user.UserWorkingStatus.ToLower() != "active")
+                        {
+                            MessageBox.Show(this, "The User Status is not Active.\nAsk the administrator to enable your activenes!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            PasswordBox_UserPin.Password = "";
+                            user = null;
+                            return;
+                        }
+                        if (user.UserIsDeleted)
+                        {
+                            MessageBox.Show(this, "The UserPIN has been deleted. Enter Different PIN!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            PasswordBox_UserPin.Password = "";
+                            user = null;
+                            return;
+                        }
                     }
                     MainWindow m = new MainWindow();
                     List<string> raw = new List<string>();
                     //raw permissions
                     raw = user.UserRights.Split(',').Where(a => a.Trim() != "").ToList();
                     //final permissions
-                    if (raw.Count > 0)
+                    if (user.UserRole == "Admin")
+                    {
+                        user.User_Permissions_final = new List<PermissionMaster>();
+                        user.User_Permissions_final.AddRange(Pm.GetAllPermissions());
+                    }
+                    else if (raw.Count > 0)
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         foreach (var a in raw)
@@ -102,7 +121,14 @@ namespace RestaurantManager.UserInterface.Security
                             }
                         }
                     }
-                    ErpShared.CurrentUser = user; 
+                    using (var db = new PosDbContext())
+                    {
+                        if (db.ClientInfo.Count() > 0)
+                        {
+                            ErpShared.ClientInfo = db.ClientInfo.First();
+                        }
+                    }
+                    ErpShared.CurrentUser = user;
                     m.Show();
                     Close();
                     
