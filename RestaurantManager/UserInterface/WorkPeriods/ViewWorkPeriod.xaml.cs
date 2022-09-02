@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -58,6 +59,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
         { 
             try
             {
+               
                 CreateWorkPeriod create = new CreateWorkPeriod(); 
                 if (create.ShowDialog() == false)
                 {
@@ -76,6 +78,16 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 };
                 using (var db = new PosDbContext())
                 {
+                    if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
+                    {
+                        MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        RefreshWorkPeriods();
+                        return;
+                    }
+
+                }
+                using (var db = new PosDbContext())
+                {
                     db.WorkPeriod.Add(w);
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -87,11 +99,67 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Datagrid_Workperiods_MouseDown(object sender, MouseButtonEventArgs e)
+ 
+        private void Datagrid_Workperiods_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            CloseWorkPeriod c = new CloseWorkPeriod();
-            c.ShowDialog();
+            try
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+                // iteratively traverse the visual tree
+                while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+
+                if (dep == null)
+                {
+                    return;
+                }
+                if (dep is DataGridCell)
+                {
+                    if (Datagrid_Workperiods.SelectedItem == null)
+                    {
+                        return;
+                    }
+                    WorkPeriod o = (WorkPeriod)Datagrid_Workperiods.SelectedItem;
+                    if (o == null)
+                    {
+                        MessageBox.Show("The selected Work Period is not Known!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    using (var db = new PosDbContext())
+                    {
+                        if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
+                        {
+                            MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            RefreshWorkPeriods();
+                            return;
+                        }
+
+                    }
+                    CloseWorkPeriod c = new CloseWorkPeriod();
+                    c.ShowDialog();
+                    if ((bool)c.DialogResult)
+                    {
+                        using (var db = new PosDbContext())
+                        {
+                            var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
+                            wp.WorkperiodStatus = "Closed";
+                            wp.ClosedBy = ErpShared.CurrentUser.UserName;
+                            wp.ClosingDate = ErpShared.CurrentDate();
+                            db.SaveChanges();
+                            MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
         }
     }
 }

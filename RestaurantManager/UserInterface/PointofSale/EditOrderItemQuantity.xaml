@@ -47,14 +47,11 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Border CornerRadius="8" Margin="8" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button x:Name="Button_Delete" Content="Delete" HorizontalAlignment="Center"  FontSize="16" Height="40" VerticalAlignment="Center" Width="120" Click="Button_Delete_Click"/>
-                </Border>
+                <Button x:Name="Button_Delete" Content="Delete" HorizontalAlignment="Center"  FontSize="16" VerticalAlignment="Center" Width="120" Click="Button_Delete_Click" Margin="4"/>
             </Grid>
             <Grid Grid.Column="2">
-                <Border CornerRadius="8" Margin="8" Background="#FF076807" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Button x:Name="Button_Accept" Content="Accept" HorizontalAlignment="Center"  FontSize="20" Height="40" VerticalAlignment="Center" Click="Button_Accept_Click" Width="120"/>
-                </Border>
+                <Button x:Name="Button_Accept" Content="Accept" HorizontalAlignment="Center"  FontSize="20" Height="40" VerticalAlignment="Center" Click="Button_Accept_Click" Width="120" Style="{DynamicResource Button_Accept}"/>
+
             </Grid>
         </Grid>
     </Grid>

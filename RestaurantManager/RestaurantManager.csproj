@@ -220,9 +220,6 @@
     <Compile Include="UserInterface\PointofSale\EditOrderItemQuantity.xaml.cs">
       <DependentUpon>EditOrderItemQuantity.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
-      <DependentUpon>EditTicket.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\PointofSale\ManageTickets.xaml.cs">
       <DependentUpon>ManageTickets.xaml</DependentUpon>
     </Compile>
@@ -231,12 +228,6 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\NewOrder.xaml.cs">
       <DependentUpon>NewOrder.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\PointofSale\OrderReports.xaml.cs">
-      <DependentUpon>OrderReports.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\PointofSale\OrdersPlaced.xaml.cs">
-      <DependentUpon>OrdersPlaced.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\ReserveTable.xaml.cs">
       <DependentUpon>ReserveTable.xaml</DependentUpon>
@@ -288,6 +279,9 @@
     </Compile>
     <Compile Include="UserInterface\Security\MyProfile.cs">
       <DependentUpon>MyProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Security\PromptAdminPin.xaml.cs">
+      <DependentUpon>PromptAdminPin.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\SelectRightsForRole.xaml.cs">
       <DependentUpon>SelectRightsForRole.xaml</DependentUpon>
@@ -361,23 +355,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PointofSale\EditTicket.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserInterface\PointofSale\ManageTickets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\PointofSale\NewOrder.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\PointofSale\OrderReports.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\PointofSale\OrdersPlaced.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -442,6 +424,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\Security\MyProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Security\PromptAdminPin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

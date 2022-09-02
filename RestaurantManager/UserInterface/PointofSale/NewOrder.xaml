@@ -62,13 +62,13 @@
                     <Grid Grid.Column="0">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Customer Information" HorizontalAlignment="Center" FontWeight="Bold"/>
-                            <Label x:Name="LabelCustomerName" Content="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label x:Name="LabelCustomerName" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Table " HorizontalAlignment="Center" FontWeight="Bold"/>
-                            <Label x:Name="Label_Table" Content="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Label x:Name="Label_Table" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -84,9 +84,9 @@
 
                     <UniformGrid Margin="0,8,0,8" Columns="3" Rows="1" VerticalAlignment="Center" >
 
-                        <Button x:Name="Button_SelectCustomer" Content="Customer" Margin="10,0" Click="Button_SelectCustomer_Click" Width="200"/>
-                        <Button x:Name="Button_SelectTable" Content="Table" Margin="10,0" Click="Button_SelectTable_Click" Width="200"/>
-                        <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click" Width="200"/>
+                        <Button x:Name="Button_SelectCustomer" Content="Customer" Margin="10,0" Click="Button_SelectCustomer_Click" Width="200" Style="{DynamicResource Button_Accept}"/>
+                        <Button x:Name="Button_SelectTable" Content="Table" Margin="10,0" Click="Button_SelectTable_Click" Width="200" Style="{DynamicResource Button_Accept}"/>
+                        <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click" Width="200" Style="{DynamicResource Button_Accept}"/>
 
 
                     </UniformGrid>

@@ -86,6 +86,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                 }
+                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid).Count() > 0)
+                {
+                    MessageBox.Show("The Product has been added to the Order before!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 OrderItems.Add(i);
                 CalculateTotal();
             }

@@ -1,0 +1,55 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.Security.PromptAdminPin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" Topmost="True"
+        Title="Security Check" Height="500" Width="400">
+
+    <Grid Grid.Column="1" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Content="ENTER ADMIN PIN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FF8A151B"/>
+        </Grid>
+        <Border Grid.Row="1" CornerRadius="8" Padding="8,4,8,4" BorderThickness="1" BorderBrush="#FF8A151B" Background="#FFFFF9EF" >
+            <Grid >
+                <DockPanel LastChildFill="True" >
+
+                    <Border DockPanel.Dock="Right" Margin="12,0,0,0"  Padding="4" CornerRadius="16" Background="#FF8A151B" VerticalAlignment="Center">
+                        <Button x:Name="Button_Clear" Padding="6" Click="Button_Clear_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/icons8-close.png"/>
+                            </Button.Background>
+                        </Button>
+                    </Border>
+
+                    <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16" PasswordChar="*" PreviewTextInput="PasswordBox_UserPin_PreviewTextInput" MaxLength="4" />
+                </DockPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2">
+            <UniformGrid Columns="3" Rows="4" Margin="0,5,0,0">
+                <Button x:Name="Button_1" Style="{StaticResource Button_Cancel}" Content="1" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="Auto" Click="Button_1_Click"  />
+                <Button x:Name="Button_2" Style="{StaticResource Button_Cancel}"  Content="2" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_2_Click"  />
+                <Button x:Name="Button_3" Style="{StaticResource Button_Cancel}"  Content="3" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_3_Click"  />
+                <Button x:Name="Button_4" Content="4"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_4_Click"  />
+                <Button x:Name="Button_5" Content="5"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_5_Click"  />
+                <Button x:Name="Button_6" Content="6"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_6_Click"  />
+                <Button x:Name="Button_7" Content="7"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_7_Click"  />
+                <Button x:Name="Button_8" Content="8"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_8_Click"  />
+                <Button x:Name="Button_9" Content="9"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_9_Click"  />
+                <Button x:Name="Button_Cancel" Background="#FF8A151B" Content="Cancel" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Exit_Click" />
+                <Button x:Name="Button_0" Content="0" Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_0_Click"  />
+                <Button x:Name="Button_Accept" Content="Accept" Background="#FF076807"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
+
+            </UniformGrid>
+
+        </Grid>
+
+    </Grid>
+</Window>

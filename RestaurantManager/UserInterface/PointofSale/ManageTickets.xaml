@@ -31,19 +31,19 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel>
-                            <TextBlock x:Name="TextBlock_TicketNo" Text="Ticket" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                            <TextBlock x:Name="TextBlock_TicketNo" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
                             <Label Content="Ticket Number" FontSize="16" HorizontalAlignment="Left" />
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel>
-                            <TextBlock x:Name="TextBlock_TicketDate" Text="Ticket" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                            <TextBlock x:Name="TextBlock_TicketDate" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
                             <Label Content="Ticketing Date" FontSize="16" HorizontalAlignment="Left" />
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel>
-                            <TextBlock x:Name="TextBlock_ItemsCount" Text="Ticket" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
+                            <TextBlock x:Name="TextBlock_ItemsCount" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
                             <Label Content="Ticket Order Items" FontSize="16" HorizontalAlignment="Left" />
                         </StackPanel>
                     </Grid>
@@ -81,8 +81,8 @@
                 <Grid Grid.Row="2">
 
                     <UniformGrid Margin="0,8,0,8" Columns="2" Rows="1" VerticalAlignment="Center" >
-                        <Button x:Name="Button_CancelEditing" Content="Discard" Width="200"/>
-                        <Button x:Name="Button_VoidTicket" Content="Void Ticket" Margin="10,0" Width="200"/>
+                        <Button x:Name="Button_CancelEditing" Content="Discard" Width="200" Click="Button_CancelEditing_Click" VerticalAlignment="Center" Background="#FFF29400"/>
+                        <Button x:Name="Button_VoidTicket" Content="Void Ticket" Margin="10,0" Width="200" Style="{StaticResource Button_Accept}" Click="Button_VoidTicket_Click"/>
                     </UniformGrid>
                 </Grid>
 
@@ -100,7 +100,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tickets" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8"/>
+                        <TextBlock Text="Tickets List" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8"/>
                         <Button Grid.Column="1" x:Name="Button_RefreshTicketsList"   Style="{x:Null}" Margin="0,0,10,0" VerticalAlignment="Center" Height="30" Width="30" HorizontalAlignment="Center" Click="Button_RefreshTicketsList_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/icons8-refresh.png"/>

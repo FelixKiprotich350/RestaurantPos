@@ -1,4 +1,5 @@
 ﻿using RestaurantManager.BusinessModels.PointofSale;
+using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == "Pending").ToList();
+                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == "Pending" && p.UserServing == ErpShared.CurrentUser.UserName).ToList();
                 }
             }
             catch (Exception ex)
@@ -47,7 +48,8 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            RefreshTicketList();
+            Button_VoidTicket.IsEnabled = false;
         }
 
         private void LisTview_TicketsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,6 +97,58 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+        }
+
+        private void Button_VoidTicket_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (TextBlock_TicketNo.Text.Trim() == "")
+                {
+                    MessageBox.Show("Select a Ticket To Manage!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                PromptAdminPin p = new PromptAdminPin();
+
+                if ((bool)p.ShowDialog())
+                {
+                    using (var db = new PosDbContext())
+                    {
+                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus="Cancelled";
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    RefreshTicketList();
+                    Button_CancelEditing_Click(new object(), new RoutedEventArgs());
+                }
+                else
+                {
+                    MessageBox.Show("Admin Approval Rejected!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_CancelEditing_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button_VoidTicket.IsEnabled = false;
+                
+                TextBlock_TicketNo.Text = "";
+                TextBlock_TicketDate.Text = "";
+                TextBlock_ItemsCount.Text = "0";
+                Datagrid_OrderItems.ItemsSource = null;
+                RefreshTicketList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+          
         }
     }
 }
