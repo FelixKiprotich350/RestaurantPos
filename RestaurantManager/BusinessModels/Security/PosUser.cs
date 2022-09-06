@@ -40,11 +40,7 @@ namespace RestaurantManager.BusinessModels.Security
         public string UserWorkingStatus { get; set; }
         [Required] 
         [Column(Order = 6)]
-        public bool UserIsDeleted { get; set; }
-        [Required]
-        [MaxLength(500)]
-        [Column(Order = 7)]
-        public string UserRights { get; set; }
+        public bool UserIsDeleted { get; set; } 
         [Required]
         [Column(Order = 8)]
         public DateTime RegistrationDate { get; set; }

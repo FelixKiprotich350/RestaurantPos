@@ -1,0 +1,50 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.Security.EditPosUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
+        Title="EditPosUser" Height="300" Width="300" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock   Text="Do you want to Delete this User ?" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/> 
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Label Content="Current Role" FontSize="16"/>
+                    <TextBox x:Name="Textbox_Currentrole" Text="" IsReadOnly="True" BorderThickness="0" FontSize="16"/>
+                </StackPanel>
+            </Grid>     
+            <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Label Content="New Role" FontSize="16"/>
+                    <ComboBox x:Name="ComboBox_Roles" FontSize="16">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding RoleName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>                
+                </StackPanel>
+            </Grid>        
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,5">
+            <UniformGrid Rows="1" Columns="2" >
+                <Button x:Name="Button_Delete" Style="{StaticResource Button_Danger}" Content="Delete" Margin="4" Height="Auto" Width="100"  IsCancel="True" Click="Button_Delete_Click" Visibility="Collapsed"/>
+                <Button x:Name="Button_Restore" Style="{StaticResource Button_Cancel}" Content="Restore" Margin="4" Height="Auto" Width="100"  IsCancel="True" Click="Button_Restore_Click" Visibility="Collapsed"/>
+                <Button x:Name="Button_Update" Style="{StaticResource Button_Accept}" Content="Update" Height="Auto" Width="100" IsDefault="True" Click="Button_Update_Click"/>
+            </UniformGrid>
+        </Grid>
+    </Grid>
+</Window>

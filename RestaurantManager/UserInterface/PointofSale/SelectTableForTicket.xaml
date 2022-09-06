@@ -23,12 +23,12 @@
             <ItemsControl x:Name="TablesList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding TableName}" Style="{x:Null}" Margin="4" Click="Button_Click"/>
+                        <Button Content="{Binding TableName}" Style="{x:Null}" Margin="4" Click="Button_Click" Width="120" Height="90"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Columns="5" />
+                        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 

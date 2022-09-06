@@ -176,6 +176,18 @@
     <Compile Include="Migrations\202209011457572_1.designer.cs">
       <DependentUpon>202209011457572_1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209060856373_M1.cs" />
+    <Compile Include="Migrations\202209060856373_M1.designer.cs">
+      <DependentUpon>202209060856373_M1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209060907284_M2.cs" />
+    <Compile Include="Migrations\202209060907284_M2.designer.cs">
+      <DependentUpon>202209060907284_M2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209060929392_M3.cs" />
+    <Compile Include="Migrations\202209060929392_M3.designer.cs">
+      <DependentUpon>202209060929392_M3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\Accounts\GeneralAccounts.xaml.cs">
@@ -265,8 +277,11 @@
     <Compile Include="UserInterface\Security\AdminFirstTimeChangePassword.xaml.cs">
       <DependentUpon>AdminFirstTimeChangePassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Security\ChangePassword.xaml.cs">
-      <DependentUpon>ChangePassword.xaml</DependentUpon>
+    <Compile Include="UserInterface\Security\EditPosUser.xaml.cs">
+      <DependentUpon>EditPosUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Security\EditUserRole.xaml.cs">
+      <DependentUpon>EditUserRole.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -407,7 +422,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Security\ChangePassword.xaml">
+    <Page Include="UserInterface\Security\EditPosUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Security\EditUserRole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -467,6 +486,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209011457572_1.resx">
       <DependentUpon>202209011457572_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209060856373_M1.resx">
+      <DependentUpon>202209060856373_M1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209060907284_M2.resx">
+      <DependentUpon>202209060907284_M2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209060929392_M3.resx">
+      <DependentUpon>202209060929392_M3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

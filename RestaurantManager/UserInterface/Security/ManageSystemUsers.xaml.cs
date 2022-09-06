@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -53,33 +54,15 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void LoadRoles()
         {
             try
             {
                 using (var db = new PosDbContext())
                 {
-                    ComboBox_Roles.ItemsSource = db.UserRoles.ToList();
+                    ComboBox_Roles.ItemsSource = db.UserRoles.Where(x => x.RoleStatus == "Active").ToList();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void Button_SelectPermission_Click(object sender, RoutedEventArgs e)
-        {
-
-            try
-            {
-                List<PermissionMaster> list = new List<PermissionMaster>();
-                list = Listview_SelectedRolerights.Items.Cast<PermissionMaster>().ToList();
-                SelectRightsForRole select = new SelectRightsForRole(list);
-                if ((bool)select.ShowDialog())
-                {
-                    Listview_SelectedRolerights.ItemsSource = select.selectedrights;
-                }
-
             }
             catch (Exception ex)
             {
@@ -91,16 +74,7 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                if (Listview_SelectedRolerights.Items.Count <= 0)
-                {
-                    MessageBox.Show("You must select atleast one Right!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                string rights = "";
-                foreach (var x in Listview_SelectedRolerights.Items.Cast<PermissionMaster>())
-                {
-                    rights += x.PermissionGuid + ",";
-                }
+                
                 using (var db = new PosDbContext())
                 {
                     PosUser user = new PosUser
@@ -112,7 +86,6 @@ namespace RestaurantManager.UserInterface.Security
                         UserRole = ((UserRole)ComboBox_Roles.SelectedItem).RoleName,
                         RegistrationDate = ErpShared.CurrentDate(),
                         LastLoginDate = ErpShared.CurrentDate(),
-                        UserRights = rights,
                         UserWorkingStatus = "Active",
                         UserIsDeleted = false
                     };
@@ -123,6 +96,85 @@ namespace RestaurantManager.UserInterface.Security
                         MessageBox.Show("Failed to save the new User!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     MessageBox.Show("Successfully Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    RefreshUsers();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Datagrid_UsersList_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+                // iteratively traverse the visual tree
+                while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+
+                if (dep == null)
+                {
+                    return;
+                }
+                if (dep is DataGridCell)
+                {
+
+                    if (Datagrid_UsersList.SelectedItem == null)
+                    {
+                        return;
+                    }
+                    PosUser o = (PosUser)Datagrid_UsersList.SelectedItem;
+                    o.User_Permissions_final = new List<PermissionMaster>();
+                    EditPosUser er = new EditPosUser(o);
+                    er.ShowDialog();
+                    if (er.ReturningAction == "Delete")
+                    {
+                        if (o.UserName == ErpShared.CurrentUser.UserName)
+                        {
+                            MessageBox.Show("You can't Delete Your own Account!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        using (var db = new PosDbContext())
+                        {
+                            PosUser r = db.PosUser.Where(a => a.UserName == o.UserName).First();
+                            r.UserWorkingStatus = "Disabled";
+                            db.SaveChanges();
+                            MessageBox.Show("User Deleted Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        }
+                    } 
+                    else if (er.ReturningAction == "Restore")
+                    {
+                        if (o.UserName == ErpShared.CurrentUser.UserName)
+                        {
+                            MessageBox.Show("You can't Restore Your own Account!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        using (var db = new PosDbContext())
+                        {
+                            PosUser r = db.PosUser.Where(a => a.UserName == o.UserName).First();
+                            r.UserWorkingStatus = "Active";
+                            db.SaveChanges();
+                            MessageBox.Show("User Restored Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        }
+                    } 
+                    else if (er.ReturningAction == "Update")
+                    {                         
+                        using (var db = new PosDbContext())
+                        {
+                            PosUser r = db.PosUser.Where(a => a.UserName == o.UserName).First();
+                            UserRole role = (UserRole)er.ComboBox_Roles.SelectedItem;
+                            r.UserRole = role.RoleName;
+                            db.SaveChanges();
+                            MessageBox.Show("User Role Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
                     RefreshUsers();
                 }
             }

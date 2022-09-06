@@ -99,7 +99,7 @@ namespace RestaurantManager
                 string tag = a.Tag.ToString();
                 if (tag != "")
                 {
-                    var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag).ToList();
+                    var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
                     Category_Submenu.ItemsSource = subitems;
                     if (subitems.Count <= 0)
                     {

@@ -19,8 +19,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding PermissionShortName,Mode=TwoWay}"/>
-                        <CheckBox IsChecked="{Binding IsSelected}"/>
+                        <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding PermissionShortName,Mode=TwoWay}" FontSize="16"/>
+                        <!--<Label />-->
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -13,14 +13,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
-            <!--<Style   TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="4" />
-                <Setter Property="Background" Value="#FF8A151B" />
-                <Setter Property="Foreground" Value="White" />
-                <Setter Property="Template" Value="{DynamicResource RoundedButtonTemplate }" /> 
-
-            </Style>-->
+          
 
             <Style   TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" /> 
@@ -110,6 +103,68 @@
                 </Setter> 
             </Style>
             
+            <Style  x:Key="Button_Danger" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="8" /> 
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="Red" />
+                                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="{TemplateBinding Height}" Width="Auto"  />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.3" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter  Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="transform"></ScaleTransform>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <EventTrigger
+                    RoutedEvent="MouseEnter">
+                        <BeginStoryboard
+                            Name="zoomIn">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger
+                    RoutedEvent="MouseLeave">
+                        <BeginStoryboard
+                        Name="zoomOut">
+                            <Storyboard>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
+            
             <Style  x:Key="Button_Cancel" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Margin" Value="4" />
@@ -121,7 +176,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
-                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="{TemplateBinding Height}" Width="Auto"  />
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="Auto" Width="Auto"  />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">

@@ -36,7 +36,7 @@
                         <TextBox Grid.Column="1" x:Name="Textbox_SearchBox" Padding="12"  FontWeight="Bold" FontFamily="MS Reference Sans Serif" Foreground="Indigo" Margin="10,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="Auto" FontSize="16"/>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="StudentsReportOperationPanel" >
-                        <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
+                        <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_UsersList_MouseUp">
 
                             <DataGrid.Columns>
                                 <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
@@ -100,27 +100,11 @@
                             </ComboBox>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0"  Background="#FF80E68E" Margin="0,10,0,0">
-                            <TextBlock Text="Rights" Margin="8" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center"/>
-                        </Grid>
-                        <ListView Name="Listview_SelectedRolerights" Grid.Row="1" BorderThickness="1">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Label Content="{Binding PermissionShortName}"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
+                     
 
                 </Grid>
                 <Grid Grid.Row="2" >
                     <UniformGrid Rows="1" Columns="2">
-                        <Button x:Name="Button_SelectPermission" Content="Rights"   HorizontalAlignment="Center" Width="80" Click="Button_SelectPermission_Click" VerticalAlignment="Center"/>
                         <Button x:Name="Button_Save" Content="Save" HorizontalAlignment="Center" Click="Button_Save_Click" Margin="2" Width="80"/>
                     </UniformGrid>
                 </Grid>

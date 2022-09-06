@@ -1,4 +1,5 @@
 ﻿using RestaurantManager.BusinessModels.Security;
+using RestaurantManager.UserInterface.PointofSale;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -31,14 +33,14 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                RefreshCategories();
+                RefreshRoles();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void RefreshCategories()
+        private void RefreshRoles()
         {
             try
             {
@@ -74,6 +76,7 @@ namespace RestaurantManager.UserInterface.Security
                         RoleGuid = Guid.NewGuid().ToString(),
                         RoleName = Textbox_RoleName.Text,
                         RoleDescription = Textbox_RoleDescription.Text,
+                        RoleStatus = "Active",
                         RoleIsDeleted = "False",
                         RegistrationDate = ErpShared.CurrentDate(),
                         LastUpdateDate = ErpShared.CurrentDate(),
@@ -98,7 +101,7 @@ namespace RestaurantManager.UserInterface.Security
         { 
             try
             {
-                RefreshCategories();
+                RefreshRoles();
             }
             catch (Exception ex)
             {
@@ -125,6 +128,90 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Datagrid_RolesList_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+
+                // iteratively traverse the visual tree
+                while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+
+                if (dep == null)
+                {
+                    return;
+                }
+                if (dep is DataGridCell)
+                {
+                    
+                    if (Datagrid_RolesList.SelectedItem == null)
+                    {
+                        return;
+                    }
+                    UserRole o = (UserRole)Datagrid_RolesList.SelectedItem;
+                    o.User_Permissions_final = new List<PermissionMaster>();
+                    EditUserRole er = new EditUserRole(o);
+                    er.ShowDialog();
+                    if (er.ReturningAction == "Delete")
+                    {
+                        if (o.RoleName == "Admin")
+                        {
+                            MessageBox.Show("You can't Delete Admin Role!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        using (var db=new PosDbContext())
+                        {
+                            UserRole r = db.UserRoles.Where(a => a.RoleGuid == o.RoleGuid).First();
+                            r.RoleStatus = "Deleted";
+                            db.SaveChanges();
+                            MessageBox.Show("Deleted Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            
+                        }
+                    }
+                    else if (er.ReturningAction == "Restore")
+                    {
+
+                        using (var db = new PosDbContext())
+                        {
+                            UserRole r = db.UserRoles.Where(a => a.RoleGuid == o.RoleGuid).First();
+                            r.RoleStatus = "Active"; 
+                            db.SaveChanges();
+                            MessageBox.Show("Restored Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    else if (er.ReturningAction == "Update")
+                    {
+                        if (o.RoleName == "Admin")
+                        {
+                            MessageBox.Show("You can't Update Admin Rights!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        using (var db = new PosDbContext())
+                        {
+                            UserRole r = db.UserRoles.Where(a => a.RoleGuid == o.RoleGuid).First();
+                            string newrights = "";
+                            foreach (PermissionMaster m in er.selectedrights)
+                            {
+                                newrights += m.PermissionGuid + ",";
+                            }
+                            r.RolePermissions = newrights;
+                            db.SaveChanges();
+                            MessageBox.Show("Role Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    RefreshRoles();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+      
     }
 }
 

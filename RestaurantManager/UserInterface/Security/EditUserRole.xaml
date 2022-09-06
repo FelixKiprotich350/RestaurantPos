@@ -1,0 +1,48 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.Security.EditUserRole"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
+        Title="Edit Role" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"  Background="#FF80E68E" Margin="0,10,0,0">
+                <TextBlock Text="Select Rights" Margin="8" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center"/>
+            </Grid>
+            <ListView x:Name="ListView_Rights" Grid.Row="1" BorderThickness="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding PermissionShortName,Mode=TwoWay}" FontSize="16"/>
+                            <!--<Label />-->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Do you want to Delete this Role ?" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
+            <Grid Grid.Row="1" VerticalAlignment="Center">
+                <StackPanel  >
+                    <Button x:Name="Button_UpdateRights" Style="{StaticResource Button_Accept}" Content="Update" Height="Auto" Width="100" IsDefault="True" Margin="4,10,4,4" Click="Button_UpdateRights_Click"/>
+                    <Button x:Name="Button_RestoreRole" Style="{StaticResource Button_Cancel}" Content="Restore" Height="Auto" Width="100" IsDefault="True" Visibility="Collapsed" Margin="4,10,4,4" Click="Button_RestoreRole_Click"/>
+                    <Button x:Name="Button_DeleteteRole" Style="{StaticResource Button_Danger}" Content="Delete" Height="Auto" Width="100" IsDefault="True" Visibility="Collapsed" Margin="4,10,4,4" Click="Button_DeleteteRole_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

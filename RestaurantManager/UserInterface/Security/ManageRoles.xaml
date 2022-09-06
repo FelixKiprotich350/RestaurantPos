@@ -41,15 +41,16 @@
 
                     </Grid>
                     <Grid Grid.Row="1" x:Name="StudentsReportOperationPanel" >
-                        <DataGrid x:Name="Datagrid_RolesList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
+                        <DataGrid x:Name="Datagrid_RolesList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_RolesList_MouseUp">
 
                             <DataGrid.Columns>
                                 <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
                                 <DataGridTextColumn Binding="{Binding UserGuid}" Visibility="Hidden" Header="Roleguid" IsReadOnly="True" CanUserSort="False"/>
                                 <DataGridTextColumn Binding="{Binding RoleName}"  Header="Role Name" IsReadOnly="True" Width="200" CanUserSort="False"/>
+                                <DataGridTextColumn Binding="{Binding RoleStatus}"  Header="RoleStatus" IsReadOnly="True" Width="150" CanUserSort="False"/>
                                 <DataGridTextColumn Binding="{Binding RoleDescription}"  Header="Description" IsReadOnly="True" Width="150" CanUserSort="False"/>
                                 <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Registration Date" IsReadOnly="True" Width="170" CanUserSort="False"/>
-                                <DataGridTextColumn  Binding="{Binding LastLoginDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="LastUpdated On" IsReadOnly="True" Width="170" CanUserSort="False"/>
+                                <DataGridTextColumn  Binding="{Binding LastUpdateDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="LastUpdated On" IsReadOnly="True" Width="170" CanUserSort="False"/>
                             </DataGrid.Columns>
                             <DataGrid.Resources>
                                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

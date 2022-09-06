@@ -15,12 +15,15 @@ namespace RestaurantManager.BusinessModels.Security
         [MaxLength(100)]
         public string RoleGuid { get; set; } 
         [Required]
-        [Index]
+        [Index("RoleName", -1, IsUnique = true)]
         [MaxLength(100)]
         public string RoleName { get; set; } 
         [Required]
         [MaxLength(500)]
-        public string RoleDescription { get; set; } 
+        public string RoleDescription { get; set; }
+        [Required]
+        [MaxLength(100)] 
+        public string RoleStatus { get; set; }
         [Required]
         [MaxLength(100)]
         public string RolePermissions { get; set; }

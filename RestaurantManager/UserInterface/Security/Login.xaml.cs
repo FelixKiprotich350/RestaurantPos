@@ -35,7 +35,30 @@ namespace RestaurantManager.UserInterface.Security
             {
                 try
                 {
-                    InitializeDb();
+                    InitializeDb(); 
+                    
+                    using (var a = new PosDbContext())
+                    {
+                        if (a.ClientInfo.Count() <= 0)
+                        {
+
+                        }
+                        if (a.UserRoles.Where(x => x.RoleName == "Admin").Count() <= 0)
+                        {
+                            UserRole r = new UserRole
+                            {
+                                RoleName = "Admin",
+                                RoleGuid = Guid.NewGuid().ToString(),
+                                RoleIsDeleted = "False",
+                                RoleDescription = "Systemm Administrator",
+                                LastUpdateDate = ErpShared.CurrentDate(),
+                                RegistrationDate = ErpShared.CurrentDate(),
+                                RolePermissions = "All"
+                            };
+                            a.UserRoles.Add(r);
+                            a.SaveChanges();
+                        }
+                    }
                     PasswordBox_UserPin.Focus();
                 }
                 catch (System.Data.SqlClient.SqlException ex1)
@@ -103,7 +126,19 @@ namespace RestaurantManager.UserInterface.Security
                     MainWindow m = new MainWindow();
                     List<string> raw = new List<string>();
                     //raw permissions
-                    raw = user.UserRights.Split(',').Where(a => a.Trim() != "").ToList();
+                    UserRole r = null;
+                    using (var db = new PosDbContext())
+                    {
+                        if (db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).Count() > 0)
+                        {
+                            r = db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).First();
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
                     //final permissions
                     if (user.UserRole == "Admin")
                     {
@@ -120,6 +155,10 @@ namespace RestaurantManager.UserInterface.Security
                                 user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionGuid == a).First());
                             }
                         }
+                    }
+                    else
+                    {
+                        user.User_Permissions_final = new List<PermissionMaster>();
                     }
                     using (var db = new PosDbContext())
                     {
