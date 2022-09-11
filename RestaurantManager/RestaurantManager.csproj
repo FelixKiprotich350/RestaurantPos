@@ -168,25 +168,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209011456487_InitialCreate.cs" />
-    <Compile Include="Migrations\202209011456487_InitialCreate.designer.cs">
-      <DependentUpon>202209011456487_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209011457572_1.cs" />
-    <Compile Include="Migrations\202209011457572_1.designer.cs">
-      <DependentUpon>202209011457572_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209060856373_M1.cs" />
-    <Compile Include="Migrations\202209060856373_M1.designer.cs">
-      <DependentUpon>202209060856373_M1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209060907284_M2.cs" />
-    <Compile Include="Migrations\202209060907284_M2.designer.cs">
-      <DependentUpon>202209060907284_M2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209060929392_M3.cs" />
-    <Compile Include="Migrations\202209060929392_M3.designer.cs">
-      <DependentUpon>202209060929392_M3.cs</DependentUpon>
+    <Compile Include="Migrations\202209101643009_M1.cs" />
+    <Compile Include="Migrations\202209101643009_M1.designer.cs">
+      <DependentUpon>202209101643009_M1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -481,20 +465,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209011456487_InitialCreate.resx">
-      <DependentUpon>202209011456487_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209011457572_1.resx">
-      <DependentUpon>202209011457572_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209060856373_M1.resx">
-      <DependentUpon>202209060856373_M1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209060907284_M2.resx">
-      <DependentUpon>202209060907284_M2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209060929392_M3.resx">
-      <DependentUpon>202209060929392_M3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209101643009_M1.resx">
+      <DependentUpon>202209101643009_M1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

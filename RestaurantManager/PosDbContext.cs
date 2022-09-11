@@ -16,15 +16,15 @@ using RestaurantManager.BusinessModels.WorkPeriod;
 
 namespace RestaurantManager
 {
-    //[DbConfigurationType(typeof(MySqlEFConfiguration))] 
+    [DbConfigurationType(typeof(MySqlEFConfiguration))] 
     class PosDbContext : DbContext
     {
         //server=localhost;port=3306;database=restpos;uid=root;password=toor
-        //Server=LAPTOP-FELIX;Database=myDataBase;User Id=sa;Password=1234;
-        public PosDbContext() : base("Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;")
+        //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
+        public PosDbContext() : base("server=localhost;port=3306;database=restpos;uid=root;password=toor;")
         { 
             //this.Database.CommandTimeout=10; 
-            this.Database.CreateIfNotExists(); 
+           // this.Database.CreateIfNotExists(); 
             
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

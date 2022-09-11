@@ -29,6 +29,7 @@ namespace RestaurantManager.UserInterface.Security
             InitializeComponent();
             ErpShared.CurrentUser = null;
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -51,6 +52,7 @@ namespace RestaurantManager.UserInterface.Security
                                 RoleGuid = Guid.NewGuid().ToString(),
                                 RoleIsDeleted = "False",
                                 RoleDescription = "Systemm Administrator",
+                                RoleStatus = "Active",
                                 LastUpdateDate = ErpShared.CurrentDate(),
                                 RegistrationDate = ErpShared.CurrentDate(),
                                 RolePermissions = "All"

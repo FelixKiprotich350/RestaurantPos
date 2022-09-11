@@ -171,7 +171,7 @@
                 <Setter Property="Padding" Value="8" /> 
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="Background" Value="#FFF29400" />
+                <Setter Property="Background" Value="#F29400" />
                                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
