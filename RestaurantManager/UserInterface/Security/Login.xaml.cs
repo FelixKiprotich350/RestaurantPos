@@ -37,7 +37,6 @@ namespace RestaurantManager.UserInterface.Security
                 try
                 {
                     InitializeDb(); 
-                    
                     using (var a = new PosDbContext())
                     {
                         if (a.ClientInfo.Count() <= 0)

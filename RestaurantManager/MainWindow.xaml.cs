@@ -99,6 +99,19 @@ namespace RestaurantManager
                 string tag = a.Tag.ToString();
                 if (tag != "")
                 {
+                    if (tag == "A")
+                    {
+                        using (var db = new PosDbContext())
+                        {
+                            if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() <= 0)
+                            {
+                                Frame1.Content = "";
+                                MessageBox.Show("No Work Period open for the sales!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information); 
+                                return;
+                            }
+
+                        }
+                    }
                     var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
                     Category_Submenu.ItemsSource = subitems;
                     if (subitems.Count <= 0)

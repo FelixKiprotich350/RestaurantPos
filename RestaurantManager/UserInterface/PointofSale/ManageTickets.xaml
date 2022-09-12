@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
       mc:Ignorable="d" Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ManageTickets">
-
+      Title="ManageTickets"> 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -49,7 +48,7 @@
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid    x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                    <DataGrid   x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_OrderItems_MouseUp" >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
@@ -58,31 +57,17 @@
                             <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="100" CanUserSort="False" IsReadOnly="True"/>
                             <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        </DataGrid.Columns>
-                        <DataGrid.Resources>
-                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="Background" Value="#FF6C6A6A" />
-                                <Setter Property="Foreground" Value="White" />
-                                <Setter Property="Padding" Value="2" />
-                                <Setter Property="FontSize" Value="16" />
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="Height" Value="30" />
-                            </Style>
-                            <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                                <Setter Property="Height" Value="50"/>
-                                <Setter Property="FontSize" Value="20"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </DataGrid.Resources>
+                        </DataGrid.Columns> 
                     </DataGrid>
 
                 </Grid>
 
                 <Grid Grid.Row="2">
 
-                    <UniformGrid Margin="0,8,0,8" Columns="2" Rows="1" VerticalAlignment="Center" >
+                    <UniformGrid Margin="0,8,0,8" Columns="3" Rows="1" VerticalAlignment="Center" >
                         <Button x:Name="Button_CancelEditing" Content="Discard" Width="200" Click="Button_CancelEditing_Click" VerticalAlignment="Center" Background="#FFF29400"/>
-                        <Button x:Name="Button_VoidTicket" Content="Void Ticket" Margin="10,0" Width="200" Style="{StaticResource Button_Accept}" Click="Button_VoidTicket_Click"/>
+                        <Button x:Name="Button_MoveTable" Content="Move Table" Width="200"  VerticalAlignment="Center"   Style="{StaticResource Button_Accept}" Click="Button_MoveTable_Click"/>
+                        <Button x:Name="Button_VoidTicket" Content="Void Ticket" Margin="10,0" Width="200" Style="{StaticResource Button_Danger}" Click="Button_VoidTicket_Click"/>
                     </UniformGrid>
                 </Grid>
 
@@ -93,6 +78,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Border  Background="#FFFFE4BA" CornerRadius="12,12,0,0" Padding="0,8" Margin="0">
                     <Grid  Grid.Row="0">
@@ -113,12 +99,20 @@
                     <ListView  x:Name="LisTview_TicketsList" SelectionChanged="LisTview_TicketsList_SelectionChanged">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="5,0" Height="40">
-                                    <TextBlock Text="{Binding OrderNo}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+                                <Border Margin="5,0" Height="40" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding OrderNo}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Label Content="[" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Label Content="{Binding TicketTable}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Label Content="]" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Button x:Name="Button_MergerTickets" Content="Merge Tickets" Style="{StaticResource Button_Accept}" Height="Auto" Width="150" Margin="4,4,4,8" Click="Button_MergerTickets_Click"/>
                 </Grid>
             </Grid>
         </Border>

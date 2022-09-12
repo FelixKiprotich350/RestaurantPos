@@ -11,8 +11,7 @@ namespace RestaurantManager.BusinessModels.Navigation
     public class Level1menu
     {
         public string GroupName { get; set; }
-        public string GroupCode { get; set; } 
-        public string GroupIcon { get; set; } 
+        public string GroupCode { get; set; }  
 
         public ObservableCollection<PermissionMaster> SubMenuItems { get; set; }
         public Level1menu()

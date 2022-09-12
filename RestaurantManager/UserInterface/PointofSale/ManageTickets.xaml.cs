@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -71,6 +72,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void LoadTicketDetails(OrderMaster order)
         {
             try
@@ -150,5 +152,66 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
           
         }
+
+       
+        private void Button_MoveTable_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+                // iteratively traverse the visual tree
+                while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+                if (dep == null)
+                {
+                    return;
+                }
+                if (dep is DataGridCell)
+                {
+                    if (Datagrid_OrderItems.SelectedItem == null)
+                    {
+                        return;
+                    }
+                    OrderItem o = (OrderItem)Datagrid_OrderItems.SelectedItem;
+                    EditOrderItemQuantity ei = new EditOrderItemQuantity()
+                    {
+                        Title = o.ItemName
+                    };
+                    ei.TextBox_Quantity.Text = o.Quantity.ToString();
+                    ei.ShowDialog();
+                    if (ei.ReturningAction == "Delete")
+                    { 
+
+                    } 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_MergerTickets_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MergeTickets merge = new MergeTickets();
+                merge.ShowDialog();
+                RefreshTicketList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

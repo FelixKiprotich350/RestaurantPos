@@ -1,5 +1,6 @@
 ﻿using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.PointofSale;
+using RestaurantManager.UserInterface.TicketPayments;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

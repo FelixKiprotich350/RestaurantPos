@@ -9,14 +9,14 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Indigo.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml"/> 
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-          
+
+
 
             <Style   TargetType="Button" >
-                <Setter Property="OverridesDefaultStyle" Value="True" /> 
+                <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Padding" Value="8" />
                 <Setter Property="Margin" Value="2" />
@@ -72,7 +72,7 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
-            
+
             <Style  x:Key="Button_Accept" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Margin" Value="4" />
@@ -81,7 +81,7 @@
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Background" Value="#FF076807" />
-                                <Setter Property="Template">
+                <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
@@ -100,79 +100,17 @@
                     <Setter.Value>
                         <ScaleTransform x:Name="transform"></ScaleTransform>
                     </Setter.Value>
-                </Setter> 
+                </Setter>
             </Style>
-            
+
             <Style  x:Key="Button_Danger" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Margin" Value="4" />
-                <Setter Property="Padding" Value="8" /> 
+                <Setter Property="Padding" Value="8" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Background" Value="Red" />
-                                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
-                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="{TemplateBinding Height}" Width="Auto"  />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Opacity" Value="0.3" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Setter  Property="RenderTransform">
-                    <Setter.Value>
-                        <ScaleTransform x:Name="transform"></ScaleTransform>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <EventTrigger
-                    RoutedEvent="MouseEnter">
-                        <BeginStoryboard
-                            Name="zoomIn">
-                            <Storyboard>
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                    To="0.96"
-                                    Duration="00:00:00.25"></DoubleAnimation>
-                                <DoubleAnimation
-                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                    To="0.96"
-                                    Duration="00:00:00.25"></DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                    <EventTrigger
-                    RoutedEvent="MouseLeave">
-                        <BeginStoryboard
-                        Name="zoomOut">
-                            <Storyboard>
-                                <DoubleAnimation
-                                Storyboard.TargetProperty="RenderTransform.ScaleX"
-                                To="1"
-                                Duration="00:00:00.25"></DoubleAnimation>
-                                <DoubleAnimation
-                                Storyboard.TargetProperty="RenderTransform.ScaleY"
-                                To="1"
-                                Duration="00:00:00.25"></DoubleAnimation>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Style.Triggers>
-            </Style>
-            
-            <Style  x:Key="Button_Cancel" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                <Setter Property="OverridesDefaultStyle" Value="True" />
-                <Setter Property="Margin" Value="4" />
-                <Setter Property="Padding" Value="8" /> 
-                <Setter Property="Cursor" Value="Hand" />
-                <Setter Property="Foreground" Value="White" />
-                <Setter Property="Background" Value="#F29400" />
-                                <Setter Property="Template">
+                <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
                             <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
@@ -226,7 +164,69 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
-            
+
+            <Style  x:Key="Button_Cancel" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Background" Value="#F29400" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"    >
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="Auto" Width="Auto"  />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.3" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter  Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="transform"></ScaleTransform>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <EventTrigger
+                    RoutedEvent="MouseEnter">
+                        <BeginStoryboard
+                            Name="zoomIn">
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                    Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                    To="0.96"
+                                    Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger
+                    RoutedEvent="MouseLeave">
+                        <BeginStoryboard
+                        Name="zoomOut">
+                            <Storyboard>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleX"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                                <DoubleAnimation
+                                Storyboard.TargetProperty="RenderTransform.ScaleY"
+                                To="1"
+                                Duration="00:00:00.25"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
+
             <Style x:Key="HomePageButton" TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -289,11 +289,11 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
-            
+
             <ControlTemplate x:Key="RoundedButtonTemplate" TargetType="{x:Type Button}" >
                 <Border x:Name="border"  CornerRadius="12"  Cursor="Hand"  SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
                     <ContentPresenter x:Name="contentPresenter"  ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                </Border> 
+                </Border>
                 <ControlTemplate.Triggers>
                     <Trigger Property="IsDefaulted" Value="True">
                         <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
@@ -323,37 +323,45 @@
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Margin" Value="5,5,5,5" />
             </Style>
-            
+
             <Style TargetType="TextBox">
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="BorderBrush" Value="LightSteelBlue"/>
                 <Setter Property="Height" Value="28"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
-            </Style> 
-            
+            </Style>
+
             <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
 
-            <!--<Style TargetType="DataGrid">
-                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="#FF6C6A6A" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="Padding" Value="2" />
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="Height" Value="30" />
-                </Style>
-                <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                    <Setter Property="Height" Value="50"/>
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
+            <Style TargetType="DataGrid"  BasedOn="{StaticResource MaterialDesignDataGrid}">
+                <Setter Property="Cursor" Value="Hand" />  
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="ColumnHeaderStyle" Value="{DynamicResource tt}"/>
+              
+            </Style> 
+            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="#FF6C6A6A" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Height" Value="30" />
             </Style>
-            -->
             
+            <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="Orange"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -8,11 +8,11 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="Auto" Loaded="Window_Loaded"  
         Width="Auto" Foreground="White" ResizeMode="CanResize" AllowsTransparency="True"
-        WindowState="Maximized" Title="Restaurant Pos" Background="Transparent"
+        WindowState="Maximized" Title="Restaurant Pos" Background="#FFF29400"
         WindowStartupLocation="CenterScreen" WindowStyle="None"  >
 
-    <Border CornerRadius="16" Margin="12" Background="#FFF29400">
-        <Grid>
+    <!--<Border CornerRadius="16" Margin="12" Background="#FFF29400">-->
+    <Grid Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -108,9 +108,9 @@
                                     </ItemsControl.ItemsPanel>
                                 </ItemsControl>
                             </Grid>
-                            <Border Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderThickness="0" BorderBrush="Black" CornerRadius="4" Margin="5" >
+                            <Border Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderThickness="0" BorderBrush="Black" CornerRadius="4" Margin="5,5,5,0" >
 
-                                <Frame Name="Frame1"  NavigationUIVisibility="Hidden" Margin="5,5,5,5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                                <Frame Name="Frame1"  NavigationUIVisibility="Hidden" Margin="8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                             </Border>
                         </Grid>
                     </Grid>
@@ -120,6 +120,6 @@
 
             </Grid>
         </Grid>
-    </Border>
+    <!--</Border>-->
 
 </Window>

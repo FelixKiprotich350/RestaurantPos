@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.WorkPeriods"
-      mc:Ignorable="d" Height="300" Width="400" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+      mc:Ignorable="d" Height="200" Width="400" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
       d:DesignHeight="400" d:DesignWidth="400"
       Title="Create Work Period">
 
@@ -19,16 +19,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/> 
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Work Period Name" />
             <TextBox x:Name="Textbox_PeriodName" Grid.Row="1"/>
             <Label Grid.Row="2" Content="Description" />
-            <TextBox x:Name="Textbox_Description" Grid.Row="3"/>
-            <Label Grid.Row="4" Content="Opening Date" />
-            <TextBox Grid.Row="5"/>
+            <TextBox x:Name="Textbox_Description" Grid.Row="3"/> 
         </Grid>
         <Grid Grid.Row="2" >
             <UniformGrid Rows="1" Margin="0,8,0,8">

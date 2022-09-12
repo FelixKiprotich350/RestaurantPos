@@ -29,13 +29,13 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
-
+        //54603228237,,,,0703070707
         public NewOrder()
         {
             InitializeComponent();
             OrderItems = new ObservableCollection<OrderItem>(); 
         }
-
+        //R2711220900172
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -106,13 +106,11 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 DependencyObject dep = (DependencyObject)e.OriginalSource;
-
                 // iteratively traverse the visual tree
                 while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
                 {
                     dep = VisualTreeHelper.GetParent(dep);
                 }
-
                 if (dep == null)
                 {
                     return;

@@ -3,12 +3,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RestaurantManager.UserInterface.PointofSale
+namespace RestaurantManager.UserInterface.TicketPayments
 { 
     public class CashPayment : Form
     {
         public decimal Amount = 0M;
-        private IContainer components = null;
+        private readonly IContainer components = null;
         private Button Btn_Ok;
         private Label label1;
         private TextBox textBox1;

@@ -1,4 +1,5 @@
 ﻿using RestaurantManager.BusinessModels.WorkPeriod;
+using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
     /// </summary>
     public partial class ViewWorkPeriod : Page
     {
+        readonly POSMail mail = new POSMail();
         public ViewWorkPeriod()
         {
             InitializeComponent();
@@ -59,7 +61,16 @@ namespace RestaurantManager.UserInterface.WorkPeriods
         { 
             try
             {
-               
+                using (var db = new PosDbContext())
+                {
+                    if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
+                    {
+                        MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        RefreshWorkPeriods();
+                        return;
+                    }
+
+                }
                 CreateWorkPeriod create = new CreateWorkPeriod(); 
                 if (create.ShowDialog() == false)
                 {
@@ -76,20 +87,12 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     OpeningDate = ErpShared.CurrentDate(),
                     ClosingDate = ErpShared.CurrentDate()
                 };
-                using (var db = new PosDbContext())
-                {
-                    if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
-                    {
-                        MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        RefreshWorkPeriods();
-                        return;
-                    }
-
-                }
+                
                 using (var db = new PosDbContext())
                 {
                     db.WorkPeriod.Add(w);
                     db.SaveChanges();
+                    var ej = SendMail();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshWorkPeriods();
                 }
@@ -130,13 +133,12 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     }
                     using (var db = new PosDbContext())
                     {
-                        if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
+                        if (db.WorkPeriod.Where(x => x.WorkperiodName == o.WorkperiodName && x.WorkperiodStatus == "Open").Count() <= 0)
                         {
-                            MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("This Work Period cannot be closed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                             RefreshWorkPeriods();
                             return;
                         }
-
                     }
                     CloseWorkPeriod c = new CloseWorkPeriod();
                     c.ShowDialog();
@@ -149,7 +151,14 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                             wp.ClosedBy = ErpShared.CurrentUser.UserName;
                             wp.ClosingDate = ErpShared.CurrentDate();
                             db.SaveChanges();
+                            var  jjj=SendMail();
+
+                            //if (jjj.Result == false)
+                            //{
+                            //    MessageBox.Show("Failed to send the Email!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            //}
                             MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            RefreshWorkPeriods();
                         }
                     }
                 }
@@ -158,8 +167,11 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-
+                    }
+        private async Task<bool> SendMail()
+        {
+            var b = await mail.SendReadyMeail("portxyz100@gmail.com", "fkiprotich845@gmail.com", "integrating async", "subject email", false);
+            return b;
         }
     }
 }
