@@ -151,6 +151,7 @@
     <Compile Include="BusinessModels\Menu\ProductCategory.cs" />
     <Compile Include="BusinessModels\Menu\MenuProductItem.cs" />
     <Compile Include="BusinessModels\OrderTicket\OrderItem.cs" />
+    <Compile Include="BusinessModels\OrderTicket\OrderItemVoided.cs" />
     <Compile Include="BusinessModels\OrderTicket\OrderMaster.cs" />
     <Compile Include="BusinessModels\Navigation\Level1menu.cs" />
     <Compile Include="BusinessModels\Navigation\NavigationMenu.cs" />
@@ -170,17 +171,13 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209101643009_M1.cs" />
-    <Compile Include="Migrations\202209101643009_M1.designer.cs">
-      <DependentUpon>202209101643009_M1.cs</DependentUpon>
+    <Compile Include="Migrations\202209121715118_M6.cs" />
+    <Compile Include="Migrations\202209121715118_M6.designer.cs">
+      <DependentUpon>202209121715118_M6.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209120846123_M2.cs" />
-    <Compile Include="Migrations\202209120846123_M2.designer.cs">
-      <DependentUpon>202209120846123_M2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209120857012_M3.cs" />
-    <Compile Include="Migrations\202209120857012_M3.designer.cs">
-      <DependentUpon>202209120857012_M3.cs</DependentUpon>
+    <Compile Include="Migrations\202209131456352_M7.cs" />
+    <Compile Include="Migrations\202209131456352_M7.designer.cs">
+      <DependentUpon>202209131456352_M7.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -213,6 +210,9 @@
     </Compile>
     <Compile Include="UserInterface\MenuProducts\NewMenuProduct.xaml.cs">
       <DependentUpon>NewMenuProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\EditTicketRemoveItem.xaml.cs">
+      <DependentUpon>EditTicketRemoveItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\MergeTickets.xaml.cs">
       <DependentUpon>MergeTickets.xaml</DependentUpon>
@@ -360,6 +360,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\EditTicketRemoveItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\PointofSale\EditOrderItemQuantity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -475,14 +479,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209101643009_M1.resx">
-      <DependentUpon>202209101643009_M1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209121715118_M6.resx">
+      <DependentUpon>202209121715118_M6.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209120846123_M2.resx">
-      <DependentUpon>202209120846123_M2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209120857012_M3.resx">
-      <DependentUpon>202209120857012_M3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209131456352_M7.resx">
+      <DependentUpon>202209131456352_M7.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

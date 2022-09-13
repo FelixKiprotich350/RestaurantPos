@@ -33,5 +33,13 @@ namespace RestaurantManager.BusinessModels.WorkPeriod
         public DateTime OpeningDate { get; set; }
         [Required]
         public DateTime ClosingDate { get; set; }
+        [NotMapped]
+        public int TotalTicketsCount { get; set; }
+        [NotMapped]
+        public int CompletedTicketsCount { get; set; }
+        [NotMapped]
+        public int VoidTicketsCount { get; set; }
+        [NotMapped]
+        public int PendingTicketsCount { get; set; }
     }
 }

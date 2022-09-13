@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.BusinessModels.OrderTicket
 {
-    public class OrderItem
+    public class OrderItemVoided
     {
         [Key]
         [MaxLength(100)]
@@ -20,15 +20,18 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public string OrderID { get; set; }
         [Required]
         [MaxLength(200)]
-        public string ItemName { get; set; }
+        public string ItemName { get; set; } 
         [Required]
-        public int Quantity { get; set; }
+        [MaxLength(500)]
+        public string VoidReason { get; set; }
         [Required]
-        public decimal Price { get; set; }
+        [MaxLength(100)]
+        public string ApprovedBy { get; set; }
         [Required]
-        public decimal Total { get; set; }
-        [Required]
-        [MaxLength(20)]
-        public string ServiceType { get; set; }  
+        [MaxLength(200)]
+        public string WorkPeriod { get; set; }
+        [Required] 
+        public DateTime VoidTime { get; set; }
+
     }
 }

@@ -46,8 +46,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if (Textbox_TableSelected.Text.Trim() != "")
                 {
                     SelectedTable = Textbox_TableSelected.Text;
+                    this.DialogResult = true;
                 }
-                this.Close();
+               
             }
             catch (Exception Ex)
             {

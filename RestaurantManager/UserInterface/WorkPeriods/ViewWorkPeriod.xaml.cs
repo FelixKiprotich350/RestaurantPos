@@ -45,15 +45,47 @@ namespace RestaurantManager.UserInterface.WorkPeriods
         {
             try
             {
+                List<WorkPeriod> workperiods = new List<WorkPeriod>();
                 using (var db = new PosDbContext())
                 {
-                    Datagrid_Workperiods.ItemsSource = db.WorkPeriod.ToList();
+                    workperiods = db.WorkPeriod.ToList();
                 }
+                foreach (var x in workperiods)
+                {
+                    x.TotalTicketsCount = TicketCount("", x.WorkperiodName, true); 
+                }
+                Datagrid_Workperiods.ItemsSource = workperiods;
                 TextBox_TotalCount.Text = Datagrid_Workperiods.Items.Count.ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        int TicketCount(string tstatus,string workperiod,bool CountAll)
+        {
+            try
+            {
+                int count = 0;
+                if (CountAll)
+                {
+                    using (var db = new PosDbContext())
+                    {
+                        count = db.OrderMaster.Where(x => x.Workperiod == workperiod).Count();
+                    }
+                    return count;
+                }
+                
+                using (var db=new PosDbContext())
+                {
+                    count = db.OrderMaster.Where(x => x.Workperiod == workperiod & x.OrderStatus == tstatus).Count();
+                }
+                    return count;
+            }
+            catch
+            {
+                return -1;
             }
         }
 
@@ -79,9 +111,9 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 WorkPeriod w = new WorkPeriod
                 {
                     WorkPeriodGuid = Guid.NewGuid().ToString(),
-                    WorkperiodName = create.Textbox_PeriodName.Text,
+                    WorkperiodName = "WP-" + create.Textbox_PeriodName.Text,
                     WorkperiodDescription = create.Textbox_Description.Text,
-                    Openedby = ErpShared.CurrentUser.UserPIN.ToString(),
+                    Openedby = ErpShared.CurrentUser.UserName.ToString(),
                     ClosedBy = "",
                     WorkperiodStatus = "Open",
                     OpeningDate = ErpShared.CurrentDate(),
@@ -92,7 +124,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 {
                     db.WorkPeriod.Add(w);
                     db.SaveChanges();
-                    var ej = SendMail();
+                    //var x = SendMail();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshWorkPeriods();
                 }
@@ -135,7 +167,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     {
                         if (db.WorkPeriod.Where(x => x.WorkperiodName == o.WorkperiodName && x.WorkperiodStatus == "Open").Count() <= 0)
                         {
-                            MessageBox.Show("This Work Period cannot be closed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            MessageBox.Show("This Work Period is already closed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                             RefreshWorkPeriods();
                             return;
                         }
@@ -151,7 +183,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                             wp.ClosedBy = ErpShared.CurrentUser.UserName;
                             wp.ClosingDate = ErpShared.CurrentDate();
                             db.SaveChanges();
-                            var  jjj=SendMail();
+                         ////   var  jjj=SendMail();
 
                             //if (jjj.Result == false)
                             //{

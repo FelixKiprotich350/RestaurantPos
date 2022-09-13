@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" Topmost="True"
-        Title="Security Check" Height="500" Width="400">
+        Title="Security Check" Height="500" Width="400" Loaded="Window_Loaded">
 
     <Grid Grid.Column="1" Margin="5">
         <Grid.RowDefinitions>

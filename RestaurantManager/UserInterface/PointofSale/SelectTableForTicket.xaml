@@ -13,10 +13,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="0,20,0,0">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Selected Table"/>
-                <TextBox x:Name="Textbox_TableSelected" Height="Auto" Width="300"  />
-                <Button Content="Clear" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Content="Selected Table" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox x:Name="Textbox_TableSelected" IsReadOnly="True" Height="Auto" Width="300" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="16"  />
+                <Button Content="Clear" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -28,7 +28,7 @@
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 

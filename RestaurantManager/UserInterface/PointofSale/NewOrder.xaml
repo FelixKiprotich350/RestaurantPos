@@ -33,7 +33,14 @@
                             <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="100" CanUserSort="False" IsReadOnly="True"/>
                             <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        </DataGrid.Columns> 
+                        </DataGrid.Columns>
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
+                                <Setter Property="Height" Value="50"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
                     </DataGrid>
 
                 </Grid>

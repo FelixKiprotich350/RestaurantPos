@@ -21,6 +21,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class PromptAdminPin : Window
     {
+        public string ApprovingAdmin = "";
         public PromptAdminPin()
         {
             InitializeComponent();
@@ -40,6 +41,7 @@ namespace RestaurantManager.UserInterface.Security
                             user = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
                             if (user.UserRole == "Admin")
                             {
+                                ApprovingAdmin = user.UserName;
                                 DialogResult = true;
                             }
                             else
@@ -72,6 +74,7 @@ namespace RestaurantManager.UserInterface.Security
         {
             this.Close();
         }
+
         private void PasswordBox_UserPin_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             try
@@ -100,6 +103,7 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         #region Number Pad
 
         private void Button_1_Click(object sender, RoutedEventArgs e)
@@ -224,5 +228,10 @@ namespace RestaurantManager.UserInterface.Security
         }
 
         #endregion
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            PasswordBox_UserPin.Focus();
+        }
     }
 }

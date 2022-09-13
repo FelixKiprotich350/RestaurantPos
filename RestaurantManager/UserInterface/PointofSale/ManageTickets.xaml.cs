@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.PointofSale;
+﻿using RestaurantManager.BusinessModels.OrderTicket;
+using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             InitializeComponent();
         }
+
         private void RefreshTicketList()
         {
             try
@@ -45,6 +47,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Button_RefreshTicketsList_Click(object sender, RoutedEventArgs e)
         {
             RefreshTicketList();
+            ResetForm();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -91,6 +94,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     total += x.Price * x.Quantity;
                 }
                 TextBlock_TicketNo.Text = order.OrderNo;
+                TextBox_Table.Text = order.TicketTable;
                 TextBlock_TicketDate.Text = order.OrderDate.ToString();
                 TextBlock_ItemsCount.Text = b.Count.ToString();
             }
@@ -116,7 +120,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     using (var db = new PosDbContext())
                     {
-                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus="Cancelled";
+                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus = "Cancelled";
                         db.SaveChanges();
                     }
                     MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -134,15 +138,16 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_CancelEditing_Click(object sender, RoutedEventArgs e)
+        private void ResetForm()
         {
             try
             {
                 Button_VoidTicket.IsEnabled = false;
-                
+
                 TextBlock_TicketNo.Text = "";
                 TextBlock_TicketDate.Text = "";
-                TextBlock_ItemsCount.Text = "0";
+                TextBlock_ItemsCount.Text = "";
+                TextBox_Table.Text = "";
                 Datagrid_OrderItems.ItemsSource = null;
                 RefreshTicketList();
             }
@@ -150,12 +155,39 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-          
         }
 
-       
+        private void Button_CancelEditing_Click(object sender, RoutedEventArgs e)
+        {
+
+            ResetForm();
+        }
+
         private void Button_MoveTable_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SelectTableForTicket st = new SelectTableForTicket();
+                if ((bool)st.ShowDialog())
+                {
+                    using (var db = new PosDbContext())
+                    {
+                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().TicketTable = st.SelectedTable;
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show("Success. Table Updated!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ResetForm();
+                    RefreshTicketList();
+                }
+                else
+                {
+                    MessageBox.Show("Admin Approval Rejected!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
@@ -180,16 +212,55 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                     OrderItem o = (OrderItem)Datagrid_OrderItems.SelectedItem;
-                    EditOrderItemQuantity ei = new EditOrderItemQuantity()
-                    {
-                        Title = o.ItemName
-                    };
-                    ei.TextBox_Quantity.Text = o.Quantity.ToString();
+                    EditTicketRemoveItem ei = new EditTicketRemoveItem(o.ItemName);
                     ei.ShowDialog();
-                    if (ei.ReturningAction == "Delete")
-                    { 
+                    if (!(bool)ei.DialogResult)
+                    {
+                        return;
+                    }
+                    if (ei.ReturningAction != "Delete")
+                    {
+                        return;
+                    }
 
-                    } 
+                    PromptAdminPin p = new PromptAdminPin();
+                    if ((bool)p.ShowDialog())
+                    {
+                        WorkPeriod wp = ErpShared.CurrentOpenWorkPeriod();
+                        if (wp == null)
+                        {
+                            MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        //check if this is the last item in the ticket
+                        using (var db = new PosDbContext())
+                        {
+                            if (db.OrderItem.Where(a => a.OrderID == o.OrderID).Count() <= 1)
+                            {
+                                MessageBox.Show("This is the last Item in the Ticket.\nKindly consider Voiding the Ticket!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return;
+                            }
+                        }
+                        //remove item and add voided item
+                        using (var db = new PosDbContext())
+                        {
+                            OrderItem x = db.OrderItem.Where(a => a.OrderID == TextBlock_TicketNo.Text.Trim() && a.ItemRowGuid == o.ItemRowGuid).First();
+                            db.OrderItem.Remove(x);
+                            OrderItemVoided ov = new OrderItemVoided();
+                            ov.ItemRowGuid = x.ItemRowGuid;
+                            ov.ParentProductItemGuid = x.ParentProductItemGuid;
+                            ov.ItemName = x.ItemName;
+                            ov.OrderID = x.OrderID;
+                            ov.VoidTime = ErpShared.CurrentDate();
+                            ov.ApprovedBy = p.ApprovingAdmin;
+                            ov.VoidReason = ei.Textbox_Description.Text;
+                            ov.WorkPeriod = wp.WorkperiodName;
+                            db.OrderItemVoided.Add(ov);
+                            db.SaveChanges();
+                        }
+                        MessageBox.Show("Item Voided Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ResetForm();
+                    }
                 }
             }
             catch (Exception ex)
@@ -203,6 +274,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 MergeTickets merge = new MergeTickets();
+
                 merge.ShowDialog();
                 RefreshTicketList();
             }
@@ -211,7 +283,5 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
     }
 }

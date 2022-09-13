@@ -6,12 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RestaurantManager.BusinessModels.PointofSale
+namespace RestaurantManager.BusinessModels.OrderTicket
 {
 
-    class OrderMaster
+   public class OrderMaster
     {
-
+        public OrderMaster()
+        {
+            IsSelected = false;
+        }
         [Key]
         [MaxLength(100)]
         public string OrderGuid { get; set; }
@@ -32,8 +35,13 @@ namespace RestaurantManager.BusinessModels.PointofSale
         [MaxLength(100)]
         public string UserServing { get; set; }
         [Required]
+        [MaxLength(100)]
+        public string Workperiod { get; set; }
+        [Required]
         public DateTime OrderDate { get; set; }
         [Required]
         public DateTime PaymentDate { get; set; }
+        [NotMapped]
+        public bool IsSelected { get; set; }
     }
 }

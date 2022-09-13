@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using RestaurantManager.BusinessModels.PointofSale;
+using System.Threading.Tasks; 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using RestaurantManager.BusinessModels;
 using RestaurantManager.BusinessModels.Menu;
@@ -14,6 +13,7 @@ using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.GeneralSettings;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using System.Data.Entity.Infrastructure;
+using RestaurantManager.BusinessModels.OrderTicket;
 
 namespace RestaurantManager
 {
@@ -79,6 +79,8 @@ namespace RestaurantManager
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
+        public DbSet<OrderItemVoided> OrderItemVoided { get; set; }
+
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }

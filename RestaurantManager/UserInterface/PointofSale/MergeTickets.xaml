@@ -5,8 +5,79 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="Merge Tickets" Height="450" Width="800">
+        Title="Merge Tickets" Height="450" Width="600" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="#FFFFFFFF" CornerRadius="12" Margin="8">
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border  Background="#FFFFE4BA" CornerRadius="12,12,0,0" Padding="0,8" Margin="0">
+                    <TextBlock Text="Tickets List" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8"/>
+                </Border>
+
+                <Grid Grid.Row="1">
+                    <ListView  x:Name="LisTview_TicketsList" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="5,0" Height="40" VerticalAlignment="Center">
+                                    <CheckBox IsChecked="{Binding IsSelected,Mode=TwoWay}" VerticalAlignment="Center" >
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding OrderNo}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <Label Content="- [ " FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                            <Label Content="{Binding TicketTable}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                            <Label Content=" ]" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                        </StackPanel>
+                                    </CheckBox>
+                                   
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Button x:Name="Button_Select" Content="Select" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Style="{DynamicResource Button_Cancel}" Click="Button_Select_Click"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Table"/>
+                    <TextBox MinWidth="200" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <GroupBox Header="Selected Tickets To Merge">
+                    <ListView x:Name="ListView_SelectedTickets" LostFocus="ListView_SelectedTickets_LostFocus">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding OrderNo}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Content="- [ " FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                    <Label Content="{Binding TicketTable}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                    <Label Content=" ]" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Row="2" HorizontalAlignment="Center">
+                <Button x:Name="Button_Merge" Content="Merge" VerticalAlignment="Center" Width="150" Style="{DynamicResource Button_Accept}" />
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

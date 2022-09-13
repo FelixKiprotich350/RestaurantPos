@@ -1,5 +1,6 @@
 ﻿using RestaurantManager.BusinessModels.Menu;
-using RestaurantManager.BusinessModels.PointofSale;
+using RestaurantManager.BusinessModels.OrderTicket; 
+using RestaurantManager.BusinessModels.WorkPeriod;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -185,7 +186,17 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                string ordno = ErpShared.CurrentDate().ToString("ddmmyyyy")+ "-" + R.Next(0, 999).ToString();
+                WorkPeriod w;
+                using (var db = new PosDbContext())
+                {
+                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").First();
+                }
+                if (w == null)
+                {
+                    MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                string ordno = ErpShared.CurrentDate().ToString("ddmmyy")+ "-" + R.Next(0, 999).ToString();
                 OrderMaster om = new OrderMaster
                 {
                     OrderGuid = Guid.NewGuid().ToString(),
@@ -195,7 +206,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderStatus = "Pending",
                     UserServing =  ErpShared.CurrentUser.UserName,
                     PaymentDate = ErpShared.CurrentDate(),
-                    OrderNo = ordno
+                    OrderNo = ordno,
+                    Workperiod=w.WorkperiodName
                 };
                 foreach (var a in OrderItems)
                 {
