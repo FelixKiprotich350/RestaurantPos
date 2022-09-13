@@ -54,10 +54,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Table"/>
-                    <TextBox MinWidth="200" />
-                </StackPanel>
+                <UniformGrid Columns="2" Rows="1" HorizontalAlignment="Center"> 
+                    <Button x:Name="Button_SelectTable" Style="{x:Null}" Click="Button_SelectTable_Click" Content="Table" Width="100" Height="32" />
+                    <Button x:Name="Button_SelectCustomer" Style="{x:Null}"  Content="Customer" Width="100" Height="32" Margin="5,0,0,0" Click="Button_SelectCustomer_Click" />
+                </UniformGrid>
             </Grid>
             <Grid Grid.Row="1">
                 <GroupBox Header="Selected Tickets To Merge">
@@ -76,7 +76,7 @@
                 </GroupBox>
             </Grid>
             <Grid Grid.Row="2" HorizontalAlignment="Center">
-                <Button x:Name="Button_Merge" Content="Merge" VerticalAlignment="Center" Width="150" Style="{DynamicResource Button_Accept}" />
+                <Button x:Name="Button_Merge" Content="Merge" VerticalAlignment="Center" Width="150" Style="{DynamicResource Button_Accept}" Click="Button_Merge_Click" />
             </Grid>
         </Grid>
     </Grid>

@@ -19,7 +19,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class SelectTableForTicket : Window
     {
-        public string SelectedTable = "";
+        public string SelectedTable = "Table";
         public SelectTableForTicket()
         {
             InitializeComponent();

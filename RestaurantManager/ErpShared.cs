@@ -36,5 +36,12 @@ namespace RestaurantManager
                 return w;
             }
         }
+        public enum OrderTicketStatuses
+        {
+            Pending,
+            Voided,
+            Merged,
+            Completed
+        }
     }
 }

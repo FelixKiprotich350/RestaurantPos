@@ -1,4 +1,5 @@
 ﻿using RestaurantManager.UserInterface.Accounts;
+using RestaurantManager.UserInterface.CustomersManagemnt;
 using RestaurantManager.UserInterface.GeneralSettings;
 using RestaurantManager.UserInterface.MenuProducts;
 using RestaurantManager.UserInterface.PointofSale;
@@ -50,6 +51,9 @@ namespace RestaurantManager.BusinessModels.Security
                     new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Work Periods", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
                     //Accounts
                     new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "General Accounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GeneralAccounts() },
+                    new PermissionMaster() { PermissionGuid = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsView() },
+                    new PermissionMaster() { PermissionGuid = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
+                    new PermissionMaster() { PermissionGuid = "C4", ParentModule = "C", PermissionShortName = "Add Vouchers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GenerateVouchers() },
                     //products
                    new PermissionMaster() { PermissionGuid = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() },
                     new PermissionMaster() { PermissionGuid = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
@@ -62,7 +66,10 @@ namespace RestaurantManager.BusinessModels.Security
                     //security
                     new PermissionMaster() { PermissionGuid = "G1", ParentModule = "G", PermissionShortName = "User Roles", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageRoles() },
                     new PermissionMaster() { PermissionGuid = "G2", ParentModule = "G", PermissionShortName = "System Users", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageSystemUsers() },
-                    new PermissionMaster() { PermissionGuid = "G3", ParentModule = "G", PermissionShortName = "My Profile", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MyProfile() }
+                    new PermissionMaster() { PermissionGuid = "G3", ParentModule = "G", PermissionShortName = "My Profile", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MyProfile() },
+                    //Customers
+                    new PermissionMaster() { PermissionGuid = "H1", ParentModule = "H", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomersList() },
+                    new PermissionMaster() { PermissionGuid = "H2", ParentModule = "H", PermissionShortName = "Add Customer", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewCustomer() }
                 };
                 return p;
             }

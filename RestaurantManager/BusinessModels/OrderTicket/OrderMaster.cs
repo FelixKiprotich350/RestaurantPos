@@ -34,6 +34,12 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         [MaxLength(100)]
         public string UserServing { get; set; }
+        /// <summary>
+        /// This field is used when the ticket was derived from merged tickets
+        /// <p>Its an ID of the original Ticket</p>
+        /// </summary> 
+        [MaxLength(100)]
+        public string MergedChild { get; set; }
         [Required]
         [MaxLength(100)]
         public string Workperiod { get; set; }

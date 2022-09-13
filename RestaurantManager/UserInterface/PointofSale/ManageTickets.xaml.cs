@@ -35,7 +35,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == "Pending" && p.UserServing == ErpShared.CurrentUser.UserName).ToList();
+                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus ==ErpShared.OrderTicketStatuses.Pending.ToString() && p.UserServing == ErpShared.CurrentUser.UserName).ToList();
                 }
             }
             catch (Exception ex)
@@ -246,15 +246,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                         {
                             OrderItem x = db.OrderItem.Where(a => a.OrderID == TextBlock_TicketNo.Text.Trim() && a.ItemRowGuid == o.ItemRowGuid).First();
                             db.OrderItem.Remove(x);
-                            OrderItemVoided ov = new OrderItemVoided();
-                            ov.ItemRowGuid = x.ItemRowGuid;
-                            ov.ParentProductItemGuid = x.ParentProductItemGuid;
-                            ov.ItemName = x.ItemName;
-                            ov.OrderID = x.OrderID;
-                            ov.VoidTime = ErpShared.CurrentDate();
-                            ov.ApprovedBy = p.ApprovingAdmin;
-                            ov.VoidReason = ei.Textbox_Description.Text;
-                            ov.WorkPeriod = wp.WorkperiodName;
+                            OrderItemVoided ov = new OrderItemVoided
+                            {
+                                ItemRowGuid = x.ItemRowGuid,
+                                ParentProductItemGuid = x.ParentProductItemGuid,
+                                ItemName = x.ItemName,
+                                OrderID = x.OrderID,
+                                VoidTime = ErpShared.CurrentDate(),
+                                ApprovedBy = p.ApprovingAdmin,
+                                VoidReason = ei.Textbox_Description.Text,
+                                WorkPeriod = wp.WorkperiodName
+                            };
                             db.OrderItemVoided.Add(ov);
                             db.SaveChanges();
                         }

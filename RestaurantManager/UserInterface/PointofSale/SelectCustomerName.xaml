@@ -5,21 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
-        Title="Select Customer" Height="200" Width="300">
+        Title="Select Customer" Height="500" Width="400" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,20,0,0">
+        <Grid Grid.Row="0" Margin="0,5,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/> 
             </Grid.RowDefinitions>
             <Label Content="Customers Name"/>
-            <TextBox x:Name="Textbox_CustomerName" Grid.Row="1" />
+            <TextBox x:Name="Textbox_SelectedCustomerPhone" Grid.Row="1" IsReadOnly="True" />
+        </Grid> 
+        <Grid Grid.Row="1" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label Content="Search"/>
+                <TextBox x:Name="Textbox_SearchCustomer" Width="200" Margin="10,0,0,0"  />
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <ListView x:Name="Listview_Customers">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding CustomerName}"/>
+                                <Label Content="{Binding PhoneNumber}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+                
         </Grid>        
-        <Grid Grid.Row="1" VerticalAlignment="Center">
+        <Grid Grid.Row="2" VerticalAlignment="Center">
             <UniformGrid Rows="1" Columns="2" >
                 <Button x:Name="Button_Cancel" Style="{StaticResource Button_Cancel}" Content="Cancel" Margin="4" Height="Auto" Width="100" Click="Button_Cancel_Click" IsCancel="True"/>
                 <Button x:Name="Button_Accept" Style="{StaticResource Button_Accept}" Content="Accept" Height="Auto" Width="100" Click="Button_Accept_Click" IsDefault="True"/>

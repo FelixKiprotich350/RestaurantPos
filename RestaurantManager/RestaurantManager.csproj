@@ -145,6 +145,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BusinessModels\CustomersManagement\Customer.cs" />
     <Compile Include="BusinessModels\GeneralSettings\ClientInfoDetails.cs" />
     <Compile Include="BusinessModels\GeneralSettings\TableEntity.cs" />
     <Compile Include="BusinessModels\Menu\ProductCategoryExt.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="BusinessModels\Security\PermissionMaster.cs" />
     <Compile Include="BusinessModels\Security\UserRoles.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
+    <Compile Include="BusinessModels\Vouchers\VoucherCard.cs" />
     <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
     <Compile Include="ChangeLog.cs" />
     <Compile Include="ErpShared.cs" />
@@ -179,10 +181,41 @@
     <Compile Include="Migrations\202209131456352_M7.designer.cs">
       <DependentUpon>202209131456352_M7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209131740495_M8.cs" />
+    <Compile Include="Migrations\202209131740495_M8.designer.cs">
+      <DependentUpon>202209131740495_M8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209132033219_M9.cs" />
+    <Compile Include="Migrations\202209132033219_M9.designer.cs">
+      <DependentUpon>202209132033219_M9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209132057242_M10.cs" />
+    <Compile Include="Migrations\202209132057242_M10.designer.cs">
+      <DependentUpon>202209132057242_M10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209132129597_M11.cs" />
+    <Compile Include="Migrations\202209132129597_M11.designer.cs">
+      <DependentUpon>202209132129597_M11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\Accounts\GeneralAccounts.xaml.cs">
       <DependentUpon>GeneralAccounts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\AccountsView.xaml.cs">
+      <DependentUpon>AccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\GenerateVouchers.xaml.cs">
+      <DependentUpon>GenerateVouchers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\VouchersList.xaml.cs">
+      <DependentUpon>VouchersList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\CustomersList.xaml.cs">
+      <DependentUpon>CustomersList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\NewCustomer.xaml.cs">
+      <DependentUpon>NewCustomer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
@@ -216,6 +249,9 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\MergeTickets.xaml.cs">
       <DependentUpon>MergeTickets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\TicketPayments\VoucherPayment.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UserInterface\TicketPayments\CardPayment.cs">
       <SubType>Form</SubType>
@@ -317,6 +353,26 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserInterface\Accounts\GeneralAccounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Accounts\AccountsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Accounts\GenerateVouchers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Accounts\VouchersList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\CustomersManagemnt\CustomersList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\CustomersManagemnt\NewCustomer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -485,12 +541,27 @@
     <EmbeddedResource Include="Migrations\202209131456352_M7.resx">
       <DependentUpon>202209131456352_M7.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209131740495_M8.resx">
+      <DependentUpon>202209131740495_M8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209132033219_M9.resx">
+      <DependentUpon>202209132033219_M9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209132057242_M10.resx">
+      <DependentUpon>202209132057242_M10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209132129597_M11.resx">
+      <DependentUpon>202209132129597_M11.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInterface\TicketPayments\PaymentsUI.resx">
       <DependentUpon>PaymentsUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserInterface\TicketPayments\VoucherPayment.resx">
+      <DependentUpon>VoucherPayment.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

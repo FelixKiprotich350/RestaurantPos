@@ -19,16 +19,32 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class SelectCustomerName : Window
     {
-        public string CustomerName = "";
+        public string SelectedCustomerName = "Customer";
         public SelectCustomerName()
         {
-            InitializeComponent();
-            CustomerName = "";
+            InitializeComponent(); 
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                 
+                using (var db = new PosDbContext())
+                {
+                    var data = db.Customer.ToList();
+                    Listview_Customers.ItemsSource = data;
+                } 
+
+            }
+            catch (Exception exception1)
+            {
+                MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            CustomerName = "";
+            SelectedCustomerName = "";
             this.Close();
         }
 
@@ -36,16 +52,22 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                if (Textbox_CustomerName.Text.Trim() != "")
-                {
-                    CustomerName = Textbox_CustomerName.Text;
-                }
-                this.Close();
+                //if (Textbox_CustomerName.Text.Trim() != "")
+                //{
+                //    SelectedCustomerName = Textbox_CustomerName.Text;
+                //    this.DialogResult = true;
+                //}
+                //else
+                //{
+                //    Close();
+                //}
             }
             catch (Exception Ex)
             {
                 MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                DialogResult = false;
             }
         }
+
     }
 }

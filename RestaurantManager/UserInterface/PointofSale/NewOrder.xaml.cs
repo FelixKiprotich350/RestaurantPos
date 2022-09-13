@@ -203,7 +203,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderDate = ErpShared.CurrentDate(),
                     CustomerName = LabelCustomerName.Content.ToString(),
                     TicketTable = Label_Table.Content.ToString(),
-                    OrderStatus = "Pending",
+                    OrderStatus =ErpShared.OrderTicketStatuses.Pending.ToString(),
                     UserServing =  ErpShared.CurrentUser.UserName,
                     PaymentDate = ErpShared.CurrentDate(),
                     OrderNo = ordno,
@@ -215,7 +215,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
                 using (var db = new PosDbContext())
                 {
-                    db.Database.Log = s => Trace.WriteLine(s);
+                    
                     db.OrderMaster.Add(om);
                     db.OrderItem.AddRange(OrderItems);
                     db.SaveChanges();
@@ -241,7 +241,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             SelectCustomerName sc = new SelectCustomerName();
             sc.ShowDialog();
-            LabelCustomerName.Content = sc.CustomerName;
+            LabelCustomerName.Content = sc.SelectedCustomerName;
         }
     }
 

@@ -256,6 +256,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.Button_Voucher.TabIndex = 32;
             this.Button_Voucher.Text = "Voucher";
             this.Button_Voucher.UseVisualStyleBackColor = true;
+            this.Button_Voucher.Click += new System.EventHandler(this.Button_Voucher_Click);
             // 
             // PaymentsUI
             // 
@@ -360,6 +361,28 @@ namespace RestaurantManager.UserInterface.TicketPayments
                 MessageBox.Show(exception1.Message, "ERROR MESSAGE", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
             base.ActiveControl = this.Btn_CompleteTransaction;
+        }
+
+        private void Button_Voucher_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                VoucherPayment v = new VoucherPayment();
+                v.ShowDialog(this);
+                decimal amount = v.Amount; 
+                if ((amount != 0M) && (amount > 0M))
+                {
+                    object[] values = new object[] { "Voucher", amount, v.textBox1.Text, "" };
+                    this.Payments_Gridview.Rows.Add(values);
+                }
+                
+            }
+            catch (Exception exception1)
+            {
+                MessageBox.Show(exception1.Message, "ERROR MESSAGE", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+            base.ActiveControl = this.Btn_CompleteTransaction;
+           
         }
 
         private void Btn_Close_Click(object sender, EventArgs e)
@@ -582,6 +605,8 @@ namespace RestaurantManager.UserInterface.TicketPayments
         {
             e.Handled = !(char.IsNumber(e.KeyChar) || char.IsControl(e.KeyChar));
         }
+
+       
     }
 }
 

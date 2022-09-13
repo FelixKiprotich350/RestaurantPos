@@ -14,25 +14,29 @@ using RestaurantManager.BusinessModels.GeneralSettings;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using System.Data.Entity.Infrastructure;
 using RestaurantManager.BusinessModels.OrderTicket;
+using System.Diagnostics;
+using RestaurantManager.BusinessModels.Vouchers;
+using RestaurantManager.BusinessModels.CustomersManagement;
 
 namespace RestaurantManager
 {
-    [DbConfigurationType(typeof(MySqlEFConfiguration))] 
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]
     class PosDbContext : DbContext
     {
         //server=localhost;port=3306;database=restpos;uid=root;password=toor
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
         public PosDbContext() : base("server=localhost;port=3306;database=restpos;uid=root;password=toor;")
-        { 
+        {
             //this.Database.CommandTimeout=10; 
-           // this.Database.CreateIfNotExists(); 
-            
+            // this.Database.CreateIfNotExists(); 
+            Database.Log = s => Debug.WriteLine(s);
+            //Database.Log = s => Trace.WriteLine(s);
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-        
+
         //public override int SaveChanges()
         //{
         //    var modifiedEntities = ChangeTracker.Entries()
@@ -74,14 +78,15 @@ namespace RestaurantManager
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
         //pos user & security
-        public DbSet<PosUser> PosUser { get; set; } 
+        public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; }
         public DbSet<OrderItem> OrderItem { get; set; }
         public DbSet<OrderItemVoided> OrderItemVoided { get; set; }
-
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
+        //Vouchers
+        public DbSet<VoucherCard> VoucherCard { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }
@@ -89,8 +94,7 @@ namespace RestaurantManager
         public DbSet<ClientInfoDetails> ClientInfo { get; set; }
         public DbSet<TableEntity> TableEntity { get; set; }
         public DbSet<ChangeLog> ChangeLogs { get; set; }
-        
-
+        //customers
+        public DbSet<Customer> Customer { get; set; }
     }
-     
 }
