@@ -49,10 +49,9 @@ namespace RestaurantManager.BusinessModels.Security
                     new PermissionMaster() { PermissionGuid = "A4", ParentModule = "A", PermissionShortName = "Void Ticket", PermissionFullName = "Description", PermissionLevel = "2", PageClass = null },
                     //Work periods
                     new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Periods List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
-                    new PermissionMaster() { PermissionGuid = "B2", ParentModule = "B", PermissionShortName = "Period Summary", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new WorkPeriodSummary() },
-                    new PermissionMaster() { PermissionGuid = "B3", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
+                    new PermissionMaster() { PermissionGuid = "B2", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
                     //Accounts
-                    new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "General Accounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GeneralAccounts() },
+                    new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "Accounts Dashboard", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GeneralAccounts() },
                     new PermissionMaster() { PermissionGuid = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsView() },
                     new PermissionMaster() { PermissionGuid = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
                     new PermissionMaster() { PermissionGuid = "C4", ParentModule = "C", PermissionShortName = "Add Vouchers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GenerateVouchers() },
@@ -64,7 +63,8 @@ namespace RestaurantManager.BusinessModels.Security
                     //settings
                     new PermissionMaster() { PermissionGuid = "F1", ParentModule = "F", PermissionShortName = "Tables", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new TablesEntities() },
                     new PermissionMaster() { PermissionGuid = "F2", ParentModule = "F", PermissionShortName = "Client Info", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ClientInfo() },
-                    new PermissionMaster() { PermissionGuid = "F3", ParentModule = "F", PermissionShortName = "Database", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DatabaseSettings() },
+                    new PermissionMaster() { PermissionGuid = "F3", ParentModule = "F", PermissionShortName = "Mail Settings", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MailSettings() },
+                    new PermissionMaster() { PermissionGuid = "F4", ParentModule = "F", PermissionShortName = "Database", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DatabaseSettings() },
                     //security
                     new PermissionMaster() { PermissionGuid = "G1", ParentModule = "G", PermissionShortName = "User Roles", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageRoles() },
                     new PermissionMaster() { PermissionGuid = "G2", ParentModule = "G", PermissionShortName = "System Users", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageSystemUsers() },

@@ -16,7 +16,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0"  Background="#FF80E68E" Margin="0">
-                    <TextBlock Text="Accounts View" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
+                    <TextBlock Text="Payments List" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <DataGrid x:Name="Datagrid_Workperiods" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  MouseUp="Datagrid_Workperiods_MouseUp">
@@ -47,7 +47,6 @@
                 </Grid>
                 <Grid Grid.Row="2" >
                     <UniformGrid Rows="1" Columns="3">
-                        <Button x:Name="Button_NewWorkPeriod" Content="New Work Period" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_NewWorkPeriod_Click" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Total : " VerticalAlignment="Center"/>
                             <TextBox x:Name="TextBox_TotalCount" Width="100" VerticalAlignment="Center"/>

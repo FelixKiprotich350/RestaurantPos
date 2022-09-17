@@ -1,6 +1,9 @@
 ﻿using RestaurantManager.BusinessModels.WorkPeriod;
+using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +12,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using WinForms = System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.IO;
 
 namespace RestaurantManager.UserInterface.WorkPeriods
 {
@@ -23,12 +28,13 @@ namespace RestaurantManager.UserInterface.WorkPeriods
     /// </summary>
     public partial class ManageWorkPeriod : Page
     {
+        readonly POSMail mail = new POSMail();
         public ManageWorkPeriod()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private  void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GroupBox_ClosePeriod.IsEnabled = false;
             GroupBox_OpenPeriod.IsEnabled = false;
@@ -37,17 +43,19 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             DispatcherTimer t = new DispatcherTimer();
             t.Tick += new EventHandler(UpdateWorkPeriodStatus);
             t.Interval = new TimeSpan(0, 0, 1);
-            t.Start();
+            t.Start(); 
+             
         }
 
         private void UpdateWorkPeriodStatus(object sender, EventArgs eventArgs)
         {
             TogglePeriodTask();
         }
+
         private void TogglePeriodTask()
         {
             try
-            { 
+            {
                 if (!GroupBox_OpenPeriod.IsEnabled)
                 {
                     Textbox_OpenningNote.Text = "";
@@ -59,7 +67,6 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     Textbox_OpenedBy.Text = "";
                     Textbox_OpeningDate.Text = "";
                     Textbox_OpenningNote_close.Text = "";
-                    Textbox_ClosingNote.Text = "";
                 }
 
 
@@ -77,24 +84,23 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     GroupBox_OpenPeriod.IsEnabled = false;
                     Textbox_PeriodName.Text = w.WorkperiodName;
                     Textbox_OpenedBy.Text = w.Openedby;
-                    Textbox_OpeningDate.Text =w.OpeningDate.ToString();
+                    Textbox_OpeningDate.Text = w.OpeningDate.ToString();
                     Textbox_OpenningNote_close.Text = w.OpeningNote;
-                    Textbox_ClosingNote.Text = "";
                     //
                 }
                 else
                 {
-                     
-                        TextBox_CurrentWorkPeriodStatus.Text = GlobalVariables.PosEnums.WorkPeriodStatuses.Closed.ToString();
-                        GroupBox_ClosePeriod.IsEnabled = false;
-                        if (!GroupBox_OpenPeriod.IsEnabled)
-                        {
-                            GroupBox_OpenPeriod.IsEnabled = true;
-                        }
-                       
-                        TextBox_CurrentWorkPeriodStatus.Tag = null;
-                     
-                } 
+
+                    TextBox_CurrentWorkPeriodStatus.Text = GlobalVariables.PosEnums.WorkPeriodStatuses.Closed.ToString();
+                    GroupBox_ClosePeriod.IsEnabled = false;
+                    if (!GroupBox_OpenPeriod.IsEnabled)
+                    {
+                        GroupBox_OpenPeriod.IsEnabled = true;
+                    }
+
+                    TextBox_CurrentWorkPeriodStatus.Tag = null;
+
+                }
             }
             catch (Exception ex)
             {
@@ -129,7 +135,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         return;
                     }
 
-                } 
+                }
                 WorkPeriod w = new WorkPeriod
                 {
                     WorkPeriodGuid = Guid.NewGuid().ToString(),
@@ -140,7 +146,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     WorkperiodStatus = "Open",
                     OpeningDate = GlobalVariables.SharedVariables.CurrentDate(),
                     ClosingDate = GlobalVariables.SharedVariables.CurrentDate(),
-                    ClosingNote="Openning"
+                    ClosingNote = "Openning"
                 };
 
                 using (var db = new PosDbContext())
@@ -156,13 +162,14 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-           
+
         }
 
-        private void Button_ClosePeriod_Click(object sender, RoutedEventArgs e)
+        private async void Button_ClosePeriod_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                DateTime closetime = GlobalVariables.SharedVariables.CurrentDate();
                 if (TextBox_CurrentWorkPeriodStatus.Tag == null)
                 {
                     MessageBox.Show("Try Again!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -187,26 +194,106 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         return;
                     }
                 }
-                using (var db = new PosDbContext())
-                {
-                    var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
-                    wp.WorkperiodStatus = "Closed";
-                    wp.ClosingNote = "Note";
-                    wp.ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName;
-                    wp.ClosingDate = GlobalVariables.SharedVariables.CurrentDate();
-                    db.SaveChanges();
-                    ////   var  jjj=SendMail();
 
-                    //if (jjj.Result == false)
-                    //{
-                    //    MessageBox.Show("Failed to send the Email!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    //}
-                    MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                CloseWorkPeriodSummary summary = new CloseWorkPeriodSummary(o.WorkperiodName);
+                if ((bool)summary.ShowDialog())
+                {
+                    using (var db = new PosDbContext())
+                    {
+                        if (db.OrderMaster.Where(x => x.Workperiod == o.WorkperiodName && x.OrderStatus == GlobalVariables.PosEnums.OrderTicketStatuses.Pending.ToString()).Count() > 0)
+                        {
+                            MessageBox.Show("Not Allowed!. The work period contains Pending Tickets.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    } 
+                    using (var db = new PosDbContext())
+                    {
+                        var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
+                        wp.WorkperiodStatus = "Closed";
+                        wp.ClosingNote = "Note";
+                        wp.ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName;
+                        wp.ClosingDate = closetime;
+                        db.SaveChanges();
+                        WPClosureMessage mess = new WPClosureMessage
+                        {
+                            WorkPeriodName=wp.WorkperiodName,
+                            OpenedBy = wp.Openedby,
+                            OpeningTime = wp.OpeningDate.ToString(),
+                            VoidedTickets = summary.TextBox_VoidedTickets.Text,
+                            PendingTickets = summary.TextBox_PendingTickets.Text,
+                            CompletedTickets = summary.TextBox_CompletedTickets.Text,
+                            Cash = summary.Textbox_CashTotal.Text,
+                            Mpesa = summary.Textbox_Mpesa.Text,
+                            Vouchers = summary.TextBox_Vouchers.Text,
+                            Cards = summary.Textbox_Cards.Text,
+                            Total = summary.Textbox_Totals.Text,
+                            ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName,
+                            ClosingTime = closetime.ToString(),
+                            OpeningNote = wp.OpeningNote,
+                            ClosingNote = summary.Textbox_ClosingNote.Text,
+                            
+                        };
+                        string message = GetDoc(mess);
+                        var xm = await mail.SendWPClosureMail( message, "Work Period Closure", true);
+                        if (!xm)
+                        {
+                            MessageBox.Show("Failed to send the Mail. Consult the Administrator Immediately!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GetDoc(WPClosureMessage m)
+        {
+            try
+            {
+                if(m is null)
+                {
+                    return null;
+                }
+                string htmlstring = File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"FilesResources\\PeriodClosure.html"));
+                htmlstring = htmlstring.Replace("~Pnamevalue~", m.WorkPeriodName);
+                htmlstring = htmlstring.Replace("~Item1~", "Open Date");
+                htmlstring = htmlstring.Replace("~Item2~", "Opened By");
+                htmlstring = htmlstring.Replace("~Item3~", "Closing Date");
+                htmlstring = htmlstring.Replace("~Item4~", "Closed By");
+                htmlstring = htmlstring.Replace("~Item5~", "Pending Tickets");
+                htmlstring = htmlstring.Replace("~Item6~", "Voided Tickets");
+                htmlstring = htmlstring.Replace("~Item7~", "Completed Tickets");
+                htmlstring = htmlstring.Replace("~Item8~", "Cash ");
+                htmlstring = htmlstring.Replace("~Item9~", "Mpesa ");
+                htmlstring = htmlstring.Replace("~Item10~", "Cards ");
+                htmlstring = htmlstring.Replace("~Item11~", "Vouchers ");
+                htmlstring = htmlstring.Replace("~Item12~", "Summary Total");
+                htmlstring = htmlstring.Replace("~Item13~", "Opening Note");
+                htmlstring = htmlstring.Replace("~Item14~", "Closing Note");
+                htmlstring = htmlstring.Replace("~Value1~", m.OpeningTime);
+                htmlstring = htmlstring.Replace("~Value2~", m.OpenedBy);
+                htmlstring = htmlstring.Replace("~Value3~", m.ClosingTime);
+                htmlstring = htmlstring.Replace("~Value4~", m.ClosedBy);
+                htmlstring = htmlstring.Replace("~Value5~", m.PendingTickets);
+                htmlstring = htmlstring.Replace("~Value6~", m.VoidedTickets);
+                htmlstring = htmlstring.Replace("~Value7~", m.CompletedTickets);
+                htmlstring = htmlstring.Replace("~Value8~", m.Cash);
+                htmlstring = htmlstring.Replace("~Value9~", m.Mpesa);
+                htmlstring = htmlstring.Replace("~Value10~", m.Cards);
+                htmlstring = htmlstring.Replace("~Value11~", m.Vouchers);
+                htmlstring = htmlstring.Replace("~Value12~", m.Total);
+                htmlstring = htmlstring.Replace("~Value13~", m.OpeningNote);
+                htmlstring = htmlstring.Replace("~Value14~", m.ClosingNote);
+                return htmlstring;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
             }
         }
     }

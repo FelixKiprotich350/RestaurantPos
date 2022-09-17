@@ -94,7 +94,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button x:Name="Button_Cards" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Cancel}" Content="View" Width="60" Click="Button_Cards_Click" Height="Auto"/>
+                            <Button x:Name="Button_Cards" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Cancel}" Content="View" Click="Button_Cards_Click" Height="Auto" Width="60" VerticalAlignment="Center"/>
 
                         </Grid>
                     </Grid>
@@ -116,7 +116,7 @@
 
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button x:Name="Button_Voucher" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Cancel}" Content="View" Width="60" Click="Button_Voucher_Click" Height="Auto"/>
+                            <Button x:Name="Button_Voucher" Grid.Column="1" Grid.Row="1" Style="{StaticResource Button_Cancel}" Content="View" Width="60" Click="Button_Voucher_Click" Height="Auto" VerticalAlignment="Center"/>
 
                         </Grid>
                     </Grid>

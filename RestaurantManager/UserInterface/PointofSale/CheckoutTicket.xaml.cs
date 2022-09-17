@@ -1,6 +1,7 @@
 ﻿using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.Payments;
+using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.TicketPayments;
 using System;
@@ -77,8 +78,13 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 var db1 = new PosDbContext();
                 DateTime Tdate = GlobalVariables.SharedVariables.CurrentDate();
+                WorkPeriod wp = db1.WorkPeriod.Where(h => h.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).FirstOrDefault();
                 OrderMaster om = db1.OrderMaster.Where(h => h.OrderNo == TextBlock_TicketNo.Text).FirstOrDefault();
-                if (om==null)
+                if (wp==null)
+                {
+                    MessageBox.Show("The work Period is Closed!", "Message Box", MessageBoxButton.OK);
+                    return;
+                }  if (om==null)
                 {
                     MessageBox.Show("The Ticket does not Exist. Select a ticket to Check it out!", "Message Box", MessageBoxButton.OK);
                     return;
@@ -88,12 +94,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 foreach (OrderItem x in a)
                 {
                     total += (int)x.Price * x.Quantity;
-                }
-                if (total.ToString("N2") != TextBox_TotalAmount.Text.ToString())
-                {
-                    MessageBox.Show("Compromised Ticket. Select the Ticket and Try again!", "Message Box", MessageBoxButton.OK);
-                    return;
-                }
+                } 
 
                 //get payments
                 List<PaymentMethod> pm = new List<PaymentMethod>();
@@ -115,8 +116,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                     PosUser = GlobalVariables.SharedVariables.CurrentUser.UserName.ToString(),
                     TotalAmountPaid = pm.Sum(b => b.Amount),
                     TotalAmountCharged = total,
-                    TicketBalanceReturned = 0,
-                    PaymentDate = Tdate
+                    TicketBalanceReturned = T.BalanceRetrned,
+                    PaymentDate = Tdate,
+                    WorkPeriod=wp.WorkperiodName
                 };
                 List<TicketPaymentItem> tpi = new List<TicketPaymentItem>();
                 foreach (PaymentMethod p in pm)
@@ -158,6 +160,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                     else
                     {
+                        
                         ca = null;
                     }
                 }
@@ -236,7 +239,7 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         public int GetLoyaltyPoints(int PurchaseAmount)
         {
-            int points = -1;
+            int points;
             try
             {
                 //using (var db=new PosDbContext())
@@ -245,9 +248,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //}
                 points = PurchaseAmount / 100;
             }
-            catch
+            catch(Exception ex)
             {
                 points = -1;
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             return points;
         }

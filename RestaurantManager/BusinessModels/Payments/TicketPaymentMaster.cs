@@ -26,5 +26,8 @@ namespace RestaurantManager.BusinessModels.Payments
         [Required]
         [MaxLength(100)]
         public string PosUser { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string WorkPeriod { get; set; }
     }
 }

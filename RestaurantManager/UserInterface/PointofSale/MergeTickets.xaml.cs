@@ -24,7 +24,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     public partial class MergeTickets : Window
     {
         readonly Random R = new Random();
-        List<OrderMaster> ticketsmaster = new List<OrderMaster>();
+        readonly List<OrderMaster> ticketsmaster = new List<OrderMaster>();
         public MergeTickets(List<OrderMaster> t)
         {
             InitializeComponent();
@@ -35,21 +35,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             LisTview_TicketsList.ItemsSource = ticketsmaster;
         }
-        private void RefreshTicketList()
-        {
-            try
-            {
-                using (var db = new PosDbContext())
-                {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString() && p.UserServing == GlobalVariables.SharedVariables.CurrentUser.UserName).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+        
         private void Button_Select_Click(object sender, RoutedEventArgs e)
         {
             try

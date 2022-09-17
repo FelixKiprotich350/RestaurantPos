@@ -38,7 +38,7 @@ namespace RestaurantManager.UserInterface.Accounts
                        Combobox_UserName.ItemsSource = b.PosUser.ToList();
                          
                     }
-                GetAccountsTotal();
+                 
             }
             catch (Exception ex)
             {
@@ -51,17 +51,22 @@ namespace RestaurantManager.UserInterface.Accounts
             try
             {
                 ClearTotals();
-                List<TicketPaymentItem> tlist = new List<TicketPaymentItem>();
+                List<TicketPaymentMaster> tlist = new List<TicketPaymentMaster>();
                 using (var b = new PosDbContext())
                 {
-                    tlist = b.TicketPaymentItem.ToList();
+                    tlist = b.TicketPaymentMaster.ToList();
+
+                } 
+                using (var b = new PosDbContext())
+                {
+                    tlist = b.TicketPaymentMaster.ToList();
 
                 }
                 if ((bool)Checkbox_ByUser.IsChecked)
                 {
                     if (Combobox_UserName.SelectedItem != null)
                     {
-                         tlist.RemoveAll(b => b.ReceivingUsername != ((PosUser)Combobox_UserName.SelectedItem).UserName);
+                         tlist.RemoveAll(b => b.PosUser != ((PosUser)Combobox_UserName.SelectedItem).UserName);
                     }
                     else
                     {
@@ -126,7 +131,7 @@ namespace RestaurantManager.UserInterface.Accounts
             Textbox_Totals.Text="0.00";
         }
 
-        private void GetAccountsTotal(List<TicketPaymentItem> tlist)
+        private void GetAccountsTotal(List<TicketPaymentMaster> tlist)
         {
             try
             {
@@ -134,82 +139,53 @@ namespace RestaurantManager.UserInterface.Accounts
                 decimal cash = 0;
                 decimal cards = 0;
                 decimal voucher = 0;
-                decimal unknown = 0; 
-                
+                decimal cashbalance = 0;
+                decimal unknown = 0;
+
+                var db = new PosDbContext();
                 if (tlist.Count <= 0)
                 {
                     return;
                 }
-                foreach (TicketPaymentItem t in tlist)
+                var innerGroupJoinQuery = from m in tlist
+                                          join t in db.TicketPaymentItem on m.TicketNo equals t.ParentOrderNo
+                                          select new { m, t };
+
+
+                foreach (var x in innerGroupJoinQuery)
                 {
-                    if (t.Method == PosEnums.TicketPaymentMethods.Cash.ToString())
+
+                    if (x.t.Method == PosEnums.TicketPaymentMethods.Cash.ToString())
                     {
-                        cash += t.AmountPaid;
+                        cash += x.t.AmountPaid;
                     }
-                    else if (t.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
+                    else if (x.t.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
                     {
-                        mpesa += t.AmountPaid;
+                        mpesa += x.t.AmountPaid;
                     }
-                    else if (t.Method.ToLower().Contains(PosEnums.TicketPaymentMethods.Card.ToString().ToLower()))
+                    else if (x.t.Method.ToLower().Contains(PosEnums.TicketPaymentMethods.Card.ToString().ToLower()))
                     {
-                        cards += t.AmountPaid;
+                        cards += x.t.AmountPaid;
                     }
-                    else if (t.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
+                    else if (x.t.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
                     {
-                        voucher += t.AmountPaid;
+                        voucher += x.t.AmountPaid;
                     }
                     else
                     {
-                        unknown += t.AmountPaid;
+                        unknown += x.t.AmountPaid;
                     }
                 }
-                Textbox_CashTotal.Text = cash.ToString();
-                Textbox_Mpesa.Text = mpesa.ToString();
-                TextBox_Vouchers.Text = voucher.ToString();
-                Textbox_Cards.Text = cards.ToString();
-                Textbox_Totals.Text = (cash + mpesa + cards).ToString();
-                if (unknown > 0)
+                foreach (var y in tlist)
                 {
-                    MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    cashbalance += y.TicketBalanceReturned;
+                }
 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-        private void GetAccountsTotal( )
-        {
-            try
-            {
-                decimal mpesa = 0;
-                decimal cash = 0;
-                decimal cards = 0;
-                decimal voucher = 0;
-                decimal unknown = 0;
-                using (var db = new PosDbContext())
-                { 
-                    var innerGroupJoinQuery = from m in db.TicketPaymentMaster
-                                              join t in db.TicketPaymentItem on m.TicketNo equals t.ParentOrderNo 
-                                              select new { m,t };
-                    
-                    foreach (var x in innerGroupJoinQuery)
-                    {
-                        if (x.t.Method == "Cash")
-                        {
-                            cash += x.t.AmountPaid;
-                        }
-                        
-                    } 
-                }
-                
-               
-                Textbox_CashTotal.Text = cash.ToString();
+                Textbox_CashTotal.Text = (cash-cashbalance).ToString();
                 Textbox_Mpesa.Text = mpesa.ToString();
                 TextBox_Vouchers.Text = voucher.ToString();
                 Textbox_Cards.Text = cards.ToString();
-                Textbox_Totals.Text = (cash + mpesa + cards).ToString();
+                Textbox_Totals.Text = (cash + mpesa + cards-cashbalance).ToString();
                 if (unknown > 0)
                 {
                     MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);

@@ -1,0 +1,65 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.WorkPeriods.CloseWorkPeriodSummary"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.WorkPeriods"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="Closing WorkPeriod Summary" Height="600" Width="440" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="8,0,8,0">
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Work Period Name" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_Workperiodname" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Opening Date" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_Openingdate" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Opened By" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_OpenedBy" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Pending Tickets Count" Width="200" FontSize="16"/>
+                <TextBox x:Name="TextBox_PendingTickets" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Voided Tickets Count" Width="200" FontSize="16"/>
+                <TextBox x:Name="TextBox_VoidedTickets" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Completed Tickets Count" Width="200" FontSize="16"/>
+                <TextBox x:Name="TextBox_CompletedTickets" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Cash Total" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_CashTotal" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Mpesa Total" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_Mpesa" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Cards Total" Width="200" FontSize="16"/>
+                <TextBox x:Name="Textbox_Cards" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Vouchers Total" Width="200" FontSize="16"/>
+                <TextBox x:Name="TextBox_Vouchers" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Summary Total" Width="200" FontSize="16" FontWeight="Bold"/>
+                <TextBox x:Name="Textbox_Totals" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center"/> 
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="0,8,0,0">
+                <Label Content="Closing Note *" Width="200" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="Textbox_ClosingNote" x:FieldModifier="public"  FontSize="14" FontWeight="Bold" HorizontalContentAlignment="Center" BorderThickness="1"/> 
+            </StackPanel>
+            <UniformGrid Columns="2" Rows="1" Margin="0,8,0,0">
+                <Button  x:Name="Button_Cancel"  Content="Cancel " Width="150" Style="{DynamicResource Button_Cancel}" Height="Auto" Click="Button_Cancel_Click"/>
+                <Button x:Name="Button_Accept" Content="Accept" Width="150" Style="{DynamicResource Button_Accept}" Height="Auto" Click="Button_Accept_Click"/>
+            </UniformGrid>
+        </StackPanel>
+    </Grid>
+</Window>

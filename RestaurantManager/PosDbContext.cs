@@ -101,6 +101,7 @@ namespace RestaurantManager
         public DbSet<TableEntity> TableEntity { get; set; }
         public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<PosVariables> PosVariables { get; set; }
+        public DbSet<MailingProfile> MailingProfile { get; set; }
         //customers
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerAccount> CustomerPointsAccount { get; set; }

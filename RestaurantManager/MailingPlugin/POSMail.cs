@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.BusinessModels.GeneralSettings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,18 +14,31 @@ namespace RestaurantManager.MailingPlugin
 
     public class POSMail
     {
+        public POSMail()
+        {
+
+        }
         MailMessage message;
         SmtpClient smtp;
-        public   async Task<bool> SendReadyMeail(string MailTo, string MailFrom, string Message, string Subject, bool IsMessageHtml)
+        public   async Task<bool> SendWPClosureMail(string Message, string Subject, bool IsMessageHtml)
         {
             bool final = false;
             try
             {
+                MailingProfile mp = null;
+                using (var db=new PosDbContext())
+                {
+                    mp = db.MailingProfile.FirstOrDefault();
+                }
+                if(mp is null)
+                {
+                    return false;
+                }
                 message = new MailMessage();
-                message.To.Add(MailTo);
+                message.To.Add(mp.DestinationAddress);
                 // message.CC.Add(txtCC.Text);
                 message.Subject = Subject;
-                message.From = new MailAddress(MailFrom, "Laxco dev",Encoding.ASCII);
+                message.From = new MailAddress(mp.SenderAddress, mp.DisplayName,Encoding.ASCII);
                 message.Body = Message;
                 message.IsBodyHtml = IsMessageHtml;
                 //message.Attachments.Add(new Attachment(lblAttachment.Text));
@@ -33,7 +47,7 @@ namespace RestaurantManager.MailingPlugin
                 {
                     UseDefaultCredentials = true,
                     Port = 587,
-                    Credentials = new NetworkCredential("fkiprotich845@gmail.com", "woinyickutgdicsj"),
+                    Credentials = new NetworkCredential(mp.MailingAddress, mp.AppPassword),
                     EnableSsl = true
                 };
                await smtp.SendMailAsync(message);
@@ -51,36 +65,22 @@ namespace RestaurantManager.MailingPlugin
         }
 
         void Smtp_SendCompleted(object sender, AsyncCompletedEventArgs e)
-
         {
 
             if (e.Cancelled == true)
-
             {
-
                 MessageBox.Show("Email sending cancelled!");
-
             }
-
             else if (e.Error != null)
-
             {
-
-                MessageBox.Show(e.Error.Message);
-
-            } 
-             
-
+                MessageBox.Show(e.Error.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
-
         {
-
             smtp.SendAsyncCancel();
-
             MessageBox.Show("Email sending cancelled!");
-
         }
     }
 }

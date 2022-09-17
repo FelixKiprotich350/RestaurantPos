@@ -24,7 +24,6 @@ namespace RestaurantManager.UserInterface.WorkPeriods
     /// </summary>
     public partial class ViewWorkPeriod : Page
     {
-        readonly POSMail mail = new POSMail();
         public ViewWorkPeriod()
         {
             InitializeComponent();
@@ -117,12 +116,6 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
                     }
-#pragma warning disable IDE0051 // Remove unused private members
-        private async Task<bool> SendMail()
-#pragma warning restore IDE0051 // Remove unused private members
-        {
-            var b = await mail.SendReadyMeail("portxyz100@gmail.com", "fkiprotich845@gmail.com", "integrating async", "subject email", false);
-            return b;
-        }
+
     }
 }

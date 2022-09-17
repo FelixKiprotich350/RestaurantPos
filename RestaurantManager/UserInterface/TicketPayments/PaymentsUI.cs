@@ -10,7 +10,8 @@ namespace RestaurantManager.UserInterface.TicketPayments
     public class PaymentsUI : Form
     {
         //255, 255, 192
-        private static decimal GrossAmount;
+        private readonly decimal GrossAmount;
+        public decimal BalanceRetrned;
         public List<PaymentMethod> Payments;
         
         public PaymentsUI(decimal TotalAmount, List<PaymentMethod> pm)
@@ -403,6 +404,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
                     MessageBox.Show("Insufficient Amount Paid !!", "Transaction Response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
+                BalanceRetrned = Convert.ToDecimal(this.Txt_AmountPaidTotal.Text) - GrossAmount;
                 int count = this.Payments_Gridview.Rows.Count;
                 int num2 = 0;
                 int num3 = 0;

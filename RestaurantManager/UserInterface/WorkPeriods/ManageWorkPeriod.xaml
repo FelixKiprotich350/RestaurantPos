@@ -44,11 +44,9 @@
                     <Label Content="Opening Date"/>
                     <TextBox  x:Name="Textbox_OpeningDate"/>
                     <Label Content="Openning Note"/>
-                    <TextBox  x:Name="Textbox_OpenningNote_close"/>
-                    <Label Content="Closing Note"/>
-                    <TextBox  x:Name="Textbox_ClosingNote"/>
+                    <TextBox  x:Name="Textbox_OpenningNote_close"/> 
                     <Grid Margin="0,4,0,0">
-                        <Button x:Name="Button_ClosePeriod" Content="Close" Click="Button_ClosePeriod_Click" />
+                        <Button x:Name="Button_ClosePeriod" Content="Summary" Click="Button_ClosePeriod_Click" />
                     </Grid>
                 </StackPanel>
             </GroupBox>
