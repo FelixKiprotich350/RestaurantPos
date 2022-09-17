@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.BusinessModels.CustomersManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class SelectCustomerName : Window
     {
-        public string SelectedCustomerName = "Customer";
+        public Customer SelectedCustomer = null;
         public SelectCustomerName()
         {
             InitializeComponent(); 
@@ -44,7 +45,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         }
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
-            SelectedCustomerName = "";
+            SelectedCustomer = null;
             this.Close();
         }
 
@@ -52,15 +53,14 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                //if (Textbox_CustomerName.Text.Trim() != "")
-                //{
-                //    SelectedCustomerName = Textbox_CustomerName.Text;
-                //    this.DialogResult = true;
-                //}
-                //else
-                //{
-                //    Close();
-                //}
+                if (SelectedCustomer!=null)
+                { ;
+                    this.DialogResult = true;
+                }
+                else
+                {
+                    Close();
+                }
             }
             catch (Exception Ex)
             {
@@ -69,5 +69,24 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
+        private void Listview_Customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (Listview_Customers.SelectedItem != null)
+                {
+                    Customer cust = (Customer)Listview_Customers.SelectedItem;
+                    Textbox_SelectedCustomerPhone.Text = cust.CustomerName + " - " + cust.PhoneNumber;
+                    Textbox_SelectedCustomerPhone.Tag = cust.PhoneNumber;
+                    SelectedCustomer = cust;
+                }
+                
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error); 
+            }
+            Listview_Customers.SelectedItem = null;
+        }
     }
 }

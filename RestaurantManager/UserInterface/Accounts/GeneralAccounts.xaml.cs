@@ -1,5 +1,6 @@
 ﻿using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.Security;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,8 @@ namespace RestaurantManager.UserInterface.Accounts
                     {
                        Combobox_UserName.ItemsSource = b.PosUser.ToList();
                          
-                    } 
-                
+                    }
+                GetAccountsTotal();
             }
             catch (Exception ex)
             {
@@ -141,21 +142,21 @@ namespace RestaurantManager.UserInterface.Accounts
                 }
                 foreach (TicketPaymentItem t in tlist)
                 {
-                    if (t.Method == "Cash")
+                    if (t.Method == PosEnums.TicketPaymentMethods.Cash.ToString())
                     {
                         cash += t.AmountPaid;
                     }
-                    else if (t.Method == "Mpesa")
+                    else if (t.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
                     {
                         mpesa += t.AmountPaid;
                     }
-                    else if (t.Method.Contains("Card"))
+                    else if (t.Method.ToLower().Contains(PosEnums.TicketPaymentMethods.Card.ToString().ToLower()))
                     {
-                        mpesa += t.AmountPaid;
+                        cards += t.AmountPaid;
                     }
-                    else if (t.Method == "Voucher")
+                    else if (t.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
                     {
-                        mpesa += t.AmountPaid;
+                        voucher += t.AmountPaid;
                     }
                     else
                     {
@@ -167,10 +168,57 @@ namespace RestaurantManager.UserInterface.Accounts
                 TextBox_Vouchers.Text = voucher.ToString();
                 Textbox_Cards.Text = cards.ToString();
                 Textbox_Totals.Text = (cash + mpesa + cards).ToString();
+                if (unknown > 0)
+                {
+                    MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void GetAccountsTotal( )
+        {
+            try
+            {
+                decimal mpesa = 0;
+                decimal cash = 0;
+                decimal cards = 0;
+                decimal voucher = 0;
+                decimal unknown = 0;
+                using (var db = new PosDbContext())
+                { 
+                    var innerGroupJoinQuery = from m in db.TicketPaymentMaster
+                                              join t in db.TicketPaymentItem on m.TicketNo equals t.ParentOrderNo 
+                                              select new { m,t };
+                    
+                    foreach (var x in innerGroupJoinQuery)
+                    {
+                        if (x.t.Method == "Cash")
+                        {
+                            cash += x.t.AmountPaid;
+                        }
+                        
+                    } 
+                }
+                
+               
+                Textbox_CashTotal.Text = cash.ToString();
+                Textbox_Mpesa.Text = mpesa.ToString();
+                TextBox_Vouchers.Text = voucher.ToString();
+                Textbox_Cards.Text = cards.ToString();
+                Textbox_Totals.Text = (cash + mpesa + cards).ToString();
+                if (unknown > 0)
+                {
+                    MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

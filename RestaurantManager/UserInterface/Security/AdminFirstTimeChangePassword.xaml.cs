@@ -30,7 +30,7 @@ namespace RestaurantManager.UserInterface.Security
             {
                 using (var b = new PosDbContext())
                 {
-                    //var a = b.PosUser.Where(c => c.UserServing == ErpShared.CurrentUser.UserName && c.OrderStatus == "Pending").ToList();
+                    //var a = b.PosUser.Where(c => c.UserServing == GlobalVariables.SharedMethodsVariables.CurrentUser.UserName && c.OrderStatus == "Pending").ToList();
                     //Datagrid_Tickets.ItemsSource = a;
                 }
             }

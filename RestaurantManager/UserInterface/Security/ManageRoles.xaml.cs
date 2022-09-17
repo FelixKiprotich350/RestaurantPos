@@ -78,8 +78,8 @@ namespace RestaurantManager.UserInterface.Security
                         RoleDescription = Textbox_RoleDescription.Text,
                         RoleStatus = "Active",
                         RoleIsDeleted = "False",
-                        RegistrationDate = ErpShared.CurrentDate(),
-                        LastUpdateDate = ErpShared.CurrentDate(),
+                        RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
+                        LastUpdateDate = GlobalVariables.SharedVariables.CurrentDate(),
                         RolePermissions = rights
                     };
                     db.UserRoles.Add(ur);
@@ -158,7 +158,7 @@ namespace RestaurantManager.UserInterface.Security
                     er.ShowDialog();
                     if (er.ReturningAction == "Delete")
                     {
-                        if (o.RoleName == "Admin")
+                        if (o.RoleName == GlobalVariables.SharedVariables.AdminRoleName)
                         {
                             MessageBox.Show("You can't Delete Admin Role!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             return;
@@ -185,7 +185,7 @@ namespace RestaurantManager.UserInterface.Security
                     }
                     else if (er.ReturningAction == "Update")
                     {
-                        if (o.RoleName == "Admin")
+                        if (o.RoleName == GlobalVariables.SharedVariables.AdminRoleName)
                         {
                             MessageBox.Show("You can't Update Admin Rights!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             return;

@@ -27,7 +27,7 @@ namespace RestaurantManager.UserInterface.Security
         public Login()
         {
             InitializeComponent();
-            ErpShared.CurrentUser = null;
+            GlobalVariables.SharedVariables.CurrentUser = null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -43,17 +43,17 @@ namespace RestaurantManager.UserInterface.Security
                         {
 
                         }
-                        if (a.UserRoles.Where(x => x.RoleName == "Admin").Count() <= 0)
+                        if (a.UserRoles.Where(x => x.RoleName == GlobalVariables.SharedVariables.AdminRoleName).Count() <= 0)
                         {
                             UserRole r = new UserRole
                             {
-                                RoleName = "Admin",
+                                RoleName = GlobalVariables.SharedVariables.AdminRoleName,
                                 RoleGuid = Guid.NewGuid().ToString(),
                                 RoleIsDeleted = "False",
                                 RoleDescription = "Systemm Administrator",
                                 RoleStatus = "Active",
-                                LastUpdateDate = ErpShared.CurrentDate(),
-                                RegistrationDate = ErpShared.CurrentDate(),
+                                LastUpdateDate = GlobalVariables.SharedVariables.CurrentDate(),
+                                RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
                                 RolePermissions = "All"
                             };
                             a.UserRoles.Add(r);
@@ -141,7 +141,7 @@ namespace RestaurantManager.UserInterface.Security
                     }
                     raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
                     //final permissions
-                    if (user.UserRole == "Admin")
+                    if (user.UserRole == GlobalVariables.SharedVariables.AdminRoleName)
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         user.User_Permissions_final.AddRange(Pm.GetAllPermissions());
@@ -165,10 +165,10 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         if (db.ClientInfo.Count() > 0)
                         {
-                            ErpShared.ClientInfo = db.ClientInfo.First();
+                            GlobalVariables.SharedVariables.ClientInfo = db.ClientInfo.First();
                         }
                     }
-                    ErpShared.CurrentUser = user;
+                    GlobalVariables.SharedVariables.CurrentUser = user;
                     m.Show();
                     Close();
                     

@@ -47,7 +47,7 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                     TableName = Textbox_UserFullName.Text,
                     TableStatus = "Available",
                     IsDeleted = false,
-                    RegistrationDate = ErpShared.CurrentDate()
+                    RegistrationDate = GlobalVariables.SharedVariables.CurrentDate()
                 };
                 using (var db = new PosDbContext())
                 {

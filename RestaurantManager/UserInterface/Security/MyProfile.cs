@@ -29,10 +29,10 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                Textbox_FullName.Text = ErpShared.CurrentUser.UserFullName;
-                Textbox_username.Text = ErpShared.CurrentUser.UserName;
-                Textbox_RegistrationDate.Text = ErpShared.CurrentUser.RegistrationDate.ToShortDateString();
-                Textbox_Status.Text = ErpShared.CurrentUser.UserWorkingStatus;
+                Textbox_FullName.Text = GlobalVariables.SharedVariables.CurrentUser.UserFullName;
+                Textbox_username.Text = GlobalVariables.SharedVariables.CurrentUser.UserName;
+                Textbox_RegistrationDate.Text = GlobalVariables.SharedVariables.CurrentUser.RegistrationDate.ToShortDateString();
+                Textbox_Status.Text = GlobalVariables.SharedVariables.CurrentUser.UserWorkingStatus;
             }
             catch (Exception ex)
             {
@@ -63,7 +63,7 @@ namespace RestaurantManager.UserInterface.Security
                     MessageBox.Show("Incorrect OLD PIN!!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (oldpin!=ErpShared.CurrentUser.UserPIN)
+                if (oldpin!=GlobalVariables.SharedVariables.CurrentUser.UserPIN)
                 {
                     MessageBox.Show("Incorrect OLD PIN!!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -86,7 +86,7 @@ namespace RestaurantManager.UserInterface.Security
                 using (var db=new PosDbContext())
                 {
                     {
-                        PosUser p = db.PosUser.Where(x => x.UserName == ErpShared.CurrentUser.UserName).First();
+                        PosUser p = db.PosUser.Where(x => x.UserName == GlobalVariables.SharedVariables.CurrentUser.UserName).First();
                         p.UserPIN = newpin;
                         db.SaveChanges();
                         MessageBox.Show("You have successfully Changed your PIN TO " + newpin.ToString()+"\nThe application will shut down Immediately.\nLogin using the new PIN!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);

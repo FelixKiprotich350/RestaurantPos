@@ -17,6 +17,7 @@ using RestaurantManager.BusinessModels.OrderTicket;
 using System.Diagnostics;
 using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.BusinessModels.CustomersManagement;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager
 {
@@ -28,9 +29,10 @@ namespace RestaurantManager
         public PosDbContext() : base("server=localhost;port=3306;database=restpos;uid=root;password=toor;")
         {
             //this.Database.CommandTimeout=10; 
-            // this.Database.CreateIfNotExists(); 
+            //Database.Initialize(true);
+            //Database.CreateIfNotExists();
             Database.Log = s => Debug.WriteLine(s);
-            //Database.Log = s => Trace.WriteLine(s);
+            //Database.Log = s => Trace.WriteLine(s); 
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -69,7 +71,10 @@ namespace RestaurantManager
         //    }
         //    return base.SaveChanges();
         //}
+
+#pragma warning disable IDE0051 // Remove unused private members
         private object GetPrimaryKeyValue(DbEntityEntry entry)
+#pragma warning restore IDE0051 // Remove unused private members
         {
             var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
             return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
@@ -87,6 +92,7 @@ namespace RestaurantManager
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
+        public DbSet<VouchersBatch> VouchersBatch { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }
@@ -94,7 +100,9 @@ namespace RestaurantManager
         public DbSet<ClientInfoDetails> ClientInfo { get; set; }
         public DbSet<TableEntity> TableEntity { get; set; }
         public DbSet<ChangeLog> ChangeLogs { get; set; }
+        public DbSet<PosVariables> PosVariables { get; set; }
         //customers
         public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustomerAccount> CustomerPointsAccount { get; set; }
     }
 }

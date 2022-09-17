@@ -84,8 +84,8 @@ namespace RestaurantManager.UserInterface.Security
                         UserName = Textbox_UserFullName.Text.Split(',')[0] + Rand.Next(100, 9999),
                         UserFullName = Textbox_UserFullName.Text,
                         UserRole = ((UserRole)ComboBox_Roles.SelectedItem).RoleName,
-                        RegistrationDate = ErpShared.CurrentDate(),
-                        LastLoginDate = ErpShared.CurrentDate(),
+                        RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
+                        LastLoginDate = GlobalVariables.SharedVariables.CurrentDate(),
                         UserWorkingStatus = "Active",
                         UserIsDeleted = false
                     };
@@ -134,7 +134,7 @@ namespace RestaurantManager.UserInterface.Security
                     er.ShowDialog();
                     if (er.ReturningAction == "Delete")
                     {
-                        if (o.UserName == ErpShared.CurrentUser.UserName)
+                        if (o.UserName == GlobalVariables.SharedVariables.CurrentUser.UserName)
                         {
                             MessageBox.Show("You can't Delete Your own Account!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             return;
@@ -150,7 +150,7 @@ namespace RestaurantManager.UserInterface.Security
                     } 
                     else if (er.ReturningAction == "Restore")
                     {
-                        if (o.UserName == ErpShared.CurrentUser.UserName)
+                        if (o.UserName == GlobalVariables.SharedVariables.CurrentUser.UserName)
                         {
                             MessageBox.Show("You can't Restore Your own Account!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             return;

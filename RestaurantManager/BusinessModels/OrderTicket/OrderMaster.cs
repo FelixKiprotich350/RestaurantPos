@@ -27,7 +27,7 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public string OrderStatus { get; set; }
       
         [MaxLength(200)]
-        public string CustomerName { get; set; }
+        public string CustomerRefference { get; set; }
        
         [MaxLength(100)]
         public string TicketTable { get; set; }

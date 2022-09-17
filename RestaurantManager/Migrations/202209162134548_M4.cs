@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class M8 : DbMigration
+    public partial class M4 : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.OrderMaster", "MergedChild", c => c.String(maxLength: 100, storeType: "nvarchar"));
+            AddColumn("dbo.CustomerAccount", "TransactionNo", c => c.String(nullable: false, maxLength: 200, storeType: "nvarchar"));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.OrderMaster", "MergedChild");
+            DropColumn("dbo.CustomerAccount", "TransactionNo");
         }
     }
 }

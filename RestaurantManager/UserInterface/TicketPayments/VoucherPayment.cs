@@ -1,13 +1,15 @@
 ﻿namespace RestaurantManager.UserInterface.TicketPayments
 {
+    using RestaurantManager.BusinessModels.Vouchers;
     using System;
     using System.ComponentModel;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
 
     public class VoucherPayment : Form
     {
-        public decimal Amount = 0M; 
+        public VoucherCard SelectedVoucher = null; 
         private readonly IContainer components = null;
         private Button Btn_Close;
         public TextBox textBox1;
@@ -17,12 +19,12 @@
         public VoucherPayment()
         {
             this.InitializeComponent();
-            this.Amount = 0M; 
+            SelectedVoucher = null;
         }
 
         private void Btn_Close_Click(object sender, EventArgs e)
         {
-            this.Amount = 0M; 
+            SelectedVoucher = null;
             base.Close();
         }
 
@@ -30,14 +32,38 @@
         {
             try
             {
-
-                this.Amount = Convert.ToDecimal(this.textBox1.Text); 
-                base.Close();
+               
+                using(var db=new PosDbContext())
+                {
+                    var voucher=db.VoucherCard.Where(x => x.VoucherNumber == textBox1.Text).FirstOrDefault();
+                    if (voucher == null)
+                    {
+                        MessageBox.Show("The Voucher Number does not Exist!","Message Box",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (voucher.VoucherStatus == GlobalVariables.PosEnums.VoucherStatuses.Redeemed.ToString())
+                    {
+                        MessageBox.Show("The Voucher Number has been Redeemed!","Message Box",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (voucher.VoucherStatus == GlobalVariables.PosEnums.VoucherStatuses.Expired.ToString())
+                    {
+                        MessageBox.Show("The Voucher Number has Expired!","Message Box",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (voucher.VoucherStatus == GlobalVariables.PosEnums.VoucherStatuses.Available.ToString())
+                    {
+                        SelectedVoucher = voucher;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Voucher Status is Uknown!", "Message Box", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
             }
             catch
-            {
-                this.Amount = 0M;
-                base.Close();
+            { 
+                Close();
             }
         }
 
@@ -122,7 +148,7 @@
             this.Name = "VoucherPayment";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "CardPayment";
+            this.Text = "Voucher Card Payment";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.CardPayment_Load);
             this.ResumeLayout(false);

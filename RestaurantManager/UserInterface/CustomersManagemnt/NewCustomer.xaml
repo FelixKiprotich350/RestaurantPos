@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.CustomersManagemnt"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.CustomersManagemnt.NewCustomer"
-        mc:Ignorable="d"
-        Title="NewCustomer" Height="400" Width="400">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="NewCustomer" Height="350" Width="400">
     <Grid>
         <Border  CornerRadius="12,0,0,12"  Background="White">
             <Grid Margin="12">
@@ -16,7 +16,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <GroupBox Grid.Row="0" Header="Customer Details">
+                <GroupBox Grid.Row="0" Header="Personal Details">
                     <StackPanel>
                         <Label Content="Full Name"/>
                         <TextBox x:Name="Textbox_FullName"/>
@@ -28,12 +28,12 @@
                         <Label Content="Phone Number"/>
                         <TextBox  x:Name="Textbox_PhoneNo"/>
                         <Label Content="Date of Birth"/>
-                        <DatePicker  x:Name="DatePicker_FullName"/>
+                        <DatePicker  x:Name="DatePicker_BirthDate"/>
                     </StackPanel>
                 </GroupBox>
                 <Grid Grid.Row="1">
                     <UniformGrid Columns="2">
-                        <Button Content="Clear" Width="150" Style="{DynamicResource Button_Cancel}" Height="Auto"/>
+                        <Button  x:Name="Button_Close"  Content="Close" Width="150" Style="{DynamicResource Button_Cancel}" Height="Auto" Click="Button_Close_Click"/>
                         <Button x:Name="Button_Save" Content="Save" Width="150" Style="{DynamicResource Button_Accept}" Height="Auto" Click="Button_Save_Click"/>
                     </UniformGrid>
                 </Grid>

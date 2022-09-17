@@ -39,7 +39,7 @@ namespace RestaurantManager.UserInterface.Security
                         if (db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).Count() > 0)
                         {
                             user = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
-                            if (user.UserRole == "Admin")
+                            if (user.UserRole == GlobalVariables.SharedVariables.AdminRoleName)
                             {
                                 ApprovingAdmin = user.UserName;
                                 DialogResult = true;

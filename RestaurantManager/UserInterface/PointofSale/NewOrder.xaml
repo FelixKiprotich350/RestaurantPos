@@ -54,7 +54,7 @@
                     <Grid Grid.Column="0">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Customer Information" HorizontalAlignment="Center" FontWeight="Bold"/>
-                            <Label x:Name="LabelCustomerName" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+                            <Label x:Name="LabelCustomer" Content="" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="1">

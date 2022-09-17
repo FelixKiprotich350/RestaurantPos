@@ -30,7 +30,7 @@
                 <TextBox x:Name="Textbox_SearchCustomer" Width="200" Margin="10,0,0,0"  />
             </StackPanel>
             <Grid Grid.Row="1">
-                <ListView x:Name="Listview_Customers">
+                <ListView x:Name="Listview_Customers" SelectionChanged="Listview_Customers_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

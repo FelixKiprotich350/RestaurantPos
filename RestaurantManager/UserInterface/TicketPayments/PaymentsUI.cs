@@ -310,7 +310,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
                 string refference = payment.Refference;
                 if ((amount != 0M) && (amount > 0M))
                 {
-                    string str2 = "C-" + ErpShared.CurrentDate().ToString("yyyyMMddHHmmssff");
+                    string str2 = "C-" + GlobalVariables.SharedVariables.CurrentDate().ToString("yyyyMMddHHmmssff");
                     object[] values = new object[] { "Card-" + refference, amount, str2, "" };
                     this.Payments_Gridview.Rows.Add(values);
                 }
@@ -369,10 +369,9 @@ namespace RestaurantManager.UserInterface.TicketPayments
             {
                 VoucherPayment v = new VoucherPayment();
                 v.ShowDialog(this);
-                decimal amount = v.Amount; 
-                if ((amount != 0M) && (amount > 0M))
+                if (v.SelectedVoucher!=null)
                 {
-                    object[] values = new object[] { "Voucher", amount, v.textBox1.Text, "" };
+                     object[] values = new object[] { "Voucher", v.SelectedVoucher.VoucherAmount, v.SelectedVoucher.VoucherNumber, v.SelectedVoucher.VoucherBatchNo };
                     this.Payments_Gridview.Rows.Add(values);
                 }
                 

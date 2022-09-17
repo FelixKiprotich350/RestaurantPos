@@ -10,24 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.PosReports
+namespace RestaurantManager.UserInterface.CustomersManagemnt
 {
     /// <summary>
-    /// Interaction logic for MasterReports.xaml
+    /// Interaction logic for CustomerDetails.xaml
     /// </summary>
-    public partial class MasterReports : Page
-    { 
-        public MasterReports()
+    public partial class CustomerDetails : Window
+    {
+        public CustomerDetails()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
-            GlobalVariables.SharedVariables.Main_Window.Category_Submenu.Visibility = Visibility.Collapsed;
+            this.Close();
         }
     }
 }

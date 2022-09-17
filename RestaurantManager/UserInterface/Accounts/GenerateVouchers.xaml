@@ -4,11 +4,77 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Accounts"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"  Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GenerateVouchers">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Label Content="Available Vouchers"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="Datagrid_Vouchers" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch">
+
+                    <DataGrid.Columns>
+                        <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
+                        <DataGridTextColumn Binding="{Binding BatchGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding BatchNumber}"  Header="Batch" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding VoucherAmount}"  Header="Amount" IsReadOnly="True" Width="100" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding VouchersCount}"  Header="Quantity" IsReadOnly="True" Width="80" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding VoucherType}" Header="Type" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding CreatedBy}" Header="CreatedBy" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding CreationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ReleaseDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding ExpiryDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ExpiryDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                    </DataGrid.Columns>
+                    <DataGrid.Resources>
+                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Padding" Value="3" />
+                            <Setter Property="FontSize" Value="12" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                    </DataGrid.Resources>
+                </DataGrid>
+
+            </Grid>
+            <Grid Grid.Row="2" Width="200" Margin="0,5">
+                <Button x:Name="Button_Refresh" Content="Refresh List" Click="Button_Refresh_Click"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Header="New Batch Details" Margin="5">
+                <StackPanel Margin="0,4,0,0">
+                    <Label Content="Voucher Type"/>
+                    <TextBox x:Name="TextBox_VoucherType" IsReadOnly="True"/>
+                    <Label Content="Voucher Amount"/>
+                    <TextBox x:Name="TextBox_VoucherAmount"/>
+                    <Label Content="Voucher Quantity"/>
+                    <TextBox x:Name="TextBox_VoucherQuantity"/>
+                    <Label Content="Batch Description"/>
+                    <TextBox x:Name="TextBox_BatchDescription"/>
+                    <Label Content="Voucher Expiry Date"/>
+                    <DatePicker x:Name="DatePicker_BatchExpiryDate"/>
+                </StackPanel>
+            </GroupBox>
+            <Grid Grid.Row="1">
+                <Button x:Name="Button_CreateVouchers" Content="Create Vouchers" Style="{DynamicResource Button_Accept}" Height="Auto" Width="150" Click="Button_CreateVouchers_Click"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

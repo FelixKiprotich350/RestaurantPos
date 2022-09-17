@@ -8,30 +8,31 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.BusinessModels.CustomersManagement
 {
-    public class Customer
+    public class CustomerAccount
     {
         [Key]
         [MaxLength(100)]
-        public string CustomerGuid { get; set; }
+        public string AccActionGuid { get; set; }
         [Required]
         [MaxLength(200)]
-        public string CustomerName { get; set; }
+        public string TransactionNo { get; set; }
         [Required]
-        [MaxLength(100)]
-        public string PhoneNumber { get; set; }
         [MaxLength(200)]
-        public string CustomerEmail { get; set; }
+        public string CustomerPhoneNo { get; set; }
+        [Required]
+        public int Debit { get; set; }
+        [Required]
+        public int Credit { get; set; } 
+        [Required]
+        public DateTime ActionDate { get; set; }
         [Required]
         [MaxLength(100)]
-        public string Gender { get; set; }
+        public string ApprovedBy { get; set; }
         [Required]
-        public DateTime RegistrationDate { get; set; }
+        [MaxLength(100)]
+        public string TransactionType { get; set; }
 
-        public DateTime BirthDate { get; set; }
-
-        //properties not mapped  
-        [NotMapped]
-        public List<CustomerAccount> GetPointsAccounts { get; set; }
+        //properties not mapped     
         [NotMapped]
         public bool IsSelected { get; set; }
     }

@@ -51,7 +51,7 @@ namespace RestaurantManager.UserInterface
                 Button x = (Button)sender;
                 if (x.IsEnabled)
                 {
-                    Button_Category_Simulated(x.Tag.ToString());
+                    GlobalVariables.SharedVariables.Main_Window.Button_Category_Click(sender, e);
                 }
                
             }
@@ -61,35 +61,7 @@ namespace RestaurantManager.UserInterface
             }
         }
 
-        private void Button_Category_Simulated(string tag)
-        {
-            try
-            {
-               
-                if (tag != "")
-                {
-                    var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag).ToList();
-                    ErpShared.Main_Window.Category_Submenu.ItemsSource = subitems;
-                    if (subitems.Count <= 0)
-                    {
-                        ErpShared.Main_Window.Frame1.Content = "";
-                        return;
-                    }
-                    ErpShared.Main_Window.Frame1.Content = subitems[0].PageClass;
-                    ErpShared.Main_Window.Category_Submenu.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    ErpShared.Main_Window.Frame1.Content = "";
-                    MessageBox.Show("The feature does not exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+       
         private void Button_PoS_Click(object sender, RoutedEventArgs e)
         {
 

@@ -2,6 +2,7 @@
 using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,52 +90,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             }
         }
 
-        private void Button_NewWorkPeriod_Click(object sender, RoutedEventArgs e)
-        { 
-            try
-            {
-                using (var db = new PosDbContext())
-                {
-                    if (db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").Count() > 0)
-                    {
-                        MessageBox.Show("You must Close the currently Open WorkPeriod to create another one!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        RefreshWorkPeriods();
-                        return;
-                    }
-
-                }
-                CreateWorkPeriod create = new CreateWorkPeriod(); 
-                if (create.ShowDialog() == false)
-                {
-                    return;
-                }
-                WorkPeriod w = new WorkPeriod
-                {
-                    WorkPeriodGuid = Guid.NewGuid().ToString(),
-                    WorkperiodName = "WP-" + create.Textbox_PeriodName.Text,
-                    WorkperiodDescription = create.Textbox_Description.Text,
-                    Openedby = ErpShared.CurrentUser.UserName.ToString(),
-                    ClosedBy = "",
-                    WorkperiodStatus = "Open",
-                    OpeningDate = ErpShared.CurrentDate(),
-                    ClosingDate = ErpShared.CurrentDate()
-                };
-                
-                using (var db = new PosDbContext())
-                {
-                    db.WorkPeriod.Add(w);
-                    db.SaveChanges();
-                    //var x = SendMail();
-                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    RefreshWorkPeriods();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
- 
+       
         private void Datagrid_Workperiods_MouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -153,46 +109,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 }
                 if (dep is DataGridCell)
                 {
-                    if (Datagrid_Workperiods.SelectedItem == null)
-                    {
-                        return;
-                    }
-                    WorkPeriod o = (WorkPeriod)Datagrid_Workperiods.SelectedItem;
-                    if (o == null)
-                    {
-                        MessageBox.Show("The selected Work Period is not Known!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                    using (var db = new PosDbContext())
-                    {
-                        if (db.WorkPeriod.Where(x => x.WorkperiodName == o.WorkperiodName && x.WorkperiodStatus == "Open").Count() <= 0)
-                        {
-                            MessageBox.Show("This Work Period is already closed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            RefreshWorkPeriods();
-                            return;
-                        }
-                    }
-                    CloseWorkPeriod c = new CloseWorkPeriod();
-                    c.ShowDialog();
-                    if ((bool)c.DialogResult)
-                    {
-                        using (var db = new PosDbContext())
-                        {
-                            var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
-                            wp.WorkperiodStatus = "Closed";
-                            wp.ClosedBy = ErpShared.CurrentUser.UserName;
-                            wp.ClosingDate = ErpShared.CurrentDate();
-                            db.SaveChanges();
-                         ////   var  jjj=SendMail();
-
-                            //if (jjj.Result == false)
-                            //{
-                            //    MessageBox.Show("Failed to send the Email!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            //}
-                            MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            RefreshWorkPeriods();
-                        }
-                    }
+                  
                 }
             }
             catch (Exception ex)
@@ -200,7 +117,9 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
                     }
+#pragma warning disable IDE0051 // Remove unused private members
         private async Task<bool> SendMail()
+#pragma warning restore IDE0051 // Remove unused private members
         {
             var b = await mail.SendReadyMeail("portxyz100@gmail.com", "fkiprotich845@gmail.com", "integrating async", "subject email", false);
             return b;

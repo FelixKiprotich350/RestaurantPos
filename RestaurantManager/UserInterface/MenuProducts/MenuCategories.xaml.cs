@@ -186,7 +186,7 @@ namespace RestaurantManager.UserInterface.MenuProducts
                 }
                 using (var db = new PosDbContext())
                 {
-                    db.ProductCategory.Add(new ProductCategory() { CategoryGuid = Guid.NewGuid().ToString(), CategoryName = a.Textbox_Categoryname.Text, CreationDate = ErpShared.CurrentDate() });
+                    db.ProductCategory.Add(new ProductCategory() { CategoryGuid = Guid.NewGuid().ToString(), CategoryName = a.Textbox_Categoryname.Text, CreationDate = GlobalVariables.SharedVariables.CurrentDate() });
                     int x=db.SaveChanges();
                     if (x==1)
                     {

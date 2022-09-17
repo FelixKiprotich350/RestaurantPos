@@ -47,11 +47,9 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 List<WorkPeriod> workperiods = new List<WorkPeriod>();
                 using (var db = new PosDbContext())
                 {
-                    workperiods = db.WorkPeriod.ToList();
+                    Datagrid_Vouchers.ItemsSource = db.VoucherCard.ToList();
                 }
-                 
-                Datagrid_Workperiods.ItemsSource = workperiods;
-                TextBox_TotalCount.Text = Datagrid_Workperiods.Items.Count.ToString();
+                TextBox_TotalCount.Text = Datagrid_Vouchers.Items.Count.ToString();
             }
             catch (Exception ex)
             {
@@ -79,45 +77,9 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 }
                 if (dep is DataGridCell)
                 {
-                    if (Datagrid_Workperiods.SelectedItem == null)
+                    if (Datagrid_Vouchers.SelectedItem == null)
                     {
                         return;
-                    }
-                    WorkPeriod o = (WorkPeriod)Datagrid_Workperiods.SelectedItem;
-                    if (o == null)
-                    {
-                        MessageBox.Show("The selected Work Period is not Known!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                    using (var db = new PosDbContext())
-                    {
-                        if (db.WorkPeriod.Where(x => x.WorkperiodName == o.WorkperiodName && x.WorkperiodStatus == "Open").Count() <= 0)
-                        {
-                            MessageBox.Show("This Work Period is already closed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            RefreshVouchersList();
-                            return;
-                        }
-                    }
-                    CloseWorkPeriod c = new CloseWorkPeriod();
-                    c.ShowDialog();
-                    if ((bool)c.DialogResult)
-                    {
-                        using (var db = new PosDbContext())
-                        {
-                            var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
-                            wp.WorkperiodStatus = "Closed";
-                            wp.ClosedBy = ErpShared.CurrentUser.UserName;
-                            wp.ClosingDate = ErpShared.CurrentDate();
-                            db.SaveChanges();
-                            ////   var  jjj=SendMail();
-
-                            //if (jjj.Result == false)
-                            //{
-                            //    MessageBox.Show("Failed to send the Email!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            //}
-                            MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            RefreshVouchersList();
-                        }
                     }
                 }
             }

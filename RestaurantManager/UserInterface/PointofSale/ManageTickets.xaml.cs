@@ -1,5 +1,6 @@
 ﻿using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.WorkPeriod;
+using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
@@ -33,10 +34,20 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                List<OrderMaster> items = new List<OrderMaster>();
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus ==ErpShared.OrderTicketStatuses.Pending.ToString() && p.UserServing == ErpShared.CurrentUser.UserName).ToList();
+                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).ToList();
                 }
+                if (SharedVariables.CurrentUser.UserRole == SharedVariables.AdminRoleName)
+                {
+                    LisTview_TicketsList.ItemsSource = items;
+                }
+                else
+                {
+                    LisTview_TicketsList.ItemsSource = items.Where(p => p.UserServing == SharedVariables.CurrentUser.UserName);
+                }
+
             }
             catch (Exception ex)
             {
@@ -226,7 +237,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     PromptAdminPin p = new PromptAdminPin();
                     if ((bool)p.ShowDialog())
                     {
-                        WorkPeriod wp = ErpShared.CurrentOpenWorkPeriod();
+                        WorkPeriod wp = GlobalVariables.SharedVariables.CurrentOpenWorkPeriod();
                         if (wp == null)
                         {
                             MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -252,7 +263,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 ParentProductItemGuid = x.ParentProductItemGuid,
                                 ItemName = x.ItemName,
                                 OrderID = x.OrderID,
-                                VoidTime = ErpShared.CurrentDate(),
+                                VoidTime = GlobalVariables.SharedVariables.CurrentDate(),
                                 ApprovedBy = p.ApprovingAdmin,
                                 VoidReason = ei.Textbox_Description.Text,
                                 WorkPeriod = wp.WorkperiodName
@@ -275,8 +286,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                MergeTickets merge = new MergeTickets();
-
+                var t = LisTview_TicketsList.Items.Cast<OrderMaster>().ToList();
+                MergeTickets merge = new MergeTickets(t);
                 merge.ShowDialog();
                 RefreshTicketList();
             }

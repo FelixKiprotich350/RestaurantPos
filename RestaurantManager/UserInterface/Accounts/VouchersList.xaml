@@ -20,19 +20,18 @@
                     <TextBlock Text="Vouchers List" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="Datagrid_Workperiods" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  MouseUp="Datagrid_Workperiods_MouseUp">
+                    <DataGrid x:Name="Datagrid_Vouchers" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  MouseUp="Datagrid_Workperiods_MouseUp">
 
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
-                            <DataGridTextColumn Binding="{Binding TableGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding WorkperiodName}"  Header="V.Code" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding Openedby}"  Header="Batch" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding WorkperiodStatus}"  Header="Amount" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ClosedBy}" Header="Status" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding TotalTicketsCount}" Header="CreatedBy Tickets" IsReadOnly="True" Width="50" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding OpeningDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ExpiryDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding OpeningDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="DateIssued" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ClosingDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="DateRedeemed" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding VoucherGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding VoucherNumber}"  Header="V.Code" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding VoucherBatchNo}"  Header="Batch" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding VoucherAmount}"  Header="Amount" IsReadOnly="True" Width="100" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding VoucherStatus}" Header="Status" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding ExpiryDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ExpiryDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding CreationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="DateIssued" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding RedemptionDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="DateRedeemed" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

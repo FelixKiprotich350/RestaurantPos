@@ -145,8 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BusinessModels\CustomersManagement\CustomerPointsAccount.cs" />
     <Compile Include="BusinessModels\CustomersManagement\Customer.cs" />
     <Compile Include="BusinessModels\GeneralSettings\ClientInfoDetails.cs" />
+    <Compile Include="BusinessModels\GeneralSettings\PosVariables.cs" />
     <Compile Include="BusinessModels\GeneralSettings\TableEntity.cs" />
     <Compile Include="BusinessModels\Menu\ProductCategoryExt.cs" />
     <Compile Include="BusinessModels\Menu\ProductCategory.cs" />
@@ -163,9 +165,11 @@
     <Compile Include="BusinessModels\Security\UserRoles.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
     <Compile Include="BusinessModels\Vouchers\VoucherCard.cs" />
+    <Compile Include="BusinessModels\Vouchers\VouchersBatch.cs" />
     <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
-    <Compile Include="ChangeLog.cs" />
-    <Compile Include="ErpShared.cs" />
+    <Compile Include="ActivityLogs\ChangeLog.cs" />
+    <Compile Include="GlobalVariables\PosEnums.cs" />
+    <Compile Include="GlobalVariables\SharedVariables.cs" />
     <Compile Include="InitialServerConfiguration.xaml.cs">
       <DependentUpon>InitialServerConfiguration.xaml</DependentUpon>
     </Compile>
@@ -173,29 +177,21 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209121715118_M6.cs" />
-    <Compile Include="Migrations\202209121715118_M6.designer.cs">
-      <DependentUpon>202209121715118_M6.cs</DependentUpon>
+    <Compile Include="Migrations\202209161607543_M1.cs" />
+    <Compile Include="Migrations\202209161607543_M1.designer.cs">
+      <DependentUpon>202209161607543_M1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209131456352_M7.cs" />
-    <Compile Include="Migrations\202209131456352_M7.designer.cs">
-      <DependentUpon>202209131456352_M7.cs</DependentUpon>
+    <Compile Include="Migrations\202209161719221_M2.cs" />
+    <Compile Include="Migrations\202209161719221_M2.designer.cs">
+      <DependentUpon>202209161719221_M2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209131740495_M8.cs" />
-    <Compile Include="Migrations\202209131740495_M8.designer.cs">
-      <DependentUpon>202209131740495_M8.cs</DependentUpon>
+    <Compile Include="Migrations\202209162102276_M3.cs" />
+    <Compile Include="Migrations\202209162102276_M3.designer.cs">
+      <DependentUpon>202209162102276_M3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209132033219_M9.cs" />
-    <Compile Include="Migrations\202209132033219_M9.designer.cs">
-      <DependentUpon>202209132033219_M9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209132057242_M10.cs" />
-    <Compile Include="Migrations\202209132057242_M10.designer.cs">
-      <DependentUpon>202209132057242_M10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209132129597_M11.cs" />
-    <Compile Include="Migrations\202209132129597_M11.designer.cs">
-      <DependentUpon>202209132129597_M11.cs</DependentUpon>
+    <Compile Include="Migrations\202209162134548_M4.cs" />
+    <Compile Include="Migrations\202209162134548_M4.designer.cs">
+      <DependentUpon>202209162134548_M4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -211,11 +207,20 @@
     <Compile Include="UserInterface\Accounts\VouchersList.xaml.cs">
       <DependentUpon>VouchersList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\CustomerAccount.xaml.cs">
+      <DependentUpon>CustomerAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\CustomerDetails.xaml.cs">
+      <DependentUpon>CustomerDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\CustomersManagemnt\CustomersList.xaml.cs">
       <DependentUpon>CustomersList.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\CustomersManagemnt\NewCustomer.xaml.cs">
       <DependentUpon>NewCustomer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\RedeeemSettings.xaml.cs">
+      <DependentUpon>RedeeemSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
@@ -331,14 +336,14 @@
     <Compile Include="UserInterface\Security\SelectRightsForRole.xaml.cs">
       <DependentUpon>SelectRightsForRole.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\WorkPeriods\CloseWorkPeriod.xaml.cs">
-      <DependentUpon>CloseWorkPeriod.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\WorkPeriods\CreateWorkPeriod.xaml.cs">
-      <DependentUpon>CreateWorkPeriod.xaml</DependentUpon>
+    <Compile Include="UserInterface\WorkPeriods\ManageWorkPeriod.xaml.cs">
+      <DependentUpon>ManageWorkPeriod.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\WorkPeriods\ViewWorkPeriod.xaml.cs">
       <DependentUpon>ViewWorkPeriod.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\WorkPeriods\WorkPeriodSummary.xaml.cs">
+      <DependentUpon>WorkPeriodSummary.xaml</DependentUpon>
     </Compile>
     <Page Include="InitialServerConfiguration.xaml">
       <SubType>Designer</SubType>
@@ -368,11 +373,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserInterface\CustomersManagemnt\CustomerAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\CustomersManagemnt\CustomerDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\CustomersManagemnt\CustomersList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\CustomersManagemnt\NewCustomer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\CustomersManagemnt\RedeeemSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -508,15 +525,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\WorkPeriods\CloseWorkPeriod.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\WorkPeriods\CreateWorkPeriod.xaml">
+    <Page Include="UserInterface\WorkPeriods\ManageWorkPeriod.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\WorkPeriods\ViewWorkPeriod.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\WorkPeriods\WorkPeriodSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -535,23 +552,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209121715118_M6.resx">
-      <DependentUpon>202209121715118_M6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209161607543_M1.resx">
+      <DependentUpon>202209161607543_M1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209131456352_M7.resx">
-      <DependentUpon>202209131456352_M7.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209161719221_M2.resx">
+      <DependentUpon>202209161719221_M2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209131740495_M8.resx">
-      <DependentUpon>202209131740495_M8.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209162102276_M3.resx">
+      <DependentUpon>202209162102276_M3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209132033219_M9.resx">
-      <DependentUpon>202209132033219_M9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209132057242_M10.resx">
-      <DependentUpon>202209132057242_M10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209132129597_M11.resx">
-      <DependentUpon>202209132129597_M11.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209162134548_M4.resx">
+      <DependentUpon>202209162134548_M4.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

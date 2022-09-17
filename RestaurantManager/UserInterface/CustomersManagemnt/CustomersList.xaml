@@ -22,17 +22,15 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
-
+                    <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_CustomersList_MouseUp"  >
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
                             <DataGridTextColumn Binding="{Binding CustomerGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
                             <DataGridTextColumn Binding="{Binding CustomerName}"  Header="Full Name" IsReadOnly="True" Width="150" CanUserSort="False"/>
                             <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="150" CanUserSort="False"/>
                             <DataGridTextColumn Binding="{Binding PhoneNumber}"  Header="Phone" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ClosedBy}" Header="Email" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="RegistrationDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding OpeningDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="LastTicket" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="RegistrationDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding BirthDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="BirthDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

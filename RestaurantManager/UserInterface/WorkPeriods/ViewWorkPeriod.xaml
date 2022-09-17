@@ -47,8 +47,7 @@
 
                 </Grid>
                 <Grid Grid.Row="2" >
-                    <UniformGrid Rows="1" Columns="3">
-                        <Button x:Name="Button_NewWorkPeriod" Content="New Work Period" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_NewWorkPeriod_Click" />
+                    <UniformGrid Rows="1" Columns="2">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Total : " VerticalAlignment="Center"/>
                             <TextBox x:Name="TextBox_TotalCount" Width="100" VerticalAlignment="Center"/>

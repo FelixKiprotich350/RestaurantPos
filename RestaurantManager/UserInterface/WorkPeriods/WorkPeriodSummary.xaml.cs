@@ -16,23 +16,13 @@ using System.Windows.Shapes;
 namespace RestaurantManager.UserInterface.WorkPeriods
 {
     /// <summary>
-    /// Interaction logic for CloseWorkPeriod.xaml
+    /// Interaction logic for WorkPeriodSummary.xaml
     /// </summary>
-    public partial class CloseWorkPeriod : Window
+    public partial class WorkPeriodSummary : Page
     {
-        public CloseWorkPeriod()
+        public WorkPeriodSummary()
         {
             InitializeComponent();
-        }
-
-        private void Button_Accept_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-
-        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
         }
     }
 }

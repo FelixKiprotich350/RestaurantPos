@@ -35,7 +35,8 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     CustomerName = Textbox_FullName.Text,
                     PhoneNumber = Textbox_PhoneNo.Text,
                     Gender = Combobox_Gender.SelectedItem.ToString(),
-                    RegistrationDate = ErpShared.CurrentDate()
+                    RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
+                    BirthDate = (DateTime)DatePicker_BirthDate.SelectedDate
                 };
                 using (var db = new PosDbContext())
                 {
@@ -43,12 +44,17 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     db.SaveChanges();
                 }
                 MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                Close();
             }
             catch (Exception exception1)
             {
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             } 
+        }
+
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

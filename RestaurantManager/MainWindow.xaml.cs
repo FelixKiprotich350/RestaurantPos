@@ -37,7 +37,7 @@ namespace RestaurantManager
         public MainWindow()
         {
             InitializeComponent();
-            TextBox_Date.Text = ErpShared.CurrentDate().ToLongDateString();  
+            TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();  
             Frame1.Content = new HomePage();
             
         }
@@ -47,8 +47,8 @@ namespace RestaurantManager
             try
             {
              
-                //TextBox_InstitutionTitle.Text = ErpShared.ClientInfo.ClientTitle;
-                ErpShared.Main_Window = this;
+                //TextBox_InstitutionTitle.Text = GlobalVariables.SharedMethodsVariables.ClientInfo.ClientTitle;
+                GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace RestaurantManager
             if (UserLoggedIn)
             {
                 SetupMenu();  
-                Textbox_LoggedinUserName.Text = ErpShared.CurrentUser.UserFullName;
+                Textbox_LoggedinUserName.Text = GlobalVariables.SharedVariables.CurrentUser.UserFullName;
             }
             else
             {
@@ -91,7 +91,7 @@ namespace RestaurantManager
             Frame1.Content = new HomePage();
         }
 
-        private void Button_Category_Click(object sender, RoutedEventArgs e)
+        public void Button_Category_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace RestaurantManager
 
                         }
                     }
-                    var subitems = ErpShared.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
+                    var subitems = GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
                     Category_Submenu.ItemsSource = subitems;
                     if (subitems.Count <= 0)
                     {
@@ -192,7 +192,7 @@ namespace RestaurantManager
             {
                 if (MessageBox.Show("Are you sure you want to logout ?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question,MessageBoxResult.No)==MessageBoxResult.Yes)
                 {
-                    ErpShared.CurrentUser = null;
+                    GlobalVariables.SharedVariables.CurrentUser = null;
                     Login Login = new Login();
                     Login.Show();
                     this.Close();

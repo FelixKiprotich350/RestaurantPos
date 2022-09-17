@@ -1,5 +1,7 @@
-﻿using RestaurantManager.BusinessModels.OrderTicket;
+﻿using RestaurantManager.BusinessModels.CustomersManagement;
+using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.WorkPeriod;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +24,16 @@ namespace RestaurantManager.UserInterface.PointofSale
     public partial class MergeTickets : Window
     {
         readonly Random R = new Random();
-        public MergeTickets()
+        List<OrderMaster> ticketsmaster = new List<OrderMaster>();
+        public MergeTickets(List<OrderMaster> t)
         {
             InitializeComponent();
+            ticketsmaster = t;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshTicketList();
+            LisTview_TicketsList.ItemsSource = ticketsmaster;
         }
         private void RefreshTicketList()
         {
@@ -37,7 +41,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == ErpShared.OrderTicketStatuses.Pending.ToString() && p.UserServing == ErpShared.CurrentUser.UserName).ToList();
+                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString() && p.UserServing == GlobalVariables.SharedVariables.CurrentUser.UserName).ToList();
                 }
             }
             catch (Exception ex)
@@ -58,6 +62,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return;
                 }
                 ListView_SelectedTickets.ItemsSource = data;
+               
             }
             catch (Exception ex)
             {
@@ -96,12 +101,39 @@ namespace RestaurantManager.UserInterface.PointofSale
                 SelectCustomerName s = new SelectCustomerName();
                 if ((bool)s.ShowDialog())
                 {
-                    Button_SelectCustomer.Content = s.SelectedCustomerName;
+                    Button_SelectCustomer.Tag = s.SelectedCustomer;
+                    Button_SelectCustomer.Content = s.SelectedCustomer.CustomerName;
                 }
             }
             catch (Exception Ex)
             {
                 MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        } 
+
+        private Customer GetCustomer()
+        {
+            try
+            {
+                if (Button_SelectCustomer.Tag.GetType() == typeof(Customer))
+                {
+                    if ((Customer)Button_SelectCustomer.Tag != null)
+                    {
+                        return (Customer)Button_SelectCustomer.Tag;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -116,7 +148,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return;
                 }
                 //check whether work period is open
-                WorkPeriod wp = ErpShared.CurrentOpenWorkPeriod();
+                WorkPeriod wp = GlobalVariables.SharedVariables.CurrentOpenWorkPeriod();
                 if (wp == null)
                 {
                     MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -125,26 +157,26 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //remove item and add voided item
                 using (var db = new PosDbContext())
                 {
-                    string ordno = ErpShared.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
+                    string ordno = GlobalVariables.SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
                     string ordguid = Guid.NewGuid().ToString();
                     List<OrderItem> newitems = new List<OrderItem>();
                     foreach (var t in data)
                     {
                         OrderMaster x = db.OrderMaster.Where(a => a.OrderNo == t.OrderNo).First();
                         x.MergedChild = ordguid;
-                        x.OrderStatus = ErpShared.OrderTicketStatuses.Merged.ToString();
+                        x.OrderStatus = PosEnums.OrderTicketStatuses.Merged.ToString();
                         db.OrderItem.Where(a => a.OrderID == x.OrderNo).ToList().ForEach(b => b.OrderID = ordno);
                     }
                     OrderMaster om = new OrderMaster
                     {
                         OrderGuid = ordguid,
                         OrderNo = ordno,
-                        CustomerName = Button_SelectCustomer.Content.ToString(),
+                        CustomerRefference = GetCustomer().PhoneNumber,
                         TicketTable = Button_SelectTable.Content.ToString(),
-                        UserServing = ErpShared.CurrentUser.UserName,
-                        OrderStatus = ErpShared.OrderTicketStatuses.Pending.ToString(),
-                        OrderDate = ErpShared.CurrentDate(),
-                        PaymentDate = ErpShared.CurrentDate(),
+                        UserServing = GlobalVariables.SharedVariables.CurrentUser.UserName,
+                        OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
+                        OrderDate = GlobalVariables.SharedVariables.CurrentDate(),
+                        PaymentDate = GlobalVariables.SharedVariables.CurrentDate(),
                         Workperiod = wp.WorkperiodName
                     };
                     db.OrderMaster.Add(om);

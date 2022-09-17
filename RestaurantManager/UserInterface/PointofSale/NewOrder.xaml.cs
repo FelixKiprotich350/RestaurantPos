@@ -1,6 +1,8 @@
-﻿using RestaurantManager.BusinessModels.Menu;
+﻿using RestaurantManager.BusinessModels.CustomersManagement;
+using RestaurantManager.BusinessModels.Menu;
 using RestaurantManager.BusinessModels.OrderTicket; 
 using RestaurantManager.BusinessModels.WorkPeriod;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Shapes; 
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -95,11 +97,13 @@ namespace RestaurantManager.UserInterface.PointofSale
 
                 OrderItems.Add(i);
                 CalculateTotal();
+                Lv.SelectedItem = null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
@@ -174,7 +178,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 OrderItems.Clear();
                 Textbox_TotalAmount.Text = "0.00";
                 Label_Table.Content = "";
-                LabelCustomerName.Content = "";
+                LabelCustomer.Content = "";
             }
             catch (Exception ex)
             {
@@ -186,26 +190,28 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                int total = 0;
                 WorkPeriod w;
                 using (var db = new PosDbContext())
                 {
-                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").First();
+                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
+                    if (w == null)
+                    {
+                        MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                 }
-                if (w == null)
-                {
-                    MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                string ordno = ErpShared.CurrentDate().ToString("ddmmyy")+ "-" + R.Next(0, 999).ToString();
+                string ordno = SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
+                Customer cust = GetCustomer();
                 OrderMaster om = new OrderMaster
                 {
                     OrderGuid = Guid.NewGuid().ToString(),
-                    OrderDate = ErpShared.CurrentDate(),
-                    CustomerName = LabelCustomerName.Content.ToString(),
+                    OrderDate = SharedVariables.CurrentDate(),
+                    CustomerRefference = cust != null ? cust.PhoneNumber : "None",
                     TicketTable = Label_Table.Content.ToString(),
-                    OrderStatus =ErpShared.OrderTicketStatuses.Pending.ToString(),
-                    UserServing =  ErpShared.CurrentUser.UserName,
-                    PaymentDate = ErpShared.CurrentDate(),
+                    OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
+                    UserServing =  SharedVariables.CurrentUser.UserName,
+                    PaymentDate = SharedVariables.CurrentDate(),
                     OrderNo = ordno,
                     Workperiod=w.WorkperiodName
                 };
@@ -213,6 +219,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     a.OrderID = om.OrderNo; 
                 }
+                foreach (var x in OrderItems)
+                {
+                    total += (int)(x.Quantity * x.Price);
+                }  
                 using (var db = new PosDbContext())
                 {
                     
@@ -228,12 +238,45 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        } 
+        private Customer GetCustomer()
+        {
+            try
+            {
+                if (LabelCustomer.Tag!=null)
+                {
+                    if (LabelCustomer.Tag.GetType() == typeof(Customer))
+                    {
+                        if ((Customer)LabelCustomer.Tag != null)
+                        {
+                            return (Customer)LabelCustomer.Tag;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void Button_SelectTable_Click(object sender, RoutedEventArgs e)
         {
             SelectTableForTicket st = new SelectTableForTicket();
             st.ShowDialog();
+            Label_Table.Tag = st.SelectedTable;
             Label_Table.Content = st.SelectedTable;
         }
 
@@ -241,7 +284,16 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             SelectCustomerName sc = new SelectCustomerName();
             sc.ShowDialog();
-            LabelCustomerName.Content = sc.SelectedCustomerName;
+            if (sc.SelectedCustomer != null)
+            {
+                LabelCustomer.Tag = sc.SelectedCustomer;
+                LabelCustomer.Content = sc.SelectedCustomer.CustomerName;
+            }
+            else
+            {
+                LabelCustomer.Tag = null;
+                LabelCustomer.Content = "";
+            }
         }
     }
 
