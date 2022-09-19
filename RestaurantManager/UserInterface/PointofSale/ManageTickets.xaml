@@ -80,7 +80,7 @@
 
                     <UniformGrid Margin="0,8,0,8" Columns="4" Rows="1" VerticalAlignment="Center" >
                         <Button x:Name="Button_CancelEditing" Content="Close" Click="Button_CancelEditing_Click" VerticalAlignment="Center" Background="#FFF29400"/>
-                        <Button x:Name="Button_Print" Content="Print"  VerticalAlignment="Center"   Style="{StaticResource Button_Accept}" />
+                        <Button x:Name="Button_Print" Content="Print"  VerticalAlignment="Center"   Style="{StaticResource Button_Accept}" Click="Button_Print_Click" />
                         <Button x:Name="Button_MoveTable" Content="Move Table"  VerticalAlignment="Center"   Style="{StaticResource Button_Accept}" Click="Button_MoveTable_Click"/>
                         <Button x:Name="Button_VoidTicket" Content="Void Ticket" Margin="10,0" Style="{StaticResource Button_Danger}" Click="Button_VoidTicket_Click"/>
                     </UniformGrid>

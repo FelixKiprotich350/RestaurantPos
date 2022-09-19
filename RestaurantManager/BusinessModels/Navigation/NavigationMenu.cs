@@ -17,7 +17,7 @@ namespace RestaurantManager.BusinessModels.Navigation
                 new Level1menu() { GroupName = "Point of Sale", GroupCode = "A" },
                 new Level1menu() { GroupName = "Work Periods", GroupCode = "B" },
                 new Level1menu() { GroupName = "Accounts", GroupCode = "C"  },
-                new Level1menu() { GroupName = "Products", GroupCode = "D"  },
+                new Level1menu() { GroupName = "WareHouse", GroupCode = "D"  },
                 new Level1menu() { GroupName = "Reports", GroupCode = "E"  },
                 new Level1menu() { GroupName = "Settings", GroupCode = "F" },
                 new Level1menu() { GroupName = "Security", GroupCode = "G" },

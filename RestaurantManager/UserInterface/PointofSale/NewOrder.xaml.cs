@@ -1,5 +1,5 @@
 ﻿using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.BusinessModels.Menu;
+using RestaurantManager.BusinessModels.Warehouse;
 using RestaurantManager.BusinessModels.OrderTicket; 
 using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
@@ -42,12 +42,24 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
+            { 
+                GetMenuItems();
+            }
+            catch (Exception ex)
             {
-                
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GetMenuItems()
+        {
+            try
+            {
+
                 using (var b = new PosDbContext())
                 {
                     var a = b.ProductCategory.ToList();
-                    a.ForEach(s => s.GetMenuItems(s.CategoryGuid));
+                    a.ForEach(s => s.GetAllMenuItems(s.CategoryGuid,true));
                     Categories_ListView.ItemsSource = a;
                 }
                 Datagrid_OrderItems.ItemsSource = OrderItems;
@@ -57,7 +69,6 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -212,6 +223,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
                     UserServing =  SharedVariables.CurrentUser.UserName,
                     PaymentDate = SharedVariables.CurrentDate(),
+                    IsPrinted = false,
                     OrderNo = ordno,
                     Workperiod=w.WorkperiodName
                 };

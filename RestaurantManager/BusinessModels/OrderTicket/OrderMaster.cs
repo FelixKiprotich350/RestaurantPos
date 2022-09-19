@@ -47,6 +47,8 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public DateTime OrderDate { get; set; }
         [Required]
         public DateTime PaymentDate { get; set; }
+        [Required]
+        public bool IsPrinted { get; set; }
         [NotMapped]
         public bool IsSelected { get; set; }
     }

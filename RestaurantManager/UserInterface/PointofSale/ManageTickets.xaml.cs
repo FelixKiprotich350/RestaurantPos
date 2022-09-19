@@ -37,7 +37,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 List<OrderMaster> items = new List<OrderMaster>();
                 using (var db = new PosDbContext())
                 {
-                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).ToList();
+                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString() && !p.IsPrinted).ToList();
                 }
                 if (SharedVariables.CurrentUser.UserRole == SharedVariables.AdminRoleName)
                 {
@@ -136,7 +136,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                     MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshTicketList();
-                    Button_CancelEditing_Click(new object(), new RoutedEventArgs());
+                    ResetForm();
                 }
                 else
                 {
@@ -290,6 +290,34 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MergeTickets merge = new MergeTickets(t);
                 merge.ShowDialog();
                 RefreshTicketList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Print_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (TextBlock_TicketNo.Text.Trim() == "")
+                {
+                    MessageBox.Show("Select a Ticket To Print!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (MessageBox.Show("You are about to print a ticket.\n\nAre you sure ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    using (var db = new PosDbContext())
+                    {
+                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().IsPrinted = true;
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show("Completed. Ticket Printed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    RefreshTicketList();
+                    Button_CancelEditing_Click(new object(), new RoutedEventArgs());
+                } 
+               
             }
             catch (Exception ex)
             {

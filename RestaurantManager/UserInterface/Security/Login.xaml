@@ -7,26 +7,29 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" Loaded="Window_Loaded"
         AllowsTransparency="True" UseLayoutRounding="True"
         Title="Login" Height="500" Width="800"  ResizeMode="NoResize" Background="#00000000" OpacityMask="White">
-   
+
 
     <Border CornerRadius="16" Background="White" Padding="16">
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" UseLayoutRounding="True">
-                    <Image Source="/RestaurantManager;component/ImageResources/laxco pos.png" Width="240" Height="240" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True"/>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" UseLayoutRounding="True">
+                <Image x:Name="Imale_Logo" Source="/RestaurantManager;component/ImageResources/laxco pos.png" Width="240" Height="240" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" >
+                  
+
+                </Image>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Label Content="ENTER PIN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FF8A151B"/>
                 </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Label Content="ENTER PIN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FF8A151B"/>
-                    </Grid>
                 <Border Grid.Row="1" CornerRadius="8" Padding="8,4,8,4" BorderThickness="1" BorderBrush="#FF8A151B" Background="#FFFFF9EF" >
                     <Grid >
                         <DockPanel LastChildFill="True" >
@@ -44,7 +47,7 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Row="2">
-                        <UniformGrid Columns="3" Rows="4" Margin="0,5,0,0">
+                    <UniformGrid Columns="3" Rows="4" Margin="0,5,0,0">
                         <Button x:Name="Button_1" Style="{StaticResource Button_Cancel}" Content="1" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="Auto" Click="Button_1_Click"  />
                         <Button x:Name="Button_2" Style="{StaticResource Button_Cancel}"  Content="2" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_2_Click"  />
                         <Button x:Name="Button_3" Style="{StaticResource Button_Cancel}"  Content="3" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_3_Click"  />
@@ -54,15 +57,15 @@
                         <Button x:Name="Button_7" Content="7"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_7_Click"  />
                         <Button x:Name="Button_8" Content="8"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_8_Click"  />
                         <Button x:Name="Button_9" Content="9"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_9_Click"  />
-                         <Button x:Name="Button_Cancel" Background="#FF8A151B" Content="Cancel" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Exit_Click" />
+                        <Button x:Name="Button_Cancel" Background="#FF8A151B" Content="Close" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Exit_Click" />
                         <Button x:Name="Button_0" Content="0" Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_0_Click"  />
                         <Button x:Name="Button_Login" Content="Login" Background="#FF076807"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
- 
-                        </UniformGrid>
 
-                    </Grid>
+                    </UniformGrid>
 
                 </Grid>
-            </Grid> 
+
+            </Grid>
+        </Grid>
     </Border>
 </Window>

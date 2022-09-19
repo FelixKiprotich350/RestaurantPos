@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks; 
 using System.Data.Entity.ModelConfiguration.Conventions;
 using RestaurantManager.BusinessModels;
-using RestaurantManager.BusinessModels.Menu;
+using RestaurantManager.BusinessModels.Warehouse;
 using RestaurantManager.BusinessModels.Security;
 using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.GeneralSettings;

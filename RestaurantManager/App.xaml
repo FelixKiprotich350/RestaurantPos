@@ -12,9 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-
-
+            <!--Buttons-->
             <Style   TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
@@ -263,11 +261,13 @@
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleX"
                                     To="0.96"
-                                    Duration="00:00:00.25"></DoubleAnimation>
+                                    Duration="00:00:00.25">
+                                </DoubleAnimation>
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleY"
                                     To="0.96"
-                                    Duration="00:00:00.25"></DoubleAnimation>
+                                    Duration="00:00:00.25">
+                                </DoubleAnimation>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -318,7 +318,11 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-
+            <!--EndButtons-->
+            
+            <!--Other Controls-->
+            <!--Other Controls-->
+            
             <Style TargetType="GroupBox" >
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="Margin" Value="5,5,5,5" />
@@ -336,13 +340,10 @@
                 <Setter Property="BorderBrush" Value="Gray"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
+            
+            <!--Datagrid-->
+            <!--Datagrid-->
 
-            <Style TargetType="DataGrid"  BasedOn="{StaticResource MaterialDesignDataGrid}">
-                <Setter Property="Cursor" Value="Hand" />  
-                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                <Setter Property="ColumnHeaderStyle" Value="{DynamicResource tt}"/>
-              
-            </Style> 
             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="Background" Value="#FF6C6A6A" />
                 <Setter Property="Foreground" Value="White" />
@@ -351,6 +352,7 @@
                 <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Height" Value="30" />
             </Style>
+            
             <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Style.Triggers>
@@ -360,6 +362,15 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="DatagridCell_BulkItems" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Padding" Value="3" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+
+            <!--EndDatagrid-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

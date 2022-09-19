@@ -50,7 +50,10 @@ namespace RestaurantManager.UserInterface.Security
                 List<string> raw = SelectedRole.RolePermissions.Split(',').Where(z => z != "").ToList();
                 foreach (var x in raw)
                 {
-                    selectedrights.Add(allrights.Find(a => a.PermissionGuid == x));
+                    if (allrights.Find(a => a.PermissionGuid == x) != null)
+                    { 
+                        selectedrights.Add(allrights.Find(a => a.PermissionGuid == x)); 
+                    }
                 }
                 foreach (var x in selectedrights)
                 {

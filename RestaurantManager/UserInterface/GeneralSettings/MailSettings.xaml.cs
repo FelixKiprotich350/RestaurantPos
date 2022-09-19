@@ -59,14 +59,16 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                     }
                     else
                     {
-                        MailingProfile m = new MailingProfile();
-                        m.RowGuid = Guid.NewGuid().ToString();
-                        m.ProfileName = "Default";
-                        m.DestinationAddress = "default";
-                        m.SenderAddress = "default";
-                        m.MailingAddress = "default";
-                        m.DisplayName = "default";
-                        m.AppPassword = "default";
+                        MailingProfile m = new MailingProfile
+                        {
+                            RowGuid = Guid.NewGuid().ToString(),
+                            ProfileName = "Default",
+                            DestinationAddress = "default",
+                            SenderAddress = "default",
+                            MailingAddress = "default",
+                            DisplayName = "default",
+                            AppPassword = "default"
+                        };
                         db.MailingProfile.Add(m);
                         db.SaveChanges();
                         if (isfirst)

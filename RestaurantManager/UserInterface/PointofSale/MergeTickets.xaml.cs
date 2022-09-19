@@ -4,6 +4,7 @@ using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         readonly Random R = new Random();
         readonly List<OrderMaster> ticketsmaster = new List<OrderMaster>();
+        List<OrderMaster> selectedtickets = new List<OrderMaster>();
         public MergeTickets(List<OrderMaster> t)
         {
             InitializeComponent();
@@ -47,8 +49,11 @@ namespace RestaurantManager.UserInterface.PointofSale
                     MessageBox.Show("Select Two or More Tickets to Merge!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                ListView_SelectedTickets.ItemsSource = data;
-               
+                selectedtickets = data;
+                ListView_SelectedTickets.ItemsSource = selectedtickets;
+                ticketsmaster.ToList().ForEach(x => x.IsSelected = false);
+                LisTview_TicketsList.ItemsSource = null;
+                LisTview_TicketsList.ItemsSource = ticketsmaster;
             }
             catch (Exception ex)
             {
@@ -101,6 +106,11 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                if (Button_SelectCustomer.Tag is null)
+                {
+                    return null;
+                }
+
                 if (Button_SelectCustomer.Tag.GetType() == typeof(Customer))
                 {
                     if ((Customer)Button_SelectCustomer.Tag != null)
@@ -127,7 +137,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                var data = ListView_SelectedTickets.Items.Cast<OrderMaster>().Where(x => x.IsSelected).ToList();
+                var data = ListView_SelectedTickets.Items.Cast<OrderMaster>().ToList();
                 if (data.Count <= 1)
                 {
                     MessageBox.Show("You cannot Merge less than Two (2) Tickets!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -156,8 +166,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderMaster om = new OrderMaster
                     {
                         OrderGuid = ordguid,
+                        IsPrinted = false,
                         OrderNo = ordno,
-                        CustomerRefference = GetCustomer().PhoneNumber,
+                        CustomerRefference = GetCustomer() != null ? GetCustomer().PhoneNumber : "None",
                         TicketTable = Button_SelectTable.Content.ToString(),
                         UserServing = GlobalVariables.SharedVariables.CurrentUser.UserName,
                         OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
@@ -177,5 +188,23 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
+        private void Button_Unselect_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            { 
+                ListView_SelectedTickets.ItemsSource = null; 
+                ticketsmaster.ToList().ForEach(x => x.IsSelected = false); 
+                LisTview_TicketsList.ItemsSource = ticketsmaster; 
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

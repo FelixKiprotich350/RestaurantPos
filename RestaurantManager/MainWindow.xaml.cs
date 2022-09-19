@@ -46,7 +46,6 @@ namespace RestaurantManager
         {
             try
             {
-             
                 //TextBox_InstitutionTitle.Text = GlobalVariables.SharedMethodsVariables.ClientInfo.ClientTitle;
                 GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
@@ -63,8 +62,9 @@ namespace RestaurantManager
         { 
             if (UserLoggedIn)
             {
+                Textbox_LoggedinUserFullName.Text = GlobalVariables.SharedVariables.CurrentUser.UserFullName;
                 SetupMenu();  
-                Textbox_LoggedinUserName.Text = GlobalVariables.SharedVariables.CurrentUser.UserFullName;
+                
             }
             else
             {
@@ -77,8 +77,17 @@ namespace RestaurantManager
         {
             try
             {
-                NavigationMenu menu = new NavigationMenu();
-                ModulesListView.ItemsSource = menu.MenuCategories; 
+                NavigationMenu menu = new NavigationMenu(); 
+                List<Level1menu> modules = new List<Level1menu>();
+                var list=GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final;
+                foreach(var x in menu.MenuCategories)
+                {
+                    if (list.Count(k=>k.ParentModule==x.GroupCode) >0)
+                    {
+                        modules.Add(x);
+                    }
+                }
+                ModulesListView.ItemsSource = modules;
             }
             catch (Exception ex)
             {
