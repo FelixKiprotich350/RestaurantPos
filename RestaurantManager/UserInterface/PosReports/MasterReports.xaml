@@ -14,15 +14,15 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <ListView>
-                <ListViewItem Content="Sales"/>
+            <ListView x:Name="Listview_ReportHeads" SelectionChanged="Listview_ReportHeads_SelectionChanged">
+                <ListViewItem x:Name="Item_SalesReports" Content="Sales"/>
                 <ListViewItem Content="Tickets"/>
                 <ListViewItem Content="Payments"/>
                 <ListViewItem Content="Users"/>
                 <ListViewItem Content="Analysis"/>
             </ListView>
         </Grid>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="White">
             <Frame x:Name="Frame_ReportArea"/>
         </Grid>
     </Grid>

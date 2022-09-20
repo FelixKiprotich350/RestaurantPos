@@ -12,6 +12,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -117,5 +118,9 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             }
                     }
 
+        private void Button_Refresh_Click(object sender, RoutedEventArgs e)
+        { 
+            
+        }
     }
 }

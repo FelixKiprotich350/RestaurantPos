@@ -79,9 +79,11 @@ namespace RestaurantManager
             var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
             return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
         }
-        //menu products
+        //Warehouse
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
+        public DbSet<StockEntryItem> StockEntryItem { get; set; }
+        public DbSet<KitchenAddItem> KitchenAddItem { get; set; }
         //pos user & security
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }

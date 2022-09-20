@@ -24,7 +24,8 @@
                 <TextBox x:Name="Textbox_TicketSearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_TicketSearchBox_TextChanged"/>
             </Grid>
             <Grid Grid.Row="1">
-                <DataGrid    x:Name="Datagrid_TicketsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp" ColumnHeaderStyle="{DynamicResource DatagridCell_BulkItems}"  >
+                <DataGrid    x:Name="Datagrid_TicketsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>

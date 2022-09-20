@@ -1,0 +1,56 @@
+﻿<Page x:Class="RestaurantManager.UserInterface.PointofSale.KitchenDisplay"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="KitchenDisplay">
+
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+        <ScrollViewer >
+            <ItemsControl x:Name="IC_PendingTickets" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{Binding PreparingBG,Mode=TwoWay}" CornerRadius="8" Width="Auto" Margin="12" Height="300" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0"  Content="{Binding Path=Order.OrderNo}" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                                <Label Grid.Row="1" Content="{Binding Path=Order.UserServing}" HorizontalAlignment="Stretch" FontWeight="Bold" FontSize="16"/>
+                                <ListView Grid.Row="2" ItemsSource="{Binding Orderitems}" SelectionMode="Single" LostFocus="ListView_LostFocus">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label Content="{Binding ItemName}"/>
+                                                <Label Content="{Binding Quantity}"/>
+                                                <Label Content="{Binding ServiceType}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <Button Grid.Row="3" Tag="{Binding Path=Order.OrderNo}" Content="{Binding ButtonText}" Click="Button_PrepareClick" Width="150" Style="{Binding ButtonStyle}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!--<WrapPanel/>-->
+                        <UniformGrid Columns="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar">
+                    <Setter Property="Width" Value="32"/>
+                </Style>
+            </ScrollViewer.Resources>
+        </ScrollViewer>
+    </Grid>
+</Page>

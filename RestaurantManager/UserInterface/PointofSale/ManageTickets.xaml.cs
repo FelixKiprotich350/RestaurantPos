@@ -310,14 +310,27 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     using (var db = new PosDbContext())
                     {
-                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().IsPrinted = true;
-                        db.SaveChanges();
+                        var order = db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).FirstOrDefault();
+                        if (order is null)
+                        {
+                            MessageBox.Show("The Ticket Number is Invalid!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                        if (order.IsInPreparation && order.IsKitchenServed)
+                        {
+                            order.IsPrinted = true;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Ticket Items are being Served. Kindly wait for the Kitchen to Complete!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
                     }
                     MessageBox.Show("Completed. Ticket Printed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshTicketList();
                     Button_CancelEditing_Click(new object(), new RoutedEventArgs());
-                } 
-               
+                }
             }
             catch (Exception ex)
             {

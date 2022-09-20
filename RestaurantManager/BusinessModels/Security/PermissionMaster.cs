@@ -43,11 +43,12 @@ namespace RestaurantManager.BusinessModels.Security
                 List<PermissionMaster> p = new List<PermissionMaster>
                 {
                     //point of sale
-                    new PermissionMaster() { PermissionGuid = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new NewOrder() },
-                    new PermissionMaster() { PermissionGuid = "A2", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
-                    new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CheckoutTicket() },
-                    new PermissionMaster() { PermissionGuid = "A4", ParentModule = "A", PermissionShortName = "View Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new ViewTickets() },
-                    new PermissionMaster() { PermissionGuid = "A5", ParentModule = "A", PermissionShortName = "Void Ticket", PermissionFullName = "Description", PermissionLevel = "2", PageClass = null },
+                    new PermissionMaster() { PermissionGuid = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewOrder() },
+                    new PermissionMaster() { PermissionGuid = "A2", ParentModule = "A", PermissionShortName = "Kitchen Display", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new KitchenDisplay() },
+                    new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
+                    new PermissionMaster() { PermissionGuid = "A4", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new CheckoutTicket() },
+                    new PermissionMaster() { PermissionGuid = "A5", ParentModule = "A", PermissionShortName = "View Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new ViewTickets() },
+                    new PermissionMaster() { PermissionGuid = "A6", ParentModule = "A", PermissionShortName = "Void Ticket", PermissionFullName = "Description", PermissionLevel = "2", PageClass = null },
                     //Work periods
                     new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Periods List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
                     new PermissionMaster() { PermissionGuid = "B2", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
@@ -60,8 +61,7 @@ namespace RestaurantManager.BusinessModels.Security
                    new PermissionMaster() { PermissionGuid = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() },
                     new PermissionMaster() { PermissionGuid = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
                     new PermissionMaster() { PermissionGuid = "D3", ParentModule = "D", PermissionShortName = "Kitchen Adds", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new KitchenAdds() },
-                    new PermissionMaster() { PermissionGuid = "D4", ParentModule = "D", PermissionShortName = "Recipes", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Recipes() },
-                    new PermissionMaster() { PermissionGuid = "D5", ParentModule = "D", PermissionShortName = "Stock Entry", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new StockEntry() },
+                    new PermissionMaster() { PermissionGuid = "D4", ParentModule = "D", PermissionShortName = "Stock Entry", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new StockEntry() },
                     //reports
                     new PermissionMaster() { PermissionGuid = "E2", ParentModule = "E", PermissionShortName = "Reports", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                     //settings

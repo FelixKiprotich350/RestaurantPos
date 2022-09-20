@@ -24,7 +24,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
-                    <DataGrid    x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_OrderItems_MouseUp" >
+                    <DataGrid    x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_OrderItems_MouseUp" ColumnHeaderStyle="{StaticResource DatagridCell_BulkItems}" >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>

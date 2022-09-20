@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.Warehouse
+namespace RestaurantManager.UserInterface.PosReports.Sales
 {
     /// <summary>
-    /// Interaction logic for Recipes.xaml
+    /// Interaction logic for SalesAnalysis.xaml
     /// </summary>
-    public partial class Recipes : Page
+    public partial class SalesAnalysis : Page
     {
-        public Recipes()
+        public SalesAnalysis()
         {
             InitializeComponent();
         }

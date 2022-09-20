@@ -4,11 +4,74 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Warehouse"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StockEntry">
 
-    <Grid>
-        
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Stock Entry Records" FontSize="14">
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <DataGrid    x:Name="Datagrid_ItemsEntry" AutoGenerateColumns="False"  Margin="5,5,12,5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_ItemsEntry_MouseUp"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ItemGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
+                            <DataGridTextColumn Binding="{Binding ItemDescription }"  Header="Item Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding UOM}" Header="UOM" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding Quantity }"  Header="Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding WorkPeriod }"  Header="WorkPeriod" IsReadOnly="True" Width="Auto" CanUserSort="False" MinWidth="100" CanUserResize="False"/>
+                            <DataGridTextColumn  Binding="{Binding InsertionDate}" Header="Date" IsReadOnly="True" Width="Auto" CanUserSort="False" CanUserResize="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <UniformGrid Columns="2" Rows="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Label Content="Total : "/>
+                            <Label x:Name="Label_Count" Content="Total : "/>
+                        </StackPanel>
+                        <Button x:Name="Button_Refresh" Content="Refresh" HorizontalAlignment="Center" Width="100" Click="Button_Refresh_Click"/>
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Filter Records">
+                <StackPanel>
+                    <Label Content="Search Item" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="8,0"/>
+                    <TextBox x:Name="Textbox_SearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_SearchBox_TextChanged"/>
+                    <Label Content="Filter by WorkPeriod" FontSize="16"/>
+                    <ComboBox/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="New Entry" FontSize="16">
+                <StackPanel>
+                    <Label Content="Item Description"/>
+                    <TextBox x:Name="Textbox_Description"/>
+                    <Label Content="Item UOM"/>
+                    <TextBox x:Name="Textbox_UOM"/>
+                    <Label Content="Quantity"/>
+                    <TextBox x:Name="Textbox_Quantity"/>
+                </StackPanel>
+            </GroupBox>
+            <Grid Grid.Row="2">
+                <Button x:Name="Button_SaveEntry" Content="Save" Click="Button_SaveEntry_Click"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

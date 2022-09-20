@@ -221,11 +221,13 @@ namespace RestaurantManager.UserInterface.PointofSale
                     CustomerRefference = cust != null ? cust.PhoneNumber : "None",
                     TicketTable = Label_Table.Content.ToString(),
                     OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
-                    UserServing =  SharedVariables.CurrentUser.UserName,
+                    UserServing = SharedVariables.CurrentUser.UserName,
                     PaymentDate = SharedVariables.CurrentDate(),
                     IsPrinted = false,
                     OrderNo = ordno,
-                    Workperiod=w.WorkperiodName
+                    Workperiod = w.WorkperiodName,
+                    IsKitchenServed = false,
+                    IsInPreparation = false
                 };
                 foreach (var a in OrderItems)
                 {
@@ -237,7 +239,6 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }  
                 using (var db = new PosDbContext())
                 {
-                    
                     db.OrderMaster.Add(om);
                     db.OrderItem.AddRange(OrderItems);
                     db.SaveChanges();

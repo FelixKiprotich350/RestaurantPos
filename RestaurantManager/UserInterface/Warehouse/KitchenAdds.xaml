@@ -4,11 +4,78 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Warehouse"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"  Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="KitchenAdds">
 
     <Grid>
         
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Kitchen Products Entries" FontSize="16">
+            <Grid >
+                <Grid.RowDefinitions> 
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions> 
+                <Grid Grid.Row="0">
+                    <DataGrid    x:Name="Datagrid_ItemsEntry" AutoGenerateColumns="False"  Margin="5,5,12,5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_ItemsEntry_MouseUp"  >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding ItemGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
+                            <DataGridTextColumn Binding="{Binding ProductName }"  Header="Item Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding Quantity }"  Header="Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding WorkPeriod }"  Header="WorkPeriod" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding InsertionDate}" Header="Date" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding InsertionBy}" Header="AddedBy" IsReadOnly="True" MinWidth="100" CanUserSort="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <UniformGrid Columns="2" Rows="1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Label Content="Total : "/>
+                            <Label x:Name="Label_Count"  Content="Total : " FontWeight="Bold"/>
+                        </StackPanel>
+                        <Button Content="Refresh" HorizontalAlignment="Center" Width="100"/>
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Filter Records" FontSize="16">
+                <StackPanel>
+                    <Label Content="Search Item" FontSize="16" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="8,0"/>
+                    <TextBox x:Name="Textbox_SearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_SearchBox_TextChanged"/>
+                    <Label Content="Filter by WorkPeriod" FontSize="16"/>
+                    <ComboBox/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="Add Quantity" FontSize="16">
+                <StackPanel>
+                    <Label Content="Product item"/>
+                    <ComboBox x:Name="Combobox_Product">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding ProductName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    
+                    <Label Content="Quantity to Add"/>
+                    <TextBox x:Name="TextBox_Quantity"/>
+                </StackPanel>
+            </GroupBox>
+            <Grid Grid.Row="2">
+                <Button x:Name="Button_AddQuantity" Content="Submit" Click="Button_AddQuantity_Click"/>
+            </Grid>
+        </Grid>
+            
     </Grid>
 </Page>

@@ -30,5 +30,6 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         [MaxLength(20)]
         public string ServiceType { get; set; }  
+         
     }
 }

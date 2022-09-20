@@ -26,30 +26,14 @@
             </Grid>
             <Grid Grid.Row="1">
                 <DataGrid    x:Name="Datagrid_ProductItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_ProductItems_MouseUp"  >
-
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
                         <DataGridTextColumn Binding="{Binding ProductName }"  Header="Product Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding RemainingQuantity }"  Header="R.Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding CategoryName}" Header="Category" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding AvailabilityStatus}" Header="Status" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                    </DataGrid.Columns>
-                    <DataGrid.Resources>
-                        <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#FF6C6A6A" />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter Property="Padding" Value="2" />
-                            <Setter Property="FontSize" Value="16" />
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Height" Value="30" />
-                        </Style>
-                        <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                            <Setter Property="Height" Value="40"/>
-                            <Setter Property="FontSize" Value="20"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="Padding" Value="2"/>
-                        </Style>
-                    </DataGrid.Resources>
+                    </DataGrid.Columns> 
                 </DataGrid>
 
             </Grid>

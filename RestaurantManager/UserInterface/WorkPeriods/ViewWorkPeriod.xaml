@@ -20,7 +20,8 @@
                     <TextBlock Text="Work Periods List" HorizontalAlignment="Left" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center" Background="#00000000"/>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="Datagrid_Workperiods" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  MouseUp="Datagrid_Workperiods_MouseUp" ColumnHeaderStyle="{DynamicResource DatagridCell_BulkItems}">
+                    <DataGrid x:Name="Datagrid_Workperiods" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" 
+                                BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  MouseUp="Datagrid_Workperiods_MouseUp" >
 
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
@@ -34,8 +35,6 @@
                             <DataGridTextColumn  Binding="{Binding TotalTicketsCount}" Header="Total Tickets" IsReadOnly="True" Width="50" CanUserSort="False"/>
                         </DataGrid.Columns> 
                     </DataGrid>
-
-
                 </Grid>
                 <Grid Grid.Row="2" >
                     <UniformGrid Rows="1" Columns="2">
@@ -43,7 +42,7 @@
                             <Label Content="Total : " VerticalAlignment="Center"/>
                             <TextBox x:Name="TextBox_TotalCount" Width="100" VerticalAlignment="Center"/>
                         </StackPanel>
-                        <Button Content="Refresh" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" />
+                        <Button x:Name="Button_Refresh" Content="Refresh" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_Refresh_Click" />
                     </UniformGrid>
                 </Grid>
             </Grid>
