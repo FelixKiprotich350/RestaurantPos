@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.PosReports.Sales
+namespace RestaurantManager.UserInterface.PosReports.FilterWindows
 {
     /// <summary>
-    /// Interaction logic for SalesAnalysis.xaml
+    /// Interaction logic for SelectWorkPeriod.xaml
     /// </summary>
-    public partial class SalesAnalysis : Page
+    public partial class SelectWorkPeriod : Window
     {
-        public SalesAnalysis()
+        public SelectWorkPeriod()
         {
             InitializeComponent();
         }

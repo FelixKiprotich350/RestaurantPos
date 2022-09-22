@@ -390,11 +390,11 @@
             AncestorType={x:Type TabControl}}" Path="ActualWidth" />
                         </MultiBinding>
                     </Setter.Value>
-                </Setter>
+                </Setter> 
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
-                            <Border Name="Border"  BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0">
+                            <Border Name="Border"  BorderBrush="Gainsboro" CornerRadius="8,8,0,0" Margin="2,0">
                                 <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"

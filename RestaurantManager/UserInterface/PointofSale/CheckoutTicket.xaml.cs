@@ -113,7 +113,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     PaymentMasterGuid = Guid.NewGuid().ToString(),
                     TicketNo = TextBlock_TicketNo.Text,
-                    PosUser = GlobalVariables.SharedVariables.CurrentUser.UserName.ToString(),
+                    PosUser =  SharedVariables.CurrentUser.UserName.ToString(),
                     TotalAmountPaid = pm.Sum(b => b.Amount),
                     TotalAmountCharged = total,
                     TicketBalanceReturned = T.BalanceRetrned,

@@ -24,5 +24,25 @@ namespace RestaurantManager.UserInterface.PosReports
         {
             InitializeComponent();
         }
+
+        private void TabControl_TicketsTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_ClearFilters_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Apply_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_SelectWorkPeriod_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

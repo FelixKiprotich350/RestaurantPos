@@ -1,5 +1,4 @@
-﻿using RestaurantManager.UserInterface.PosReports.Sales;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,6 +29,7 @@ namespace RestaurantManager.UserInterface.PosReports
         {
             GlobalVariables.SharedVariables.Main_Window.Category_Submenu.Visibility = Visibility.Collapsed;
             Listview_ReportHeads.SelectedIndex = 0;
+            Frame_ReportArea.Content = new SalesReport();
         }
 
         private void Listview_ReportHeads_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -41,10 +41,22 @@ namespace RestaurantManager.UserInterface.PosReports
                     Listview_ReportHeads.SelectedIndex = 0;
                     return;
                 }
-                ListViewItem i = Listview_ReportHeads.SelectedItem as ListViewItem;
-                if(i.Name== "Item_SalesReports")
+                ListViewItem Lv = Listview_ReportHeads.SelectedItem as ListViewItem;
+                if(Listview_ReportHeads.SelectedIndex==0)
                 {
                     Frame_ReportArea.Content = new SalesReport();
+                }
+                else if (Listview_ReportHeads.SelectedIndex == 1)
+                {
+                    Frame_ReportArea.Content = new TicketsReports();
+                }
+                else if (Listview_ReportHeads.SelectedIndex == 2)
+                {
+                    Frame_ReportArea.Content = new PaymentsReport();
+                }
+                else if (Listview_ReportHeads.SelectedIndex == 3)
+                {
+                    Frame_ReportArea.Content = new UsersReport();
                 }
             }
             catch (Exception ex)

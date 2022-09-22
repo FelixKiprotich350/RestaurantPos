@@ -121,6 +121,12 @@ namespace RestaurantManager
 
                         }
                     }
+                    if (tag == "E")
+                    {
+                        Category_Submenu.Visibility = Visibility.Collapsed;
+                        Frame1.Content = new UserInterface.PosReports.MasterReports();
+                        return;
+                    }
                     var subitems = GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
                     Category_Submenu.ItemsSource = subitems;
                     if (subitems.Count <= 0)
