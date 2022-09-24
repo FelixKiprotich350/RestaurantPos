@@ -100,7 +100,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                 }
-                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid).Count() > 0)
+                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid).Count() > 1)
                 {
                     MessageBox.Show("The Product has been added to the Order before!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -201,51 +201,54 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                int total = 0;
-                WorkPeriod w;
-                using (var db = new PosDbContext())
+                if (MessageBox.Show("Are you sure you want to Make an Order ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question)==MessageBoxResult.Yes)
                 {
-                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
-                    if (w == null)
+                    int total = 0;
+                    WorkPeriod w;
+                    using (var db = new PosDbContext())
                     {
-                        MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
+                        w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
+                        if (w == null)
+                        {
+                            MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                     }
+                    string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
+                    Customer cust = GetCustomer();
+                    OrderMaster om = new OrderMaster
+                    {
+                        OrderGuid = Guid.NewGuid().ToString(),
+                        OrderDate = SharedVariables.CurrentDate(),
+                        CustomerRefference = cust != null ? cust.PhoneNumber : "None",
+                        TicketTable = Label_Table.Content.ToString(),
+                        OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
+                        UserServing = SharedVariables.CurrentUser.UserName,
+                        PaymentDate = SharedVariables.CurrentDate(),
+                        IsPrinted = false,
+                        OrderNo = ordno,
+                        Workperiod = w.WorkperiodName,
+                        IsKitchenServed = false,
+                        IsInPreparation = false
+                    };
+                    foreach (var a in OrderItems)
+                    {
+                        a.OrderID = om.OrderNo;
+                    }
+                    foreach (var x in OrderItems)
+                    {
+                        total += (int)(x.Quantity * x.Price);
+                    }
+                    using (var db = new PosDbContext())
+                    {
+                        db.OrderMaster.Add(om);
+                        db.OrderItem.AddRange(OrderItems);
+                        db.SaveChanges();
+                    }
+                    MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    OrderItems.Clear();
+                    ResetForm();
                 }
-                string ordno = SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                Customer cust = GetCustomer();
-                OrderMaster om = new OrderMaster
-                {
-                    OrderGuid = Guid.NewGuid().ToString(),
-                    OrderDate = SharedVariables.CurrentDate(),
-                    CustomerRefference = cust != null ? cust.PhoneNumber : "None",
-                    TicketTable = Label_Table.Content.ToString(),
-                    OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
-                    UserServing = SharedVariables.CurrentUser.UserName,
-                    PaymentDate = SharedVariables.CurrentDate(),
-                    IsPrinted = false,
-                    OrderNo = ordno,
-                    Workperiod = w.WorkperiodName,
-                    IsKitchenServed = false,
-                    IsInPreparation = false
-                };
-                foreach (var a in OrderItems)
-                {
-                    a.OrderID = om.OrderNo; 
-                }
-                foreach (var x in OrderItems)
-                {
-                    total += (int)(x.Quantity * x.Price);
-                }  
-                using (var db = new PosDbContext())
-                {
-                    db.OrderMaster.Add(om);
-                    db.OrderItem.AddRange(OrderItems);
-                    db.SaveChanges();
-                }
-                MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                OrderItems.Clear();
-                ResetForm();
             }
             catch (Exception ex)
             {

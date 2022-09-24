@@ -185,6 +185,14 @@
     <Compile Include="Migrations\202209201403229_M11.designer.cs">
       <DependentUpon>202209201403229_M11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209230929067_M12.cs" />
+    <Compile Include="Migrations\202209230929067_M12.designer.cs">
+      <DependentUpon>202209230929067_M12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209240939023_M13.cs" />
+    <Compile Include="Migrations\202209240939023_M13.designer.cs">
+      <DependentUpon>202209240939023_M13.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="UserInterface\Accounts\AccountsDashboard.xaml.cs">
@@ -602,6 +610,12 @@
     </Compile>
     <EmbeddedResource Include="Migrations\202209201403229_M11.resx">
       <DependentUpon>202209201403229_M11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209230929067_M12.resx">
+      <DependentUpon>202209230929067_M12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209240939023_M13.resx">
+      <DependentUpon>202209240939023_M13.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

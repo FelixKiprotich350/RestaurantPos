@@ -27,6 +27,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class CheckoutTicket : Page
     {
+        readonly Random R = new Random();
         public CheckoutTicket()
         {
             InitializeComponent();
@@ -113,6 +114,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     PaymentMasterGuid = Guid.NewGuid().ToString(),
                     TicketNo = TextBlock_TicketNo.Text,
+                    TransNo =  "C"+SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString() ,
                     PosUser =  SharedVariables.CurrentUser.UserName.ToString(),
                     TotalAmountPaid = pm.Sum(b => b.Amount),
                     TotalAmountCharged = total,
@@ -127,12 +129,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         PaymentGuid = Guid.NewGuid().ToString(),
                         ParentOrderNo = TextBlock_TicketNo.Text,
-                        ParentPaymasterGuid = tpm.PaymentMasterGuid,
+                        ParentTransNo = tpm.TransNo,
                         PrimaryRefference = p.PrimaryRefference,
                         Method = p.PaymentMethodName,
                         AmountPaid = p.Amount,
                         PaymentDate = Tdate,
-                        ReceivingUsername = GlobalVariables.SharedVariables.CurrentUser.UserName,
+                        ReceivingUsername = SharedVariables.CurrentUser.UserName,
                         SecondaryRefference = p.SecondaryRefference
                     };
                     tpi.Add(t);

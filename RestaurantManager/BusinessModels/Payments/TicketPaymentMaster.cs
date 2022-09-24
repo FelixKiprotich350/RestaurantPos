@@ -14,6 +14,9 @@ namespace RestaurantManager.BusinessModels.Payments
         public string PaymentMasterGuid { get; set; }
         [Required]
         [MaxLength(100)]
+        public string TransNo { get; set; }
+        [Required]
+        [MaxLength(100)]
         public string TicketNo { get; set; }
         [Required] 
         public decimal TotalAmountPaid { get; set; }

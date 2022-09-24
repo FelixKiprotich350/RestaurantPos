@@ -17,7 +17,7 @@ namespace RestaurantManager.BusinessModels.Payments
         public string ParentOrderNo { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ParentPaymasterGuid { get; set; }
+        public string ParentTransNo { get; set; }
         [Required]
         public decimal AmountPaid { get; set; }
         [Required]

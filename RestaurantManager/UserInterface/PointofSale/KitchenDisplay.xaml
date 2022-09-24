@@ -42,7 +42,7 @@
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <!--<WrapPanel/>-->
-                        <UniformGrid Columns="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+                        <UniformGrid Columns="4" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>

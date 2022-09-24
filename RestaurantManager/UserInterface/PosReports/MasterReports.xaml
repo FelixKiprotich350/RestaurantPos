@@ -20,7 +20,6 @@
                 <ListViewItem x:Name="Item_TicketReports" Content="Tickets" Height="48"/>
                 <ListViewItem x:Name="Item_PaymentsReports" Content="Payments" Height="48"/>
                 <ListViewItem x:Name="Item_UsersReports" Content="Users" Height="48"/>
-                <ListViewItem Content="Analysis" Height="48"  />
             </ListView>
         </Grid>
         <Grid Grid.Column="1" Background="White">
