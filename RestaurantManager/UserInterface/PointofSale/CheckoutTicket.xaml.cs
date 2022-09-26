@@ -285,7 +285,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //get ticket items
                 using (var db = new PosDbContext())
                 {
-                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo).ToList();
+                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
                     Datagrid_TicketItems.ItemsSource = a;
                 }
                 //find total

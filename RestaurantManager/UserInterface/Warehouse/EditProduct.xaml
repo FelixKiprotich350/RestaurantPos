@@ -8,7 +8,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
         Title="Update Product" Height="300" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
     <Grid Margin="0,0,4,0">
-        <UniformGrid Rows="5" Columns="1">
+        <UniformGrid Rows="6" Columns="1">
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
                 <Label DockPanel.Dock="Left" Content="Product Name" Width="120" FontSize="16"/>
                 <TextBox x:Name="Textbox_Productname" FontSize="16" />
@@ -35,6 +35,10 @@
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
                 <Label DockPanel.Dock="Left" Content="Product Price" Width="120" FontSize="16"/>
                 <TextBox  x:Name="Textbox_ProductPrice" FontSize="16" />
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Packaging Price" Width="120" FontSize="16"/>
+                <TextBox  x:Name="Textbox_ProductPackagePrice" FontSize="16" />
             </DockPanel>
             <UniformGrid Rows="1" Columns="2">
                 <Button x:Name="Button_Close" Content="Close" Style="{DynamicResource Button_Cancel}" Width="150" Click="Button_Close_Click"/>

@@ -4,14 +4,18 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Accounts"
-      mc:Ignorable="d"  Loaded="Page_Loaded"
+      mc:Ignorable="d"  Loaded="Page_Loaded" FontSize="16"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GenerateVouchers">
-
+    <Page.Resources>
+        <Style TargetType="DatePicker"  >
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
@@ -55,25 +59,62 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/> 
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="New Batch Details" Margin="5">
                 <StackPanel Margin="0,4,0,0">
-                    <Label Content="Voucher Type"/>
-                    <TextBox x:Name="TextBox_VoucherType" IsReadOnly="True"/>
-                    <Label Content="Voucher Amount"/>
-                    <TextBox x:Name="TextBox_VoucherAmount"/>
-                    <Label Content="Voucher Quantity"/>
-                    <TextBox x:Name="TextBox_VoucherQuantity"/>
-                    <Label Content="Batch Description"/>
+                    <Label Content="Discount Type"/>
+                    <ComboBox x:Name="ComboBox_VoucherType"  IsReadOnly="True" SelectionChanged="ComboBox_VoucherType_SelectionChanged"/>
+                    <Label Content="Discount Amount"/>
+                    <TextBox x:Name="TextBox_VoucherAmount"/> 
+                    <Label Content=" Description"/>
                     <TextBox x:Name="TextBox_BatchDescription"/>
-                    <Label Content="Voucher Expiry Date"/>
-                    <DatePicker x:Name="DatePicker_BatchExpiryDate"/>
+                    <UniformGrid Rows="2" Columns="1">
+                        <Label Content="Start Date"/>
+                        <DatePicker x:Name="DatePicker_StartDate"/>
+                    </UniformGrid>
+                    <UniformGrid Rows="2" Columns="1">
+                        <Label Content="End Date"/>
+                        <DatePicker x:Name="DatePicker_EndDate"/>
+                    </UniformGrid>
+                  
+                   
                 </StackPanel>
             </GroupBox>
-            <Grid Grid.Row="1">
-                <Button x:Name="Button_CreateVouchers" Content="Create Vouchers" Style="{DynamicResource Button_Accept}" Height="Auto" Width="150" Click="Button_CreateVouchers_Click"/>
+            <GroupBox Grid.Row="1" Header="Conditions">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/> 
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="Ugrid_Productitem" Visibility="Collapsed">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Product Items"/>
+                        <Button Grid.Row="1" x:Name="Button_SelectProducts" Style="{x:Null}" Content="Select" Click="Button_SelectProducts_Click"/>
+                        <ListView Grid.Row="2" x:Name="ListView_ProductstoDiscount">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding ProductName}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                    <Grid  Grid.Row="1" x:Name="Ugrid_BulkSales"  Visibility="Collapsed" VerticalAlignment="Top">
+                        <Label Content="Bulk Sales Determinat "/>
+                        <TextBox x:Name="TextBox_BulkSalesLimit"/>
+                    </Grid>
+
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="2">
+                <Button x:Name="Button_CreateVouchers" Content="Save" Style="{DynamicResource Button_Accept}" Height="Auto" Width="150" Click="Button_CreateVouchers_Click"/>
             </Grid>
         </Grid>
     </Grid>

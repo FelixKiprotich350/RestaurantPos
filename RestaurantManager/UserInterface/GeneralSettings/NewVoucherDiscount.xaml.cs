@@ -14,15 +14,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.Warehouse
+namespace RestaurantManager.UserInterface.GeneralSettings
 {
     /// <summary>
     /// Interaction logic for NewMenuProduct.xaml
     /// </summary>
-    public partial class NewMenuProduct : Window
+    public partial class NewVoucherDiscount : Window
     {
         bool returnvalue = false;
-        public NewMenuProduct()
+        public NewVoucherDiscount()
         {
             InitializeComponent();
         }

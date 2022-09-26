@@ -34,7 +34,9 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         [MaxLength(100)]
         public string UserServing { get; set; }
-
+        [Required]
+        [MaxLength(500)]
+        public string VoidReason { get; set; } 
         [Required]
         public bool IsKitchenServed { get; set; }
 

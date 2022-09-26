@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.PosReports"
-      mc:Ignorable="d" FontSize="16"
+      mc:Ignorable="d" FontSize="16" Loaded="Page_Loaded"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TicketsReports">
 
@@ -38,7 +38,7 @@
             </GroupBox>
 
         </Grid >
-        <TabControl x:Name="TabControl_SalesTabControl" Style="{x:Null}" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{DynamicResource KD_Color1}" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_TicketsTabControl_SelectionChanged">
+        <TabControl x:Name="TabControl_TicketsTabControl" Style="{x:Null}" Grid.Row="1" HorizontalContentAlignment="Stretch" BorderThickness="0" Background="{DynamicResource KD_Color1}" VerticalContentAlignment="Stretch" SelectionChanged="TabControl_TicketsTabControl_SelectionChanged" SelectedIndex="0">
             <TabItem Padding="6,2" HorizontalContentAlignment="Stretch" >
                 <TabItem.Header>
                     <Label Content="All Tickets" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
@@ -48,13 +48,13 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid Grid.Row="0"  x:Name="Datagrid_OrderItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
+                    <DataGrid Grid.Row="0"  x:Name="Datagrid_CompletedTickets" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding ParentProductItemGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="Product" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding  Quantity}" Header="Qty" Width="Auto" MinWidth="150" IsReadOnly="True"/>
-                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" MinWidth="150" Width="Auto" />
+                            <DataGridTextColumn Binding="{Binding OrderNo}"  Header="TicketNo" IsReadOnly="True" Width="80" CanUserSort="False" />
+                            <DataGridTextColumn Binding="{Binding OrderDate}"  Header="OrderDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  UserServing}" Header="User" Width="Auto" MinWidth="150" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Workperiod}" Header="WorkPeriod" IsReadOnly="True" MinWidth="150" Width="Auto" />
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCell" >
@@ -70,16 +70,13 @@
                         </DataGrid.Resources>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="4">
+                        <UniformGrid Columns="3">
                             <Separator/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Items : " FontSize="20"/>
-                                <Label x:Name="Label_Products_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                                <Label x:Name="Label_CompletedTicketsCount_Count" Content="0" FontWeight="Bold" FontSize="20"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Total Sales: " FontSize="20"/>
-                                <Label x:Name="Label_Products_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
-                            </StackPanel>
+                          
                             <Separator/>
                         </UniformGrid>
                     </GroupBox>
@@ -95,27 +92,23 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="Datagrid_AllSales" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                    <DataGrid x:Name="Datagrid_MergedTickets" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="100" CanUserSort="False" IsReadOnly="True"/>
-                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding OrderNo}"  Header="TicketNo" IsReadOnly="True" Width="*" CanUserSort="False" />
+                            <DataGridTextColumn Binding="{Binding OrderDate}"  Header="OrderDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  UserServing}" Header="User" Width="Auto" MinWidth="150" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Workperiod}" Header="WorkPeriod" IsReadOnly="True" MinWidth="150" Width="Auto" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="4">
+                        <UniformGrid Columns="3">
                             <Separator/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Sales Count : " FontSize="20"/>
-                                <Label x:Name="Label_Allsales_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                                <Label Content="Total Items : " FontSize="20"/>
+                                <Label x:Name="Label_MergedTicketsCount_Count" Content="0" FontWeight="Bold" FontSize="20"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Total Sales: " FontSize="20"/>
-                                <Label x:Name="Label_Allsales_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
-                            </StackPanel>
+
                             <Separator/>
                         </UniformGrid>
                     </GroupBox>
@@ -131,26 +124,24 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="DataGrid_PeruserSales" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                    <DataGrid x:Name="Datagrid_VoidedTickets" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding FullName }"  Header="Full Name" IsReadOnly="True" Width="6*" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding UserName }"  Header="UserName" IsReadOnly="True" Width="4*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding SalesCount,StringFormat=N2}" Header="Sales Count" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding TotalSales,StringFormat=N2}" Header="Total Sales" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding OrderNo}"  Header="TicketNo" IsReadOnly="True" Width="150" CanUserSort="False" />
+                            <DataGridTextColumn Binding="{Binding OrderDate}"  Header="OrderDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  UserServing}" Header="User" Width="Auto" MinWidth="150" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Workperiod}" Header="WorkPeriod" IsReadOnly="True" MinWidth="150" Width="Auto" />
+                            <DataGridTextColumn  Binding="{Binding Workperiod}" Header="VoidReason" IsReadOnly="True" MinWidth="150" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="4">
+                        <UniformGrid Columns="3">
                             <Separator/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Items : " FontSize="20"/>
-                                <Label x:Name="Label_User_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                                <Label x:Name="Label_VoidedTicketsCount_Count" Content="0" FontWeight="Bold" FontSize="20"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Total Sales: " FontSize="20"/>
-                                <Label x:Name="Label_user_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
-                            </StackPanel>
+
                             <Separator/>
                         </UniformGrid>
                     </GroupBox>
@@ -165,26 +156,22 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="Datagrid_CustomerSales" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                    <DataGrid x:Name="Datagrid_VoidedItemsTickets" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Phone }"  Header="CustNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding FullName }"  Header="Cust Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding AppearanceCount,StringFormat=N2}" Header="Count" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding OrderNo}"  Header="TicketNo" IsReadOnly="True" Width="100" CanUserSort="False" />
+                            <DataGridTextColumn Binding="{Binding ItemName}"  Header="ItemName" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  UserServing}" Header="Qty" Width="50" MinWidth="150" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Workperiod}" Header="VoidReason" IsReadOnly="True" MinWidth="150" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="4">
+                        <UniformGrid Columns="3">
                             <Separator/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Customers : " FontSize="20"/>
-                                <Label x:Name="Label_Customer_Count" Content="0" FontWeight="Bold" FontSize="20"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Total Sales: " FontSize="20"/>
-                                <Label x:Name="Label_Customer_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
-                            </StackPanel>
+                                <Label x:Name="Label_VoidedItemsCount_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                            </StackPanel> 
                             <Separator/>
                         </UniformGrid>
                     </GroupBox>

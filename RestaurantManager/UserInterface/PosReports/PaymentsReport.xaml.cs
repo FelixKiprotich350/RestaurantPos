@@ -23,9 +23,7 @@ namespace RestaurantManager.UserInterface.PosReports
     /// </summary>
     public partial class PaymentsReport : Page
     {
-        readonly List<dynamic> MainList = new List<dynamic>();
-        //List<TicketPaymentItem> ListofPayItems = new List<TicketPaymentItem>();
-        //List<TicketPaymentMaster> ListofPayMaster = new List<TicketPaymentMaster>();
+        readonly List<dynamic> MainList = new List<dynamic>(); 
         public PaymentsReport()
         {
             InitializeComponent();
@@ -165,8 +163,8 @@ namespace RestaurantManager.UserInterface.PosReports
                 {
 
                     List<dynamic> percheckout = new List<dynamic>();
-                    var master = MainList.Select(k=>(TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
-                    var items = MainList.Select(k=>(TicketPaymentItem)k.tpi).ToList();
+                    var master = MainList.Select(k => (TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
+                    var items = MainList.Select(k => (TicketPaymentItem)k.tpi).ToList();
                     if (master.Count > 0)
                     {
                         decimal cash = 0;
@@ -192,14 +190,14 @@ namespace RestaurantManager.UserInterface.PosReports
                         Label_Transactions_Total.Content = totals.ToString();
                         Datagrid_Payments.ItemsSource = percheckout;
                     }
-                } 
+                }
                 else if (position == 1)
                 {
 
                     List<dynamic> cardpayments = new List<dynamic>();
                     List<dynamic> cardpaymentsdistincttotals = new List<dynamic>();
-                    var master = MainList.Select(k=>(TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
-                    var items = MainList.Select(k=>(TicketPaymentItem)k.tpi).ToList();
+                    var master = MainList.Select(k => (TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
+                    var items = MainList.Select(k => (TicketPaymentItem)k.tpi).ToList();
                     var cardpaymentsonly = MainList.Select(k => (TicketPaymentItem)k.tpi).Where(k => k.Method.ToLower().Contains(PosEnums.TicketPaymentMethods.Card.ToString().ToLower())).ToList();
                     var cardpaymentsdistinctt = cardpaymentsonly.Distinct(new PaymentItem_method_Comparer());
                     if (master.Count > 0)
@@ -213,12 +211,12 @@ namespace RestaurantManager.UserInterface.PosReports
                             {
                                 cardpayments.Add(new { Tpi = y, Tpm = x });
                             }
-                           
+
                         }
                         decimal totaldistinct = 0;
                         foreach (var x in cardpaymentsdistinctt)
                         {
-                            decimal t= cardpaymentsonly.Where(k => k.Method == x.Method).Sum(j=>j.AmountPaid);
+                            decimal t = cardpaymentsonly.Where(k => k.Method == x.Method).Sum(j => j.AmountPaid);
                             totaldistinct += t;
                             cardpaymentsdistincttotals.Add(new { CardName = x.Method, Total = t });
                         }
@@ -226,14 +224,13 @@ namespace RestaurantManager.UserInterface.PosReports
                         Datagrid_BankCardsAll.ItemsSource = cardpayments;
                         Datagrid_BankCardsWise.ItemsSource = cardpaymentsdistincttotals;
                     }
-                } 
-
+                }
                 else if (position == 2)
                 {
 
-                    List<dynamic> mpesapayments = new List<dynamic>(); 
-                    var master = MainList.Select(k=>(TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
-                    var items = MainList.Select(k=>(TicketPaymentItem)k.tpi).ToList();
+                    List<dynamic> mpesapayments = new List<dynamic>();
+                    var master = MainList.Select(k => (TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
+                    var items = MainList.Select(k => (TicketPaymentItem)k.tpi).ToList();
                     var mpesapaymentsonly = MainList.Select(k => (TicketPaymentItem)k.tpi).Where(k => k.Method.ToLower() == PosEnums.TicketPaymentMethods.Mpesa.ToString().ToLower()).ToList();
                     if (master.Count > 0)
                     {
@@ -243,18 +240,45 @@ namespace RestaurantManager.UserInterface.PosReports
                         {
                             var a = mpesapaymentsonly.Where(k => k.ParentTransNo == x.TransNo).ToList();
                             total += a.Sum(j => j.AmountPaid);
-                            count += a.Count; 
+                            count += a.Count;
                             foreach (var y in a)
                             {
                                 mpesapayments.Add(new { Tpi = y, Tpm = x });
                             }
-                           
+
                         }
                         Label_MpesaCount_Count.Content = count.ToString();
                         Label_Mpesa_Total.Content = total.ToString();
                         Datagrid_MpesaPayments.ItemsSource = mpesapayments;
                     }
-                } 
+                }
+                else if (position == 3)
+                {
+
+                    List<dynamic> voucherpayments = new List<dynamic>();
+                    var master = MainList.Select(k => (TicketPaymentMaster)k.tpm).Distinct(new PaymentMaster_Comparer()).ToList();
+                    var items = MainList.Select(k => (TicketPaymentItem)k.tpi).ToList();
+                    var voucherpaymentsonly = MainList.Select(k => (TicketPaymentItem)k.tpi).Where(k => k.Method.ToLower() == PosEnums.TicketPaymentMethods.Voucher.ToString().ToLower()).ToList();
+                    if (master.Count > 0)
+                    {
+                        decimal total = 0;
+                        int count = 0;
+                        foreach (var x in master)
+                        {
+                            var a = voucherpaymentsonly.Where(k => k.ParentTransNo == x.TransNo).ToList();
+                            total += a.Sum(j => j.AmountPaid);
+                            count += a.Count;
+                            foreach (var y in a)
+                            {
+                                voucherpayments.Add(new { Tpi = y, Tpm = x });
+                            }
+
+                        }
+                        Label_MpesaCount_Count.Content = count.ToString();
+                        Label_Mpesa_Total.Content = total.ToString();
+                        Datagrid_Vouchers.ItemsSource = voucherpayments;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -276,6 +300,7 @@ namespace RestaurantManager.UserInterface.PosReports
             }
 
         }
+
         public class PaymentItem_method_Comparer : IEqualityComparer<TicketPaymentItem>
         {
             public bool Equals(TicketPaymentItem x, TicketPaymentItem y)

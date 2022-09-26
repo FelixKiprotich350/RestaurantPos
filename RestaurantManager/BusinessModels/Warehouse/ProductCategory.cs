@@ -22,6 +22,8 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [Required] 
         public DateTime CreationDate { get; set; }
         [NotMapped]
+        public bool IsSelected { get; set; }
+        [NotMapped]
         public List<MenuProductItem> MenuItems { get; set; }
 
         public void GetAllMenuItems(string catid,bool AvailableOnly)

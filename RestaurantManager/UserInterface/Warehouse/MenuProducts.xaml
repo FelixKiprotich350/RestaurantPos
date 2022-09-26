@@ -29,7 +29,8 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
                         <DataGridTextColumn Binding="{Binding ProductName }"  Header="Product Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding ProductPrice,StringFormat=N2}" Header="ProductPrice" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding PackagingCost,StringFormat=N2}" Header="PackageCost" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding RemainingQuantity }"  Header="R.Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding CategoryName}" Header="Category" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding AvailabilityStatus}" Header="Status" IsReadOnly="True" Width="100" CanUserSort="False"/>

@@ -29,7 +29,14 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public decimal Total { get; set; }
         [Required]
         [MaxLength(20)]
-        public string ServiceType { get; set; }  
-         
+        public string ServiceType { get; set; }
+
+        [Required]
+        [MaxLength(500)]
+        public string VoidReason { get; set; }
+
+        [Required]
+        public bool IsItemVoided { get; set; }
+
     }
 }

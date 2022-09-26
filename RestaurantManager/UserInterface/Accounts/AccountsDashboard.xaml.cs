@@ -1,7 +1,6 @@
 ﻿using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.Security;
-using RestaurantManager.GlobalVariables;
-using RestaurantManager.UserInterface.Accounts.SubWindows;
+using RestaurantManager.GlobalVariables; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -194,35 +193,8 @@ namespace RestaurantManager.UserInterface.Accounts
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Button_Cash_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                CashPaymentsView cp = new CashPaymentsView();
-                cp.ShowDialog();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Button_Voucher_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Cards_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Mpesa_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
  
+    
         private void RadioButton_SingleDay_Checked(object sender, RoutedEventArgs e)
         {
             try

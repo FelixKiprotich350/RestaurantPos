@@ -25,10 +25,10 @@ namespace RestaurantManager.GlobalVariables
 
         public enum VoucherTypes
         {
-            CashVoucher,
-            GiftVoucher,
-            LoyaltyVoucher,
-            SpecialDayVoucher
+            CustomerRedeemed,
+            ProductDiscount,
+            SpecialDayOffer,
+            BulkSales
         }
 
         public enum VoucherStatuses

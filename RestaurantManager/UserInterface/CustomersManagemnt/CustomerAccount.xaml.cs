@@ -52,37 +52,18 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     return;
                 }
                 DateTime dtime = GlobalVariables.SharedVariables.CurrentDate();
-                VouchersBatch v = new VouchersBatch
-                {
-                    BatchGuid = Guid.NewGuid().ToString(),
-                    BatchNumber = R.Next(100000, 999999).ToString(),
-                    VoucherType = GlobalVariables.PosEnums.VoucherTypes.LoyaltyVoucher.ToString(),
-                    CreatedBy = GlobalVariables.SharedVariables.CurrentUser.UserName,
-                    VoucherAmount = rs.RedeemPoints,
-                    VouchersCount = 1,
-                    BatchDescription = "Redeemed from customers account",
-                    CreationDate = GlobalVariables.SharedVariables.CurrentDate(),
-                    ExpiryDate = GlobalVariables.SharedVariables.CurrentDate().AddYears(10)
-                };
-                List<int> UniqueList = new List<int>();
-                while (UniqueList.Count < v.VouchersCount)
-                {
-                    int y = R.Next(10000, 99999);
-                    if (!UniqueList.Contains(y))
-                    {
-                        UniqueList.Add(y);
-                    }
-                }
+               
+             
                 VoucherCard vc = new VoucherCard
                 {
-                    VoucherBatchNo = v.BatchNumber,
-                    VoucherType = v.VoucherType,
-                    VoucherAmount = v.VoucherAmount,
-                    VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Available.ToString(),
-                    CreationDate = dtime,
-                    ExpiryDate = v.ExpiryDate,
-                    VoucherGuid = Guid.NewGuid().ToString(),
-                    VoucherNumber = v.BatchNumber + "-" + UniqueList[0]
+                    //VoucherBatchNo = v.BatchNumber,
+                    //VoucherType = v.VoucherType,
+                    //VoucherAmount = v.VoucherAmount,
+                    //VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Available.ToString(),
+                    //CreationDate = dtime,
+                    //ExpiryDate = v.StartDate,
+                    //VoucherGuid = Guid.NewGuid().ToString(),
+                    //VoucherNumber = v.BatchNumber + "-" + UniqueList[0]
                 };
                 BusinessModels.CustomersManagement.CustomerAccount ca = new BusinessModels.CustomersManagement.CustomerAccount
                 {
@@ -98,8 +79,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 using (var db = new PosDbContext())
                 {
                     db.CustomerPointsAccount.Add(ca);
-                    db.VoucherCard.Add(vc);
-                    db.VouchersBatch.Add(v);
+                    db.VoucherCard.Add(vc); 
                     db.SaveChanges();
                 }
                 MessageBox.Show("Successfully Redeemed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);

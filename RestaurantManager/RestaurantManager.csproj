@@ -181,17 +181,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209201403229_M11.cs" />
-    <Compile Include="Migrations\202209201403229_M11.designer.cs">
-      <DependentUpon>202209201403229_M11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209230929067_M12.cs" />
-    <Compile Include="Migrations\202209230929067_M12.designer.cs">
-      <DependentUpon>202209230929067_M12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209240939023_M13.cs" />
-    <Compile Include="Migrations\202209240939023_M13.designer.cs">
-      <DependentUpon>202209240939023_M13.cs</DependentUpon>
+    <Compile Include="Migrations\202209252025419_M16.cs" />
+    <Compile Include="Migrations\202209252025419_M16.designer.cs">
+      <DependentUpon>202209252025419_M16.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -204,8 +196,8 @@
     <Compile Include="UserInterface\Accounts\GenerateVouchers.xaml.cs">
       <DependentUpon>GenerateVouchers.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Accounts\SubWindows\CashPaymentsView.xaml.cs">
-      <DependentUpon>CashPaymentsView.xaml</DependentUpon>
+    <Compile Include="UserInterface\Accounts\SelectDiscountProducts.xaml.cs">
+      <DependentUpon>SelectDiscountProducts.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Accounts\VouchersList.xaml.cs">
       <DependentUpon>VouchersList.xaml</DependentUpon>
@@ -237,11 +229,17 @@
     <Compile Include="UserInterface\GeneralSettings\MailSettings.xaml.cs">
       <DependentUpon>MailSettings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\GeneralSettings\NewVoucherDiscount.xaml.cs">
+      <DependentUpon>NewVoucherDiscount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\GeneralSettings\TablesEntities.xaml.cs">
       <DependentUpon>TablesEntities.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\ServiceType.xaml.cs">
+      <DependentUpon>ServiceType.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\KitchenDisplay.xaml.cs">
       <DependentUpon>KitchenDisplay.xaml</DependentUpon>
@@ -393,9 +391,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Accounts\SubWindows\CashPaymentsView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="UserInterface\Accounts\SelectDiscountProducts.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\Accounts\VouchersList.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -437,6 +435,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\GeneralSettings\NewVoucherDiscount.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\GeneralSettings\TablesEntities.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -444,6 +446,10 @@
     <Page Include="UserInterface\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PointofSale\ServiceType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\PointofSale\KitchenDisplay.xaml">
       <SubType>Designer</SubType>
@@ -608,14 +614,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209201403229_M11.resx">
-      <DependentUpon>202209201403229_M11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209230929067_M12.resx">
-      <DependentUpon>202209230929067_M12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209240939023_M13.resx">
-      <DependentUpon>202209240939023_M13.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209252025419_M16.resx">
+      <DependentUpon>202209252025419_M16.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

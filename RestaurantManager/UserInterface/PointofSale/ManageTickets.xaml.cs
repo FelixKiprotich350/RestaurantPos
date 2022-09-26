@@ -94,7 +94,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //get ticket items
                 using (var db = new PosDbContext())
                 {
-                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo).ToList();
+                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
                     Datagrid_OrderItems.ItemsSource = a;
                 }
                 //find total
@@ -131,7 +131,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     using (var db = new PosDbContext())
                     {
-                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus = "Cancelled";
+                        db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus = PosEnums.OrderTicketStatuses.Voided.ToString();
                         db.SaveChanges();
                     }
                     MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -256,19 +256,20 @@ namespace RestaurantManager.UserInterface.PointofSale
                         using (var db = new PosDbContext())
                         {
                             OrderItem x = db.OrderItem.Where(a => a.OrderID == TextBlock_TicketNo.Text.Trim() && a.ItemRowGuid == o.ItemRowGuid).First();
-                            db.OrderItem.Remove(x);
-                            OrderItemVoided ov = new OrderItemVoided
-                            {
-                                ItemRowGuid = x.ItemRowGuid,
-                                ParentProductItemGuid = x.ParentProductItemGuid,
-                                ItemName = x.ItemName,
-                                OrderID = x.OrderID,
-                                VoidTime = GlobalVariables.SharedVariables.CurrentDate(),
-                                ApprovedBy = p.ApprovingAdmin,
-                                VoidReason = ei.Textbox_Description.Text,
-                                WorkPeriod = wp.WorkperiodName
-                            };
-                            db.OrderItemVoided.Add(ov);
+                            x.IsItemVoided = true;
+                            x.VoidReason = ei.Textbox_Description.Text; 
+                            //OrderItemVoided ov = new OrderItemVoided
+                            //{
+                            //    ItemRowGuid = x.ItemRowGuid,
+                            //    ParentProductItemGuid = x.ParentProductItemGuid,
+                            //    ItemName = x.ItemName,
+                            //    OrderID = x.OrderID,
+                            //    VoidTime = GlobalVariables.SharedVariables.CurrentDate(),
+                            //    ApprovedBy = p.ApprovingAdmin,
+                            //    VoidReason = ei.Textbox_Description.Text,
+                            //    WorkPeriod = wp.WorkperiodName
+                            //};
+                            //db.OrderItemVoided.Add(ov);
                             db.SaveChanges();
                         }
                         MessageBox.Show("Item Voided Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);

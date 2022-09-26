@@ -10,9 +10,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3*" MinWidth="150"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" CornerRadius="12" Background="White" Padding="12">
@@ -100,9 +100,9 @@
                     <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding MenuCategories}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
                         <ListView.ItemTemplate>
                             <DataTemplate >
-                                <Expander     Name="myExpander"  HorizontalAlignment="Stretch" 
-                                           Foreground="Black" IsExpanded="False" OverridesDefaultStyle="True"  
-                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="-10" ScrollViewer.CanContentScroll="False"  FontWeight="Normal" Background="White" >
+                                <Expander     Name="myExpander"  HorizontalAlignment="Stretch" Tag="{Binding CategoryGuid}"
+                                           Foreground="Black" IsExpanded="{Binding IsSelected}" OverridesDefaultStyle="True"  
+                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="-10" ScrollViewer.CanContentScroll="True"  FontWeight="Normal" Background="White" Expanded="Expander_Expanded" >
                                     <Expander.Header>
                                         <Label  Content="{Binding CategoryName}" Foreground="Black" Padding="5"    FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="20"/>
 
@@ -114,7 +114,7 @@
                                                     <Border Height="Auto" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FFFFE4BA">
                                                         <TextBlock Tag="{Binding ProductGuid}" Margin="8"  Text="{Binding ProductName}" 
                                                        VerticalAlignment="Center" 
-                                                       Foreground="Black" HorizontalAlignment="Center" FontWeight="Normal" FontSize="16"  />
+                                                       Foreground="Black" HorizontalAlignment="Center" FontWeight="Normal" FontSize="20"  />
                                                     </Border>
 
                                                 </DataTemplate>
@@ -124,6 +124,11 @@
                                 </Expander>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+                        <ListView.Resources>
+                            <Style TargetType="ScrollBar">
+                                <Setter Property="Width" Value="32"/>
+                            </Style>
+                        </ListView.Resources>
                     </ListView>
                 </Grid>
             </Grid>

@@ -15,21 +15,23 @@ namespace RestaurantManager.BusinessModels.Vouchers
         public string BatchGuid { get; set; }
         [Required]
         [MaxLength(200)]
-        public string BatchNumber { get; set; }
-        [Required] 
-        public int VouchersCount { get; set; }
+        public string BatchNumber { get; set; } 
         [Required]
         [MaxLength(100)]
         public string VoucherType { get; set; }
         [Required]
         public decimal VoucherAmount { get; set; }
         [Required]
+        public decimal BulkSalesLimitAmount { get; set; }
+        [Required]
         [MaxLength(100)]
         public string CreatedBy { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         [Required]
-        public DateTime ExpiryDate { get; set; }
+        public DateTime StartDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
         [Required]
         [MaxLength(500)]
         public string BatchDescription { get; set; }

@@ -168,10 +168,10 @@ namespace RestaurantManager
                         {
                             Frame1.Content = UiItem;
                         }
-                        else
-                        {
-                            MessageBox.Show("The following is activated");
-                        }
+                        //else
+                        //{
+                        //    MessageBox.Show("The following is activated");
+                        //}
                     }
                 }
                 else

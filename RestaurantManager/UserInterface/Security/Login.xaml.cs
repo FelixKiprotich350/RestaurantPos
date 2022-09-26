@@ -87,6 +87,11 @@ namespace RestaurantManager.UserInterface.Security
                 string help = "\nKindly contact Developer for HELP!";
                 MessageBox.Show(ex.Message + help, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                PasswordBox_UserPin.Password = "1234";
+                Button_Login_Click(new object(), new RoutedEventArgs());
+            }
         }
 
         public void Button_Login_Click(object sender, RoutedEventArgs e)

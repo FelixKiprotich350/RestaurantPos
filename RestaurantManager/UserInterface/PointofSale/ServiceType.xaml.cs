@@ -17,16 +17,15 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// <summary>
     /// Interaction logic for EditOrderItem.xaml
     /// </summary>
-    public partial class EditOrderItemQuantity : Window
-    {
-        public string ReturningAction = ""; 
-        public int ReturningQuantity=1;
-        public EditOrderItemQuantity()
+    public partial class ServiceType : Window
+    { 
+        public string ItemServiceType = "";
+        public int ItemQty = 1;
+        public ServiceType()
         {
             InitializeComponent();
         }
-
-       
+         
 
         private void Buton_Add_Click(object sender, RoutedEventArgs e)
         {
@@ -49,19 +48,25 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Button_Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+ 
 
         private void Button_Accept_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                ReturningAction = "Update";
-                ReturningQuantity = Convert.ToInt32(TextBox_Quantity.Text); 
-                this.Close();
+            { 
+                if ((bool)CheckBox_CarryOut.IsChecked)
+                {
+                    ItemServiceType = "Out"; 
+                    CheckBox_EatIn.IsChecked = false;
+
+                }
+                else
+                {
+                    ItemServiceType = "In"; 
+                    CheckBox_CarryOut.IsChecked = false;
+                }
+                ItemQty = Convert.ToInt32(TextBox_Quantity.Text);
+                this.DialogResult = true;
             }
             catch (Exception ex)
             {
@@ -69,21 +74,25 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_Delete_Click(object sender, RoutedEventArgs e)
+        
+        private void CheckBox_CarryOut_Checked(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                if (MessageBox.Show("Are you sure you want to remove this item ?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question,MessageBoxResult.No) == MessageBoxResult.Yes)
-                {
-                    ReturningAction = "Delete";
-                    this.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            CheckBox_EatIn.IsChecked = false;
         }
- 
+
+        private void CheckBox_EatIn_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox_CarryOut.IsChecked = false;
+        }
+
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBox_Quantity.Text = "1";
+        }
     }
 }

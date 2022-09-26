@@ -95,7 +95,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 foreach (var x in master)
                 {
                     KitchenTicket kt = new KitchenTicket();
-                    var oi = db.OrderItem.Where(k => k.OrderID == x.OrderNo).ToList();
+                    var oi = db.OrderItem.Where(k => k.OrderID == x.OrderNo && k.IsItemVoided == false).ToList();
                     kt.Order = x;
                     kt.Orderitems = oi;
                     if (x.IsInPreparation)

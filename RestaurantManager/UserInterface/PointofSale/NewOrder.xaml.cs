@@ -32,11 +32,13 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
+        private ObservableCollection<ProductCategory> Category_Items;
         //54603228237,,,,0703070707
         public NewOrder()
         {
             InitializeComponent();
             OrderItems = new ObservableCollection<OrderItem>(); 
+            Category_Items = new ObservableCollection<ProductCategory>(); 
         }
         //R2711220900172
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -60,7 +62,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     var a = b.ProductCategory.ToList();
                     a.ForEach(s => s.GetAllMenuItems(s.CategoryGuid,true));
-                    Categories_ListView.ItemsSource = a;
+                    Category_Items= new ObservableCollection<ProductCategory>(a);
+                    Categories_ListView.ItemsSource = Category_Items;
                 }
                 Datagrid_OrderItems.ItemsSource = OrderItems;
             }
@@ -69,6 +72,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message);
             }
         }
+
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -77,8 +81,29 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if (Lv.SelectedItem == null)
                 {
                     return;
-                }
+                } 
+                decimal price = 0;
+                int icount = 0;
                 MenuProductItem mpi = (MenuProductItem)Lv.SelectedItem;
+                ServiceType st = new ServiceType();
+                if ((bool)st.ShowDialog())
+                {
+                    if (st.ItemServiceType == "Out")
+                    {
+                        price = mpi.TotalCost;
+                        icount = st.ItemQty;
+                    }
+                    else
+                    {
+                        price = mpi.ProductPrice;
+                        icount = st.ItemQty;
+                    }
+                }
+                else
+                {
+                    Lv.SelectedItem = null;
+                    return;
+                }
                 OrderItem i = new OrderItem();
                 using (var db = new PosDbContext())
                 {
@@ -89,20 +114,24 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.ItemRowGuid = Guid.NewGuid().ToString();
                         i.ParentProductItemGuid = b.ProductGuid;
                         i.ItemName = b.ProductName; 
-                        i.Quantity = 1;
-                        i.Price = b.Price;
-                        i.Total = b.Price;
-                        i.ServiceType = "In";
+                        i.Quantity = icount;
+                        i.Price = price;
+                        i.Total = price * icount;
+                        i.ServiceType = st.ItemServiceType;
+                        i.IsItemVoided = false;
+                        i.VoidReason = "None";
                     }
                     else
                     {
                         MessageBox.Show("The Item does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Lv.SelectedItem = null; 
                         return;
                     }
                 }
-                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid).Count() > 1)
+                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid && a.ServiceType==i.ServiceType).Count() >0)
                 {
                     MessageBox.Show("The Product has been added to the Order before!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Lv.SelectedItem = null;
                     return;
                 }
 
@@ -113,8 +142,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
+            } 
         }
 
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
@@ -151,9 +179,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                     else if (ei.ReturningAction == "Update")
                     {
                         decimal total = (decimal)ei.ReturningQuantity * o.Price;
-                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid).First().Quantity = ei.ReturningQuantity;
-                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid).First().ServiceType = ei.ItemServiceType;
-                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid).First().Total = total;
+                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid && h.ServiceType == o.ServiceType).First().Quantity = ei.ReturningQuantity;
+                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid && h.ServiceType == o.ServiceType).First().Total = total;
                         Datagrid_OrderItems.Items.Refresh();
                     }
                     CalculateTotal();
@@ -227,6 +254,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         PaymentDate = SharedVariables.CurrentDate(),
                         IsPrinted = false,
                         OrderNo = ordno,
+                        VoidReason = "None",
                         Workperiod = w.WorkperiodName,
                         IsKitchenServed = false,
                         IsInPreparation = false
@@ -255,6 +283,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         } 
+
         private Customer GetCustomer()
         {
             try
@@ -309,6 +338,26 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 LabelCustomer.Tag = null;
                 LabelCustomer.Content = "";
+            }
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Expander exp = sender as Expander;
+                foreach (var x in Category_Items)
+                {
+                    if (x.CategoryGuid != exp.Tag.ToString())
+                    {
+                        x.IsSelected = false;
+                    }
+                }
+                Categories_ListView.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

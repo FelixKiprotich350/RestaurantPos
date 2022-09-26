@@ -165,18 +165,17 @@
                 <TabItem.Header>
                     <Label Content="Vouchers"/>
                 </TabItem.Header>
-                <TabPanel>
-                    <DataGrid Grid.Row="1" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                <Grid>
+                    <DataGrid x:Name="Datagrid_Vouchers" Grid.Row="1" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="TransNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="Voucherode" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="VoucherType" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Amount" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding Path=Tpm.TransNo }"  Header="TransNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding Path=Tpi.PrimaryRefference }"  Header="Voucherode" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding Path=Tpi.AmountPaid,StringFormat=N2}" Header="Amount" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                </TabPanel>
+                </Grid>
             </TabItem>
         </TabControl>
 

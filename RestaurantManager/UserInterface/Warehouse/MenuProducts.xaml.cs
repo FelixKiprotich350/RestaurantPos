@@ -40,7 +40,6 @@ namespace RestaurantManager.UserInterface.Warehouse
             }
         }
         
-
         private void Textbox_SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -96,14 +95,19 @@ namespace RestaurantManager.UserInterface.Warehouse
                 string category = "";
                 ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
                 category = productCategory.CategoryGuid;
-                if (!decimal.TryParse(nmp.Textbox_Price.Text.Trim(), out decimal price))
+                if (!decimal.TryParse(nmp.Textbox_ProductPrice.Text.Trim(), out decimal price))
                 {
-                    MessageBox.Show("The Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The ProductPrice value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (!decimal.TryParse(nmp.Textbox_PackagingPrice.Text.Trim(), out decimal packagingprice))
+                {
+                    MessageBox.Show("The Packaging Cost value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 using (var db = new PosDbContext())
                 {
-                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available", Price = price, CategoryGuid = category });
+                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available", ProductPrice = price, PackagingCost = packagingprice, CategoryGuid = category });
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshMenuProducts();
@@ -140,6 +144,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void Button_Refresh_Click(object sender, RoutedEventArgs e)
         {
             RefreshMenuProducts();
@@ -171,6 +176,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                         MenuProductItem m = (MenuProductItem)Datagrid_ProductItems.SelectedItem;
                         EditProduct ed = new EditProduct(m);
                         ed.ShowDialog();
+                        RefreshMenuProducts();
                     }
                     
                 }

@@ -163,7 +163,7 @@ namespace RestaurantManager.UserInterface.PosReports
                     t = t.Where(a => a.om.OrderDate >= startdate && a.om.OrderDate <= enddate).ToList();
                 }
                 MainList.AddRange(t);
-                MessageBox.Show("Loading Done!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                //MessageBox.Show("Loading Done!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {

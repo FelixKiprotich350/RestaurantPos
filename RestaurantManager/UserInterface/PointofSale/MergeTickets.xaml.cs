@@ -153,7 +153,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //remove item and add voided item
                 using (var db = new PosDbContext())
                 {
-                    string ordno = GlobalVariables.SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
+                    string ordno = SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
                     string ordguid = Guid.NewGuid().ToString();
                     List<OrderItem> newitems = new List<OrderItem>();
                     foreach (var t in data)
@@ -161,13 +161,31 @@ namespace RestaurantManager.UserInterface.PointofSale
                         OrderMaster x = db.OrderMaster.Where(a => a.OrderNo == t.OrderNo).First();
                         x.MergedChild = ordguid;
                         x.OrderStatus = PosEnums.OrderTicketStatuses.Merged.ToString();
-                        db.OrderItem.Where(a => a.OrderID == x.OrderNo).ToList().ForEach(b => b.OrderID = ordno);
-                    }
+                        var y=db.OrderItem.Where(a => a.OrderID == x.OrderNo && a.IsItemVoided == false);
+                        foreach (var m in y)
+                        {
+                            OrderItem item = new OrderItem()
+                            {
+                                ItemRowGuid = Guid.NewGuid().ToString(),
+                                ItemName = m.ItemName,
+                                OrderID = ordno,
+                                IsItemVoided = false,
+                                ParentProductItemGuid = m.ParentProductItemGuid,
+                                Price = m.Price,
+                                Quantity = m.Quantity,
+                                VoidReason = "None",
+                                ServiceType = m.ServiceType,
+                                Total = m.Total
+                            };
+                            newitems.Add(item);
+                        }
+                    } 
                     OrderMaster om = new OrderMaster
                     {
                         OrderGuid = ordguid,
                         IsPrinted = false,
                         OrderNo = ordno,
+                        VoidReason = "None",
                         CustomerRefference = GetCustomer() != null ? GetCustomer().PhoneNumber : "None",
                         TicketTable = Button_SelectTable.Content.ToString(),
                         UserServing = GlobalVariables.SharedVariables.CurrentUser.UserName,
@@ -176,7 +194,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                         PaymentDate = GlobalVariables.SharedVariables.CurrentDate(),
                         Workperiod = wp.WorkperiodName
                     };
+
                     db.OrderMaster.Add(om);
+                    db.OrderItem.AddRange(newitems);
                     db.SaveChanges();
                 }
                 MessageBox.Show("Tickets Merged Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);

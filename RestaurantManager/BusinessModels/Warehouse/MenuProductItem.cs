@@ -22,9 +22,14 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [Required]
         [MinLength(5)]
         [MaxLength(100)]
-        public string AvailabilityStatus { get; set; }
+        public string AvailabilityStatus { get; set; } 
+
         [Required]
-        public decimal Price { get; set; }
+        public decimal ProductPrice { get; set; }
+        [Required]
+        public decimal PackagingCost { get; set; }
+        [Required]
+        public decimal TotalCost { get; set; }
         [Required]
         public int RemainingQuantity { get; set; }
         //properties not mapped 
