@@ -12,40 +12,33 @@ namespace RestaurantManager.BusinessModels.Security
     public class PosUser
     {
         [Key]
-        [MaxLength(100)]
-        [Column(Order =0)]
+        [MaxLength(100)] 
         public string UserGuid { get; set; }
         [Index]
-        [Required]
-        [Column(Order = 1)]
+        [Required] 
         public int UserPIN { get; set; }
         [Required]
         [Index]
-        [MaxLength(100)]
-        [Column(Order = 2)]
+        [MaxLength(100)] 
         public string UserName { get; set; }
 
-        [Required]
-        [MaxLength(500)]
-        [Column(Order = 3)]
+        [Required] 
         public string UserFullName { get; set; }
         [Required]
-        [Index]
+        [Index] 
         [MaxLength(100)]
-        [Column(Order = 4)]
         public string UserRole { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 5)]
+        [MaxLength(100)] 
         public string UserWorkingStatus { get; set; }
-        [Required] 
-        [Column(Order = 6)]
+        [Required]
+        [MaxLength(1000)] 
+        public string UserRights { get; set; }
+        [Required]  
         public bool UserIsDeleted { get; set; } 
-        [Required]
-        [Column(Order = 8)]
+        [Required] 
         public DateTime RegistrationDate { get; set; }
-        [Required]
-        [Column(Order = 9)]
+        [Required] 
         public DateTime LastLoginDate { get; set; } 
         [NotMapped]
         public List<PermissionMaster> User_Permissions_final { get; set; }

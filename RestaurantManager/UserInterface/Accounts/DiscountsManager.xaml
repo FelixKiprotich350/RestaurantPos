@@ -1,4 +1,4 @@
-﻿<Page x:Class="RestaurantManager.UserInterface.Accounts.GenerateVouchers"
+﻿<Page x:Class="RestaurantManager.UserInterface.Accounts.DiscountsManager"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -34,11 +34,12 @@
                         <DataGridTextColumn Binding="{Binding BatchGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding BatchNumber}"  Header="Batch" IsReadOnly="True" Width="150" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding VoucherAmount}"  Header="Amount" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding VouchersCount}"  Header="Quantity" IsReadOnly="True" Width="80" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding CreatedBy}"  Header="CreatedBy" IsReadOnly="True" Width="80" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding VoucherType}" Header="Type" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding CreatedBy}" Header="CreatedBy" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding IsActiveStatus}" Header="IsActive" IsReadOnly="True" Width="*" CanUserSort="False"/>
                         <DataGridTextColumn  Binding="{Binding CreationDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ReleaseDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding ExpiryDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="ExpiryDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding StartDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="StartDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding EndDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="EndDate" IsReadOnly="True" Width="*" CanUserSort="False"/>
                     </DataGrid.Columns>
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

@@ -98,7 +98,7 @@
                                 <ItemsControl x:Name="Category_Submenu" >
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Button Tag="{Binding PermissionGuid}" Margin="5,-2,5,0"  Content="{Binding PermissionShortName}" Click="Button_CategoryPermissionItem_Click" />
+                                        <Button Tag="{Binding PermissionCode}" Margin="5,-2,5,0"  Content="{Binding PermissionShortName}" Click="Button_CategoryPermissionItem_Click" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                     <ItemsControl.ItemsPanel>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.BusinessModels.Vouchers
 {
-    public class VouchersBatch
+    public class DiscountVoucher
     {
         [Key]
         [MaxLength(100)]
@@ -35,7 +35,8 @@ namespace RestaurantManager.BusinessModels.Vouchers
         [Required]
         [MaxLength(500)]
         public string BatchDescription { get; set; }
-
+        [Required]
+        public bool IsActiveStatus { get; set; }
 
         //properties not mapped  
         [NotMapped]

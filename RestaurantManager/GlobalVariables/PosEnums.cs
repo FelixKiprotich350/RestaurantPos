@@ -59,5 +59,15 @@ namespace RestaurantManager.GlobalVariables
             Open,
             Closed
         }
+        public enum UserAccountsRoles
+        {
+            Admin,
+            Supervisor,
+            Accountant,
+            Waiter,
+            Cashier,
+            KitchenCook,
+            StoreKeeper
+        }
     }
 }

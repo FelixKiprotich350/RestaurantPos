@@ -36,7 +36,7 @@ namespace RestaurantManager.UserInterface.Security
                 var allrights = pm.GetAllPermissions();
                 foreach(var x in selectedrights)
                 {
-                    allrights.Find(a => a.PermissionGuid == x.PermissionGuid).IsSelected = true;
+                    allrights.Find(a => a.PermissionCode == x.PermissionCode).IsSelected = true;
                 }
                 ListView_Rights.ItemsSource = allrights;
             }

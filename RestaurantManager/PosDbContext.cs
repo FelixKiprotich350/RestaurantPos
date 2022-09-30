@@ -94,7 +94,8 @@ namespace RestaurantManager
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
-        public DbSet<VouchersBatch> VouchersBatch { get; set; }
+        public DbSet<DiscountVoucher> DiscountVoucher { get; set; }
+        public DbSet<DiscountedItem> DiscountedItem { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }

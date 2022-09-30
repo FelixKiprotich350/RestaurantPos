@@ -12,13 +12,17 @@ namespace RestaurantManager.UserInterface.TicketPayments
         //255, 255, 192
         private readonly decimal GrossAmount;
         public decimal BalanceRetrned;
+        public TextBox Txt_Discount;
+        private Label label1;
         public List<PaymentMethod> Payments;
-        
-        public PaymentsUI(decimal TotalAmount, List<PaymentMethod> pm)
+        public decimal Discount = 0;
+        public PaymentsUI(decimal TotalAmount, List<PaymentMethod> pm,decimal disc)
         {
             this.InitializeComponent();
             GrossAmount = TotalAmount;
             this.Payments = pm;
+            Discount = disc;
+            Txt_Discount.Text = Discount.ToString("N2");
         }
 
         #region
@@ -60,6 +64,8 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.Btn_Mpesa = new System.Windows.Forms.Button();
             this.Btn_Card = new System.Windows.Forms.Button();
             this.Button_Voucher = new System.Windows.Forms.Button();
+            this.Txt_Discount = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Payments_Gridview)).BeginInit();
             this.ContextMenuStrip_paymentsGridview.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +77,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.Btn_CompleteTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_CompleteTransaction.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_CompleteTransaction.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Btn_CompleteTransaction.Location = new System.Drawing.Point(292, 350);
+            this.Btn_CompleteTransaction.Location = new System.Drawing.Point(296, 407);
             this.Btn_CompleteTransaction.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Btn_CompleteTransaction.Name = "Btn_CompleteTransaction";
             this.Btn_CompleteTransaction.Size = new System.Drawing.Size(265, 50);
@@ -84,7 +90,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(12, 236);
+            this.label12.Location = new System.Drawing.Point(10, 300);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(179, 31);
             this.label12.TabIndex = 24;
@@ -94,7 +100,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(12, 294);
+            this.label13.Location = new System.Drawing.Point(10, 361);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(127, 31);
             this.label13.TabIndex = 25;
@@ -103,7 +109,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             // Txt_AmountPaidTotal
             // 
             this.Txt_AmountPaidTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_AmountPaidTotal.Location = new System.Drawing.Point(292, 236);
+            this.Txt_AmountPaidTotal.Location = new System.Drawing.Point(290, 294);
             this.Txt_AmountPaidTotal.Multiline = true;
             this.Txt_AmountPaidTotal.Name = "Txt_AmountPaidTotal";
             this.Txt_AmountPaidTotal.ReadOnly = true;
@@ -117,7 +123,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             // Txt_Balance
             // 
             this.Txt_Balance.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Balance.Location = new System.Drawing.Point(292, 296);
+            this.Txt_Balance.Location = new System.Drawing.Point(290, 354);
             this.Txt_Balance.Name = "Txt_Balance";
             this.Txt_Balance.ReadOnly = true;
             this.Txt_Balance.Size = new System.Drawing.Size(268, 45);
@@ -214,7 +220,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.Btn_Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Close.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Btn_Close.ForeColor = System.Drawing.Color.White;
-            this.Btn_Close.Location = new System.Drawing.Point(12, 350);
+            this.Btn_Close.Location = new System.Drawing.Point(16, 407);
             this.Btn_Close.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Btn_Close.Name = "Btn_Close";
             this.Btn_Close.Size = new System.Drawing.Size(172, 50);
@@ -259,6 +265,29 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.Button_Voucher.UseVisualStyleBackColor = true;
             this.Button_Voucher.Click += new System.EventHandler(this.Button_Voucher_Click);
             // 
+            // Txt_Discount
+            // 
+            this.Txt_Discount.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Txt_Discount.Location = new System.Drawing.Point(291, 235);
+            this.Txt_Discount.Multiline = true;
+            this.Txt_Discount.Name = "Txt_Discount";
+            this.Txt_Discount.ReadOnly = true;
+            this.Txt_Discount.Size = new System.Drawing.Size(268, 43);
+            this.Txt_Discount.TabIndex = 34;
+            this.Txt_Discount.Text = "0.00";
+            this.Txt_Discount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Txt_Discount.WordWrap = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(11, 241);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(129, 31);
+            this.label1.TabIndex = 33;
+            this.label1.Text = "Discount";
+            // 
             // PaymentsUI
             // 
             this.AcceptButton = this.Btn_CompleteTransaction;
@@ -266,8 +295,10 @@ namespace RestaurantManager.UserInterface.TicketPayments
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.Btn_Close;
-            this.ClientSize = new System.Drawing.Size(570, 411);
+            this.ClientSize = new System.Drawing.Size(570, 471);
             this.ControlBox = false;
+            this.Controls.Add(this.Txt_Discount);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.Button_Voucher);
             this.Controls.Add(this.Btn_Card);
             this.Controls.Add(this.Btn_Mpesa);
@@ -590,15 +621,17 @@ namespace RestaurantManager.UserInterface.TicketPayments
         {
             try
             {
-                decimal num3 = Convert.ToDecimal(this.Txt_AmountPaidTotal.Text) - GrossAmount;
+                decimal num3 = Convert.ToDecimal(this.Txt_AmountPaidTotal.Text) - (GrossAmount + Convert.ToDecimal(this.Txt_Discount.Text));
                 this.Txt_Balance.Text = num3.ToString("N2");
                 if (num3 > 0M)
                 {
                     base.AcceptButton = this.Btn_CompleteTransaction;
                 }
             }
-            catch
+            catch(Exception exception3)
             {
+                MessageBox.Show(exception3.Message, "Error message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 

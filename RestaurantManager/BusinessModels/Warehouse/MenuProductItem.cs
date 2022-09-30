@@ -36,5 +36,8 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [MaxLength(100)]
         [NotMapped]
         public string CategoryName { get; set; }
+
+        [NotMapped]
+        public bool IsSelected { get; set; }
     }
 }

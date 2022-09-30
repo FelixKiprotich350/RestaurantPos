@@ -19,7 +19,7 @@ namespace RestaurantManager.BusinessModels.Security
     {
         [Key]  
         [MaxLength(100)]
-        public string PermissionGuid { get; set; }  
+        public string PermissionCode { get; set; }  
         [Required]
         [MaxLength(100)]
         public string ParentModule { get; set; }
@@ -43,38 +43,38 @@ namespace RestaurantManager.BusinessModels.Security
                 List<PermissionMaster> p = new List<PermissionMaster>
                 {
                     //point of sale
-                    new PermissionMaster() { PermissionGuid = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewOrder() },
-                    new PermissionMaster() { PermissionGuid = "A2", ParentModule = "A", PermissionShortName = "Kitchen Display", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new KitchenDisplay() },
-                    new PermissionMaster() { PermissionGuid = "A3", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
-                    new PermissionMaster() { PermissionGuid = "A4", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new CheckoutTicket() },
-                    new PermissionMaster() { PermissionGuid = "A5", ParentModule = "A", PermissionShortName = "View Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new ViewTickets() },
-                    new PermissionMaster() { PermissionGuid = "A6", ParentModule = "A", PermissionShortName = "Void Ticket", PermissionFullName = "Description", PermissionLevel = "2", PageClass = null },
+                    new PermissionMaster() { PermissionCode = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewOrder() },
+                    new PermissionMaster() { PermissionCode = "A2", ParentModule = "A", PermissionShortName = "Kitchen Display", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new KitchenDisplay() },
+                    new PermissionMaster() { PermissionCode = "A3", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
+                    new PermissionMaster() { PermissionCode = "A4", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new CheckoutTicket() },
+                    new PermissionMaster() { PermissionCode = "A5", ParentModule = "A", PermissionShortName = "View Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new ViewTickets() },
+                    new PermissionMaster() { PermissionCode = "A6", ParentModule = "A", PermissionShortName = "Void Ticket", PermissionFullName = "Description", PermissionLevel = "2", PageClass = null },
                     //Work periods
-                    new PermissionMaster() { PermissionGuid = "B1", ParentModule = "B", PermissionShortName = "Periods List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
-                    new PermissionMaster() { PermissionGuid = "B2", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
+                    new PermissionMaster() { PermissionCode = "B1", ParentModule = "B", PermissionShortName = "Periods List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
+                    new PermissionMaster() { PermissionCode = "B2", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
                     //Accounts
-                    new PermissionMaster() { PermissionGuid = "C1", ParentModule = "C", PermissionShortName = "Accounts Dashboard", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsDashboard() },
-                    new PermissionMaster() { PermissionGuid = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountTicketsPayments() },
-                    new PermissionMaster() { PermissionGuid = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
-                    new PermissionMaster() { PermissionGuid = "C4", ParentModule = "C", PermissionShortName = "Add Vouchers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new GenerateVouchers() },
+                    new PermissionMaster() { PermissionCode = "C1", ParentModule = "C", PermissionShortName = "Accounts Dashboard", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsDashboard() },
+                    new PermissionMaster() { PermissionCode = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountTicketsPayments() },
+                    new PermissionMaster() { PermissionCode = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
+                    new PermissionMaster() { PermissionCode = "C4", ParentModule = "C", PermissionShortName = "Discounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DiscountsManager() },
                     //products
-                   new PermissionMaster() { PermissionGuid = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() },
-                    new PermissionMaster() { PermissionGuid = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
-                    new PermissionMaster() { PermissionGuid = "D3", ParentModule = "D", PermissionShortName = "Kitchen Adds", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new KitchenAdds() },
-                    new PermissionMaster() { PermissionGuid = "D4", ParentModule = "D", PermissionShortName = "Stock Entry", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new StockEntry() },
+                   new PermissionMaster() { PermissionCode = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuCategories() },
+                    new PermissionMaster() { PermissionCode = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
+                    new PermissionMaster() { PermissionCode = "D3", ParentModule = "D", PermissionShortName = "Kitchen Adds", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new KitchenAdds() },
+                    new PermissionMaster() { PermissionCode = "D4", ParentModule = "D", PermissionShortName = "Stock Entry", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new StockEntry() },
                     //reports
-                    new PermissionMaster() { PermissionGuid = "E2", ParentModule = "E", PermissionShortName = "Reports", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
+                    new PermissionMaster() { PermissionCode = "E2", ParentModule = "E", PermissionShortName = "Reports", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                     //settings
-                    new PermissionMaster() { PermissionGuid = "F1", ParentModule = "F", PermissionShortName = "Tables", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new TablesEntities() },
-                    new PermissionMaster() { PermissionGuid = "F2", ParentModule = "F", PermissionShortName = "Client Info", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ClientInfo() },
-                    new PermissionMaster() { PermissionGuid = "F3", ParentModule = "F", PermissionShortName = "Mail Settings", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MailSettings() },
-                    new PermissionMaster() { PermissionGuid = "F4", ParentModule = "F", PermissionShortName = "Database", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DatabaseSettings() },
-                    new PermissionMaster() { PermissionGuid = "F5", ParentModule = "F", PermissionShortName = "User Roles", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageRoles() },
-                    new PermissionMaster() { PermissionGuid = "F6", ParentModule = "F", PermissionShortName = "System Users", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageSystemUsers() },
-                    new PermissionMaster() { PermissionGuid = "F7", ParentModule = "F", PermissionShortName = "My Profile", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MyProfile() },
+                    new PermissionMaster() { PermissionCode = "F1", ParentModule = "F", PermissionShortName = "Tables", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new TablesEntities() },
+                    new PermissionMaster() { PermissionCode = "F2", ParentModule = "F", PermissionShortName = "Client Info", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ClientInfo() },
+                    new PermissionMaster() { PermissionCode = "F3", ParentModule = "F", PermissionShortName = "Mail Settings", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MailSettings() },
+                    new PermissionMaster() { PermissionCode = "F4", ParentModule = "F", PermissionShortName = "Database", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DatabaseSettings() },
+                    //new PermissionMaster() { PermissionGuid = "F5", ParentModule = "F", PermissionShortName = "User Roles", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageRoles() },
+                    new PermissionMaster() { PermissionCode = "F6", ParentModule = "F", PermissionShortName = "System Users", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageSystemUsers() },
+                    new PermissionMaster() { PermissionCode = "F7", ParentModule = "F", PermissionShortName = "My Profile", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MyProfile() },
                     //Customers
-                    new PermissionMaster() { PermissionGuid = "H1", ParentModule = "H", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomersList() },
-                    new PermissionMaster() { PermissionGuid = "H2", ParentModule = "H", PermissionShortName = "Customer Account", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new CustomerAccount() }
+                    new PermissionMaster() { PermissionCode = "H1", ParentModule = "H", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomersList() },
+                    new PermissionMaster() { PermissionCode = "H2", ParentModule = "H", PermissionShortName = "Customer Account", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new CustomerAccount() }
                 };
                 return p;
             }

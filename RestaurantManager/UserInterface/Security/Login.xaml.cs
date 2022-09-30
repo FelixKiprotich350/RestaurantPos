@@ -156,9 +156,9 @@ namespace RestaurantManager.UserInterface.Security
                         user.User_Permissions_final = new List<PermissionMaster>();
                         foreach (var a in raw)
                         {
-                            if (Pm.GetAllPermissions().Where(b => b.PermissionGuid == a).Count() > 0)
+                            if (Pm.GetAllPermissions().Where(b => b.PermissionCode == a).Count() > 0)
                             {
-                                user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionGuid == a).First());
+                                user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionCode == a).First());
                             }
                         }
                     }

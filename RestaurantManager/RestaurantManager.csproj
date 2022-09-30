@@ -152,6 +152,7 @@
     <Compile Include="BusinessModels\GeneralSettings\PosVariables.cs" />
     <Compile Include="BusinessModels\GeneralSettings\TableEntity.cs" />
     <Compile Include="BusinessModels\OrderTicket\Un_OrderItem.cs" />
+    <Compile Include="BusinessModels\Vouchers\DiscountedItem.cs" />
     <Compile Include="BusinessModels\Warehouse\KitchenAddItem.cs" />
     <Compile Include="BusinessModels\Warehouse\StockEntryItem.cs" />
     <Compile Include="BusinessModels\Warehouse\ProductCategory.cs" />
@@ -168,10 +169,13 @@
     <Compile Include="BusinessModels\Security\UserRoles.cs" />
     <Compile Include="BusinessModels\Security\PosUser.cs" />
     <Compile Include="BusinessModels\Vouchers\VoucherCard.cs" />
-    <Compile Include="BusinessModels\Vouchers\VouchersBatch.cs" />
+    <Compile Include="BusinessModels\Vouchers\DiscountVoucher.cs" />
     <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
     <Compile Include="ActivityLogs\ChangeLog.cs" />
     <Compile Include="BusinessModels\WorkPeriod\WPClosureMessage.cs" />
+    <Compile Include="DeveloperDashboard.xaml.cs">
+      <DependentUpon>DeveloperDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalVariables\PosEnums.cs" />
     <Compile Include="GlobalVariables\SharedVariables.cs" />
     <Compile Include="InitialServerConfiguration.xaml.cs">
@@ -181,9 +185,17 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209252025419_M16.cs" />
-    <Compile Include="Migrations\202209252025419_M16.designer.cs">
-      <DependentUpon>202209252025419_M16.cs</DependentUpon>
+    <Compile Include="Migrations\202209260906128_M19.cs" />
+    <Compile Include="Migrations\202209260906128_M19.designer.cs">
+      <DependentUpon>202209260906128_M19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209281915506_M20.cs" />
+    <Compile Include="Migrations\202209281915506_M20.designer.cs">
+      <DependentUpon>202209281915506_M20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202209281917524_M21.cs" />
+    <Compile Include="Migrations\202209281917524_M21.designer.cs">
+      <DependentUpon>202209281917524_M21.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -193,8 +205,8 @@
     <Compile Include="UserInterface\Accounts\AccountTicketsPayments.xaml.cs">
       <DependentUpon>AccountTicketsPayments.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Accounts\GenerateVouchers.xaml.cs">
-      <DependentUpon>GenerateVouchers.xaml</DependentUpon>
+    <Compile Include="UserInterface\Accounts\DiscountsManager.xaml.cs">
+      <DependentUpon>DiscountsManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Accounts\SelectDiscountProducts.xaml.cs">
       <DependentUpon>SelectDiscountProducts.xaml</DependentUpon>
@@ -238,6 +250,9 @@
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\DiscountsSelector.xaml.cs">
+      <DependentUpon>DiscountsSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\ServiceType.xaml.cs">
       <DependentUpon>ServiceType.xaml</DependentUpon>
     </Compile>
@@ -246,6 +261,9 @@
     </Compile>
     <Compile Include="UserInterface\PosReports\SelectWorkPeriod.xaml.cs">
       <DependentUpon>SelectWorkPeriod.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Security\AddNewUser.xaml.cs">
+      <DependentUpon>AddNewUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Warehouse\AddnewCategory.xaml.cs">
       <DependentUpon>AddnewCategory.xaml</DependentUpon>
@@ -337,14 +355,8 @@
     <Compile Include="UserInterface\Security\EditPosUser.xaml.cs">
       <DependentUpon>EditPosUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Security\EditUserRole.xaml.cs">
-      <DependentUpon>EditUserRole.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\Security\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\Security\ManageRoles.xaml.cs">
-      <DependentUpon>ManageRoles.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\ManageSystemUsers.xaml.cs">
       <DependentUpon>ManageSystemUsers.xaml</DependentUpon>
@@ -367,6 +379,10 @@
     <Compile Include="UserInterface\WorkPeriods\ViewWorkPeriod.xaml.cs">
       <DependentUpon>ViewWorkPeriod.xaml</DependentUpon>
     </Compile>
+    <Page Include="DeveloperDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InitialServerConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -387,7 +403,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Accounts\GenerateVouchers.xaml">
+    <Page Include="UserInterface\Accounts\DiscountsManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -447,6 +463,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\DiscountsSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\PointofSale\ServiceType.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -458,6 +478,10 @@
     <Page Include="UserInterface\PosReports\SelectWorkPeriod.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Security\AddNewUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\Warehouse\AddnewCategory.xaml">
       <SubType>Designer</SubType>
@@ -559,15 +583,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Security\EditUserRole.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserInterface\Security\Login.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\Security\ManageRoles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -614,8 +630,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209252025419_M16.resx">
-      <DependentUpon>202209252025419_M16.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202209260906128_M19.resx">
+      <DependentUpon>202209260906128_M19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209281915506_M20.resx">
+      <DependentUpon>202209281915506_M20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209281917524_M21.resx">
+      <DependentUpon>202209281917524_M21.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

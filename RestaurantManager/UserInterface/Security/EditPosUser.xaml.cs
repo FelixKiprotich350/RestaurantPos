@@ -55,17 +55,14 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-                using (var db = new PosDbContext())
-                {
-                    ComboBox_Roles.ItemsSource = db.UserRoles.Where(x => x.RoleStatus == "Active").ToList();
-                }
+                var x = Enum.GetNames(typeof(GlobalVariables.PosEnums.UserAccountsRoles)).Cast<string>().ToList();
+                x.ForEach(k => ComboBox_Roles.Items.Add(k));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void Button_Delete_Click(object sender, RoutedEventArgs e)
         {
             try

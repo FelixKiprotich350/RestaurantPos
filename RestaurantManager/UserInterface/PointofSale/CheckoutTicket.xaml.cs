@@ -1,11 +1,13 @@
 ﻿using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.Payments;
+using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.TicketPayments;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -95,11 +97,50 @@ namespace RestaurantManager.UserInterface.PointofSale
                 foreach (OrderItem x in a)
                 {
                     total += (int)x.Price * x.Quantity;
-                } 
+                }
+                //get Discounts
+                List<DiscountVoucher> finaldiscounts = new List<DiscountVoucher>();
+                try
+                {
+                    
+                    var db = new PosDbContext();
+                    var discounts = new ObservableCollection<DiscountVoucher>(db.DiscountVoucher.AsNoTracking().Where(k => k.IsActiveStatus && k.StartDate <= Tdate && Tdate <= k.EndDate).ToList());
+                    //find bulk discount
+                    var bulkdiscount = discounts.Where(k => k.VoucherType == PosEnums.VoucherTypes.BulkSales.ToString() && total >= k.BulkSalesLimitAmount).FirstOrDefault();
+                    if (bulkdiscount != null)
+                    {
+                        finaldiscounts.Add(bulkdiscount);
+                    }
+                    //find product discount
+                    var productdiscount = discounts.Where(k => k.VoucherType == PosEnums.VoucherTypes.ProductDiscount.ToString()).ToList();
+                    List<DiscountVoucher> disci = new List<DiscountVoucher>();
+                    foreach (var p in Datagrid_TicketItems.Items.Cast<OrderItem>().ToList())
+                    {
+                        var z = from c in db.DiscountedItem.AsNoTracking()
+                                join b in db.DiscountVoucher.AsNoTracking() on c.BatchNumber equals b.BatchNumber 
+                                select b;
+                        finaldiscounts.AddRange(z);
+                    }
+                }
+                catch (Exception exception1)
+                {
+                    MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                //DiscountsSelector ds = new DiscountsSelector(finaldiscounts); 
+                //if ((bool)ds.ShowDialog())
+                //{
+
+                //}
+                decimal discount = 0;
+                if (finaldiscounts.Count>0)
+                {
+                    discount = finaldiscounts.Sum(k => k.VoucherAmount);
+                }
 
                 //get payments
                 List<PaymentMethod> pm = new List<PaymentMethod>();
-                PaymentsUI T = new PaymentsUI(total, pm);
+                PaymentsUI T = new PaymentsUI(total, pm, discount);
                 if (T.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     pm = T.Payments;

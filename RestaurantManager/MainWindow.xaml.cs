@@ -157,9 +157,9 @@ namespace RestaurantManager
                 string tag = a.Tag.ToString();
                 if (tag != "")
                 {
-                    if (pm.GetAllPermissions().Where(k => k.PermissionGuid == tag).Count() > 0)
+                    if (pm.GetAllPermissions().Where(k => k.PermissionCode == tag).Count() > 0)
                     {
-                        object UiItem = pm.GetAllPermissions().Where(k => k.PermissionGuid == tag).First().PageClass;
+                        object UiItem = pm.GetAllPermissions().Where(k => k.PermissionCode == tag).First().PageClass;
                         if (UiItem == null)
                         {
                             return;

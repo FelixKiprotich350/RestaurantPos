@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
-      mc:Ignorable="d" Loaded="Page_Loaded" 
+      mc:Ignorable="d" Loaded="Page_Loaded" MinHeight="300"
       Title="ManageSystemUsers" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
                         <TextBox Grid.Column="1" x:Name="Textbox_SearchBox" Padding="12"  FontWeight="Bold" FontFamily="MS Reference Sans Serif" Foreground="Indigo" Margin="10,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="Auto" FontSize="16"/>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="StudentsReportOperationPanel" >
-                        <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_UsersList_MouseUp">
+                        <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_UsersList_MouseUp" SelectionChanged="Datagrid_UsersList_SelectionChanged">
 
                             <DataGrid.Columns>
                                 <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
@@ -63,9 +63,10 @@
                     </Grid>
 
                 </Grid>
-                <Grid Grid.Row="2" >
-                    <Button Content="Refresh" Margin="2" HorizontalAlignment="Center" Width="100" />
-                </Grid>
+                <UniformGrid Columns="2" Rows="1" Grid.Row="2" >
+                    <Button x:Name="Button_NewUser" Content="New User" Width="200" Click="Button_NewUser_Click"/> 
+                    <Button Content="Refresh" Margin="2" HorizontalAlignment="Center" Width="200" />
+                </UniformGrid>
             </Grid>
         </Border>
         <Grid Grid.Column="1">
@@ -75,39 +76,30 @@
             <Grid Margin="12" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0"  Background="#FF80E68E">
-                    <TextBlock Text="New User" HorizontalAlignment="Left" Margin="8" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center"/>
+                <Grid   Grid.Row="0"  Background="#FF80E68E">
+                    <TextBlock Text="User Rights" HorizontalAlignment="Left" Margin="8" FontSize="16" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center"/>
+                    
                 </Grid>
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <StackPanel Orientation="Vertical">
-                            <Label Content="Name"/>
-                            <TextBox x:Name="Textbox_UserFullName" Margin="5"/>
-                            <Label Content="Role"/>
-                            <ComboBox x:Name="ComboBox_Roles" IsEditable="False" Margin="5">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding RoleName}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
-                    </Grid>
-                     
-
+                <UniformGrid Grid.Row="1">
+                    <Label x:Name="Label_Username"  Content="{Binding UserName}"/> 
+                </UniformGrid>
+                <Grid   Grid.Row="2" >
+                    <ListView x:Name="Listview_SelectedRolerights" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding PermissionShortName}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-                <Grid Grid.Row="2" >
-                    <UniformGrid Rows="1" Columns="2">
-                        <Button x:Name="Button_Save" Content="Save" HorizontalAlignment="Center" Click="Button_Save_Click" Margin="2" Width="80"/>
-                    </UniformGrid>
+                <Grid   Grid.Row="3" >
+                    <Button x:Name="Button_UpdateRights" Content="Update" Click="Button_UpdateRights_Click"/>
                 </Grid>
+               
             </Grid>
         </Border>
     </Grid>

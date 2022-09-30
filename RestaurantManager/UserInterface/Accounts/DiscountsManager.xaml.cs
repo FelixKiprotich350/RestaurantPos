@@ -1,4 +1,5 @@
 ﻿using RestaurantManager.BusinessModels.Vouchers;
+using RestaurantManager.BusinessModels.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace RestaurantManager.UserInterface.Accounts
     /// <summary>
     /// Interaction logic for GenerateVouchers.xaml
     /// </summary>
-    public partial class GenerateVouchers : Page
+    public partial class DiscountsManager : Page
     {
         readonly Random R = new Random();
-        public GenerateVouchers()
+        public DiscountsManager()
         {
             InitializeComponent();
         }
@@ -35,6 +36,7 @@ namespace RestaurantManager.UserInterface.Accounts
         {
             try
             {
+                ComboBox_VoucherType.Items.Clear();
                 var x = Enum.GetValues(typeof(GlobalVariables.PosEnums.VoucherTypes)).Cast<VoucherTypes>().ToList();
                 foreach (var y in x)
                 {
@@ -46,7 +48,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 }
                  using (var db = new PosDbContext())
                 {
-                    var data = db.VouchersBatch.ToList();
+                    var data = db.DiscountVoucher.ToList();
                     Datagrid_Vouchers.ItemsSource = data;
 
                 }
@@ -92,7 +94,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     return;
                 }
                 DateTime dtime = GlobalVariables.SharedVariables.CurrentDate();
-                VouchersBatch v = new VouchersBatch
+                DiscountVoucher v = new DiscountVoucher
                 {
                     BatchGuid = Guid.NewGuid().ToString(),
                     BatchNumber = R.Next(100000, 999999).ToString(),
@@ -100,14 +102,23 @@ namespace RestaurantManager.UserInterface.Accounts
                     CreatedBy = GlobalVariables.SharedVariables.CurrentUser.UserName,
                     VoucherAmount = VoucherAmount, 
                     BatchDescription = TextBox_BatchDescription.Text,
-                    BulkSalesLimitAmount=BulkLimit, 
+                    BulkSalesLimitAmount=BulkLimit,
+                    IsActiveStatus=true,
                     CreationDate = dtime,
                     StartDate = (DateTime)DatePicker_StartDate.SelectedDate,
                     EndDate = (DateTime)DatePicker_EndDate.SelectedDate
                 };  
                 using (var db = new PosDbContext())
-                { 
-                    db.VouchersBatch.Add(v);
+                {
+                    if (ComboBox_VoucherType.SelectedItem.ToString() == VoucherTypes.ProductDiscount.ToString())
+                    {
+                        var ite = ListView_ProductstoDiscount.Items.Cast<MenuProductItem>().ToList();
+                        foreach(var x in ite)
+                        {
+                            db.DiscountedItem.Add(new DiscountedItem() { ItemRowGuid = Guid.NewGuid().ToString(), ProductItemGuid = x.ProductGuid, BatchNumber = v.BatchNumber });
+                        }
+                    }
+                    db.DiscountVoucher.Add(v);
                     db.SaveChanges();
                 }
                 MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -137,6 +148,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 else if (ComboBox_VoucherType.SelectedItem.ToString() == VoucherTypes.BulkSales.ToString())
                 {
                     Ugrid_BulkSales.Visibility = Visibility.Visible;
+                    ListView_ProductstoDiscount.Items.Clear();
                 }
 
             }
@@ -152,7 +164,7 @@ namespace RestaurantManager.UserInterface.Accounts
             s.ShowDialog();
             if ((bool)s.DialogResult)
             {
-                ListView_ProductstoDiscount.ItemsSource = s.Products;
+                ListView_ProductstoDiscount.ItemsSource = s.Products.Where(k=>k.IsSelected);
             }
         }
     }
