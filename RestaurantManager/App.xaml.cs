@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,10 +21,37 @@ namespace RestaurantManager
      
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose; 
+                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
+
             //preloader
             //configure firstrun client info and user
             //initializedbb
+        }
+        private void Textbox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox tb = sender as TextBox;
+                if (!tb.IsReadOnly)
+                {
+                    if (File.Exists(@"C:\Windows\system32\osk.exe"))
+                    {
+                        Process p = new Process();
+                        p.StartInfo.FileName = "C:\\Windows\\system32\\osk.exe";  
+                        //p.StartInfo.Arguments = "node fileWithCommands.js";
+                        p.Start(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Keyboard not Found!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch(Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

@@ -89,8 +89,7 @@ namespace RestaurantManager
         public DbSet<UserRole> UserRoles { get; set; }
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; }
-        public DbSet<OrderItem> OrderItem { get; set; }
-        public DbSet<OrderItemVoided> OrderItemVoided { get; set; }
+        public DbSet<OrderItem> OrderItem { get; set; } 
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }

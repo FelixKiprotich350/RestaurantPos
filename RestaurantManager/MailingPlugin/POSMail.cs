@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,5 +83,6 @@ namespace RestaurantManager.MailingPlugin
             smtp.SendAsyncCancel();
             MessageBox.Show("Email sending cancelled!");
         }
+       
     }
 }

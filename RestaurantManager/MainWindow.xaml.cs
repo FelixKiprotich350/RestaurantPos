@@ -224,6 +224,17 @@ namespace RestaurantManager
             Frame1.Content = new HomePage();
             Category_Submenu.ItemsSource = null;
         }
- 
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyboardDevice.Modifiers == ModifierKeys.Control) && (e.Key == Key.E))
+            {
+                MessageBox.Show("Activated");
+            }
+            if ((e.KeyboardDevice.Modifiers == ModifierKeys.Control) && (e.Key == Key.D))
+            {
+                MessageBox.Show("DeActivated");
+            }
+        }
     }
 }

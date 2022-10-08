@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RestaurantManager" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d" Height="Auto" Loaded="Window_Loaded"  
+        mc:Ignorable="d" Height="Auto" Loaded="Window_Loaded"  KeyDown="Window_KeyDown"
         Width="Auto" Foreground="White" ResizeMode="CanResize" AllowsTransparency="True"
         WindowState="Maximized" Title="Restaurant Pos" Background="#FFF29400"
         WindowStartupLocation="CenterScreen" WindowStyle="None"  >
@@ -42,6 +42,9 @@
                 <Grid Grid.Column="3" Margin="6">
                     <Image ToolTip="Minimize App"  x:Name="Image_Minimize" Source="ImageResources/icons8-subtract.png"   MouseUp="Image_Minimize_MouseUp" Cursor="Hand" Width="24" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
+            <Grid Grid.Column="4">
+                <Label  />
+            </Grid>
                 <Grid Grid.Column="5" Margin="8,6,12,6">
                     <Image ToolTip="Close App" x:Name="Image_Close" Source="ImageResources/icons8-close.png" MouseUp="Image_Close_MouseUp" Cursor="Hand" Width="24" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </Grid>
