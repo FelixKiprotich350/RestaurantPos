@@ -172,8 +172,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 IsItemVoided = false,
                                 ParentProductItemGuid = m.ParentProductItemGuid,
                                 Price = m.Price,
-                                Quantity = m.Quantity,
-                                VoidReason = "None",
+                                Quantity = m.Quantity, 
                                 ServiceType = m.ServiceType,
                                 Total = m.Total
                             };

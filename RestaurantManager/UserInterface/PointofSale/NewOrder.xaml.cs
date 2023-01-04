@@ -118,8 +118,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.Price = price;
                         i.Total = price * icount;
                         i.ServiceType = st.ItemServiceType;
-                        i.IsItemVoided = false;
-                        i.VoidReason = "None";
+                        i.IsItemVoided = false; 
                     }
                     else
                     {
@@ -130,11 +129,11 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
                 if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid && a.ServiceType==i.ServiceType).Count() >0)
                 {
-                    MessageBox.Show("The Product has been added to the Order before!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The Product is in the Order list!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     Lv.SelectedItem = null;
                     return;
                 }
-
+                //get attached discounts if present
                 OrderItems.Add(i);
                 CalculateTotal();
                 Lv.SelectedItem = null;

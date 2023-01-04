@@ -23,6 +23,9 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [MinLength(5)]
         [MaxLength(100)]
         public string AvailabilityStatus { get; set; } 
+        [Required] 
+        [MaxLength(100)]
+        public string HouseType { get; set; } 
 
         [Required]
         public decimal ProductPrice { get; set; }

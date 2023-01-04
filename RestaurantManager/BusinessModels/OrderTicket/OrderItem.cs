@@ -30,11 +30,12 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         [MaxLength(20)]
         public string ServiceType { get; set; }
-
         [Required]
-        [MaxLength(500)]
-        public string VoidReason { get; set; }
-
+        public bool IsDiscountItem { get; set; }
+        [Required]
+        public string ParentItem { get; set; }
+        [Required]
+        public decimal DiscPercent { get; set; }
         [Required]
         public bool IsItemVoided { get; set; }
 

@@ -154,6 +154,7 @@
     <Compile Include="BusinessModels\OrderTicket\Un_OrderItem.cs" />
     <Compile Include="BusinessModels\Vouchers\DiscountedItem.cs" />
     <Compile Include="BusinessModels\Warehouse\KitchenAddItem.cs" />
+    <Compile Include="BusinessModels\Warehouse\DiscountItem.cs" />
     <Compile Include="BusinessModels\Warehouse\StockEntryItem.cs" />
     <Compile Include="BusinessModels\Warehouse\ProductCategory.cs" />
     <Compile Include="BusinessModels\Warehouse\MenuProductItem.cs" />
@@ -200,6 +201,14 @@
     <Compile Include="Migrations\202209301444084_M22.cs" />
     <Compile Include="Migrations\202209301444084_M22.designer.cs">
       <DependentUpon>202209301444084_M22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212300940016_m23.cs" />
+    <Compile Include="Migrations\202212300940016_m23.designer.cs">
+      <DependentUpon>202212300940016_m23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301040956096_M24.cs" />
+    <Compile Include="Migrations\202301040956096_M24.designer.cs">
+      <DependentUpon>202301040956096_M24.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -272,6 +281,9 @@
     </Compile>
     <Compile Include="UserInterface\Warehouse\AddnewCategory.xaml.cs">
       <DependentUpon>AddnewCategory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Warehouse\Discounts.xaml.cs">
+      <DependentUpon>Discounts.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Warehouse\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
@@ -492,6 +504,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Warehouse\Discounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Warehouse\EditProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -646,6 +662,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202209301444084_M22.resx">
       <DependentUpon>202209301444084_M22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212300940016_m23.resx">
+      <DependentUpon>202212300940016_m23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301040956096_M24.resx">
+      <DependentUpon>202301040956096_M24.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

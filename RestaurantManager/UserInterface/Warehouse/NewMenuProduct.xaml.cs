@@ -41,6 +41,11 @@ namespace RestaurantManager.UserInterface.Warehouse
                     MessageBox.Show("Select Category", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 } 
+                if (Combobox_HouseType.SelectedItem == null)
+                {
+                    MessageBox.Show("Select ProductType", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                } 
                 if (!decimal.TryParse(Textbox_ProductPrice.Text.Trim(), out decimal productprice))
                 {
                     MessageBox.Show("The ProductPrice value entered is not allowed !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);

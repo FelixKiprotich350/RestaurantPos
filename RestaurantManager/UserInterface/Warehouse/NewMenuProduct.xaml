@@ -5,15 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Warehouse"
       mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
-      Height="290" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
+      Height="340" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
       Title="Add New Product" FontSize="16">
 
-    <Grid Margin="20,0">
+    <Grid Margin="20,0" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
@@ -30,7 +31,6 @@
         <DockPanel Grid.Row="1" VerticalAlignment="Center">
             <Label DockPanel.Dock="Top" Content="Category"/>
             <ComboBox x:Name="Combobox_Category" IsEditable="False" Height="30" Margin="0,0,4,0" >
-
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Label Content="{Binding CategoryName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -38,7 +38,14 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel> 
-        <Grid Grid.Row="2">
+        <DockPanel Grid.Row="2" VerticalAlignment="Center">
+            <Label DockPanel.Dock="Top" Content="Restaurant/Bar"/>
+            <ComboBox x:Name="Combobox_HouseType" IsEditable="False" Height="30" Margin="0,0,4,0" >
+                <ComboBoxItem Content="Restaurant"/>
+                <ComboBoxItem Content="Bar"/>
+            </ComboBox>
+        </DockPanel> 
+        <Grid Grid.Row="3">
             <UniformGrid Columns="2">
                 <StackPanel  >
                     <Label Content="Price"/>
@@ -50,7 +57,7 @@
                 </StackPanel>
             </UniformGrid>
                 </Grid> 
-        <UniformGrid Grid.Row="3" Columns="2">
+        <UniformGrid Grid.Row="4" Columns="2">
             <Button x:Name="Button_Close" Content="Close" Width="150"   Margin="2,4,4,2" Style="{DynamicResource Button_Cancel}" Height="40"/>
             <Button x:Name="Button_Save" Content="Save" Width="150" Click="Button_save_Click" Margin="2,4,2,2" Style="{DynamicResource Button_Accept}" Height="40"/>
         </UniformGrid>

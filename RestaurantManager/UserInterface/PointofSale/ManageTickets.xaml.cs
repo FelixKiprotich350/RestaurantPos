@@ -256,8 +256,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         using (var db = new PosDbContext())
                         {
                             OrderItem x = db.OrderItem.Where(a => a.OrderID == TextBlock_TicketNo.Text.Trim() && a.ItemRowGuid == o.ItemRowGuid).First();
-                            x.IsItemVoided = true;
-                            x.VoidReason = ei.Textbox_Description.Text; 
+                            x.IsItemVoided = true; 
                             //OrderItemVoided ov = new OrderItemVoided
                             //{
                             //    ItemRowGuid = x.ItemRowGuid,

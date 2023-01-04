@@ -21,8 +21,9 @@ namespace RestaurantManager
      
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-                App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+            App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
             EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
+            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
 
             //preloader
             //configure firstrun client info and user
@@ -41,6 +42,31 @@ namespace RestaurantManager
                         p.StartInfo.FileName = "C:\\Windows\\system32\\osk.exe";  
                         //p.StartInfo.Arguments = "node fileWithCommands.js";
                         p.Start(); 
+                    }
+                    else
+                    {
+                        MessageBox.Show("Keyboard not Found!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch(Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Textbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBox tb = sender as TextBox;
+                if (!tb.IsReadOnly)
+                {
+                    if (File.Exists(@"C:\Windows\system32\osk.exe"))
+                    {
+                        Process p = new Process();
+                        p.StartInfo.FileName = "C:\\Windows\\system32\\osk.exe"; 
+                        string pname=p.ProcessName;
+                        //kill processs
                     }
                     else
                     {

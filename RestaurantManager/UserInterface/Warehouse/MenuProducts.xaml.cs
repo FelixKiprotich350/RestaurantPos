@@ -107,7 +107,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                 }
                 using (var db = new PosDbContext())
                 {
-                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available", ProductPrice = price, PackagingCost = packagingprice, CategoryGuid = category });
+                    db.MenuProductItem.Add(new MenuProductItem() { ProductGuid = Guid.NewGuid().ToString(), ProductName = nmp.Textbox_ProductName.Text, AvailabilityStatus = "Available",HouseType=nmp.Combobox_HouseType.Text, ProductPrice = price, PackagingCost = packagingprice, CategoryGuid = category });
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshMenuProducts();
