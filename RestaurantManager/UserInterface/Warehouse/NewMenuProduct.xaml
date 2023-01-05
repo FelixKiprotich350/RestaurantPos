@@ -52,7 +52,7 @@
                     <TextBox x:Name="Textbox_ProductPrice" FontSize="20" Height="30" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Margin="8,0,0,0" >
-                    <Label Content="Price"/>
+                    <Label Content="PackagingPrice"/>
                     <TextBox x:Name="Textbox_PackagingPrice" FontSize="20" Height="30" VerticalAlignment="Center"/>
                 </StackPanel>
             </UniformGrid>

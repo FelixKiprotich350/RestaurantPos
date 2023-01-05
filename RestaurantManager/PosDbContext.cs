@@ -84,6 +84,7 @@ namespace RestaurantManager
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
         public DbSet<StockEntryItem> StockEntryItem { get; set; }
         public DbSet<KitchenAddItem> KitchenAddItem { get; set; }
+        public DbSet<DiscountItem> DiscountItem { get; set; }
         //pos user & security
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }

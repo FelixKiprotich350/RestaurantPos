@@ -16,6 +16,8 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [Required]
         [MaxLength(200)]
         public string ProductGuid { get; set; }
+        [Required] 
+        public string ProductName { get; set; }
         [MaxLength(100)]
         public string DiscType { get; set; }
         [Required]  
@@ -32,5 +34,7 @@ namespace RestaurantManager.BusinessModels.Warehouse
         public bool IsRepetitive { get; set; }
         [Required]
         public string DiscStatus { get; set; }
+        [NotMapped]
+        public bool IsSelected { get; set; }
     }
 }

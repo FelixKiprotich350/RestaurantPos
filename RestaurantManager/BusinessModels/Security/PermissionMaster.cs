@@ -62,7 +62,7 @@ namespace RestaurantManager.BusinessModels.Security
                     new PermissionMaster() { PermissionCode = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MenuProducts() },
                     new PermissionMaster() { PermissionCode = "D3", ParentModule = "D", PermissionShortName = "Kitchen Adds", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new KitchenAdds() },
                     new PermissionMaster() { PermissionCode = "D4", ParentModule = "D", PermissionShortName = "Stock Entry", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new StockEntry() },
-                    new PermissionMaster() { PermissionCode = "D4", ParentModule = "D", PermissionShortName = "Discounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Discounts() },
+                    new PermissionMaster() { PermissionCode = "D5", ParentModule = "D", PermissionShortName = "Discounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Discounts() },
                     //reports
                     new PermissionMaster() { PermissionCode = "E2", ParentModule = "E", PermissionShortName = "Reports", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                     //settings

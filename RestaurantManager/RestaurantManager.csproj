@@ -210,6 +210,18 @@
     <Compile Include="Migrations\202301040956096_M24.designer.cs">
       <DependentUpon>202301040956096_M24.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202301041223290_M25.cs" />
+    <Compile Include="Migrations\202301041223290_M25.designer.cs">
+      <DependentUpon>202301041223290_M25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301041443176_M26.cs" />
+    <Compile Include="Migrations\202301041443176_M26.designer.cs">
+      <DependentUpon>202301041443176_M26.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301041453399_M27.cs" />
+    <Compile Include="Migrations\202301041453399_M27.designer.cs">
+      <DependentUpon>202301041453399_M27.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="Printing\PrintTicket.cs" />
@@ -285,6 +297,9 @@
     <Compile Include="UserInterface\Warehouse\Discounts.xaml.cs">
       <DependentUpon>Discounts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Warehouse\EditDiscount.xaml.cs">
+      <DependentUpon>EditDiscount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Warehouse\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
     </Compile>
@@ -297,8 +312,14 @@
     <Compile Include="UserInterface\Warehouse\MenuProducts.xaml.cs">
       <DependentUpon>MenuProducts.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Warehouse\NewDiscountItem.xaml.cs">
+      <DependentUpon>NewDiscountItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Warehouse\NewMenuProduct.xaml.cs">
       <DependentUpon>NewMenuProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Warehouse\SelectProduct.xaml.cs">
+      <DependentUpon>SelectProduct.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Warehouse\StockEntry.xaml.cs">
       <DependentUpon>StockEntry.xaml</DependentUpon>
@@ -396,6 +417,7 @@
     <Compile Include="UserInterface\WorkPeriods\ViewWorkPeriod.xaml.cs">
       <DependentUpon>ViewWorkPeriod.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowIconRemover.cs" />
     <Page Include="DeveloperDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -508,6 +530,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Warehouse\EditDiscount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Warehouse\EditProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -524,7 +550,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Warehouse\NewDiscountItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Warehouse\NewMenuProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Warehouse\SelectProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -668,6 +702,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202301040956096_M24.resx">
       <DependentUpon>202301040956096_M24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301041223290_M25.resx">
+      <DependentUpon>202301041223290_M25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301041443176_M26.resx">
+      <DependentUpon>202301041443176_M26.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301041453399_M27.resx">
+      <DependentUpon>202301041453399_M27.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
