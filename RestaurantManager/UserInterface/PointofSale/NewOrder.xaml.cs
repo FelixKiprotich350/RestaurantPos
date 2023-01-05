@@ -109,10 +109,22 @@ namespace RestaurantManager.UserInterface.PointofSale
                 DiscountItem disc_i = null;
                 using (var db = new PosDbContext())
                 {
-                    var r = db.DiscountItem.FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active");
+                    var date=SharedVariables.CurrentDate();
+                    var r = db.DiscountItem.FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active" && k.StartDate <=date  && k.EndDate >= date);
                     if (r != null)
-                    {
-                        disc_i = r;
+                    { 
+                        if (r.IsRepetitive)
+                        {
+                            if (date.DayOfWeek.ToString().ToLower() == r.OfferDay.ToLower())
+                            {
+                                disc_i = r;
+                            }
+                        }
+                        else
+                        {
+                            disc_i = r;
+                        }
+                        
                     } 
                 }
                 
@@ -259,10 +271,15 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 var neworderlist = OrderItems.Where(k=>k.IsGiftItem==false);
+                foreach (var a in OrderItems)
+                {
+                    var atotal = a.Quantity * a.Price;
+                    a.Total = atotal;
+                                  }
                 decimal t = 0;
                 foreach (var a in neworderlist)
-                {
-                    t += (decimal)a.Total * ((100 - a.DiscPercent) / 100);
+                { 
+                    t += a.Total * ((100 - a.DiscPercent) / 100);
                 }
                 Textbox_TotalAmount.Text = t.ToString("N2");
             }

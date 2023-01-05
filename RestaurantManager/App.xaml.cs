@@ -24,8 +24,8 @@ namespace RestaurantManager
             App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
             EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
             EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
-            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostTouchCaptureEvent, new RoutedEventHandler(Textbox_LostFocus), true);
-            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostKeyboardFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
+            //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostTouchCaptureEvent, new RoutedEventHandler(Textbox_LostFocus), true);
+            //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostKeyboardFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
 
             //preloader
             //configure firstrun client info and user
@@ -43,7 +43,7 @@ namespace RestaurantManager
                         Process p = new Process();
                         p.StartInfo.FileName = keyboardlocation; 
                         //p.StartInfo.Arguments = "node fileWithCommands.js";
-                        p.Start(); 
+                       // p.Start(); 
                     }
                     else
                     {

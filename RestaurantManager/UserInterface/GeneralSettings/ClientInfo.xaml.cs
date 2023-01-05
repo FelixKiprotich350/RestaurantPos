@@ -30,24 +30,46 @@ namespace RestaurantManager.UserInterface.GeneralSettings
         {
             try
             {
-                if (TextBox_ClientTitle.Tag == null)
+                if(!decimal.TryParse(TextBox_TaxPercentage.Text,out decimal tax))
                 {
+                    MessageBox.Show("Enter correct Percentage Value", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 using (var b = new PosDbContext())
                 {
-                    
-                        ClientInfoDetails c = b.ClientInfo.Where(a => a.ClientGuid == TextBox_ClientTitle.Tag.ToString()).First();
-                    c.ClientTitle = TextBox_ClientTitle.Text;
-                    c.PhysicalAddress = TextBox_PhysicalAddress.Text;
-                    c.Email = TextBox_Email.Text;
-                    c.Phone = TextBox_Telephone.Text; 
-                    c.ClientKRAPIN = TextBox_PinNumber.Text;  
-                    c.ReceiptNote1 = TextBox_ReceiptNote1.Text;  
-                    c.ReceiptNote2 = TextBox_ReceiptNote2.Text;   
-                    c.ThankYouNote = TextBox_ThankYouNote.Text; 
-                    b.SaveChanges();
-                    MessageBox.Show("Success. Updated", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    ClientInfoDetails c = b.ClientInfo.FirstOrDefault();
+                    if(c is null)
+                    {
+                        ClientInfoDetails d = new ClientInfoDetails();
+                        d.ClientGuid = Guid.NewGuid().ToString(); 
+                        d.ClientTitle = TextBox_ClientTitle.Text;
+                        d.PhysicalAddress = TextBox_PhysicalAddress.Text;
+                        d.Email = TextBox_Email.Text;
+                        d.Phone = TextBox_Telephone.Text;
+                        d.ClientKRAPIN = TextBox_PinNumber.Text;
+                        d.TaxPercentage = tax;
+                        d.ReceiptNote1 = TextBox_ReceiptNote1.Text;
+                        d.ReceiptNote2 = TextBox_ReceiptNote2.Text;
+                        d.ReceiptNote3 = TextBox_ThankYouNote.Text;
+                        b.ClientInfo.Add(d);
+                        b.SaveChanges(); 
+                        MessageBox.Show("Success.", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        c.ClientTitle = TextBox_ClientTitle.Text;
+                        c.PhysicalAddress = TextBox_PhysicalAddress.Text;
+                        c.Email = TextBox_Email.Text;
+                        c.Phone = TextBox_Telephone.Text;
+                        c.ClientKRAPIN = TextBox_PinNumber.Text;
+                        c.TaxPercentage = tax;
+                        c.ReceiptNote1 = TextBox_ReceiptNote1.Text;
+                        c.ReceiptNote2 = TextBox_ReceiptNote2.Text;
+                        c.ReceiptNote3 = TextBox_ThankYouNote.Text;
+                        b.SaveChanges();
+                        MessageBox.Show("Success.", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    } 
                 }
             }
             catch (Exception ex)
@@ -64,6 +86,7 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                 {
                     if (b.ClientInfo.Count() <= 0)
                     {
+                        MessageBox.Show("You have not created any profile!","Message Box",MessageBoxButton.OK,MessageBoxImage.Warning);
                         return;
                     }
                     TextBox_ClientTitle.Text = b.ClientInfo.ToList()[0].ClientTitle;
@@ -74,7 +97,7 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                     TextBox_PinNumber.Text = b.ClientInfo.ToList()[0].ClientKRAPIN;
                     TextBox_ReceiptNote1.Text = b.ClientInfo.ToList()[0].ReceiptNote1;
                     TextBox_ReceiptNote2.Text = b.ClientInfo.ToList()[0].ReceiptNote2;
-                    TextBox_ThankYouNote.Text = b.ClientInfo.ToList()[0].ThankYouNote;
+                    TextBox_ThankYouNote.Text = b.ClientInfo.ToList()[0].ReceiptNote3;
                 }
             }
             catch (Exception ex)

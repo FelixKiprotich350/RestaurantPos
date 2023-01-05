@@ -166,13 +166,13 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                     }
-                    using (var db = new PosDbContext())
-                    {
-                        if (db.ClientInfo.Count() > 0)
-                        {
-                            GlobalVariables.SharedVariables.ClientInfo = db.ClientInfo.First();
-                        }
-                    }
+                    //using (var db = new PosDbContext())
+                    //{
+                    //    if (db.ClientInfo.Count() > 0)
+                    //    {
+                    //        GlobalVariables.SharedVariables.ClientInfo = db.ClientInfo.First();
+                    //    }
+                    //}
                     GlobalVariables.SharedVariables.CurrentUser = user;
                     m.Show();
                     Close();

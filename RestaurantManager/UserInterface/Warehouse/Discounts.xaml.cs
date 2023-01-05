@@ -105,11 +105,14 @@ namespace RestaurantManager.UserInterface.Warehouse
                     DiscountItem o = (DiscountItem)Datagrid_DiscountProductItems.SelectedItem;
                     EditDiscount ed = new EditDiscount()
                     {
+                      
                         Title = o.ProductName
                     };
+                    ed.Textblock_CurrentStatus.Text = o.DiscStatus;
+                    ed.Item = o;
                     if ((bool)ed.ShowDialog())
                     {
-
+                        RefreshProducts();
                     }
 
                 }

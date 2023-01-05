@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.BusinessModels.Warehouse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace RestaurantManager.UserInterface.Warehouse
     /// </summary>
     public partial class EditDiscount : Window
     {
+        public DiscountItem Item = null;
         public EditDiscount()
         {
             InitializeComponent();
@@ -29,10 +31,48 @@ namespace RestaurantManager.UserInterface.Warehouse
         {
             WindowIconRemover.RemoveIcon(this);
         }
+         
 
-        private void OnSourceInitialized(object sender, EventArgs e)
+        private void Btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            this.Close();
+        }
+
+        private void Btn_Change_Click(object sender, RoutedEventArgs e)
         {
 
+            try
+            {
+                if (Combobox_DiscStatus.SelectedItem != null)
+                {
+                    if (Item != null)
+                    {
+                        using (var db=new PosDbContext())
+                        {
+                            db.DiscountItem.First(k => k.ProductGuid == Item.ProductGuid).DiscStatus = Combobox_DiscStatus.Text;
+                            db.SaveChanges();
+                            MessageBox.Show("Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The product is not known!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Select the Status", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Close();
+            }
         }
     }
 }

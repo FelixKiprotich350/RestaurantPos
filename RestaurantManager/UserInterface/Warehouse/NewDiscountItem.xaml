@@ -83,6 +83,11 @@
                     <ComboBox  x:Name="Combobox_WeeklyDays" IsEditable="False" Height="30" Margin="0,0,4,0" >
                         <ComboBoxItem Content="Monday"/>
                         <ComboBoxItem Content="Tuesday"/>
+                        <ComboBoxItem Content="Wednesday"/>
+                        <ComboBoxItem Content="Thursday"/>
+                        <ComboBoxItem Content="Friday"/>
+                        <ComboBoxItem Content="Saturday"/>
+                        <ComboBoxItem Content="Sunday"/>
                     </ComboBox>
                 </DockPanel>
                 <Grid Grid.Column="2" VerticalAlignment="Center">

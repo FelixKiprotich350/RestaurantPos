@@ -46,6 +46,9 @@ namespace RestaurantManager.BusinessModels.GeneralSettings
         [Required]
         [MaxLength(100)]
         [Column(Order = 8)]
-        public string ThankYouNote { get; set; }
+        public string ReceiptNote3 { get; set; }
+        [Required] 
+        [Column(Order = 9)]
+        public decimal TaxPercentage { get; set; }
     }
 }

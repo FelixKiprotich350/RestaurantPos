@@ -46,6 +46,10 @@
                             <TextBox x:Name="TextBox_PinNumber" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
                         <DockPanel   Margin="0,5">
+                            <Label DockPanel.Dock="Left" Content="Tax Percent : " Width="120" FontSize="16"/>
+                            <TextBox x:Name="TextBox_TaxPercentage" HorizontalContentAlignment="Stretch" FontSize="16" />
+                        </DockPanel>
+                        <DockPanel   Margin="0,5">
                             <Label DockPanel.Dock="Left" Content="Receipt Note 1 : " Width="120" FontSize="16"/>
                             <TextBox x:Name="TextBox_ReceiptNote1" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
