@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using RestaurantManager.ApplicationFiles;
 
 namespace RestaurantManager.UserInterface.CustomersManagemnt
 {

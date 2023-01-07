@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.Vouchers;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.BusinessModels.Warehouse;
 using System;
 using System.Collections.Generic;
@@ -28,10 +29,12 @@ namespace RestaurantManager.UserInterface.Accounts
         {
             InitializeComponent();
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadBatchVoucher();
         }
+
         private void LoadBatchVoucher()
         {
             try
@@ -63,23 +66,22 @@ namespace RestaurantManager.UserInterface.Accounts
         {
             try
             {
-                decimal VoucherAmount = 0;
-                decimal BulkLimit = 0;
-                if (!decimal.TryParse(TextBox_VoucherAmount.Text, out VoucherAmount))
+                if (!decimal.TryParse(TextBox_VoucherAmount.Text, out decimal VoucherAmount))
                 {
                     MessageBox.Show("Invalid Discount Amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
+                decimal BulkLimit = 0;
                 if (ComboBox_VoucherType.SelectedItem.ToString() == VoucherTypes.ProductDiscount.ToString())
                 {
-                    BulkLimit = 0; 
+                    BulkLimit = 0;
                     if (ListView_ProductstoDiscount.Items.Count <= 0)
                     {
                         MessageBox.Show("You must select atleast one Product to Discount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                 }
-                else if(ComboBox_VoucherType.SelectedItem.ToString() == VoucherTypes.BulkSales.ToString())
+                else if (ComboBox_VoucherType.SelectedItem.ToString() == VoucherTypes.BulkSales.ToString())
                 {
 
                     if (!decimal.TryParse(TextBox_BulkSalesLimit.Text, out BulkLimit))

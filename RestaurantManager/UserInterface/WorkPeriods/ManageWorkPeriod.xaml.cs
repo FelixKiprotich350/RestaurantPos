@@ -20,6 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.IO;
+using RestaurantManager.ApplicationFiles;
 
 namespace RestaurantManager.UserInterface.WorkPeriods
 {

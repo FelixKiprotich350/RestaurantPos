@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.Security;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class ManageSystemUsers : Page
     {
-        readonly Random Rand = new Random();
+       // readonly Random Rand = new Random();
         public ManageSystemUsers()
         {
             InitializeComponent();
@@ -72,7 +73,7 @@ namespace RestaurantManager.UserInterface.Security
                 {
                     return;
                 }
-                if (dep is DataGridCell)
+                if (dep is DataGridCell cell)
                 {
 
                     if (Datagrid_UsersList.SelectedItem == null)
@@ -80,7 +81,7 @@ namespace RestaurantManager.UserInterface.Security
                         return;
                     }
                     PosUser o = (PosUser)Datagrid_UsersList.SelectedItem;
-                    if (((DataGridCell)dep).Column.DisplayIndex.ToString() == "2")
+                    if (cell.Column.DisplayIndex.ToString() == "2")
                     {
                         o.User_Permissions_final = new List<PermissionMaster>();
                         EditPosUser er = new EditPosUser(o);
@@ -158,14 +159,13 @@ namespace RestaurantManager.UserInterface.Security
             try
             {
                 var tag=Label_Username.Tag;
-                if (tag is PosUser)
+                if (tag is PosUser user)
                 {
-                    var user = (PosUser)tag;
-                   var items= Listview_SelectedRolerights.Items.Cast< PermissionMaster>().ToList().Where(k=>k.IsSelected).ToList();
-                    using(var db=new PosDbContext())
+                    var items = Listview_SelectedRolerights.Items.Cast<PermissionMaster>().ToList().Where(k => k.IsSelected).ToList();
+                    using (var db = new PosDbContext())
                     {
                         string rights = "";
-                        foreach(var x in items)
+                        foreach (var x in items)
                         {
                             rights += x.PermissionCode + ",";
                         }

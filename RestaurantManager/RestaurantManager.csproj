@@ -145,6 +145,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationFiles\Base64.cs" />
+    <Compile Include="AppStaticvalues.cs" />
     <Compile Include="BusinessModels\CustomersManagement\CustomerPointsAccount.cs" />
     <Compile Include="BusinessModels\CustomersManagement\Customer.cs" />
     <Compile Include="BusinessModels\GeneralSettings\ClientInfoDetails.cs" />
@@ -174,61 +176,23 @@
     <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
     <Compile Include="ActivityLogs\ChangeLog.cs" />
     <Compile Include="BusinessModels\WorkPeriod\WPClosureMessage.cs" />
-    <Compile Include="DeveloperDashboard.xaml.cs">
+    <Compile Include="ApplicationFiles\DeveloperDashboard.xaml.cs">
       <DependentUpon>DeveloperDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariables\PosEnums.cs" />
     <Compile Include="GlobalVariables\SharedVariables.cs" />
-    <Compile Include="InitialServerConfiguration.xaml.cs">
+    <Compile Include="ApplicationFiles\InitialServerConfiguration.xaml.cs">
       <DependentUpon>InitialServerConfiguration.xaml</DependentUpon>
     </Compile>
     <Compile Include="MailingPlugin\POSMail.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202209260906128_M19.cs" />
-    <Compile Include="Migrations\202209260906128_M19.designer.cs">
-      <DependentUpon>202209260906128_M19.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209281915506_M20.cs" />
-    <Compile Include="Migrations\202209281915506_M20.designer.cs">
-      <DependentUpon>202209281915506_M20.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209281917524_M21.cs" />
-    <Compile Include="Migrations\202209281917524_M21.designer.cs">
-      <DependentUpon>202209281917524_M21.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202209301444084_M22.cs" />
-    <Compile Include="Migrations\202209301444084_M22.designer.cs">
-      <DependentUpon>202209301444084_M22.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212300940016_m23.cs" />
-    <Compile Include="Migrations\202212300940016_m23.designer.cs">
-      <DependentUpon>202212300940016_m23.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301040956096_M24.cs" />
-    <Compile Include="Migrations\202301040956096_M24.designer.cs">
-      <DependentUpon>202301040956096_M24.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301041223290_M25.cs" />
-    <Compile Include="Migrations\202301041223290_M25.designer.cs">
-      <DependentUpon>202301041223290_M25.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301041443176_M26.cs" />
-    <Compile Include="Migrations\202301041443176_M26.designer.cs">
-      <DependentUpon>202301041443176_M26.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301041453399_M27.cs" />
-    <Compile Include="Migrations\202301041453399_M27.designer.cs">
-      <DependentUpon>202301041453399_M27.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301051449563_M28.cs" />
-    <Compile Include="Migrations\202301051449563_M28.designer.cs">
-      <DependentUpon>202301051449563_M28.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="PosDbContext.cs" />
+    <Compile Include="ApplicationFiles\PosDbContext.cs" />
     <Compile Include="Printing\PrintTicket.cs" />
+    <Compile Include="ApplicationFiles\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Accounts\AccountsDashboard.xaml.cs">
       <DependentUpon>AccountsDashboard.xaml</DependentUpon>
     </Compile>
@@ -294,6 +258,9 @@
     </Compile>
     <Compile Include="UserInterface\Security\AddNewUser.xaml.cs">
       <DependentUpon>AddNewUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\TicketPayments\PaymentsWindow.xaml.cs">
+      <DependentUpon>PaymentsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Warehouse\AddnewCategory.xaml.cs">
       <DependentUpon>AddnewCategory.xaml</DependentUpon>
@@ -421,12 +388,12 @@
     <Compile Include="UserInterface\WorkPeriods\ViewWorkPeriod.xaml.cs">
       <DependentUpon>ViewWorkPeriod.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowIconRemover.cs" />
-    <Page Include="DeveloperDashboard.xaml">
+    <Compile Include="ApplicationFiles\WindowIconRemover.cs" />
+    <Page Include="ApplicationFiles\DeveloperDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InitialServerConfiguration.xaml">
+    <Page Include="ApplicationFiles\InitialServerConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -438,6 +405,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ApplicationFiles\SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\Accounts\AccountsDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -525,6 +496,10 @@
     <Page Include="UserInterface\Security\AddNewUser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\TicketPayments\PaymentsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\Warehouse\AddnewCategory.xaml">
       <SubType>Designer</SubType>
@@ -689,36 +664,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202209260906128_M19.resx">
-      <DependentUpon>202209260906128_M19.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209281915506_M20.resx">
-      <DependentUpon>202209281915506_M20.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209281917524_M21.resx">
-      <DependentUpon>202209281917524_M21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202209301444084_M22.resx">
-      <DependentUpon>202209301444084_M22.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212300940016_m23.resx">
-      <DependentUpon>202212300940016_m23.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301040956096_M24.resx">
-      <DependentUpon>202301040956096_M24.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301041223290_M25.resx">
-      <DependentUpon>202301041223290_M25.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301041443176_M26.resx">
-      <DependentUpon>202301041443176_M26.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301041453399_M27.resx">
-      <DependentUpon>202301041453399_M27.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301051449563_M28.resx">
-      <DependentUpon>202301051449563_M28.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

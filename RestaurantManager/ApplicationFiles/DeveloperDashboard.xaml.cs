@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RestaurantManager
+namespace RestaurantManager.ApplicationFiles
 {
     /// <summary>
     /// Interaction logic for DeveloperDashboard.xaml

@@ -1,10 +1,12 @@
-﻿using RestaurantManager.BusinessModels.OrderTicket;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,9 +41,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                 List<OrderMaster> items = new List<OrderMaster>();
                 using (var db = new PosDbContext())
                 {
-                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString() && !p.IsPrinted).ToList();
+                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()&& p.OrderStatus!=PosEnums.OrderTicketStatuses.Completed.ToString()).ToList();
                 }
-                if (SharedVariables.CurrentUser.UserRole == SharedVariables.AdminRoleName)
+                if (SharedVariables.CurrentUser.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
                 {
                     LisTview_TicketsList.ItemsSource = items;
                 }
@@ -322,17 +324,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                             MessageBox.Show("The Ticket Number is Invalid!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
-                        if (order.IsInPreparation && order.IsKitchenServed)
-                        { 
-                            PrintReceipt(); 
-                            order.IsPrinted = true;
-                            db.SaveChanges();
-                        }
-                        else
-                        {
-                            MessageBox.Show("The Ticket Items are being Served. Kindly wait for the Kitchen to Complete!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            return;
-                        }
+                        PrintReceipt();
+                        order.IsPrinted = true;
+                        db.SaveChanges();
                     }
                     MessageBox.Show("Completed. Ticket Printed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     RefreshTicketList();
@@ -344,14 +338,15 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         public void PrintReceipt()
         {
             try
             {
                 PrintDocument document = new PrintDocument();
                 document.PrintPage += new PrintPageEventHandler(this.ProvideContentForTicket);
-                document.PrintController = new StandardPrintController(); 
-                document.PrinterSettings.PrintFileName = "D:\\Receipt1.pdf";
+                document.PrintController = new StandardPrintController();
+                document.PrinterSettings.PrintFileName = "Ticket.pdf";
                 document.PrinterSettings.PrintToFile = true;
                 document.Print();
             }
@@ -372,21 +367,17 @@ namespace RestaurantManager.UserInterface.PointofSale
             decimal taxamount = SharedVariables.ClientInfo().TaxPercentage * GrossTotal / 100;
             winformdrawing.Graphics graphics = e.Graphics;
             //begin receipt
-            int topoffset = 10;
-            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat();
-            format1.LineAlignment = winformdrawing.StringAlignment.Center;
-            format1.Alignment = winformdrawing.StringAlignment.Center;
+            int topoffset = 20;
+            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
+            {
+                LineAlignment = winformdrawing.StringAlignment.Center,
+                Alignment = winformdrawing.StringAlignment.Center
+            };
             winformdrawing.StringFormat format = format1;
             graphics.DrawString(SharedVariables.ClientInfo().ClientTitle.ToUpper(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             topoffset += 20;
             graphics.DrawString(SharedVariables.ClientInfo().PhysicalAddress, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Phone, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Email, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ClientKRAPIN.ToUpper(), new winformdrawing.Font("Arial", 12f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
+            topoffset += 20; 
             graphics.DrawString("Order Ticket", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             topoffset += 15;
@@ -432,12 +423,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                             object local1 = obj1;
                             text1 = null;
                         }
-                        s = s + text1;
+                        s += text1;
                         index++;
                     }
                 }
                 topoffset += 15;
-                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ord_i.Price.ToString(), "   ", ord_i.Total.ToString() };
+                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ((int)ord_i.Price).ToString(), "   ", ((int)ord_i.Total).ToString() };
                 graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
                 topoffset += 15; 
             }
@@ -451,122 +442,12 @@ namespace RestaurantManager.UserInterface.PointofSale
             graphics.DrawString("Tax%        TaxAmt", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Underline), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 70f, (float)topoffset);
             topoffset += 15;
             graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 80f, (float)topoffset);
-            graphics.DrawString(taxamount.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
+            graphics.DrawString(taxamount.ToString("N2"), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
             topoffset += 10;
             graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
             topoffset += 20;
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Italic), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-
-        } 
-        public void ProvideContentforsalesreceipt(object sender, PrintPageEventArgs e)
-        {
-            int Center_X = 150;
-            decimal Balance = 0;
-            decimal AmountPaid = 0;
-            decimal GrossTotal = 0; 
-            List<OrderItem> receiptitems = Datagrid_OrderItems.Items.Cast<OrderItem>().ToList();
-
-            winformdrawing.Graphics graphics = e.Graphics;
-            //begin receipt
-            int topoffset = 10;
-            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat();
-            format1.LineAlignment = winformdrawing.StringAlignment.Center;
-            format1.Alignment = winformdrawing.StringAlignment.Center;
-            winformdrawing.StringFormat format = format1;
-            graphics.DrawString(SharedVariables.ClientInfo().ClientTitle.ToUpper(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().PhysicalAddress, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Phone, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Email, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ClientKRAPIN.ToUpper(), new winformdrawing.Font("Arial", 12f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString("Order Ticket", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
-            graphics.DrawString("TicketNo:" + this.TicketNo, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Date:" + SharedVariables.CurrentDate().ToShortDateString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("Counter : " + SharedVariables.LogInCounter, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Time : " + SharedVariables.CurrentDate().ToShortTimeString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("Served By: " + SharedVariables.CurrentUser.UserFullName, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("Item                              Qty Price    Total", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("______________________________________", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20; 
-            foreach (OrderItem ord_i in receiptitems)
-            { 
-                if (ord_i.ItemName.ToString().Length <= 0x1f)
-                {
-                    graphics.DrawString(ord_i.ItemName.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-                }
-                else
-                {
-                    Array array = ord_i.ItemName.ToString().ToCharArray(0, 30);
-                    string s = "";
-                    int index = 0;
-                    while (true)
-                    {
-                        string text1;
-                        if (index >= array.Length)
-                        {
-                            graphics.DrawString(s, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-                            break;
-                        }
-                        object obj1 = array.GetValue(index);
-                        if (obj1 != null)
-                        {
-                            text1 = obj1.ToString();
-                        }
-                        else
-                        {
-                            object local1 = obj1;
-                            text1 = null;
-                        }
-                        s = s + text1;
-                        index++;
-                    }
-                }
-                topoffset += 15;
-                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ord_i.Price.ToString(), "   ", decimal.Parse(ord_i.Total.ToString()).ToString("N2") };
-                graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
-                topoffset += 15; 
-            }
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString("TOTAL :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(GrossTotal.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Amount Paid :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(AmountPaid.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Balance", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(Balance.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString("Tax%        TaxAmt", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Underline), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 70f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 80f, (float)topoffset);
-            graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Italic), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-
-        } 
+            
+        }  
     }
 }

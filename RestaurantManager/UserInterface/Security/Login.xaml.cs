@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RestaurantManager.BusinessModels.Navigation;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 
 namespace RestaurantManager.UserInterface.Security
 {
@@ -26,34 +29,45 @@ namespace RestaurantManager.UserInterface.Security
         readonly PermissionMaster Pm = new PermissionMaster();
         public Login()
         {
+           
             InitializeComponent();
             GlobalVariables.SharedVariables.CurrentUser = null;
+           
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             try
-            {
+            { 
+                using (var a = new PosDbContext())
+                {
+                    if (!a.Database.Exists())
+                    {
+                        MessageBox.Show("THE DATABASE DOES NOT EXIST!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                        App.Current.Shutdown();
+                    }
+                }
+                FirstAdminUser();
                 try
                 {
-                    InitializeDb(); 
                     using (var a = new PosDbContext())
                     {
                         if (a.ClientInfo.Count() <= 0)
                         {
 
                         }
-                        if (a.UserRoles.Where(x => x.RoleName == GlobalVariables.SharedVariables.AdminRoleName).Count() <= 0)
+                        if (a.UserRoles.Where(x => x.RoleName == PosEnums.UserAccountsRoles.Admin.ToString()).Count() <= 0)
                         {
                             UserRole r = new UserRole
                             {
-                                RoleName = GlobalVariables.SharedVariables.AdminRoleName,
+                                RoleName = PosEnums.UserAccountsRoles.Admin.ToString(),
                                 RoleGuid = Guid.NewGuid().ToString(),
                                 RoleIsDeleted = "False",
                                 RoleDescription = "Systemm Administrator",
                                 RoleStatus = "Active",
-                                LastUpdateDate = GlobalVariables.SharedVariables.CurrentDate(),
-                                RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
+                                LastUpdateDate = SharedVariables.CurrentDate(),
+                                RegistrationDate = SharedVariables.CurrentDate(),
                                 RolePermissions = "All"
                             };
                             a.UserRoles.Add(r);
@@ -62,20 +76,7 @@ namespace RestaurantManager.UserInterface.Security
                     }
                     PasswordBox_UserPin.Focus();
                 }
-                catch (System.Data.SqlClient.SqlException ex1)
-                {
-                    if (ex1.Message.ToLower().Contains("a network-related or instance-specific"))// error occured
-                    {
-                        if (MessageBox.Show(ex1.Message + "\n\nDo you want to configure the server now?", "Server Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                        {
-                            InitialServerConfiguration isc = new InitialServerConfiguration();
-                            isc.ShowDialog();
-                            MessageBox.Show("The application will shut down.\n\nKindly restart the application for the changes to apply.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        }
-                        App.Current.Shutdown();
-                    }
-                }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -84,13 +85,10 @@ namespace RestaurantManager.UserInterface.Security
             }
             catch (Exception ex)
             {
-                string help = "\nKindly contact Developer for HELP!";
-                MessageBox.Show(ex.Message + help, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                PasswordBox_UserPin.Password = "1234";
-                Button_Login_Click(new object(), new RoutedEventArgs());
+
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                App.Current.Shutdown();
             }
         }
 
@@ -146,7 +144,7 @@ namespace RestaurantManager.UserInterface.Security
                     }
                     raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
                     //final permissions
-                    if (user.UserRole == GlobalVariables.SharedVariables.AdminRoleName)
+                    if (user.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         user.User_Permissions_final.AddRange(Pm.GetAllPermissions());
@@ -173,7 +171,7 @@ namespace RestaurantManager.UserInterface.Security
                     //        GlobalVariables.SharedVariables.ClientInfo = db.ClientInfo.First();
                     //    }
                     //}
-                    GlobalVariables.SharedVariables.CurrentUser = user;
+                    SharedVariables.CurrentUser = user;
                     m.Show();
                     Close();
                     
@@ -194,14 +192,41 @@ namespace RestaurantManager.UserInterface.Security
             this.Close();
         }
 
-        private void InitializeDb()
+        private void FirstAdminUser()
         {
-            using (var a = new PosDbContext())
+            try
             {
-                a.Database.Initialize(true);
-                // a.ProductCategory.ToList();
+                using (var db = new PosDbContext())
+                {
+                    if (db.PosUser.Count() <= 0)
+                    {
+
+                        PosUser user = new PosUser()
+                        {
+                            UserGuid = Guid.NewGuid().ToString(),
+                            UserFullName = "Admin-Default",
+                            UserPIN = 1234,
+                            UserName = "Admin",
+                            UserIsDeleted = false,
+                            UserRole = PosEnums.UserAccountsRoles.Admin.ToString(),
+                            UserWorkingStatus = PosEnums.UserAccountStatuses.Active.ToString(),
+                            UserRights =",",
+                            LastLoginDate = SharedVariables.CurrentDate(),
+                            RegistrationDate = SharedVariables.CurrentDate()
+                        };
+                        db.PosUser.Add(user);
+                        db.SaveChanges();
+                    } 
+                    
+                } 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                App.Current.Shutdown();
             }
         }
+        
 
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
         {

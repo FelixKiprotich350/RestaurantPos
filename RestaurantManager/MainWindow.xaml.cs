@@ -24,6 +24,7 @@ using MaterialDesignThemes.Wpf;
 using MySql.Data.MySqlClient;
 using RestaurantManager.UserInterface.PointofSale;
 using System.Diagnostics;
+using RestaurantManager.ApplicationFiles;
 
 namespace RestaurantManager
 {
@@ -46,7 +47,7 @@ namespace RestaurantManager
         {
             try
             {
-                //TextBox_InstitutionTitle.Text = GlobalVariables.SharedMethodsVariables.ClientInfo.ClientTitle;
+                TextBox_InstitutionTitle.Text = GlobalVariables.SharedVariables.ClientInfo().ClientTitle;
                 GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
             }
@@ -234,6 +235,17 @@ namespace RestaurantManager
             if ((e.KeyboardDevice.Modifiers == ModifierKeys.Control) && (e.Key == Key.D))
             {
                 MessageBox.Show("DeActivated");
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window != this)
+                {
+                    window.Close(); 
+                }
             }
         }
     }

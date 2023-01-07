@@ -22,6 +22,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.ApplicationFiles;
 
 namespace RestaurantManager.UserInterface.PosReports
 {
@@ -190,9 +191,9 @@ namespace RestaurantManager.UserInterface.PosReports
                         foreach (var x in items3)
                         {
                             Un_OrderItem item = new Un_OrderItem();
-                            int qty = items2.Where(k => k.ParentProductItemGuid == x.ParentProductItemGuid).Sum(l => l.Quantity);
-                            decimal total = items2.Where(k => k.ParentProductItemGuid == x.ParentProductItemGuid).Sum(l => l.Total);
-                            item.ParentProductItemGuid = x.ParentProductItemGuid;
+                            int qty = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.Quantity);
+                            decimal total = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.Total);
+                            item.ParentProductItemGuid = x.ProductItemGuid;
                             item.ItemName = x.ItemName;
                             item.Quantity = qty;
                             item.Total = total;
@@ -317,12 +318,12 @@ namespace RestaurantManager.UserInterface.PosReports
             public bool Equals(OrderItem x, OrderItem y)
             {
                 // compare multiple fields
-                return x.ParentProductItemGuid == y.ParentProductItemGuid;
+                return x.ProductItemGuid == y.ProductItemGuid;
             }
 
             public int GetHashCode(OrderItem obj)
             {
-                return obj.ParentProductItemGuid.GetHashCode();
+                return obj.ProductItemGuid.GetHashCode();
             }
 
         }

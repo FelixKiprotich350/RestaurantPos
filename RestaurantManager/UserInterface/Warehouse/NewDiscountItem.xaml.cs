@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using RestaurantManager.ApplicationFiles;
 using RestaurantManager.BusinessModels.Warehouse;
 
 namespace RestaurantManager.UserInterface.Warehouse
@@ -96,16 +97,18 @@ namespace RestaurantManager.UserInterface.Warehouse
                 {
                    foreach(var x in Selected_Items)
                     {
-                        DiscountItem d = new DiscountItem();
-                        d.DiscRowID = Guid.NewGuid().ToString();
-                        d.ProductGuid = x.ProductGuid;
-                        d.ProductName = x.ProductName;
-                        d.DiscType = disctype;
-                        d.DiscStatus = "Active";
-                        d.StartDate = (DateTime)Datepicker_Startdate.SelectedDate;
-                        d.EndDate = (DateTime)Datepicker_Enddate.SelectedDate;
-                        d.IsRepetitive = (bool)CheckBox_RepeatWeekly.IsChecked;
-                        d.OfferDay = "None"; 
+                        DiscountItem d = new DiscountItem
+                        {
+                            DiscRowID = Guid.NewGuid().ToString(),
+                            ProductGuid = x.ProductGuid,
+                            ProductName = x.ProductName,
+                            DiscType = disctype,
+                            DiscStatus = "Active",
+                            StartDate = (DateTime)Datepicker_Startdate.SelectedDate,
+                            EndDate = (DateTime)Datepicker_Enddate.SelectedDate,
+                            IsRepetitive = (bool)CheckBox_RepeatWeekly.IsChecked,
+                            OfferDay = "None"
+                        };
                         if ((bool)CheckBox_RepeatWeekly.IsChecked)
                         {
                             d.OfferDay = Combobox_WeeklyDays.Text;
@@ -196,8 +199,10 @@ namespace RestaurantManager.UserInterface.Warehouse
 
         private void Button_SelectGiftItem_Click(object sender, RoutedEventArgs e)
         {
-            SelectProduct sp = new SelectProduct();
-            sp.Title = "Select a Gift Item";
+            SelectProduct sp = new SelectProduct
+            {
+                Title = "Select a Gift Item"
+            };
             if ((bool)sp.ShowDialog())
             {
                 var x = sp.Returnlist[0];

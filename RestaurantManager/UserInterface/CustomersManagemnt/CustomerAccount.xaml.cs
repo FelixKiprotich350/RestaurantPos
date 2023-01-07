@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.CustomersManagement;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.UserInterface.PointofSale;
 using System;
@@ -24,7 +25,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
     /// </summary>
     public partial class CustomerAccount : Page
     {
-        readonly Random R = new Random();
+        //readonly Random R = new Random();
         public CustomerAccount()
         {
             InitializeComponent();

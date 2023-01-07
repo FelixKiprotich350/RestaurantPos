@@ -11,44 +11,36 @@ namespace RestaurantManager.BusinessModels.GeneralSettings
     public class ClientInfoDetails
     {
         [Key]
-        [MaxLength(100)]
-        [Column(Order = 0)]
+        [MaxLength(100)] 
         public string ClientGuid { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 1)]
+        [MaxLength(100)] 
         public string ClientTitle { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 2)]
+        [MaxLength(100)] 
         public string PhysicalAddress { get; set; }
         [Required]
         [Index]
-        [MaxLength(100)]
-        [Column(Order = 3)]
+        [MaxLength(100)] 
         public string Email { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 4)]
+        [MaxLength(100)] 
         public string Phone { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 5)]
+        [MaxLength(100)] 
         public string ClientKRAPIN { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 6)]
+        [MaxLength(100)] 
         public string ReceiptNote1 { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 7)]
+        [MaxLength(100)] 
         public string ReceiptNote2 { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 8)]
+        [MaxLength(100)] 
         public string ReceiptNote3 { get; set; }
-        [Required] 
-        [Column(Order = 9)]
+        [Required]  
         public decimal TaxPercentage { get; set; }
+        [Required]  
+        public string AcceptedCards { get; set; }
     }
 }

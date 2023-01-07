@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.Payments;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using System;
 using System.Collections.Generic;
@@ -61,31 +62,31 @@ namespace RestaurantManager.UserInterface.Accounts
             }
         }
 
-        int TicketCount(string tstatus, string workperiod, bool CountAll)
-        {
-            try
-            {
-                int count = 0;
-                if (CountAll)
-                {
-                    using (var db = new PosDbContext())
-                    {
-                        count = db.OrderMaster.Where(x => x.Workperiod == workperiod).Count();
-                    }
-                    return count;
-                }
+        //int TicketCount(string tstatus, string workperiod, bool CountAll)
+        //{
+        //    try
+        //    {
+        //        int count = 0;
+        //        if (CountAll)
+        //        {
+        //            using (var db = new PosDbContext())
+        //            {
+        //                count = db.OrderMaster.Where(x => x.Workperiod == workperiod).Count();
+        //            }
+        //            return count;
+        //        }
 
-                using (var db = new PosDbContext())
-                {
-                    count = db.OrderMaster.Where(x => x.Workperiod == workperiod & x.OrderStatus == tstatus).Count();
-                }
-                return count;
-            }
-            catch
-            {
-                return -1;
-            }
-        }
+        //        using (var db = new PosDbContext())
+        //        {
+        //            count = db.OrderMaster.Where(x => x.Workperiod == workperiod & x.OrderStatus == tstatus).Count();
+        //        }
+        //        return count;
+        //    }
+        //    catch
+        //    {
+        //        return -1;
+        //    }
+        //}
 
         private void Datagrid_Workperiods_MouseUp(object sender, MouseButtonEventArgs e)
         {

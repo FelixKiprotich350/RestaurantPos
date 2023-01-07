@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.GeneralSettings;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.GeneralSettings;
 using RestaurantManager.BusinessModels.Security;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using System;
@@ -16,7 +17,7 @@ namespace RestaurantManager.GlobalVariables
         public static string DbConnectionstring = "server=127.0.0.1;user=root;password=toor;port=3306;database=restpos";
          
         public static PosUser CurrentUser = null;
-        public static string AdminRoleName = "Admin";
+      //  public static string AdminRoleName = "Admin";
         public static string LogInCounter = Environment.MachineName; 
 
         /// <summary>

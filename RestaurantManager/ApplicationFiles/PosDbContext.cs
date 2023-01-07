@@ -19,26 +19,28 @@ using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.ActivityLogs;
 
-namespace RestaurantManager
+namespace RestaurantManager.ApplicationFiles
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
-    class PosDbContext : DbContext
+    public class PosDbContext : DbContext
     {
         //server=localhost;port=3306;database=restpos;uid=root;password=toor
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
-        public PosDbContext() : base("server=localhost;port=3306;database=restpos;uid=root;password=toor;")
+
+        public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
         {
+            Database.SetInitializer<PosDbContext>(null);
+            //Database.SetInitializer<PosDbContext>(new MyInitializer());
             //this.Database.CommandTimeout=10; 
-            //Database.Initialize(true);
-            //Database.CreateIfNotExists();
-            Database.Log = s => Debug.WriteLine(s);
+            // Database.Initialize(false);
+            //Database.Log = s => Debug.WriteLine(s);
             //Database.Log = s => Trace.WriteLine(s); 
+
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
-
+        } 
         //public override int SaveChanges()
         //{
         //    var modifiedEntities = ChangeTracker.Entries()
@@ -71,14 +73,7 @@ namespace RestaurantManager
         //    }
         //    return base.SaveChanges();
         //}
-
-#pragma warning disable IDE0051 // Remove unused private members
-        private object GetPrimaryKeyValue(DbEntityEntry entry)
-#pragma warning restore IDE0051 // Remove unused private members
-        {
-            var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
-            return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
-        }
+ 
         //Warehouse
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
@@ -108,5 +103,16 @@ namespace RestaurantManager
         //customers
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerAccount> CustomerPointsAccount { get; set; }
+    }
+    public class MyInitializer : IDatabaseInitializer<PosDbContext>
+    { 
+        public void InitializeDatabase(PosDbContext context)
+        {
+            //check for existance
+            if (!context.Database.Exists())
+            {
+                
+            }
+        }
     }
 }

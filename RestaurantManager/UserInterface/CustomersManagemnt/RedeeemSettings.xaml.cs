@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.ApplicationFiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +35,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             {
                 int debit = 0;
                 int credit = 0;
-                using (var db=new PosDbContext())
+                using (var db = new PosDbContext())
                 {
                     var list = db.CustomerPointsAccount.Where(y => y.CustomerPhoneNo == custno).ToList();
                     if (list.Count > 0)

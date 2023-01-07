@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.Payments;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Payments;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
 using System;
@@ -177,7 +178,7 @@ namespace RestaurantManager.UserInterface.PosReports
                             mpesa = items.Where(k => k.ParentTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(j => j.AmountPaid);
                             voucher = items.Where(k => k.ParentTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Voucher.ToString()).Sum(j => j.AmountPaid);
                             cards = items.Where(k => k.ParentTransNo == x.TransNo && k.Method.Contains(PosEnums.TicketPaymentMethods.Card.ToString())).Sum(j => j.AmountPaid);
-                            percheckout.Add(new { TransNo = x.TransNo, AmountCharged = x.TotalAmountCharged, AmountPaid = x.TotalAmountPaid, Balance = x.TicketBalanceReturned, Cash = cash, Mpesa = mpesa, Cards = cards, Voucher = voucher });
+                            percheckout.Add(new { x.TransNo, AmountCharged = x.TotalAmountCharged, AmountPaid = x.TotalAmountPaid, Balance = x.TicketBalanceReturned, Cash = cash, Mpesa = mpesa, Cards = cards, Voucher = voucher });
                         }
                         decimal totals = 0;
                         int count = 0;

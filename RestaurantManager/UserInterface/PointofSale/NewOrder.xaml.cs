@@ -21,7 +21,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes; 
+using System.Windows.Shapes;
+using RestaurantManager.ApplicationFiles;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -137,7 +138,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         MenuProductItem b = a.First();
                         i.ItemRowGuid = Guid.NewGuid().ToString();
-                        i.ParentProductItemGuid = b.ProductGuid;
+                        i.ProductItemGuid = b.ProductGuid;
                         i.ItemName = b.ProductName;
                         i.Quantity = icount;
                         i.Price = price;
@@ -151,13 +152,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                             {
                                 i.DiscPercent = disc_i.DiscPercentage;
                               
-                                i.ParentItem = i.ParentProductItemGuid;
+                                i.ParentItem = i.ProductItemGuid;
                             }
                             else if (disc_i.DiscType == "GiftItem")
                             {
                                 i.DiscPercent = 0; 
                                 i.ParentItem = disc_i.AttachedProduct;
                             }
+                        }
+                        else
+                        {
+                            i.ParentItem = i.ProductItemGuid;
                         }
                     }
                     else
@@ -167,7 +172,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                 }
-                if (OrderItems.Where(a => a.ParentProductItemGuid == i.ParentProductItemGuid && a.ServiceType == i.ServiceType).Count() > 0)
+                if (OrderItems.Where(a => a.ProductItemGuid == i.ProductItemGuid && a.ServiceType == i.ServiceType).Count() > 0)
                 {
                     MessageBox.Show("The Product is in the Order list!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     Lv.SelectedItem = null;
@@ -180,19 +185,21 @@ namespace RestaurantManager.UserInterface.PointofSale
                     if (disc_i.DiscType == "GiftItem")
                     {
                         var db1 = new PosDbContext();
-                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k=>k.ProductGuid==disc_i.AttachedProduct); 
-                        OrderItem gift = new OrderItem();
-                        gift.ItemRowGuid = Guid.NewGuid().ToString();
-                        gift.ParentProductItemGuid = disc_i.AttachedProduct;//real product guid
-                        gift.ItemName = giftoriginalproduct.ProductName + " - Gift";
-                        gift.Quantity = icount;
-                        gift.Price = giftoriginalproduct.ProductPrice;
-                        gift.Total = 0;
-                        gift.ServiceType = st.ItemServiceType;
-                        gift.IsItemVoided = false;
-                        gift.IsGiftItem = true;
-                        gift.DiscPercent = 0;
-                        gift.ParentItem = mpi.ProductGuid;
+                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k=>k.ProductGuid==disc_i.AttachedProduct);
+                        OrderItem gift = new OrderItem
+                        {
+                            ItemRowGuid = Guid.NewGuid().ToString(),
+                            ProductItemGuid = disc_i.AttachedProduct,//real product guid
+                            ItemName = giftoriginalproduct.ProductName + " - Gift",
+                            Quantity = icount,
+                            Price = giftoriginalproduct.ProductPrice,
+                            Total = 0,
+                            ServiceType = st.ItemServiceType,
+                            IsItemVoided = false,
+                            IsGiftItem = true,
+                            DiscPercent = 0,
+                            ParentItem = mpi.ProductGuid
+                        };
                         OrderItems.Add(gift);
                     }
                 }
@@ -240,19 +247,19 @@ namespace RestaurantManager.UserInterface.PointofSale
                     ei.ShowDialog();
                     if (ei.ReturningAction == "Delete")
                     {
-                        OrderItem x=OrderItems.Where(h => h.ParentItem == o.ParentProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).FirstOrDefault();
+                        OrderItem x=OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).FirstOrDefault();
                         OrderItems.Remove(x);
                         OrderItems.Remove(o);
                     }
                     else if (ei.ReturningAction == "Update")
                     {
                         decimal total = (decimal)ei.ReturningQuantity * o.Price;
-                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid && h.ServiceType == o.ServiceType).First().Quantity = ei.ReturningQuantity;
-                        OrderItems.Where(h => h.ParentProductItemGuid == o.ParentProductItemGuid && h.ServiceType == o.ServiceType).First().Total = total;
+                        OrderItems.Where(h => h.ProductItemGuid == o.ProductItemGuid && h.ServiceType == o.ServiceType).First().Quantity = ei.ReturningQuantity;
+                        OrderItems.Where(h => h.ProductItemGuid == o.ProductItemGuid && h.ServiceType == o.ServiceType).First().Total = total;
                         //update gifts count also
-                        if (OrderItems.Where(h => h.ParentItem == o.ParentProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).Count()>0)
+                        if (OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).Count()>0)
                         {
-                            OrderItems.Where(h => h.ParentItem == o.ParentProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).First().Quantity = ei.ReturningQuantity;
+                            OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).First().Quantity = ei.ReturningQuantity;
                         }
                          
                         Datagrid_OrderItems.Items.Refresh();

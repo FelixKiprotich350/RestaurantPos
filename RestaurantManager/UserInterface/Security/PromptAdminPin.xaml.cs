@@ -1,4 +1,6 @@
-﻿using RestaurantManager.BusinessModels.Security;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Security;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +41,7 @@ namespace RestaurantManager.UserInterface.Security
                         if (db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).Count() > 0)
                         {
                             user = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
-                            if (user.UserRole == GlobalVariables.SharedVariables.AdminRoleName)
+                            if (user.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
                             {
                                 ApprovingAdmin = user.UserName;
                                 DialogResult = true;

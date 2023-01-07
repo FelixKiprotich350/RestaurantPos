@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.CustomersManagement;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.BusinessModels.OrderTicket;
 using RestaurantManager.BusinessModels.WorkPeriod;
 using RestaurantManager.GlobalVariables;
@@ -170,7 +171,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 ItemName = m.ItemName,
                                 OrderID = ordno,
                                 IsItemVoided = false,
-                                ParentProductItemGuid = m.ParentProductItemGuid,
+                                ProductItemGuid = m.ProductItemGuid,
                                 Price = m.Price,
                                 Quantity = m.Quantity, 
                                 ServiceType = m.ServiceType,

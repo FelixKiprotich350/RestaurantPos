@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.GeneralSettings;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.GeneralSettings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,17 +42,20 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                     ClientInfoDetails c = b.ClientInfo.FirstOrDefault();
                     if(c is null)
                     {
-                        ClientInfoDetails d = new ClientInfoDetails();
-                        d.ClientGuid = Guid.NewGuid().ToString(); 
-                        d.ClientTitle = TextBox_ClientTitle.Text;
-                        d.PhysicalAddress = TextBox_PhysicalAddress.Text;
-                        d.Email = TextBox_Email.Text;
-                        d.Phone = TextBox_Telephone.Text;
-                        d.ClientKRAPIN = TextBox_PinNumber.Text;
-                        d.TaxPercentage = tax;
-                        d.ReceiptNote1 = TextBox_ReceiptNote1.Text;
-                        d.ReceiptNote2 = TextBox_ReceiptNote2.Text;
-                        d.ReceiptNote3 = TextBox_ThankYouNote.Text;
+                        ClientInfoDetails d = new ClientInfoDetails
+                        {
+                            ClientGuid = Guid.NewGuid().ToString(),
+                            ClientTitle = TextBox_ClientTitle.Text,
+                            PhysicalAddress = TextBox_PhysicalAddress.Text,
+                            Email = TextBox_Email.Text,
+                            Phone = TextBox_Telephone.Text,
+                            ClientKRAPIN = TextBox_PinNumber.Text,
+                            TaxPercentage = tax,
+                            ReceiptNote1 = TextBox_ReceiptNote1.Text,
+                            ReceiptNote2 = TextBox_ReceiptNote2.Text,
+                            ReceiptNote3 = TextBox_ReceiptNote3.Text,
+                            AcceptedCards = TextBox_AcceptedCards.Text.Trim()
+                        };
                         b.ClientInfo.Add(d);
                         b.SaveChanges(); 
                         MessageBox.Show("Success.", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -66,7 +70,8 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                         c.TaxPercentage = tax;
                         c.ReceiptNote1 = TextBox_ReceiptNote1.Text;
                         c.ReceiptNote2 = TextBox_ReceiptNote2.Text;
-                        c.ReceiptNote3 = TextBox_ThankYouNote.Text;
+                        c.ReceiptNote3 = TextBox_ReceiptNote3.Text;
+                        c.AcceptedCards = TextBox_AcceptedCards.Text.Trim();
                         b.SaveChanges();
                         MessageBox.Show("Success.", "Messsage Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     } 
@@ -97,7 +102,9 @@ namespace RestaurantManager.UserInterface.GeneralSettings
                     TextBox_PinNumber.Text = b.ClientInfo.ToList()[0].ClientKRAPIN;
                     TextBox_ReceiptNote1.Text = b.ClientInfo.ToList()[0].ReceiptNote1;
                     TextBox_ReceiptNote2.Text = b.ClientInfo.ToList()[0].ReceiptNote2;
-                    TextBox_ThankYouNote.Text = b.ClientInfo.ToList()[0].ReceiptNote3;
+                    TextBox_ReceiptNote3.Text = b.ClientInfo.ToList()[0].ReceiptNote3;
+                    TextBox_TaxPercentage.Text = b.ClientInfo.ToList()[0].TaxPercentage.ToString();
+                    TextBox_AcceptedCards.Text = b.ClientInfo.ToList()[0].AcceptedCards;
                 }
             }
             catch (Exception ex)

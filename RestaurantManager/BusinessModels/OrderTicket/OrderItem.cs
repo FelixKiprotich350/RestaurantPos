@@ -14,7 +14,7 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public string ItemRowGuid { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ParentProductItemGuid { get; set; }
+        public string ProductItemGuid { get; set; }
         [Required]
         [MaxLength(100)]
         public string OrderID { get; set; }
@@ -32,6 +32,10 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         public string ServiceType { get; set; }
         [Required]
         public bool IsGiftItem { get; set; }
+        /// <summary>
+        /// If the item has a gift - use the productid of the gifted item
+        /// If the item does not have a gift productid and GiftItemid are same
+        /// </summary>
         [Required]
         public string ParentItem { get; set; }
         [Required]

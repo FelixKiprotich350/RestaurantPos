@@ -1,4 +1,5 @@
-﻿using RestaurantManager.BusinessModels.Warehouse;
+﻿using RestaurantManager.ApplicationFiles;
+using RestaurantManager.BusinessModels.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace RestaurantManager.UserInterface.Warehouse
         {
             try
             {
+                UpdateExpiredDiscounts();
                 RefreshProducts();
             }
             catch (Exception ex)
@@ -37,7 +39,29 @@ namespace RestaurantManager.UserInterface.Warehouse
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void RefreshProducts()
+        private void UpdateExpiredDiscounts()
+        {
+            try
+            { 
+                List<DiscountItem> item = new List<DiscountItem>();
+                using (var db = new PosDbContext())
+                {
+                    foreach (var x in db.DiscountItem)
+                    {
+                        if (x.EndDate < GlobalVariables.SharedVariables.CurrentDate() && x.DiscStatus == "Active")
+                        {
+                            x.DiscStatus = "Expired";
+                        }
+                    }
+                    db.SaveChanges();
+                }
+              
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }private void RefreshProducts()
         {
             try
             { 

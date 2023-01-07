@@ -22,5 +22,53 @@ namespace RestaurantManager.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("fd")]
+        public string String1 {
+            get {
+                return ((string)(this["String1"]));
+            }
+            set {
+                this["String1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string String2 {
+            get {
+                return ((string)(this["String2"]));
+            }
+            set {
+                this["String2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string String3 {
+            get {
+                return ((string)(this["String3"]));
+            }
+            set {
+                this["String3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string String4 {
+            get {
+                return ((string)(this["String4"]));
+            }
+            set {
+                this["String4"] = value;
+            }
+        }
     }
 }

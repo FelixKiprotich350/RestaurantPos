@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.GeneralSettings"
       mc:Ignorable="d" Loaded="Page_Loaded"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Title="ClientInfo" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -50,6 +50,10 @@
                             <TextBox x:Name="TextBox_TaxPercentage" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
                         <DockPanel   Margin="0,5">
+                            <Label DockPanel.Dock="Left" Content="Accepted Card: " Width="120" FontSize="16"/>
+                            <TextBox x:Name="TextBox_AcceptedCards" HorizontalContentAlignment="Stretch" FontSize="16" />
+                        </DockPanel>
+                        <DockPanel   Margin="0,5">
                             <Label DockPanel.Dock="Left" Content="Receipt Note 1 : " Width="120" FontSize="16"/>
                             <TextBox x:Name="TextBox_ReceiptNote1" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
@@ -58,8 +62,8 @@
                             <TextBox x:Name="TextBox_ReceiptNote2" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
                         <DockPanel   Margin="0,5">
-                            <Label DockPanel.Dock="Left" Content="Thank You Note : " Width="120" FontSize="16"/>
-                            <TextBox x:Name="TextBox_ThankYouNote" HorizontalContentAlignment="Stretch" FontSize="16" />
+                            <Label DockPanel.Dock="Left" Content="Receipt Note 3 : " Width="120" FontSize="16"/>
+                            <TextBox x:Name="TextBox_ReceiptNote3" HorizontalContentAlignment="Stretch" FontSize="16" />
                         </DockPanel>
                        
                     </StackPanel>

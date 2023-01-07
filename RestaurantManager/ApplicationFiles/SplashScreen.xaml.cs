@@ -12,26 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RestaurantManager
+namespace RestaurantManager.ApplicationFiles
 {
     /// <summary>
-    /// Interaction logic for InitialServerConfiguration.xaml
+    /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class InitialServerConfiguration : Window
+    public partial class SplashScreen : Window
     {
-        public InitialServerConfiguration()
+        public SplashScreen()
         {
             InitializeComponent();
-        }
-
-        private void Button_Test_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-        }
-
-        private void Button_Exit_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
         }
     }
 }

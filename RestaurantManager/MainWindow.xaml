@@ -9,7 +9,7 @@
         mc:Ignorable="d" Height="Auto" Loaded="Window_Loaded"  KeyDown="Window_KeyDown"
         Width="Auto" Foreground="White" ResizeMode="CanResize" AllowsTransparency="True"
         WindowState="Maximized" Title="Restaurant Pos" Background="#FFF29400"
-        WindowStartupLocation="CenterScreen" WindowStyle="None"  >
+        WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="Window_Closing" >
 
     <!--<Border CornerRadius="16" Margin="12" Background="#FFF29400">-->
     <Grid Margin="8">

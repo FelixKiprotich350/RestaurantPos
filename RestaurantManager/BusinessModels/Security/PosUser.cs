@@ -31,8 +31,7 @@ namespace RestaurantManager.BusinessModels.Security
         [Required]
         [MaxLength(100)] 
         public string UserWorkingStatus { get; set; }
-        [Required]
-        [MaxLength(1000)] 
+        [Required] 
         public string UserRights { get; set; }
         [Required]  
         public bool UserIsDeleted { get; set; } 

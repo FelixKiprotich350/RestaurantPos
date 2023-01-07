@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.ActivityLogs
 {
-    class ChangeLog
+    public class ChangeLog
     {
         public int Id { get; set; }
         public string EntityName { get; set; }

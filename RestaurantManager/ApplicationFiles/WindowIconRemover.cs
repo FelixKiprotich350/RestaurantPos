@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace RestaurantManager
+namespace RestaurantManager.ApplicationFiles
 {
     public static class WindowIconRemover
     {
@@ -31,7 +31,7 @@ namespace RestaurantManager
         const int SWP_NOMOVE = 0x0002;
         const int SWP_NOZORDER = 0x0004;
         const int SWP_FRAMECHANGED = 0x0020;
-        const uint WM_SETICON = 0x0080;
+        //const uint WM_SETICON = 0x0080;
 
         public static void RemoveIcon(Window window)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManager.BusinessModels.GeneralSettings
 {
-    class TableEntity
+    public class TableEntity
     {
 
         [Key]
