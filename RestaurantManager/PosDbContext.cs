@@ -19,7 +19,7 @@ using RestaurantManager.BusinessModels.Vouchers;
 using RestaurantManager.BusinessModels.CustomersManagement;
 using RestaurantManager.ActivityLogs;
 
-namespace RestaurantManager.ApplicationFiles
+namespace RestaurantManager
 {
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class PosDbContext : DbContext

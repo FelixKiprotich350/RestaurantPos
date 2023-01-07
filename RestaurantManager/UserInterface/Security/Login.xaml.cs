@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.BusinessModels.GeneralSettings;
 
 namespace RestaurantManager.UserInterface.Security
 {
@@ -49,6 +50,7 @@ namespace RestaurantManager.UserInterface.Security
                     }
                 }
                 FirstAdminUser();
+                FirstCompanyProfile();
                 try
                 {
                     using (var a = new PosDbContext())
@@ -210,15 +212,15 @@ namespace RestaurantManager.UserInterface.Security
                             UserIsDeleted = false,
                             UserRole = PosEnums.UserAccountsRoles.Admin.ToString(),
                             UserWorkingStatus = PosEnums.UserAccountStatuses.Active.ToString(),
-                            UserRights =",",
+                            UserRights = ",",
                             LastLoginDate = SharedVariables.CurrentDate(),
                             RegistrationDate = SharedVariables.CurrentDate()
                         };
                         db.PosUser.Add(user);
                         db.SaveChanges();
-                    } 
-                    
-                } 
+                    }
+
+                }
             }
             catch (Exception ex)
             {
@@ -226,8 +228,42 @@ namespace RestaurantManager.UserInterface.Security
                 App.Current.Shutdown();
             }
         }
-        
 
+        private void FirstCompanyProfile()
+        {
+            try
+            {
+                using (var db = new PosDbContext())
+                {
+                    if (db.ClientInfo.Count() <= 0)
+                    {
+
+                        ClientInfoDetails client = new ClientInfoDetails()
+                        {
+                            ClientGuid = Guid.NewGuid().ToString(),
+                            ClientTitle = "Restaurant Title",
+                            ClientKRAPIN = "Tax PIN",
+                            PhysicalAddress = "Admin",
+                            AcceptedCards = ",",
+                            Email = "Client Email",
+                            Phone = "Phone Number",
+                            TaxPercentage = 1,
+                            ReceiptNote1 = "Note",
+                            ReceiptNote2 = "Note",
+                            ReceiptNote3 = "Note"
+                        };
+                        db.ClientInfo.Add(client);
+                        db.SaveChanges();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                App.Current.Shutdown();
+            }
+        }
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
         {
             try

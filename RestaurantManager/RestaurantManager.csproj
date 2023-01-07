@@ -188,7 +188,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationFiles\PosDbContext.cs" />
+    <Compile Include="PosDbContext.cs" />
     <Compile Include="Printing\PrintTicket.cs" />
     <Compile Include="ApplicationFiles\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>

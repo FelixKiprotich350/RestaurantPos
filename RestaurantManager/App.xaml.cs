@@ -20,18 +20,17 @@ namespace RestaurantManager
     /// </summary>
     public partial class App : Application
     {
-        private readonly string keyboardlocation = @"C:\Windows\system32\osk.exe"; 
+        private readonly string keyboardlocation = @"C:\Windows\system32\osk.exe";
         private void Application_Startup(object sender, StartupEventArgs e)
-        { 
+        {
             App.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             SetUpDatabase();
 
-            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
-            EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
+            //  EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
+            // EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
             //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostTouchCaptureEvent, new RoutedEventHandler(Textbox_LostFocus), true);
             //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostKeyboardFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
 
-           
         }
         private void SetUpDatabase()
         {
@@ -41,7 +40,7 @@ namespace RestaurantManager
                 AppStaticvalues.DbUser = RestaurantManager.Properties.Settings.Default.String2;
                 AppStaticvalues.DbPassword = RestaurantManager.Properties.Settings.Default.String3;
                 AppStaticvalues.DbPort = RestaurantManager.Properties.Settings.Default.String4;  
-                using (var db=new ApplicationFiles.PosDbContext())
+                using (var db=new PosDbContext())
                 {
                     db.Database.Connection.Open();
                     db.Database.Connection.Close();

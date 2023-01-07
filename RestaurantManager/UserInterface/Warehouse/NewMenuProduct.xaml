@@ -30,10 +30,10 @@
         </Grid>
         <DockPanel Grid.Row="1" VerticalAlignment="Center">
             <Label DockPanel.Dock="Top" Content="Category"/>
-            <ComboBox x:Name="Combobox_Category" IsEditable="False" Height="30" Margin="0,0,4,0" >
+            <ComboBox x:Name="Combobox_Category" IsEditable="False" Margin="0,0,4,0" Padding="0" Height="32" VerticalContentAlignment="Center" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding CategoryName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Content="{Binding CategoryName}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,0"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

@@ -34,7 +34,7 @@ namespace RestaurantManager.ApplicationFiles
                 AppStaticvalues.DbUser = Textbox_ServerUserID.Text;
                 AppStaticvalues.DbPassword = Textbox_ServerPassword.Text;
                 AppStaticvalues.DbPort = Textbox_ServerPort.Text;
-                using (var db = new ApplicationFiles.PosDbContext())
+                using (var db = new PosDbContext())
                 {
                     Debug.WriteLine(db.Database.Connection.ConnectionString);
        

@@ -70,7 +70,8 @@ namespace RestaurantManager.UserInterface.Security
                         RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
                         LastLoginDate = GlobalVariables.SharedVariables.CurrentDate(),
                         UserWorkingStatus = "Active",
-                        UserIsDeleted = false
+                        UserIsDeleted = false,
+                        UserRights = ","
                     };
                     db.PosUser.Add(user);
                     int x = db.SaveChanges();

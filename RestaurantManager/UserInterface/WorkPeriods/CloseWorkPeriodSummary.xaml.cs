@@ -159,8 +159,8 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 {
                     if (db.OrderMaster.Where(x => x.Workperiod == Textbox_Workperiodname.Text && x.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).Count() > 0)
                     {
-                        MessageBox.Show("Not Allowed!. The work period contains Pending Tickets.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
+                        MessageBox.Show("The work period contains Pending Tickets. This will be closed anyway!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                       // return;
                     }
                 }
                 this.DialogResult = true;

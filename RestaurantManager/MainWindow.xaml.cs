@@ -25,6 +25,7 @@ using MySql.Data.MySqlClient;
 using RestaurantManager.UserInterface.PointofSale;
 using System.Diagnostics;
 using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 
 namespace RestaurantManager
 {
@@ -47,9 +48,22 @@ namespace RestaurantManager
         {
             try
             {
-                TextBox_InstitutionTitle.Text = GlobalVariables.SharedVariables.ClientInfo().ClientTitle;
+                if (SharedVariables.CurrentUser == null)
+                {
+                    MessageBox.Show("The current LoggedIn User is Null!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    App.Current.Shutdown();
+                    return;
+                }
+                if (SharedVariables.ClientInfo() == null )
+                {
+                    MessageBox.Show("The Restaurant Profile does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                    App.Current.Shutdown();
+                    return;
+                }
+                TextBox_InstitutionTitle.Text = SharedVariables.ClientInfo().ClientTitle;
                 GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
+
             }
             catch (Exception ex)
             {
