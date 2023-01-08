@@ -25,7 +25,11 @@ namespace RestaurantManager
         {
             App.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             SetUpDatabase();
-
+            //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("localhost"));
+            //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("root"));
+            //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("toor"));
+            //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("3306"));
+            //Debug.WriteLine("Completed");
             //  EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.GotFocusEvent, new RoutedEventHandler(Textbox_GotFocus), true);
             // EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
             //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostTouchCaptureEvent, new RoutedEventHandler(Textbox_LostFocus), true);

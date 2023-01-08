@@ -34,6 +34,13 @@ namespace RestaurantManager.ApplicationFiles
                 AppStaticvalues.DbUser = Textbox_ServerUserID.Text;
                 AppStaticvalues.DbPassword = Textbox_ServerPassword.Text;
                 AppStaticvalues.DbPort = Textbox_ServerPort.Text;
+                Properties.Settings.Default.String1 = new ApplicationFiles.Base64().Base64Encode(Textbox_ServerIP.Text);
+                Properties.Settings.Default.String2 = new ApplicationFiles.Base64().Base64Encode(Textbox_ServerUserID.Text);
+                Properties.Settings.Default.String3 = new ApplicationFiles.Base64().Base64Encode(Textbox_ServerPassword.Text);
+                Properties.Settings.Default.String4 = new ApplicationFiles.Base64().Base64Encode(Textbox_ServerPort.Text);
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.Reload();
+                Properties.Settings.Default.Upgrade();
                 using (var db = new PosDbContext())
                 {
                     Debug.WriteLine(db.Database.Connection.ConnectionString);
@@ -44,11 +51,7 @@ namespace RestaurantManager.ApplicationFiles
                     }
                     db.Database.Connection.Open();
                     db.Database.Connection.Close();
-                    Properties.Settings.Default.String1= Textbox_ServerIP.Text;
-                    Properties.Settings.Default.String2 = Textbox_ServerUserID.Text;
-                    Properties.Settings.Default.String3 = Textbox_ServerPassword.Text;
-                    Properties.Settings.Default.String4= Textbox_ServerPort.Text;
-                    Properties.Settings.Default.Save(); 
+                   
                     MessageBox.Show("DATABASE CONNECTION STATUS : SUCCESS", "DATABASE SERVER CONNECTION", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     Close();

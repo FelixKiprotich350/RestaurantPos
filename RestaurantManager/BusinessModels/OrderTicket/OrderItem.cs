@@ -33,11 +33,17 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         public bool IsGiftItem { get; set; }
         /// <summary>
-        /// If the item has a gift - use the productid of the gifted item
-        /// If the item does not have a gift productid and GiftItemid are same
+        /// If the item is a gift - default value is None
+        /// If the item is not a gift and it has a gift item  use the giftitem_productid
         /// </summary>
         [Required]
-        public string ParentItem { get; set; }
+        public string GiftItemGuid { get; set; }
+        /// <summary>
+        /// If the item is a gift - use the productid of the Product which birthed this gift item
+        /// If the item is not a gift default value is None
+        /// </summary>
+        [Required]
+        public string ParentItemGuid { get; set; }
         [Required]
         public decimal DiscPercent { get; set; }
         [Required]

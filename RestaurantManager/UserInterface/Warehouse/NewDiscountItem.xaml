@@ -112,9 +112,9 @@
                   </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Margin="0,8,0,12">
             <UniformGrid Grid.Row="4" Columns="3">
-                <Button x:Name="Button_Remove" Content="Remove" Width="150"   Margin="2,4,4,2" Style="{x:Null}" Height="40" Click="Button_Close_Click"/>
+                <Button x:Name="Button_Remove" Content="Close" Width="150"   Margin="2,4,4,2" Style="{x:Null}" Height="40" Click="Button_Close_Click"/>
                 <Button x:Name="Button_Add" Content="Add Items" Width="150"   Margin="2,4,4,2" Style="{DynamicResource MaterialDesignPaperDarkButton}" Height="40" Click="Button_Add_Click"/>
                 <Button x:Name="Button_Save" Content="Save" Width="150" Click="Button_save_Click" Margin="2,4,2,2" Style="{DynamicResource Button_Accept}" Height="40"/>
             </UniformGrid>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" Loaded="Window_Loaded"
-        AllowsTransparency="True" UseLayoutRounding="True"
+        AllowsTransparency="True" UseLayoutRounding="True" x:Name="Login_Window"
         Title="Login" Height="500" Width="800"  ResizeMode="NoResize" Background="#00000000" OpacityMask="White">
 
 

@@ -20,6 +20,9 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [MaxLength(100)]
         public string ProductGuid { get; set; }
         [Required]
+        [MaxLength(100)]
+        public string ProductName { get; set; }
+        [Required]
         [MaxLength(200)]
         public string WorkPeriod { get; set; } 
         [Required]
@@ -28,9 +31,7 @@ namespace RestaurantManager.BusinessModels.Warehouse
         public DateTime InsertionDate { get; set; }
         [Required] 
         [MaxLength(200)] 
-        public string InsertionBy { get; set; }
-        [NotMapped]
-        public string ProductName { get; set; }
+        public string InsertionBy { get; set; } 
 
     }
 }

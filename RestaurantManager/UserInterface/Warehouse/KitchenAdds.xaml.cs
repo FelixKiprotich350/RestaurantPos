@@ -65,8 +65,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                 db.MenuProductItem.AsNoTracking();
                 var products = db.MenuProductItem.ToList();
                 List<KitchenAddItem> item = new List<KitchenAddItem>();
-                item = db.KitchenAddItem.ToList();
-                item.ForEach(k => k.ProductName = products.First(x => x.ProductGuid == k.ProductGuid).ProductName);
+                item = db.KitchenAddItem.ToList(); 
                 Datagrid_ItemsEntry.ItemsSource = item;
                 Label_Count.Content = Datagrid_ItemsEntry.Items.Count.ToString();
             }
@@ -115,6 +114,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                     {
                         ItemGuid = Guid.NewGuid().ToString(),
                         ProductGuid = pi.ProductGuid,
+                        ProductName=pi.ProductName,
                         Quantity = qty,
                         WorkPeriod = wp.WorkperiodName,
                         InsertionDate = GlobalVariables.SharedVariables.CurrentDate(),

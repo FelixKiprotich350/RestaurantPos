@@ -28,12 +28,12 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="10" CanUserSort="False" Visibility="Collapsed"/>
-                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="4*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Price" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding  Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="1*" CanUserSort="False" IsReadOnly="True"/>
-                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding DiscPercent}" Header="%Disc" IsReadOnly="True" Width="2*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="1*" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N1}" Header="Price" IsReadOnly="True" Width="100" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding  Quantity}" Header="Qty" Width="80" CanUserSort="False" IsReadOnly="True"/>
+                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N1}" Header="Total" IsReadOnly="True" Width="120" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding DiscPercent}" Header="%Disc" IsReadOnly="True" Width="80" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="80" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">

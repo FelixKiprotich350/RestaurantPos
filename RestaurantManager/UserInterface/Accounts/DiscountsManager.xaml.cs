@@ -117,7 +117,7 @@ namespace RestaurantManager.UserInterface.Accounts
                         var ite = ListView_ProductstoDiscount.Items.Cast<MenuProductItem>().ToList();
                         foreach(var x in ite)
                         {
-                            db.DiscountedItem.Add(new DiscountedItem() { ItemRowGuid = Guid.NewGuid().ToString(), ProductItemGuid = x.ProductGuid, BatchNumber = v.BatchNumber });
+                           // db.DiscountedItem.Add(new DiscountedItem() { ItemRowGuid = Guid.NewGuid().ToString(), ProductItemGuid = x.ProductGuid, BatchNumber = v.BatchNumber });
                         }
                     }
                     db.DiscountVoucher.Add(v);

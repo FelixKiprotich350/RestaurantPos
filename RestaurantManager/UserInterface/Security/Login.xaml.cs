@@ -32,13 +32,12 @@ namespace RestaurantManager.UserInterface.Security
         {
            
             InitializeComponent();
-            GlobalVariables.SharedVariables.CurrentUser = null;
-           
+            SharedVariables.CurrentUser = null;
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
             try
             { 
                 using (var a = new PosDbContext())

@@ -27,16 +27,16 @@ namespace RestaurantManager
         //server=localhost;port=3306;database=restpos;uid=root;password=toor
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
 
-        public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
-        {
+       //public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
+        public PosDbContext() : base(AppStaticvalues.GetDbConnectionString())
+        { 
             Database.SetInitializer<PosDbContext>(null);
             //Database.SetInitializer<PosDbContext>(new MyInitializer());
             //this.Database.CommandTimeout=10; 
             // Database.Initialize(false);
-            //Database.Log = s => Debug.WriteLine(s);
-            //Database.Log = s => Trace.WriteLine(s); 
 
         }
+ 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -90,7 +90,7 @@ namespace RestaurantManager
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
         public DbSet<DiscountVoucher> DiscountVoucher { get; set; }
-        public DbSet<DiscountedItem> DiscountedItem { get; set; }
+        public DbSet<TestModel> TestModel { get; set; }
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }

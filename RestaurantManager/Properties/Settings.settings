@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="String1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">fd</Value>
+      <Value Profile="(Default)">bG9jYWxob3N0</Value>
     </Setting>
     <Setting Name="String2" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">cm9vdA==</Value>
     </Setting>
     <Setting Name="String3" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">dG9vcg==</Value>
     </Setting>
     <Setting Name="String4" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">MzMwNg==</Value>
     </Setting>
   </Settings>
 </SettingsFile>

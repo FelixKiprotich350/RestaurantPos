@@ -256,7 +256,7 @@ namespace RestaurantManager
         {
             foreach (Window window in Application.Current.Windows)
             {
-                if (window != this)
+                if (window != this&&window.Name!= "Login_Window")
                 {
                     window.Close(); 
                 }

@@ -25,7 +25,7 @@ namespace RestaurantManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fd")]
+        [global::System.Configuration.DefaultSettingValueAttribute("bG9jYWxob3N0")]
         public string String1 {
             get {
                 return ((string)(this["String1"]));
@@ -37,7 +37,7 @@ namespace RestaurantManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("cm9vdA==")]
         public string String2 {
             get {
                 return ((string)(this["String2"]));
@@ -49,7 +49,7 @@ namespace RestaurantManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("dG9vcg==")]
         public string String3 {
             get {
                 return ((string)(this["String3"]));
@@ -61,7 +61,7 @@ namespace RestaurantManager.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MzMwNg==")]
         public string String4 {
             get {
                 return ((string)(this["String4"]));

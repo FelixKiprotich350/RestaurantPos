@@ -73,8 +73,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListView_SelectionChanged_copy(object sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -110,10 +109,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 DiscountItem disc_i = null;
                 using (var db = new PosDbContext())
                 {
-                    var date=SharedVariables.CurrentDate();
-                    var r = db.DiscountItem.FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active" && k.StartDate <=date  && k.EndDate >= date);
+                    var date = SharedVariables.CurrentDate();
+                    var r = db.DiscountItem.FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active" && k.StartDate <= date && k.EndDate >= date);
                     if (r != null)
-                    { 
+                    {
                         if (r.IsRepetitive)
                         {
                             if (date.DayOfWeek.ToString().ToLower() == r.OfferDay.ToLower())
@@ -125,10 +124,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                         {
                             disc_i = r;
                         }
-                        
-                    } 
+
+                    }
                 }
-                
+
                 //set item order
                 OrderItem i = new OrderItem();
                 using (var db = new PosDbContext())
@@ -144,25 +143,25 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.Price = price;
                         i.Total = price * icount;
                         i.ServiceType = st.ItemServiceType;
-                        i.IsItemVoided = false; 
+                        i.IsItemVoided = false;
                         i.IsGiftItem = false;
                         if (disc_i != null)
                         {
                             if (disc_i.DiscType == "PricePercentage")
                             {
                                 i.DiscPercent = disc_i.DiscPercentage;
-                              
-                                i.ParentItem = i.ProductItemGuid;
+
+                                i.GiftItemGuid = i.ProductItemGuid;
                             }
                             else if (disc_i.DiscType == "GiftItem")
                             {
-                                i.DiscPercent = 0; 
-                                i.ParentItem = disc_i.AttachedProduct;
+                                i.DiscPercent = 0;
+                                i.GiftItemGuid = disc_i.AttachedProduct;
                             }
                         }
                         else
                         {
-                            i.ParentItem = i.ProductItemGuid;
+                            i.GiftItemGuid = i.ProductItemGuid;
                         }
                     }
                     else
@@ -178,14 +177,14 @@ namespace RestaurantManager.UserInterface.PointofSale
                     Lv.SelectedItem = null;
                     return;
                 }
-                
+
                 OrderItems.Add(i);
                 if (disc_i != null)
                 {
                     if (disc_i.DiscType == "GiftItem")
                     {
                         var db1 = new PosDbContext();
-                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k=>k.ProductGuid==disc_i.AttachedProduct);
+                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k => k.ProductGuid == disc_i.AttachedProduct);
                         OrderItem gift = new OrderItem
                         {
                             ItemRowGuid = Guid.NewGuid().ToString(),
@@ -198,19 +197,172 @@ namespace RestaurantManager.UserInterface.PointofSale
                             IsItemVoided = false,
                             IsGiftItem = true,
                             DiscPercent = 0,
-                            ParentItem = mpi.ProductGuid
+                            GiftItemGuid = mpi.ProductGuid
                         };
                         OrderItems.Add(gift);
                     }
                 }
-                   
+
                 CalculateTotal();
                 Lv.SelectedItem = null;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            } 
+            }
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListView Lv = sender as ListView;
+            try
+            { 
+                if (Lv.SelectedItem == null)
+                {
+                    return;
+                } 
+                //get bought item
+                MenuProductItem mpi = (MenuProductItem)Lv.SelectedItem;
+                AddNewItemToOrder(mpi);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Lv.SelectedItem = null;
+            }
+        }
+     
+        private void AddNewItemToOrder(MenuProductItem mpii)
+        {
+            try
+            {  
+                decimal price = 0;
+                int icount = 0;
+                MenuProductItem mpi = mpii;
+                ServiceType st = new ServiceType();
+                if ((bool)st.ShowDialog())
+                {
+                    if (st.ItemServiceType == "Out")
+                    {
+                        price = mpi.TotalCost;
+                        icount = st.ItemQty;
+                    }
+                    else
+                    {
+                        price = mpi.ProductPrice;
+                        icount = st.ItemQty;
+                    }
+                }
+                else
+                { 
+                    return;
+                }
+                //check if the Item has discount(gift or pricediscount)
+                DiscountItem disc_i = null;
+                using (var db = new PosDbContext())
+                {
+                    var date = SharedVariables.CurrentDate();
+                    var r = db.DiscountItem.AsNoTracking().FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active" && k.StartDate <= date && k.EndDate >= date);
+                    if (r != null)
+                    {
+                        if (r.IsRepetitive)
+                        {
+                            if (date.DayOfWeek.ToString().ToLower() == r.OfferDay.ToLower())
+                            {
+                                disc_i = r;
+                            }
+                        }
+                        else
+                        {
+                            disc_i = r;
+                        }
+
+                    }
+                }
+
+                //set item order
+                OrderItem i = new OrderItem();
+                using (var db = new PosDbContext())
+                {
+                    var a = db.MenuProductItem.AsNoTracking().Where(o => o.ProductGuid == mpi.ProductGuid);
+                    if (a.Count() > 0)
+                    {
+                        MenuProductItem b = a.First();
+                        i.ItemRowGuid = Guid.NewGuid().ToString();
+                        i.ProductItemGuid = b.ProductGuid;
+                        i.ItemName = b.ProductName;
+                        i.Quantity = icount;
+                        i.Price = price;
+                        i.Total = price * icount;
+                        i.ServiceType = st.ItemServiceType;
+                        i.IsItemVoided = false;
+                        i.IsGiftItem = false;
+                        i.DiscPercent = 0;
+                        i.GiftItemGuid = "None";
+                        i.ParentItemGuid = "None";
+                        if (disc_i != null)
+                        {
+                            if (disc_i.DiscType == "PricePercentage")
+                            {
+                                i.DiscPercent = disc_i.DiscPercentage;
+                            }
+                            else if (disc_i.DiscType == "GiftItem")
+                            {
+                                i.GiftItemGuid = disc_i.AttachedProduct;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("The Item does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                       
+                        return;
+                    }
+                }
+
+                if (OrderItems.Where(a => a.ProductItemGuid == i.ProductItemGuid && a.ServiceType == i.ServiceType&& a.IsGiftItem==false).Count() > 0)
+                {
+                    MessageBox.Show("The Product is in the Order list!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                     
+                    return;
+                }
+                //finally add item
+                OrderItems.Add(i);
+                //add gift item if present
+                if (disc_i != null)
+                {
+                    if (disc_i.DiscType == "GiftItem")
+                    {
+                        var db1 = new PosDbContext();
+                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k => k.ProductGuid == disc_i.AttachedProduct&&k.ProductGuid==i.GiftItemGuid);
+                        OrderItem gift = new OrderItem
+                        {
+                            ItemRowGuid = Guid.NewGuid().ToString(),
+                            ProductItemGuid = disc_i.AttachedProduct,//real product guid
+                            ItemName = giftoriginalproduct.ProductName + " - Gift",
+                            Quantity = icount,
+                            Price = giftoriginalproduct.TotalCost,
+                            Total = icount* giftoriginalproduct.TotalCost,
+                            ServiceType = st.ItemServiceType,
+                            IsItemVoided = false,
+                            IsGiftItem = true,
+                            DiscPercent = 0,
+                            GiftItemGuid = "None",
+                            ParentItemGuid = disc_i.ProductGuid
+                        };
+                        OrderItems.Add(gift);
+                    }
+                }
+
+                CalculateTotal(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
@@ -234,38 +386,54 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                     OrderItem o = (OrderItem)Datagrid_OrderItems.SelectedItem;
-                    EditOrderItemQuantity ei = new EditOrderItemQuantity()
-                    {
-                        Title = o.ItemName
-                    };
-                    if (o.IsGiftItem)
-                    {
-                        MessageBox.Show("You cannot Edit a Gift!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        return;
-                    }
-                    ei.TextBox_Quantity.Text = o.Quantity.ToString();
-                    ei.ShowDialog();
-                    if (ei.ReturningAction == "Delete")
-                    {
-                        OrderItem x=OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).FirstOrDefault();
-                        OrderItems.Remove(x);
-                        OrderItems.Remove(o);
-                    }
-                    else if (ei.ReturningAction == "Update")
-                    {
-                        decimal total = (decimal)ei.ReturningQuantity * o.Price;
-                        OrderItems.Where(h => h.ProductItemGuid == o.ProductItemGuid && h.ServiceType == o.ServiceType).First().Quantity = ei.ReturningQuantity;
-                        OrderItems.Where(h => h.ProductItemGuid == o.ProductItemGuid && h.ServiceType == o.ServiceType).First().Total = total;
-                        //update gifts count also
-                        if (OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).Count()>0)
-                        {
-                            OrderItems.Where(h => h.ParentItem == o.ProductItemGuid && h.ServiceType == o.ServiceType && h.IsGiftItem == true).First().Quantity = ei.ReturningQuantity;
-                        }
-                         
-                        Datagrid_OrderItems.Items.Refresh();
-                    }
-                    CalculateTotal();
+                    UpdateDeleteOrderItem(o);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateDeleteOrderItem(OrderItem item)
+        {
+            try
+            {
+                EditOrderItemQuantity ei = new EditOrderItemQuantity()
+                {
+                    Title = item.ItemName
+                };
+                if (item.IsGiftItem)
+                {
+                    MessageBox.Show("You cannot Edit a Gift!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+                ei.TextBox_Quantity.Text = item.Quantity.ToString();
+                ei.ShowDialog();
+                if (ei.ReturningAction == "Delete")
+                {
+                    OrderItem x = OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid&&h.ParentItemGuid==item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault();
+                    if (x != null)
+                    {
+                        OrderItems.Remove(x);
+                    }
+                    OrderItems.Remove(item);
+                }
+                else if (ei.ReturningAction == "Update")
+                {
+                    decimal total = (decimal)ei.ReturningQuantity * item.Price;
+                    OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().Quantity = ei.ReturningQuantity;
+                    OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().Total = total;
+                    //update gifts quantity also
+                    OrderItem x = OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid&&h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault();
+                    if (x != null)
+                    {
+                        OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid && h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault().Quantity = ei.ReturningQuantity;
+                    } 
+
+                    Datagrid_OrderItems.Items.Refresh();
+                }
+                CalculateTotal();
             }
             catch (Exception ex)
             {
@@ -276,15 +444,16 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void CalculateTotal()
         {
             try
-            {
-                var neworderlist = OrderItems.Where(k=>k.IsGiftItem==false);
+            { 
+                //update every item total in the list
                 foreach (var a in OrderItems)
                 {
-                    var atotal = a.Quantity * a.Price;
-                    a.Total = atotal;
-                                  }
+                    a.Total = a.Quantity * a.Price;
+                }
+                //find sum of all items total
                 decimal t = 0;
-                foreach (var a in neworderlist)
+                var chargeditems = OrderItems.Where(k => k.IsGiftItem == false);
+                foreach (var a in chargeditems)
                 { 
                     t += a.Total * ((100 - a.DiscPercent) / 100);
                 }

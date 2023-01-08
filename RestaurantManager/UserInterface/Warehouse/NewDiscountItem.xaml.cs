@@ -126,6 +126,10 @@ namespace RestaurantManager.UserInterface.Warehouse
                         } 
                         Final_Selected_Items.Add(d);
                     }
+                    foreach (var x in Selected_Items)
+                    {
+                        x.IsSelected = false;
+                    }
                     db.DiscountItem.AddRange(Final_Selected_Items.ToArray());
                     db.SaveChanges();
                     MessageBox.Show("Items Discounted Successfully!","Message Box",MessageBoxButton.OK,MessageBoxImage.Information);
@@ -152,12 +156,20 @@ namespace RestaurantManager.UserInterface.Warehouse
                     {
                         if (db.DiscountItem.AsNoTracking().Where(l => l.ProductGuid == x.ProductGuid && l.DiscStatus == "Active").Count() <= 0)
                         {
-                            Selected_Items.Add(x);
+                            if (Selected_Items.FirstOrDefault(k=>k.ProductGuid==x.ProductGuid) == null)
+                            {
+                                Selected_Items.Add(x);
+                            }
+
                         }
                         else
                         {
                             failed_items.Add(x);
                         }
+                    }
+                    foreach (var x in Selected_Items)
+                    {
+                        x.IsSelected = false;
                     }
                 }
                 if (failed_items.Count > 0)
