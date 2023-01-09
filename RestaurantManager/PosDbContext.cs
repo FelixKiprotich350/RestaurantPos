@@ -31,6 +31,7 @@ namespace RestaurantManager
         public PosDbContext() : base(AppStaticvalues.GetDbConnectionString())
         { 
             Database.SetInitializer<PosDbContext>(null);
+            //Database.CreateIfNotExists();
             //Database.SetInitializer<PosDbContext>(new MyInitializer());
             //this.Database.CommandTimeout=10; 
             // Database.Initialize(false);
@@ -111,7 +112,10 @@ namespace RestaurantManager
             //check for existance
             if (!context.Database.Exists())
             {
-                
+                if (System.Windows.MessageBox.Show("THE DATABASE DOES NOT EXIST. DO YOU WANT TO CREATE?", "Message Box",System.Windows.MessageBoxButton.YesNo,System.Windows.MessageBoxImage.Question) == System.Windows.MessageBoxResult.Yes)
+                {
+                    context.Database.Create();
+                }
             }
         }
     }

@@ -188,25 +188,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202301081043332_M1.cs" />
-    <Compile Include="Migrations\202301081043332_M1.designer.cs">
-      <DependentUpon>202301081043332_M1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301081117288_M2.cs" />
-    <Compile Include="Migrations\202301081117288_M2.designer.cs">
-      <DependentUpon>202301081117288_M2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301081336201_M3.cs" />
-    <Compile Include="Migrations\202301081336201_M3.designer.cs">
-      <DependentUpon>202301081336201_M3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301081555172_M4.cs" />
-    <Compile Include="Migrations\202301081555172_M4.designer.cs">
-      <DependentUpon>202301081555172_M4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301081626132_M5.cs" />
-    <Compile Include="Migrations\202301081626132_M5.designer.cs">
-      <DependentUpon>202301081626132_M5.cs</DependentUpon>
+    <Compile Include="Migrations\202301081740004_M1.cs" />
+    <Compile Include="Migrations\202301081740004_M1.designer.cs">
+      <DependentUpon>202301081740004_M1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PosDbContext.cs" />
@@ -685,20 +669,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202301081043332_M1.resx">
-      <DependentUpon>202301081043332_M1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301081117288_M2.resx">
-      <DependentUpon>202301081117288_M2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301081336201_M3.resx">
-      <DependentUpon>202301081336201_M3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301081555172_M4.resx">
-      <DependentUpon>202301081555172_M4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301081626132_M5.resx">
-      <DependentUpon>202301081626132_M5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202301081740004_M1.resx">
+      <DependentUpon>202301081740004_M1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

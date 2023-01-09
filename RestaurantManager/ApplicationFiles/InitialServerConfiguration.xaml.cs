@@ -46,10 +46,11 @@ namespace RestaurantManager.ApplicationFiles
                     Debug.WriteLine(db.Database.Connection.ConnectionString);
        
                     if (!db.Database.Exists())
-                    {
-                        db.Database.CreateIfNotExists();
+                    { 
+                        //db.Database.Delete();
+                        db.Database.Create();
                     }
-                    db.Database.Connection.Open();
+                     db.Database.Connection.Open();
                     db.Database.Connection.Close();
                    
                     MessageBox.Show("DATABASE CONNECTION STATUS : SUCCESS", "DATABASE SERVER CONNECTION", MessageBoxButton.OK, MessageBoxImage.Information);

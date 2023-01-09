@@ -177,6 +177,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B0354E4A40A14DB988149D327A114995"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B37F6AB0F1C2F649A41F3B4040D55017"
         "OwnerKey" = "8:_C7851C96522149E4AD1AC9230082ED4C"
         "MsmSig" = "8:_UNDEFINED"
@@ -478,6 +484,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -942,6 +956,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B0354E4A40A14DB988149D327A114995"
+            {
+            "SourcePath" = "8:..\\RestaurantManager\\pos logo.ico"
+            "TargetName" = "8:pos logo.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B665D272D36B4EE2894A31B78B5E49D6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B37F6AB0F1C2F649A41F3B4040D55017"
             {
             "AssemblyRegister" = "3:1"
@@ -1216,7 +1250,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Laxco Restaurant Pos "
         "ProductCode" = "8:{EAA81391-E56F-4038-AEB2-708B51FA1563}"
-        "PackageCode" = "8:{1ED544B9-ACE1-47D7-AE6C-D246BAA85E77}"
+        "PackageCode" = "8:{A55A080B-278F-4228-AEB0-BFDE815AA308}"
         "UpgradeCode" = "8:{18A0C728-F3A3-421A-B01C-F9086B89DCC9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1233,7 +1267,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_B0354E4A40A14DB988149D327A114995"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1347,7 +1381,7 @@
             "Target" = "8:_C7851C96522149E4AD1AC9230082ED4C"
             "Folder" = "8:_3BF9C5CCB7B044FB8C80F00569EE5440"
             "WorkingFolder" = "8:_B665D272D36B4EE2894A31B78B5E49D6"
-            "Icon" = "8:"
+            "Icon" = "8:_B0354E4A40A14DB988149D327A114995"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_FBA6557755BB46AEA17096C25F037BF8"
@@ -1361,7 +1395,7 @@
             "Target" = "8:_C7851C96522149E4AD1AC9230082ED4C"
             "Folder" = "8:_7969A29D3A9B4F778CA3E0E1AD146FAB"
             "WorkingFolder" = "8:_B665D272D36B4EE2894A31B78B5E49D6"
-            "Icon" = "8:"
+            "Icon" = "8:_B0354E4A40A14DB988149D327A114995"
             "Feature" = "8:"
             }
         }

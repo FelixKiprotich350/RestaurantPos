@@ -36,6 +36,7 @@ namespace RestaurantManager
             //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostKeyboardFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
 
         }
+
         private void SetUpDatabase()
         {
             try
@@ -46,6 +47,7 @@ namespace RestaurantManager
                 AppStaticvalues.DbPort = RestaurantManager.Properties.Settings.Default.String4;  
                 using (var db=new PosDbContext())
                 {
+                    
                     db.Database.Connection.Open();
                     db.Database.Connection.Close();
 
