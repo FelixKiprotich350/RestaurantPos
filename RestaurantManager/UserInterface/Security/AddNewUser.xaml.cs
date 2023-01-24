@@ -64,7 +64,7 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         UserGuid = Guid.NewGuid().ToString(),
                         UserPIN = Rand.Next(1000, 9999),
-                        UserName = Textbox_UserFullName.Text.Split(',')[0] + Rand.Next(100, 9999),
+                        UserName = Textbox_UserFullName.Text.Split(' ')[0] + Rand.Next(100, 9999),
                         UserFullName = Textbox_UserFullName.Text,
                         UserRole = ComboBox_Roles.SelectedItem.ToString(),
                         RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
@@ -79,8 +79,8 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         MessageBox.Show("Failed to save the new User!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                    MessageBox.Show("Successfully Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                   
+                    MessageBox.Show("Successfully Saved The default PIN is "+user.UserPIN+"\nLogin and change your PIN now!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Close();
                 }
             }
             catch (Exception ex)

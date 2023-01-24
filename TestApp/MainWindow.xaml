@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:self="clr-namespace:TestApp"
-        mc:Ignorable="d"
+        xmlns:self="clr-namespace:TestApp" WindowState="Maximized"
+        mc:Ignorable="d" ResizeMode="CanMinimize" WindowStyle="SingleBorderWindow"
         Title="MainWindow" Height="300" Width="400">
     <Window.CommandBindings>
         <CommandBinding Command="self:CustomCommands.Exit" CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
@@ -22,5 +22,6 @@
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Command="self:CustomCommands.Exit">Exit</Button>
         </StackPanel>
+        <TextBox Width="200"/>
     </Grid>
 </Window>

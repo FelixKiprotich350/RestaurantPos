@@ -346,8 +346,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 PrintDocument document = new PrintDocument();
                 document.PrintPage += new PrintPageEventHandler(this.ProvideContentForTicket);
                 document.PrintController = new StandardPrintController();
-                document.PrinterSettings.PrintFileName = "Ticket.pdf";
-                document.PrinterSettings.PrintToFile = true;
+                //document.PrinterSettings.PrintFileName = "Ticket.pdf";
+                //document.PrinterSettings.PrintToFile = true;
                 document.Print();
             }
             catch (Exception exception1)
@@ -436,14 +436,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             topoffset += 15;
             graphics.DrawString("TOTAL :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
             graphics.DrawString(GrossTotal.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 20; 
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString("Tax%        TaxAmt", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Underline), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 70f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 80f, (float)topoffset);
-            graphics.DrawString(taxamount.ToString("N2"), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
-            topoffset += 10;
+            topoffset += 20;  
             graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
             topoffset += 20;
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);

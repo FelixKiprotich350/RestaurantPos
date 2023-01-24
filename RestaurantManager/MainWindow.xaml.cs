@@ -99,6 +99,13 @@ namespace RestaurantManager
                 {
                     if (list.Count(k=>k.ParentModule==x.GroupCode) >0)
                     {
+                        x.IsEnabled = true;
+                        //x.BackgroundColor = Brushes.Transparent;
+                        modules.Add(x);
+                    }
+                    else
+                    {
+                        //x.BackgroundColor = Brushes.DarkGray;
                         modules.Add(x);
                     }
                 }
@@ -120,6 +127,10 @@ namespace RestaurantManager
             try
             {
                 Button a = sender as Button;
+                if (!a.IsEnabled)
+                {
+                    return;
+                }
                 string tag = a.Tag.ToString();
                 if (tag != "")
                 {

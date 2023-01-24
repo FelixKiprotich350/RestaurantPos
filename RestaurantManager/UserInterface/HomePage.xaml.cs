@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestaurantManager.BusinessModels.Navigation;
+using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 
 namespace RestaurantManager.UserInterface
@@ -35,8 +36,49 @@ namespace RestaurantManager.UserInterface
                 Button_WorkPeriod.Tag = "B";
                 Button_Accounts.Tag = "C";
                 Button_MenuProducts.Tag = "D";
-                Button_Security.Tag = "G";
+                Button_Security.Tag = "F";
                 Button_Reports.Tag = "E";
+                NavigationMenu menu = new NavigationMenu();
+                List<Level1menu> modules = new List<Level1menu>();
+                var list = GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final;
+                foreach (var x in menu.MenuCategories)
+                {
+                    if (list.Count(k => k.ParentModule == x.GroupCode) > 0)
+                    {
+                        x.IsEnabled = true;
+                        //x.BackgroundColor = Brushes.Transparent;
+                        modules.Add(x);
+                    }
+                    else
+                    {
+                        //x.BackgroundColor = Brushes.DarkGray;
+                        modules.Add(x);
+                    }
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "A"&&k.IsEnabled) != null)
+                {
+                    Button_PoS.IsEnabled = true;
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "B"&&k.IsEnabled) != null)
+                {
+                    Button_WorkPeriod.IsEnabled = true;
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "C"&&k.IsEnabled) != null)
+                {
+                    Button_Accounts.IsEnabled = true;
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "D"&&k.IsEnabled) != null)
+                {
+                    Button_MenuProducts.IsEnabled = true;
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "F"&&k.IsEnabled) != null)
+                {
+                    Button_Security.IsEnabled = true;
+                }
+                if (modules.FirstOrDefault(k => k.GroupCode == "E"&&k.IsEnabled) != null)
+                {
+                    Button_Reports.IsEnabled = true;
+                }
             }
             catch (Exception ex)
             {

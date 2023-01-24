@@ -131,18 +131,22 @@ namespace RestaurantManager.UserInterface.PosReports
         {
             try
             {
-                List<dynamic> list = new List<dynamic>();
-                int c = 9000000;
-                DateTime a = DateTime.Now;
-                while (c>0)
-                {
-                    list.Add(new { TransNo = "S" , AmountCharged = c, AmountPaid = c, Balance = c });
-                    c--;
-                }
-                DateTime b = DateTime.Now;
-                double d = (b - a).TotalMilliseconds;
-                MessageBox.Show("Done",d.ToString());
-                Datagrid_Payments.ItemsSource =list;
+                Button_SelectWorkPeriod.Content = "All";
+                Datepicker_Startdate.SelectedDate = null;
+                Datepicker_Enddate.SelectedDate = null;
+                MainList.Clear();
+                //List<dynamic> list = new List<dynamic>();
+                //int c = 9000000;
+                //DateTime a = DateTime.Now;
+                //while (c>0)
+                //{
+                //    list.Add(new { TransNo = "S" , AmountCharged = c, AmountPaid = c, Balance = c });
+                //    c--;
+                //}
+                //DateTime b = DateTime.Now;
+                //double d = (b - a).TotalMilliseconds;
+                //MessageBox.Show("Done",d.ToString());
+                //Datagrid_Payments.ItemsSource =list;
             }
             catch(Exception ex)
             {

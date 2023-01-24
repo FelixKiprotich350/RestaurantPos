@@ -150,11 +150,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
         {
             try
             {
-                if (Textbox_ClosingNote.Text.Trim() == "")
-                {
-                    MessageBox.Show("Enter the Closing Note/Short Description", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
+                
                 using (var db = new PosDbContext())
                 {
                     if (db.OrderMaster.Where(x => x.Workperiod == Textbox_Workperiodname.Text && x.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).Count() > 0)

@@ -123,8 +123,8 @@ namespace RestaurantManager.UserInterface.Security
                             using (var db = new PosDbContext())
                             {
                                 PosUser r = db.PosUser.Where(a => a.UserName == o.UserName).First();
-                                UserRole role = (UserRole)er.ComboBox_Roles.SelectedItem;
-                                r.UserRole = role.RoleName;
+                                //UserRole role = (UserRole)er.ComboBox_Roles.SelectedItem;
+                                r.UserRole = er.ComboBox_Roles.Text;
                                 db.SaveChanges();
                                 MessageBox.Show("User Role Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                             }

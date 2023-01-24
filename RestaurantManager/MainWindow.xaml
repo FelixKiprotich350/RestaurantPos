@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RestaurantManager" 
+        xmlns:local="clr-namespace:RestaurantManager" Margin="50"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="Auto" Loaded="Window_Loaded"  KeyDown="Window_KeyDown"
-        Width="Auto" Foreground="White" ResizeMode="CanResize" AllowsTransparency="True"
+        Width="Auto" Foreground="White" ResizeMode="CanResizeWithGrip"
         WindowState="Maximized" Title="Restaurant Pos" Background="#FFF29400"
         WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="Window_Closing" >
 
@@ -77,7 +77,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate >
                                         <Border CornerRadius="8"  Margin="0,5"  Background="#FF8A151B" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Button Content="{Binding GroupName}" Tag="{Binding GroupCode}" Height="40"   BorderThickness="0" Click="Button_Category_Click" FontWeight="Bold" FontSize="16" Background="Transparent" />
+                                        <Button Content="{Binding GroupName}" Tag="{Binding GroupCode}" IsEnabled="{Binding IsEnabled}" Height="40"   BorderThickness="0" Click="Button_Category_Click" FontWeight="Bold" FontSize="16" Background="Transparent" />
                                         </Border>
                                         
                                     </DataTemplate>

@@ -118,39 +118,41 @@ namespace RestaurantManager.UserInterface.Security
                             MessageBox.Show(this, "The User Status is not Active.\nAsk the administrator to enable your activenes!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             PasswordBox_UserPin.Password = "";
                             user = null;
-                            return;
+                            App.Current.Shutdown();
                         }
                         if (user.UserIsDeleted)
                         {
                             MessageBox.Show(this, "The UserPIN has been deleted. Enter Different PIN!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             PasswordBox_UserPin.Password = "";
                             user = null;
-                            return;
+                            App.Current.Shutdown();
                         }
                     }
                     MainWindow m = new MainWindow();
                     List<string> raw = new List<string>();
                     //raw permissions
-                    UserRole r = null;
-                    using (var db = new PosDbContext())
-                    {
-                        if (db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).Count() > 0)
-                        {
-                            r = db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).First();
-                        }
-                        else
-                        {
-                            return;
-                        }
-                    }
-                    raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
+                    //UserRole r = null;
+                    //using (var db = new PosDbContext())
+                    //{
+                    //    if (db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).Count() > 0)
+                    //    {
+                    //        r = db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).First();
+                    //    }
+                    //    else
+                    //    {
+                    //        return;
+                    //    }
+                    //}
+                    // raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
+                   
+                    raw = user.UserRights.Split(',').Where(k => k.Trim() != "").ToList();
                     //final permissions
-                    if (user.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
+                    if (user.UserRole.ToLower() == PosEnums.UserAccountsRoles.Admin.ToString().ToLower())
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         user.User_Permissions_final.AddRange(Pm.GetAllPermissions());
                     }
-                    else if (raw.Count > 0)
+                   else if (raw.Count > 0)
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         foreach (var a in raw)
@@ -187,6 +189,10 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        //private List<PermissionMaster> GetUserRights(bool IsAdmin)
+        //{
+
+        //}
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
         {

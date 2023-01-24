@@ -199,14 +199,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 CloseWorkPeriodSummary summary = new CloseWorkPeriodSummary(o.WorkperiodName);
                 if ((bool)summary.ShowDialog())
                 {
-                    using (var db = new PosDbContext())
-                    {
-                        if (db.OrderMaster.Where(x => x.Workperiod == o.WorkperiodName && x.OrderStatus == GlobalVariables.PosEnums.OrderTicketStatuses.Pending.ToString()).Count() > 0)
-                        {
-                            MessageBox.Show("Not Allowed!. The work period contains Pending Tickets.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            return;
-                        }
-                    } 
+                    
                     using (var db = new PosDbContext())
                     {
                         var wp = db.WorkPeriod.Where(a => a.WorkperiodName == o.WorkperiodName).First();
@@ -231,7 +224,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                             ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName,
                             ClosingTime = closetime.ToString(),
                             OpeningNote = wp.OpeningNote,
-                            ClosingNote = summary.Textbox_ClosingNote.Text,
+                            ClosingNote ="Closed",
                             
                         };
                         string message = GetDoc(mess);

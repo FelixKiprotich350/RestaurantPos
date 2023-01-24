@@ -12,33 +12,33 @@
     <Grid>
         <UniformGrid Rows="2" Columns="3" Margin="64,64">
 
-            <Button x:Name="Button_PoS" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click">
+            <Button x:Name="Button_PoS" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/point of sale.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="Button_WorkPeriod"  Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" IsEnabled="True" Click="Button_Click" >
+            <Button x:Name="Button_WorkPeriod"  Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" IsEnabled="False" Click="Button_Click" >
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/work-period.png"/>
                 </Button.Background>
                 
             </Button>
-            <Button x:Name="Button_Accounts" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click">
+            <Button x:Name="Button_Accounts" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/Accounts.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="Button_MenuProducts" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click">
+            <Button x:Name="Button_MenuProducts" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/menu.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="Button_Security" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click">
+            <Button x:Name="Button_Security" Height="Auto" Margin="12,32,12,32" Style="{StaticResource HomePageButton}" Click="Button_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/security.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="Button_Reports" Height="Auto" Margin="12,32,12,32"  Style="{StaticResource HomePageButton}" Click="Button_Click">
+            <Button x:Name="Button_Reports" Height="Auto" Margin="12,32,12,32"  Style="{StaticResource HomePageButton}" Click="Button_Click" IsEnabled="False">
                 <Button.Background>
                     <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/reports.png"/>
                 </Button.Background>

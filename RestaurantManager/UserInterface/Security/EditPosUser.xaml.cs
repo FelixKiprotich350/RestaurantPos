@@ -26,6 +26,7 @@ namespace RestaurantManager.UserInterface.Security
         {
             InitializeComponent();
             pu = user;
+              
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

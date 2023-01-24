@@ -331,6 +331,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         }
                         db.SaveChanges();
                         tr.Commit();
+                        R_receiptno = tpm.TransNo;
                         PrintReceipt();
                         MessageBox.Show("Successfuly Saved", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                         Button_Discard_Click(new object(), new RoutedEventArgs());
@@ -344,6 +345,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
 
         }
+        string R_receiptno = "";
         decimal R_totalpaid = 0;
         decimal R_TotalCharged = 0;
         decimal R_balance = 0;
@@ -387,8 +389,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 PrintDocument document = new PrintDocument();
                 document.PrintPage += new PrintPageEventHandler(this.ProvideContentforsalesreceipt);
                 document.PrintController = new StandardPrintController();
-                document.PrinterSettings.PrintFileName = "Receipt.pdf";
-                document.PrinterSettings.PrintToFile = true;
+                //document.PrinterSettings.PrintFileName = "Receipt.pdf";
+                //document.PrinterSettings.PrintToFile = true;
                 document.Print();
             }
             catch (Exception exception1)
@@ -424,7 +426,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             graphics.DrawString("Payment Receipt", new winformdrawing.Font("Palatino Linotype", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             topoffset += 15;
-            graphics.DrawString("TicketNo:" + this.TextBlock_TicketNo.Text, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("Receipt No:" + R_receiptno, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
             topoffset += 20;
             graphics.DrawString("Date:" + SharedVariables.CurrentDate().ToShortDateString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
             graphics.DrawString("Counter : " + SharedVariables.LogInCounter, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
