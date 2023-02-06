@@ -12,24 +12,20 @@ namespace RestaurantManager.BusinessModels.GeneralSettings
     {
 
         [Key]
-        [MaxLength(100)]
-        [Column(Order = 0)]
+        [MaxLength(100)] 
         public string TableGuid { get; set; }
         
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 1)]
+        [MaxLength(100)] 
+        [Index(IsUnique = true)]
         public string TableName { get; set; }
         [Required]
-        [MaxLength(100)]
-        [Column(Order = 2)]
+        [MaxLength(100)] 
         public string TableStatus { get; set; }
         [Required]
-        [Index] 
-        [Column(Order = 3)]
+        [Index]  
         public bool IsDeleted { get; set; } 
-        [Required]
-        [Column(Order = 4)]
+        [Required] 
         public DateTime RegistrationDate { get; set; }
     }
 }

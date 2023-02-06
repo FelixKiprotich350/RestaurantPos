@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="650" d:DesignWidth="1120"
       Title="HomePage" Loaded="Page_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-   
+
     <Grid>
         <UniformGrid Rows="2" Columns="3" Margin="64,64">
 
