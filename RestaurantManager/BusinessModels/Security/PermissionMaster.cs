@@ -44,7 +44,6 @@ namespace RestaurantManager.BusinessModels.Security
                 {
                     //point of sale
                     new PermissionMaster() { PermissionCode = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewOrder() },
-                    new PermissionMaster() { PermissionCode = "A2", ParentModule = "A", PermissionShortName = "Kitchen Display", PermissionFullName = "Make a new order", PermissionLevel = "1", PageClass = new KitchenDisplay() },
                     new PermissionMaster() { PermissionCode = "A3", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
                     new PermissionMaster() { PermissionCode = "A4", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new CheckoutTicket() },
                     new PermissionMaster() { PermissionCode = "A5", ParentModule = "A", PermissionShortName = "View Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new ViewTickets() },

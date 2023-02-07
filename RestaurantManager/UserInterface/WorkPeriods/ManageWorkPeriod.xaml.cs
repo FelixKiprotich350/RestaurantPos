@@ -252,7 +252,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 {
                     return null;
                 }
-                string htmlstring = File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"FilesResources\\PeriodClosure.html"));
+                string htmlstring = File.ReadAllText(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"PeriodClosure.html"));
                 htmlstring = htmlstring.Replace("~Pnamevalue~", m.WorkPeriodName);
                 htmlstring = htmlstring.Replace("~Item1~", "Open Date");
                 htmlstring = htmlstring.Replace("~Item2~", "Opened By");

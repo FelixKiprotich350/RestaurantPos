@@ -39,7 +39,7 @@
                       
                     </StackPanel>
                 </StackPanel>
-                <Grid Grid.Column="3" Margin="6">
+                <Grid Grid.Column="3" Margin="6" Visibility="Collapsed">
                     <Image ToolTip="Minimize App"  x:Name="Image_Minimize" Source="ImageResources/icons8-subtract.png"   MouseUp="Image_Minimize_MouseUp" Cursor="Hand" Width="24" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             <Grid Grid.Column="4">

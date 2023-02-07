@@ -144,7 +144,7 @@
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
                                                 <RadioButton x:Name="RadioButton_SingleDay" GroupName="DateSelector" Content="Day" HorizontalAlignment="Left" FontWeight="Bold" Checked="RadioButton_SingleDay_Checked"/>
-                                                <DatePicker x:Name="DatePicker_SingleDay" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Grid.ColumnSpan="2" />
+                                                <DatePicker x:Name="DatePicker_SingleDay" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Grid.ColumnSpan="2" Focusable="False" />
                                             </Grid>
                                             <Grid>
                                                 <Grid.RowDefinitions>
@@ -155,12 +155,12 @@
                                                 <UniformGrid x:Name="UniformGrid_Period" Grid.Row="1" Columns="2" Rows="1" Margin="0,4,0,0">
                                                     <StackPanel Orientation="Vertical">
                                                         <Label Content="From" FontSize="16"/>
-                                                        <DatePicker x:Name="Datepicker_From" Grid.Row="1" VerticalAlignment="Center" FontSize="16" BorderThickness="1,1,0,1" BorderBrush="Black" />
+                                                        <DatePicker x:Name="Datepicker_From" Grid.Row="1" VerticalAlignment="Center" FontSize="16" BorderThickness="1,1,0,1" BorderBrush="Black" Focusable="False" />
 
                                                     </StackPanel>
                                                     <StackPanel Orientation="Vertical" Margin="5,0,0,0">
                                                         <Label Content="To" FontSize="16"/>
-                                                        <DatePicker x:Name="Datepicker_To" Grid.Row="1" VerticalAlignment="Center" FontSize="16" />
+                                                        <DatePicker x:Name="Datepicker_To" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Focusable="False" />
 
                                                     </StackPanel>
                                                 </UniformGrid>

@@ -33,9 +33,14 @@ namespace RestaurantManager.UserInterface.Warehouse
                     MessageBox.Show("Enter the name of the Category!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (Textbox_Categoryname.Text.Length<5)
+                if (Textbox_Categoryname.Text.Length<2)
                 {
                     MessageBox.Show("The name is too short!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (Combobox_department.SelectedItem==null)
+                {
+                    MessageBox.Show("Select the department!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 DialogResult = true;

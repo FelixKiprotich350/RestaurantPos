@@ -113,7 +113,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                         ProductGuid = Guid.NewGuid().ToString(), 
                         ProductName = nmp.Textbox_ProductName.Text, 
                         AvailabilityStatus = "Available", 
-                        HouseType = nmp.Combobox_HouseType.Text,
+                        HouseType = productCategory.Department,
                         ProductPrice = price, 
                         PackagingCost = packagingprice,
                         CategoryGuid = category ,

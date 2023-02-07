@@ -10,9 +10,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="3*" MinWidth="150"/>
+            <ColumnDefinition Width="68*"/>
+            <ColumnDefinition Width="8"/>
+            <ColumnDefinition Width="32*" MinWidth="150"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" CornerRadius="12" Background="White" Padding="12">
@@ -29,11 +29,11 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="10" CanUserSort="False" Visibility="Collapsed"/>
                             <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding Price,StringFormat=N1}" Header="Price" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding  Quantity}" Header="Qty" Width="80" CanUserSort="False" IsReadOnly="True"/>
-                            <DataGridTextColumn  Binding="{Binding Total,StringFormat=N1}" Header="Total" IsReadOnly="True" Width="120" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding DiscPercent}" Header="%Disc" IsReadOnly="True" Width="80" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="80" CanUserSort="False"/>
+                            <!--<DataGridTextColumn  Binding="{Binding Price,StringFormat=N1}" Header="Price" IsReadOnly="True" Width="100" CanUserSort="False"/>-->
+                            <DataGridTextColumn  Binding="{Binding  Quantity}" Header="Qty" Width="70" CanUserSort="False" IsReadOnly="True"/>
+                            <!--<DataGridTextColumn  Binding="{Binding Total,StringFormat=N1}" Header="Total" IsReadOnly="True" Width="120" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding DiscPercent}" Header="%Disc" IsReadOnly="True" Width="80" CanUserSort="False"/> -->
+                            <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="70" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
@@ -65,21 +65,26 @@
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="2">
-                        <StackPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="41*"/>
+                            <ColumnDefinition Width="171*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.ColumnSpan="2">
                             <Label Content="Total Amount " HorizontalAlignment="Center" FontWeight="Bold"/>
                             <Border CornerRadius="24" Background="#00000000" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBox x:Name="Textbox_TotalAmount"  MinWidth="200" Height="50" FontSize="32" HorizontalContentAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" TextOptions.TextFormattingMode="Display" HorizontalAlignment="Center" IsReadOnly="True" BorderThickness="0"/>
+                                <TextBox x:Name="Textbox_TotalAmount"  MinWidth="200" Height="50" FontSize="32" HorizontalContentAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" TextOptions.TextFormattingMode="Display" HorizontalAlignment="Center" IsReadOnly="True" BorderThickness="0" AllowDrop="False" Focusable="False"/>
                             </Border>
                         </StackPanel>
                     </Grid>
                 </Grid>
+                
                 <Grid Grid.Row="2">
 
                     <UniformGrid Margin="0,8,0,8" Columns="3" Rows="1" VerticalAlignment="Center" >
 
-                        <Button x:Name="Button_SelectCustomer" Content="Customer" Margin="10,0" Click="Button_SelectCustomer_Click" Width="200" Style="{DynamicResource Button_Accept}" Height="Auto"/>
-                        <Button x:Name="Button_SelectTable" Content="Table" Margin="10,0" Click="Button_SelectTable_Click" Width="200" Style="{DynamicResource Button_Accept}" Height="Auto"/>
-                        <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click" Width="200" Style="{DynamicResource Button_Accept}" Height="Auto"/>
+                        <Button x:Name="Button_SelectCustomer" Content="Customer" Margin="10,0" Click="Button_SelectCustomer_Click"  Style="{DynamicResource Button_Accept}" Height="Auto"/>
+                        <Button x:Name="Button_SelectTable" Content="Table" Margin="10,0" Click="Button_SelectTable_Click"  Style="{DynamicResource Button_Accept}" Height="Auto"/>
+                        <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click"   Style="{DynamicResource Button_Accept}" Height="Auto"/>
 
 
                     </UniformGrid>
@@ -87,7 +92,7 @@
 
             </Grid>
         </Border>
-        <Border Grid.Column="2" CornerRadius="12" Background="White" Padding="12">
+        <Border Grid.Column="2" CornerRadius="12" Background="White" Padding="4,8">
 
             <Grid  >
                 <Grid.RowDefinitions>
@@ -95,7 +100,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Center">
-                    <Label Content="Products Menu" FontWeight="Bold" FontSize="18" HorizontalAlignment="Left" Width="200" />
+                    <UniformGrid Columns="2" Margin="0,2">
+                        <Button x:Name="Button_RestaurantDept" Content="Restaurant" HorizontalAlignment="Center" Height="32" Width="100" Style="{x:Null}" Click="Button_RestaurantDept_Click"/>
+                        <Button x:Name="Button_BarDept" Content="Bar" HorizontalAlignment="Center" Width="100" Height="32" Style="{x:Null}" Click="Button_BarDept_Click"/>
+                    </UniformGrid>
                 </Grid>
                 <Grid Grid.Row="1" >
                     <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding MenuCategories}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
@@ -103,19 +111,19 @@
                             <DataTemplate >
                                 <Expander     Name="myExpander"  HorizontalAlignment="Stretch" Tag="{Binding CategoryGuid}"
                                            Foreground="Black" IsExpanded="{Binding IsSelected}" OverridesDefaultStyle="True"  
-                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="-10" ScrollViewer.CanContentScroll="True"  FontWeight="Normal" Background="White" Expanded="Expander_Expanded" >
+                                          ExpandDirection="Down" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Margin="-14,-14,-24,-10" ScrollViewer.CanContentScroll="True"  FontWeight="Normal" Background="Transparent" Expanded="Expander_Expanded" >
                                     <Expander.Header>
-                                        <Label  Content="{Binding CategoryName}" Foreground="Black" Padding="5"    FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="20"/>
+                                        <Label  Content="{Binding CategoryName}" Foreground="Black" Padding="0"    FontWeight="Bold" FontFamily="Segoe UI" HorizontalAlignment="Center" FontSize="20" Background="Transparent" Margin="-12,0"/>
 
                                     </Expander.Header>
                                     <Grid   Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" ScrollViewer.CanContentScroll="False">
                                         <ListView      ItemsSource="{Binding MenuItems}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" VerticalContentAlignment="Stretch" SelectionChanged="ListView_SelectionChanged"  >
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Height="Auto" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FFFFE4BA">
-                                                        <TextBlock Tag="{Binding ProductGuid}" Margin="8"  Text="{Binding ProductName}" 
+                                                    <Border Height="Auto" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FFFFE4BA" Margin="0,-4">
+                                                        <TextBlock Tag="{Binding ProductGuid}" Margin="4,0"  Text="{Binding ProductName}" 
                                                        VerticalAlignment="Center" 
-                                                       Foreground="Black" HorizontalAlignment="Center" FontWeight="Normal" FontSize="20"  />
+                                                       Foreground="Black" HorizontalAlignment="Left" FontWeight="Normal" FontSize="20"  />
                                                     </Border>
 
                                                 </DataTemplate>

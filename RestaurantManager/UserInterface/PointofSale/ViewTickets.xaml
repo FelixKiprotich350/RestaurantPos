@@ -41,8 +41,8 @@
 
             </Grid>
             <Grid Grid.Row="2">
-                <UniformGrid Columns="3" VerticalAlignment="Center">
-                    <Button x:Name="Button_NewProduct" Content="null" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16"  />
+                <UniformGrid Columns="2" VerticalAlignment="Center">
+                    <Button x:Name="Button_NewProduct" Content="null" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Visibility="Collapsed"  />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">
                         <Label Content="Total :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
                         <TextBox x:Name="TextBox_ProductsCount" Text="0" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>

@@ -5,6 +5,7 @@ using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
@@ -343,6 +344,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                Debug.WriteLine(PrinterSettings.InstalledPrinters.Count);
                 PrintDocument document = new PrintDocument();
                 document.PrintPage += new PrintPageEventHandler(this.ProvideContentForTicket);
                 document.PrintController = new StandardPrintController();

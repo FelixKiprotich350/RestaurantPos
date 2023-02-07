@@ -23,7 +23,7 @@
                     <StackPanel>
                         <Label Content="Mail Address"/>
                         <TextBox x:Name="Textbox_MailingAddress"/>
-                        <Label Content="Mail Address"/>
+                        <Label Content="Password"/>
                         <PasswordBox x:Name="Passwordbox_AppPassword" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
                     </StackPanel>
                 </GroupBox>

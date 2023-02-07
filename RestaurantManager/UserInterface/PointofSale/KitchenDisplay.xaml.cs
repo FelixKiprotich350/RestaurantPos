@@ -43,83 +43,83 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Button_PrepareClick(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Button b = sender as Button;
-                var db = new PosDbContext();
-                if (b.Content.ToString() == "Prepare")
-                {
-                    var order = db.OrderMaster.FirstOrDefault(x => x.OrderNo == b.Tag.ToString());
-                    if (order != null)
-                    {
-                        order.IsInPreparation = true;
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid Ticket", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
-                else if (b.Content.ToString() == "Complete")
-                {
-                    var order = db.OrderMaster.FirstOrDefault(x => x.OrderNo == b.Tag.ToString());
-                    if (order != null)
-                    {
-                        order.IsKitchenServed = true;
-                        db.SaveChanges();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid Ticket", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Invalid Action!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                SyncItems();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            //try
+            //{
+            //    Button b = sender as Button;
+            //    var db = new PosDbContext();
+            //    if (b.Content.ToString() == "Prepare")
+            //    {
+            //        var order = db.OrderMaster.FirstOrDefault(x => x.OrderNo == b.Tag.ToString());
+            //        if (order != null)
+            //        {
+            //            order.IsInPreparation = true;
+            //            db.SaveChanges();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Invalid Ticket", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //        }
+            //    }
+            //    else if (b.Content.ToString() == "Complete")
+            //    {
+            //        var order = db.OrderMaster.FirstOrDefault(x => x.OrderNo == b.Tag.ToString());
+            //        if (order != null)
+            //        {
+            //            order.IsKitchenServed = true;
+            //            db.SaveChanges();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Invalid Ticket", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Invalid Action!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+            //    }
+            //    SyncItems();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
         }
 
         private void SyncItems()
         {
-            try
-            {
-                Ticket_items.Clear();
-                var db = new PosDbContext();
-                List<OrderMaster> master = new List<OrderMaster>();
-                master = db.OrderMaster.Where(k => k.IsKitchenServed == false).ToList();
-                foreach (var x in master)
-                {
-                    KitchenTicket kt = new KitchenTicket();
-                    var oi = db.OrderItem.Where(k => k.OrderID == x.OrderNo && k.IsItemVoided == false).ToList();
-                    kt.Order = x;
-                    kt.Orderitems = oi;
-                    if (x.IsInPreparation)
-                    {
-                        kt.ButtonText = "Complete";
-                        kt.PreparingBG = (Brush)FindResource("KD_Color2");
-                        kt.ButtonStyle = (Style)FindResource("Button_Accept");
-                    }
-                    else
-                    {
-                        kt.ButtonText = "Prepare";
-                        kt.PreparingBG = (Brush)FindResource("KD_Color1"); 
-                        kt.ButtonStyle = (Style)FindResource("Button_Cancel");
-                    }
-                    Ticket_items.Add(kt);
-                }
-                IC_PendingTickets.ItemsSource = null;
-                IC_PendingTickets.ItemsSource = Ticket_items;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            //try
+            //{
+            //    Ticket_items.Clear();
+            //    var db = new PosDbContext();
+            //    List<OrderMaster> master = new List<OrderMaster>();
+            //    master = db.OrderMaster.Where(k => k.IsKitchenServed == false).ToList();
+            //    foreach (var x in master)
+            //    {
+            //        KitchenTicket kt = new KitchenTicket();
+            //        var oi = db.OrderItem.Where(k => k.OrderID == x.OrderNo && k.IsItemVoided == false).ToList();
+            //        kt.Order = x;
+            //        kt.Orderitems = oi;
+            //        if (x.IsInPreparation)
+            //        {
+            //            kt.ButtonText = "Complete";
+            //            kt.PreparingBG = (Brush)FindResource("KD_Color2");
+            //            kt.ButtonStyle = (Style)FindResource("Button_Accept");
+            //        }
+            //        else
+            //        {
+            //            kt.ButtonText = "Prepare";
+            //            kt.PreparingBG = (Brush)FindResource("KD_Color1"); 
+            //            kt.ButtonStyle = (Style)FindResource("Button_Cancel");
+            //        }
+            //        Ticket_items.Add(kt);
+            //    }
+            //    IC_PendingTickets.ItemsSource = null;
+            //    IC_PendingTickets.ItemsSource = Ticket_items;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
         }
 
         public class KitchenTicket

@@ -82,9 +82,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         return;
                     }
-                    OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
-                    TrackTicketMaster t = new TrackTicketMaster(om);
-                    t.ShowDialog();
+                    //OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
+                    //TrackTicketMaster t = new TrackTicketMaster(om);
+                    //t.ShowDialog();
                 }
             }
             catch (Exception ex)

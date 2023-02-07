@@ -31,6 +31,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class NewOrder : Page
     {
+        Brush defaultbuttonbrush = null;
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
         private ObservableCollection<ProductCategory> Category_Items;
@@ -38,6 +39,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         public NewOrder()
         {
             InitializeComponent();
+            defaultbuttonbrush = Button_RestaurantDept.Background;
             OrderItems = new ObservableCollection<OrderItem>(); 
             Category_Items = new ObservableCollection<ProductCategory>(); 
         }
@@ -45,8 +47,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
-            { 
-                GetMenuItems();
+            {
+                Button_RestaurantDept_Click(Button_RestaurantDept, new RoutedEventArgs());
             }
             catch (Exception ex)
             {
@@ -54,14 +56,14 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void GetMenuItems()
+        private void GetMenuItems(string department)
         {
             try
             {
 
                 using (var b = new PosDbContext())
                 {
-                    var a = b.ProductCategory.ToList();
+                    var a = b.ProductCategory.AsNoTracking().Where(k=>k.Department.ToLower()==department.ToLower()).ToList();
                     a.ForEach(s => s.GetAllMenuItems(s.CategoryGuid,true));
                     Category_Items= new ObservableCollection<ProductCategory>(a);
                     Categories_ListView.ItemsSource = Category_Items;
@@ -71,144 +73,6 @@ namespace RestaurantManager.UserInterface.PointofSale
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-        }
-        private void ListView_SelectionChanged_copy(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                ListView Lv = sender as ListView;
-                if (Lv.SelectedItem == null)
-                {
-                    return;
-                }
-                decimal price = 0;
-                int icount = 0;
-                //get bought item
-                MenuProductItem mpi = (MenuProductItem)Lv.SelectedItem;
-                ServiceType st = new ServiceType();
-                if ((bool)st.ShowDialog())
-                {
-                    if (st.ItemServiceType == "Out")
-                    {
-                        price = mpi.TotalCost;
-                        icount = st.ItemQty;
-                    }
-                    else
-                    {
-                        price = mpi.ProductPrice;
-                        icount = st.ItemQty;
-                    }
-                }
-                else
-                {
-                    Lv.SelectedItem = null;
-                    return;
-                }
-                //get item discounts 
-                DiscountItem disc_i = null;
-                using (var db = new PosDbContext())
-                {
-                    var date = SharedVariables.CurrentDate();
-                    var r = db.DiscountItem.FirstOrDefault(k => k.ProductGuid == mpi.ProductGuid && k.DiscStatus == "Active" && k.StartDate <= date && k.EndDate >= date);
-                    if (r != null)
-                    {
-                        if (r.IsRepetitive)
-                        {
-                            if (date.DayOfWeek.ToString().ToLower() == r.OfferDay.ToLower())
-                            {
-                                disc_i = r;
-                            }
-                        }
-                        else
-                        {
-                            disc_i = r;
-                        }
-
-                    }
-                }
-
-                //set item order
-                OrderItem i = new OrderItem();
-                using (var db = new PosDbContext())
-                {
-                    var a = db.MenuProductItem.AsNoTracking().Where(o => o.ProductGuid == mpi.ProductGuid);
-                    if (a.Count() > 0)
-                    {
-                        MenuProductItem b = a.First();
-                        i.ItemRowGuid = Guid.NewGuid().ToString();
-                        i.ProductItemGuid = b.ProductGuid;
-                        i.ItemName = b.ProductName;
-                        i.Quantity = icount;
-                        i.Price = price;
-                        i.Total = price * icount;
-                        i.ServiceType = st.ItemServiceType;
-                        i.IsItemVoided = false;
-                        i.IsGiftItem = false;
-                        if (disc_i != null)
-                        {
-                            if (disc_i.DiscType == "PricePercentage")
-                            {
-                                i.DiscPercent = disc_i.DiscPercentage;
-
-                                i.GiftItemGuid = i.ProductItemGuid;
-                            }
-                            else if (disc_i.DiscType == "GiftItem")
-                            {
-                                i.DiscPercent = 0;
-                                i.GiftItemGuid = disc_i.AttachedProduct;
-                            }
-                        }
-                        else
-                        {
-                            i.GiftItemGuid = i.ProductItemGuid;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("The Item does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        Lv.SelectedItem = null;
-                        return;
-                    }
-                }
-                if (OrderItems.Where(a => a.ProductItemGuid == i.ProductItemGuid && a.ServiceType == i.ServiceType).Count() > 0)
-                {
-                    MessageBox.Show("The Product is in the Order list!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    Lv.SelectedItem = null;
-                    return;
-                }
-
-                OrderItems.Add(i);
-                if (disc_i != null)
-                {
-                    if (disc_i.DiscType == "GiftItem")
-                    {
-                        var db1 = new PosDbContext();
-                        var giftoriginalproduct = db1.MenuProductItem.FirstOrDefault(k => k.ProductGuid == disc_i.AttachedProduct);
-                        OrderItem gift = new OrderItem
-                        {
-                            ItemRowGuid = Guid.NewGuid().ToString(),
-                            ProductItemGuid = disc_i.AttachedProduct,//real product guid
-                            ItemName = giftoriginalproduct.ProductName + " - Gift",
-                            Quantity = icount,
-                            Price = giftoriginalproduct.ProductPrice,
-                            Total = 0,
-                            ServiceType = st.ItemServiceType,
-                            IsItemVoided = false,
-                            IsGiftItem = true,
-                            DiscPercent = 0,
-                            GiftItemGuid = mpi.ProductGuid
-                        };
-                        OrderItems.Add(gift);
-                    }
-                }
-
-                CalculateTotal();
-                Lv.SelectedItem = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -243,6 +107,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 int icount = 0;
                 MenuProductItem mpi = mpii;
                 ServiceType st = new ServiceType();
+                st.Topmost = true;
                 if ((bool)st.ShowDialog())
                 {
                     if (st.ItemServiceType == "Out")
@@ -511,9 +376,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         IsPrinted = false,
                         OrderNo = ordno,
                         VoidReason = "None",
-                        Workperiod = w.WorkperiodName,
-                        IsKitchenServed = false,
-                        IsInPreparation = false
+                        Workperiod = w.WorkperiodName
                     };
                     foreach (var a in OrderItems)
                     {
@@ -610,6 +473,41 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                 }
                 Categories_ListView.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_RestaurantDept_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                Button b = sender as Button;
+                Button_BarDept.Background = defaultbuttonbrush;
+                b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
+                GetMenuItems("Restaurant");
+                
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_BarDept_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button b = sender as Button;
+                Button_RestaurantDept.Background = defaultbuttonbrush;
+                b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
+                GetMenuItems("Bar");
+               
+                
             }
             catch (Exception ex)
             {

@@ -108,6 +108,7 @@ namespace RestaurantManager.UserInterface.Warehouse
                         item.ProductPrice = price;
                         item.PackagingCost = packagingprice;
                         item.TotalCost = price + packagingprice;
+                        item.HouseType = pc.Department;
                         db.SaveChanges();
                         MessageBox.Show("Product Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                         Close();

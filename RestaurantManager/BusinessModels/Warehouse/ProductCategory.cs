@@ -19,7 +19,12 @@ namespace RestaurantManager.BusinessModels.Warehouse
         public string CategoryGuid { get; set; }
         [Required]
         [MaxLength(200)]
+        [Index(IsUnique =true)]
         public string CategoryName { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string Department { get; set; }
         [Required] 
         public DateTime CreationDate { get; set; }
         [NotMapped]

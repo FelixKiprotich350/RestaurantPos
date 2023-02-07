@@ -37,11 +37,11 @@ namespace RestaurantManager.BusinessModels.OrderTicket
         [Required]
         [MaxLength(500)]
         public string VoidReason { get; set; } 
-        [Required]
-        public bool IsKitchenServed { get; set; }
+        //[Required]
+        //public bool IsKitchenServed { get; set; }
 
-        [Required]
-        public bool IsInPreparation { get; set; }
+        //[Required]
+        //public bool IsInPreparation { get; set; }
         /// <summary>
         /// This field is used when the ticket was derived from merged tickets
         /// <p>Its an ID of the original Ticket</p>
