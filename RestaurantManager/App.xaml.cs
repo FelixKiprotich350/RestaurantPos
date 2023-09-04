@@ -41,13 +41,10 @@ namespace RestaurantManager
         {
             try
             {
-                AppStaticvalues.DbServer = RestaurantManager.Properties.Settings.Default.String1;
-                AppStaticvalues.DbUser = RestaurantManager.Properties.Settings.Default.String2;
-                AppStaticvalues.DbPassword = RestaurantManager.Properties.Settings.Default.String3;
-                AppStaticvalues.DbPort = RestaurantManager.Properties.Settings.Default.String4;  
-                using (var db=new PosDbContext())
+
+                using (var db = new PosDbContext())
                 {
-                    
+
                     db.Database.Connection.Open();
                     db.Database.Connection.Close();
 
@@ -55,19 +52,21 @@ namespace RestaurantManager
                     App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
                 }
             }
-            catch(Exception ex)
-            { 
+            catch (Exception ex)
+            {
                 if (MessageBox.Show(ex.Message + "\n\nDo you want to configure the server now?", "DATABASE SERVER CONNECTION", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    InitialServerConfiguration isc = new InitialServerConfiguration();
+                    ServerConfiguration isc = new ServerConfiguration();
                     isc.ShowDialog();
-                     
-                    MessageBox.Show("Application will shut down.Kindly Restart!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
-                App.Current.Shutdown();
-            } 
-            return ;
-        } 
+                else
+                {
+                    App.Current.Shutdown();
+                }
+            }
+            return;
+        }
 
         private void Textbox_GotFocus(object sender, RoutedEventArgs e)
         {

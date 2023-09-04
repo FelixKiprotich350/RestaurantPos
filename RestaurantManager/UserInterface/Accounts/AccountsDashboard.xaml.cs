@@ -1,6 +1,6 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Payments;
-using RestaurantManager.BusinessModels.Security;
+﻿using DatabaseModels.Payments;
+using DatabaseModels.Security;
+using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables; 
 using System;
 using System.Collections.Generic;

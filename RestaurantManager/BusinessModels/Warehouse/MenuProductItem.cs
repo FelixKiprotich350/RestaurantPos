@@ -26,7 +26,6 @@ namespace RestaurantManager.BusinessModels.Warehouse
         [Required] 
         [MaxLength(100)]
         public string HouseType { get; set; } 
-
         [Required]
         public decimal ProductPrice { get; set; }
         [Required]

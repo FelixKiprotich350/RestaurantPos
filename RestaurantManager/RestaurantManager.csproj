@@ -69,14 +69,15 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
@@ -154,69 +155,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationFiles\Base64.cs" />
+    <Compile Include="ApplicationFiles\ServerConfiguration.xaml.cs">
+      <DependentUpon>ServerConfiguration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppStaticvalues.cs" />
-    <Compile Include="BusinessModels\CustomersManagement\CustomerPointsAccount.cs" />
-    <Compile Include="BusinessModels\CustomersManagement\Customer.cs" />
-    <Compile Include="BusinessModels\GeneralSettings\ClientInfoDetails.cs" />
-    <Compile Include="BusinessModels\GeneralSettings\MailingProfile.cs" />
-    <Compile Include="BusinessModels\GeneralSettings\PosVariables.cs" />
-    <Compile Include="BusinessModels\GeneralSettings\TableEntity.cs" />
-    <Compile Include="BusinessModels\OrderTicket\Un_OrderItem.cs" />
-    <Compile Include="BusinessModels\TestModel.cs" />
-    <Compile Include="BusinessModels\Warehouse\KitchenAddItem.cs" />
-    <Compile Include="BusinessModels\Warehouse\DiscountItem.cs" />
-    <Compile Include="BusinessModels\Warehouse\StockEntryItem.cs" />
-    <Compile Include="BusinessModels\Warehouse\ProductCategory.cs" />
-    <Compile Include="BusinessModels\Warehouse\MenuProductItem.cs" />
-    <Compile Include="BusinessModels\OrderTicket\OrderItem.cs" />
-    <Compile Include="BusinessModels\OrderTicket\OrderItemVoided.cs" />
-    <Compile Include="BusinessModels\OrderTicket\OrderMaster.cs" />
-    <Compile Include="BusinessModels\Navigation\Level1menu.cs" />
-    <Compile Include="BusinessModels\Navigation\NavigationMenu.cs" />
-    <Compile Include="BusinessModels\Payments\TicketPaymentItem.cs" />
-    <Compile Include="BusinessModels\Payments\TicketPaymentMaster.cs" />
-    <Compile Include="BusinessModels\Payments\PaymentMethod.cs" />
-    <Compile Include="BusinessModels\Security\PermissionMaster.cs" />
-    <Compile Include="BusinessModels\Security\UserRoles.cs" />
-    <Compile Include="BusinessModels\Security\PosUser.cs" />
-    <Compile Include="BusinessModels\Vouchers\VoucherCard.cs" />
-    <Compile Include="BusinessModels\Vouchers\DiscountVoucher.cs" />
-    <Compile Include="BusinessModels\WorkPeriod\WorkPeriod.cs" />
     <Compile Include="ActivityLogs\ChangeLog.cs" />
-    <Compile Include="BusinessModels\WorkPeriod\WPClosureMessage.cs" />
     <Compile Include="ApplicationFiles\DeveloperDashboard.xaml.cs">
       <DependentUpon>DeveloperDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalVariables\PosEnums.cs" />
     <Compile Include="GlobalVariables\SharedVariables.cs" />
-    <Compile Include="ApplicationFiles\InitialServerConfiguration.xaml.cs">
-      <DependentUpon>InitialServerConfiguration.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MailingPlugin\POSMail.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202301241226232_m1.cs" />
-    <Compile Include="Migrations\202301241226232_m1.designer.cs">
-      <DependentUpon>202301241226232_m1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202301241252349_m2.cs" />
-    <Compile Include="Migrations\202301241252349_m2.designer.cs">
-      <DependentUpon>202301241252349_m2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302070721168_m3.cs" />
-    <Compile Include="Migrations\202302070721168_m3.designer.cs">
-      <DependentUpon>202302070721168_m3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302070847213_m4.cs" />
-    <Compile Include="Migrations\202302070847213_m4.designer.cs">
-      <DependentUpon>202302070847213_m4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202302071222149_m5.cs" />
-    <Compile Include="Migrations\202302071222149_m5.designer.cs">
-      <DependentUpon>202302071222149_m5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Permissions.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="Printing\PrintTicket.cs" />
     <Compile Include="ApplicationFiles\SplashScreen.xaml.cs">
@@ -273,6 +226,9 @@
     <Compile Include="UserInterface\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\NoDashboard.xaml.cs">
+      <DependentUpon>NoDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\DiscountsSelector.xaml.cs">
       <DependentUpon>DiscountsSelector.xaml</DependentUpon>
     </Compile>
@@ -281,6 +237,9 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\KitchenDisplay.xaml.cs">
       <DependentUpon>KitchenDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\POSMainContainer.xaml.cs">
+      <DependentUpon>POSMainContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\SelectWorkPeriod.xaml.cs">
       <DependentUpon>SelectWorkPeriod.xaml</DependentUpon>
@@ -422,11 +381,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ApplicationFiles\InitialServerConfiguration.xaml">
+    <Page Include="ApplicationFiles\ServerConfiguration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="UserInterface\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -506,6 +465,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\NoDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\PointofSale\DiscountsSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -515,6 +478,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\PointofSale\KitchenDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\POSMainContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -693,21 +660,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202301241226232_m1.resx">
-      <DependentUpon>202301241226232_m1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202301241252349_m2.resx">
-      <DependentUpon>202301241252349_m2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302070721168_m3.resx">
-      <DependentUpon>202302070721168_m3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302070847213_m4.resx">
-      <DependentUpon>202302070847213_m4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202302071222149_m5.resx">
-      <DependentUpon>202302071222149_m5.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -775,7 +727,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseModels\DatabaseModels.csproj">
+      <Project>{fdd69bef-3452-49f0-8577-a3f65406b92e}</Project>
+      <Name>DatabaseModels</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

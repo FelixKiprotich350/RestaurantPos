@@ -1,5 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Warehouse;
+﻿using DatabaseModels.Warehouse;
+using RestaurantManager.ApplicationFiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;

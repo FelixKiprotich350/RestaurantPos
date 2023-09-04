@@ -1,4 +1,4 @@
-﻿using RestaurantManager.BusinessModels.Security;
+﻿using DatabaseModels.Security; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class SelectRightsForRole : Window
     {
-        readonly PermissionMaster pm = new PermissionMaster();
+        readonly Permissions pm = new Permissions();
         public List<PermissionMaster> selectedrights = new List<PermissionMaster>();
         public SelectRightsForRole(List<PermissionMaster> selecteditems)
         {

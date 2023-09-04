@@ -106,7 +106,7 @@
                     </UniformGrid>
                 </Grid>
                 <Grid Grid.Row="1" >
-                    <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding MenuCategories}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
+                    <ListView  x:Name="Categories_ListView"  ItemsSource="{Binding Category_Items}" ScrollViewer.CanContentScroll="False" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" Background="#00000000" SelectionMode="Single"   >
                         <ListView.ItemTemplate>
                             <DataTemplate >
                                 <Expander     Name="myExpander"  HorizontalAlignment="Stretch" Tag="{Binding CategoryGuid}"

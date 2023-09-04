@@ -1,5 +1,4 @@
-﻿using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.Vouchers;
+﻿using DatabaseModels.Vouchers;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;

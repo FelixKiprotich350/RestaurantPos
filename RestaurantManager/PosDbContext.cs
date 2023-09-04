@@ -5,19 +5,18 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks; 
-using System.Data.Entity.ModelConfiguration.Conventions;
-using RestaurantManager.BusinessModels;
-using RestaurantManager.BusinessModels.Warehouse;
-using RestaurantManager.BusinessModels.Security;
-using RestaurantManager.BusinessModels.Payments;
-using RestaurantManager.BusinessModels.GeneralSettings;
-using RestaurantManager.BusinessModels.WorkPeriod;
+using System.Data.Entity.ModelConfiguration.Conventions; 
+using DatabaseModels.Warehouse;
+using DatabaseModels.Security;
+using DatabaseModels.Payments;
+using DatabaseModels.GeneralSettings;
+using DatabaseModels.WorkPeriod;
 using System.Data.Entity.Infrastructure;
-using RestaurantManager.BusinessModels.OrderTicket;
+using DatabaseModels.OrderTicket;
 using System.Diagnostics;
-using RestaurantManager.BusinessModels.Vouchers;
-using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.ActivityLogs;
+using DatabaseModels.Vouchers;
+using DatabaseModels.CustomersManagement;
+using RestaurantManager.ActivityLogs; 
 
 namespace RestaurantManager
 {
@@ -28,7 +27,7 @@ namespace RestaurantManager
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
 
        //public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
-        public PosDbContext() : base(AppStaticvalues.GetDbConnectionString())
+        public PosDbContext() : base(AppStaticvalues.GetMysqlDbConnectionString())
         { 
             Database.SetInitializer<PosDbContext>(null);
             //Database.CreateIfNotExists();
@@ -90,8 +89,7 @@ namespace RestaurantManager
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
-        public DbSet<DiscountVoucher> DiscountVoucher { get; set; }
-        public DbSet<TestModel> TestModel { get; set; }
+        public DbSet<DiscountVoucher> DiscountVoucher { get; set; } 
         //payments
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }
@@ -103,7 +101,7 @@ namespace RestaurantManager
         public DbSet<MailingProfile> MailingProfile { get; set; }
         //customers
         public DbSet<Customer> Customer { get; set; }
-        public DbSet<CustomerAccount> CustomerPointsAccount { get; set; }
+        public DbSet<CustomerPointsAccount> CustomerPointsAccount { get; set; }
     }
     public class MyInitializer : IDatabaseInitializer<PosDbContext>
     { 

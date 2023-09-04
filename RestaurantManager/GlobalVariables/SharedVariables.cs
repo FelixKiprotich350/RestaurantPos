@@ -1,24 +1,26 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.GeneralSettings;
-using RestaurantManager.BusinessModels.Security;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestaurantManager.UserInterface;
+using DatabaseModels.Security;
+using DatabaseModels.WorkPeriod;
+using DatabaseModels.GeneralSettings;
 
 namespace RestaurantManager.GlobalVariables
 {
     public static class SharedVariables
     {
      
-        public static MainWindow Main_Window = null;
+        public static POSMainContainer Main_Window = null;
         public static string DbConnectionstring = "server=127.0.0.1;user=root;password=toor;port=3306;database=restpos";
          
         public static PosUser CurrentUser = null;
       //  public static string AdminRoleName = "Admin";
         public static string LogInCounter = Environment.MachineName; 
+        public static string CurrentUserMode = ""; 
 
         /// <summary>
         /// Global Methods

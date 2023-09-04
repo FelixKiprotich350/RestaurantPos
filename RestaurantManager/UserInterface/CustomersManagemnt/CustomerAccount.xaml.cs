@@ -1,6 +1,6 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.BusinessModels.Vouchers;
+﻿using DatabaseModels.CustomersManagement;
+using DatabaseModels.Vouchers;
+using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.UserInterface.PointofSale;
 using System;
 using System.Collections.Generic;
@@ -66,7 +66,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     //VoucherGuid = Guid.NewGuid().ToString(),
                     //VoucherNumber = v.BatchNumber + "-" + UniqueList[0]
                 };
-                BusinessModels.CustomersManagement.CustomerAccount ca = new BusinessModels.CustomersManagement.CustomerAccount
+                DatabaseModels.CustomersManagement.CustomerPointsAccount ca = new DatabaseModels.CustomersManagement.CustomerPointsAccount
                 {
                     AccActionGuid = Guid.NewGuid().ToString(),
                     TransactionNo = GlobalVariables.SharedVariables.CurrentDate().ToString("yyMMddHHmmssffff"),

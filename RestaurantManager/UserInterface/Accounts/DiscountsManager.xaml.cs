@@ -1,6 +1,6 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Vouchers;
-using RestaurantManager.BusinessModels.Warehouse;
+﻿using DatabaseModels.Vouchers;
+using DatabaseModels.Warehouse;
+using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

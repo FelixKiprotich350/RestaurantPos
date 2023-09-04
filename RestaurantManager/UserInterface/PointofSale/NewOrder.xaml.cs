@@ -1,8 +1,4 @@
-﻿using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.BusinessModels.Warehouse;
-using RestaurantManager.BusinessModels.OrderTicket; 
-using RestaurantManager.BusinessModels.WorkPeriod;
-using RestaurantManager.GlobalVariables;
+﻿using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +19,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
+using DatabaseModels.OrderTicket;
+using DatabaseModels.Warehouse;
+using DatabaseModels.CustomersManagement;
+using DatabaseModels.WorkPeriod;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -61,10 +61,13 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
 
-                using (var b = new PosDbContext())
+                using (var db = new PosDbContext())
                 {
-                    var a = b.ProductCategory.AsNoTracking().Where(k=>k.Department.ToLower()==department.ToLower()).ToList();
-                    a.ForEach(s => s.GetAllMenuItems(s.CategoryGuid,true));
+                    var a = db.ProductCategory.AsNoTracking().Where(k=>k.Department.ToLower()==department.ToLower()).ToList();
+                    foreach (var x in a)
+                    {
+                        x.MenuItems = db.MenuProductItem.Where(m => m.CategoryGuid == x.CategoryGuid).ToList();
+                    } 
                     Category_Items= new ObservableCollection<ProductCategory>(a);
                     Categories_ListView.ItemsSource = Category_Items;
                 }

@@ -1,5 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using DatabaseModels.WorkPeriod;
+using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;

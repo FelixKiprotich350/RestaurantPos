@@ -1,10 +1,10 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.Payments;
-using RestaurantManager.BusinessModels.Vouchers;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using DatabaseModels.CustomersManagement;
+using DatabaseModels.OrderTicket;
+using DatabaseModels.Payments;
+using DatabaseModels.WorkPeriod;
+using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.UserInterface.CustomersManagemnt;
 using RestaurantManager.UserInterface.TicketPayments;
 using System;
 using System.Collections.Generic;
@@ -272,10 +272,10 @@ namespace RestaurantManager.UserInterface.PointofSale
 
                 //customer service
                 Customer cust = GetCustomer(om.CustomerRefference);
-                CustomerAccount ca = null;
+                CustomerPointsAccount ca = null;
                 if (cust != null)
                 {
-                    ca = new CustomerAccount
+                    ca = new CustomerPointsAccount
                     {
                         AccActionGuid = Guid.NewGuid().ToString(),
                         TransactionNo = SharedVariables.CurrentDate().ToString("yyMMddHHmmssffff"),

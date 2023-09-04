@@ -1,6 +1,4 @@
-﻿using RestaurantManager.BusinessModels.Warehouse;
-using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿ 
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
@@ -17,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
+using DatabaseModels.Warehouse;
 
 namespace RestaurantManager.UserInterface.Accounts
 {

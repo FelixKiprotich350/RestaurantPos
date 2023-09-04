@@ -1,7 +1,7 @@
 ﻿namespace RestaurantManager.UserInterface.TicketPayments
 {
-    using RestaurantManager.ApplicationFiles;
-    using RestaurantManager.BusinessModels.Vouchers;
+    using DatabaseModels.Vouchers;
+    using RestaurantManager.ApplicationFiles; 
     using System;
     using System.ComponentModel;
     using System.Drawing;

@@ -1,9 +1,4 @@
-﻿using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.CustomersManagement;
-using RestaurantManager.BusinessModels.Security;
-using RestaurantManager.BusinessModels.Payments;
-using RestaurantManager.BusinessModels.Warehouse;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿
 using RestaurantManager.UserInterface.PosReports.FilterWindows;
 using System;
 using System.Collections.Generic;
@@ -23,6 +18,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.ApplicationFiles;
+using DatabaseModels.OrderTicket;
+using DatabaseModels.Warehouse;
+using DatabaseModels.CustomersManagement;
+using DatabaseModels.Security;
+using DatabaseModels.Payments;
+using DatabaseModels.WorkPeriod;
 
 namespace RestaurantManager.UserInterface.PosReports
 {

@@ -1,5 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Security;
+﻿using DatabaseModels.Security;
+using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

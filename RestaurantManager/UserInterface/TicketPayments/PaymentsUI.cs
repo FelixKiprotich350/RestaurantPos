@@ -1,4 +1,4 @@
-﻿ using RestaurantManager.BusinessModels.Payments; 
+﻿using DatabaseModels.Payments; 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

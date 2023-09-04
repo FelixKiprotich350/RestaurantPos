@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using RestaurantManager.BusinessModels.Security;
+﻿using MySql.Data.MySqlClient; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using RestaurantManager.BusinessModels.Navigation;
+using System.Windows.Shapes; 
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
-using RestaurantManager.BusinessModels.GeneralSettings;
+using DatabaseModels.Security;
+using DatabaseModels.GeneralSettings;
 
 namespace RestaurantManager.UserInterface.Security
 {
@@ -27,7 +26,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class Login : Window
     {
-        readonly PermissionMaster Pm = new PermissionMaster();
+        readonly Permissions P = new Permissions();
         public Login()
         {
            
@@ -97,69 +96,54 @@ namespace RestaurantManager.UserInterface.Security
         {
             try
             {
-               
-                if (PasswordBox_UserPin.Password != "" )
+                PosUser user = null;
+                var db = new PosDbContext();
+                if (PasswordBox_UserPin.Password.Trim() == "")
                 {
-                    PosUser user = null;
-                    using (var db = new PosDbContext())
+                    MessageBox.Show(this, "Enter your PIN!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    PasswordBox_UserPin.Password = "";
+                    return;
+                }
+                else if (db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).Count() > 0)
+                {
+                    var xuser = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
+                    if (xuser.UserWorkingStatus.ToLower() != "active")
                     {
-                        if (db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).Count() > 0)
-                        {
-                            user = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
-                        }
-                        else
-                        {
-                            MessageBox.Show(this, "The User PIN is Wrong!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            PasswordBox_UserPin.Password = "";
-                            return;
-                        }
-                        if (user.UserWorkingStatus.ToLower() != "active")
-                        {
-                            MessageBox.Show(this, "The User Status is not Active.\nAsk the administrator to enable your activenes!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            PasswordBox_UserPin.Password = "";
-                            user = null;
-                            App.Current.Shutdown();
-                        }
-                        if (user.UserIsDeleted)
-                        {
-                            MessageBox.Show(this, "The UserPIN has been deleted. Enter Different PIN!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            PasswordBox_UserPin.Password = "";
-                            user = null;
-                            App.Current.Shutdown();
-                        }
+                        MessageBox.Show(this, "The User Status is not Active.\nAsk the administrator to enable you!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        PasswordBox_UserPin.Password = "";
+                        user = null;
                     }
-                    MainWindow m = new MainWindow();
+                    else
+                    {
+                        user = xuser;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Wrong PIN. Try again!!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    PasswordBox_UserPin.Password = "";
+                    return;
+                }
+
+                if (user != null)
+                {
                     List<string> raw = new List<string>();
-                    //raw permissions
-                    //UserRole r = null;
-                    //using (var db = new PosDbContext())
-                    //{
-                    //    if (db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).Count() > 0)
-                    //    {
-                    //        r = db.UserRoles.Where(a => a.RoleName.ToString() == user.UserRole).First();
-                    //    }
-                    //    else
-                    //    {
-                    //        return;
-                    //    }
-                    //}
-                    // raw = r.RolePermissions.Split(',').Where(a => a.Trim() != "").ToList();
-                   
+
                     raw = user.UserRights.Split(',').Where(k => k.Trim() != "").ToList();
                     //final permissions
                     if (user.UserRole.ToLower() == PosEnums.UserAccountsRoles.Admin.ToString().ToLower())
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
-                        user.User_Permissions_final.AddRange(Pm.GetAllPermissions());
+                        user.User_Permissions_final.AddRange(P.GetAllPermissions());
                     }
-                   else if (raw.Count > 0)
+                    else if (raw.Count > 0)
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                         foreach (var a in raw)
                         {
-                            if (Pm.GetAllPermissions().Where(b => b.PermissionCode == a).Count() > 0)
+                            if (P.GetAllPermissions().Where(b => b.PermissionCode == a).Count() > 0)
                             {
-                                user.User_Permissions_final.Add(Pm.GetAllPermissions().Where(b => b.PermissionCode == a).First());
+                                user.User_Permissions_final.Add(P.GetAllPermissions().Where(b => b.PermissionCode == a).First());
                             }
                         }
                     }
@@ -167,22 +151,30 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         user.User_Permissions_final = new List<PermissionMaster>();
                     }
-                    //using (var db = new PosDbContext())
-                    //{
-                    //    if (db.ClientInfo.Count() > 0)
-                    //    {
-                    //        GlobalVariables.SharedVariables.ClientInfo = db.ClientInfo.First();
-                    //    }
-                    //}
                     SharedVariables.CurrentUser = user;
-                    m.Show();
-                    Close();
-                    
+
                 }
                 else
                 {
-                    MessageBox.Show(this, "Enter User PIN!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    App.Current.Shutdown();
                 }
+                //
+                if (user.IsBackendUser)
+                {
+                    MainWindow main = new MainWindow();
+                    main.Show();
+                }
+                else if (user.IsPosUser)
+                {
+                    POSMainContainer main = new POSMainContainer();
+                    main.Show();
+                }
+                else
+                {
+                    NoDashboard main = new NoDashboard();
+                    main.Show();
+                }
+                Close();
             }
             catch (Exception ex)
             {
@@ -219,7 +211,9 @@ namespace RestaurantManager.UserInterface.Security
                             UserWorkingStatus = PosEnums.UserAccountStatuses.Active.ToString(),
                             UserRights = ",",
                             LastLoginDate = SharedVariables.CurrentDate(),
-                            RegistrationDate = SharedVariables.CurrentDate()
+                            RegistrationDate = SharedVariables.CurrentDate(),
+                            IsBackendUser=true,
+                            IsPosUser=true
                         };
                         db.PosUser.Add(user);
                         db.SaveChanges();

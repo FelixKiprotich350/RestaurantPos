@@ -1,4 +1,4 @@
-﻿using RestaurantManager.BusinessModels.Security;
+﻿using DatabaseModels.Security; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

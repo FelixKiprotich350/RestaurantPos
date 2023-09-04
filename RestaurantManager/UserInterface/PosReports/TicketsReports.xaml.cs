@@ -1,6 +1,6 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using DatabaseModels.OrderTicket;
+using DatabaseModels.WorkPeriod;
+using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;

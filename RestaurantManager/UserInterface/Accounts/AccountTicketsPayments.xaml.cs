@@ -1,6 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Payments;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using DatabaseModels.Payments;
+using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

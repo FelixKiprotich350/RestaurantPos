@@ -1,5 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.Security;
+﻿using DatabaseModels.Security;
+using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -216,7 +216,7 @@ namespace RestaurantManager.UserInterface.Security
                     return;
                 }
                 List<PermissionMaster> pm = new List<PermissionMaster>();
-                PermissionMaster master = new PermissionMaster();
+                Permissions master = new Permissions();
                 var items = master.GetAllPermissions();
                 var rights = user.UserRights.Split(',').ToList();
                 foreach (var x in rights)

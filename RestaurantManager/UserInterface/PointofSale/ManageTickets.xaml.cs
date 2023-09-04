@@ -1,6 +1,6 @@
-﻿using RestaurantManager.ApplicationFiles;
-using RestaurantManager.BusinessModels.OrderTicket;
-using RestaurantManager.BusinessModels.WorkPeriod;
+﻿using DatabaseModels.OrderTicket;
+using DatabaseModels.WorkPeriod;
+using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
@@ -380,9 +380,9 @@ namespace RestaurantManager.UserInterface.PointofSale
             topoffset += 20;
             graphics.DrawString(SharedVariables.ClientInfo().PhysicalAddress, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             topoffset += 20; 
-            graphics.DrawString("Order Ticket", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            graphics.DrawString("Ticket Invoice", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
+            topoffset += 20;
             graphics.DrawString("TicketNo:" + this.TicketNo, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
             topoffset += 20;
             graphics.DrawString("Date:" + SharedVariables.CurrentDate().ToShortDateString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
@@ -440,8 +440,10 @@ namespace RestaurantManager.UserInterface.PointofSale
             graphics.DrawString(GrossTotal.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
             topoffset += 20;  
             graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
+            topoffset += 40;
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 30;
+            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote2, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             
         }  
     }

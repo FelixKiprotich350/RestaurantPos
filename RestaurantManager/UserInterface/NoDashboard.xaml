@@ -1,0 +1,15 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.NoDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface"
+        mc:Ignorable="d"
+        Title="Home" Height="300" Width="450">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Vertical">
+            <TextBlock HorizontalAlignment="Center">Welcome.</TextBlock>
+            <TextBlock HorizontalAlignment="Center">Contact Admin For Support.</TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,4 +1,4 @@
-﻿using RestaurantManager.BusinessModels.WorkPeriod;
+﻿
 using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.IO;
 using RestaurantManager.ApplicationFiles;
+using DatabaseModels.WorkPeriod;
 
 namespace RestaurantManager.UserInterface.WorkPeriods
 {
