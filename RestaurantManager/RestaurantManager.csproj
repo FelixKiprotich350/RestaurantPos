@@ -251,6 +251,9 @@
     <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
       <DependentUpon>EditTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\SelectTicketToUpdate.xaml.cs">
+      <DependentUpon>SelectTicketToUpdate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\ServiceType.xaml.cs">
       <DependentUpon>ServiceType.xaml</DependentUpon>
     </Compile>
@@ -501,6 +504,10 @@
     <Page Include="UserInterface\PointofSale\EditTicket.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\PointofSale\SelectTicketToUpdate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\PointofSale\ServiceType.xaml">
       <Generator>MSBuild:Compile</Generator>

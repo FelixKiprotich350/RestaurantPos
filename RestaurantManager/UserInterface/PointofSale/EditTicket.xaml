@@ -28,6 +28,7 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="2*"/> 
+                        <ColumnDefinition Width="2*"/> 
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <StackPanel>
@@ -46,7 +47,10 @@
                             <TextBox x:Name="TextBlock_ItemsCount" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" IsReadOnly="True" />
                             <Label Content="Total" FontSize="16" HorizontalAlignment="Left" />
                         </StackPanel>
-                    </Grid> 
+                    </Grid>
+                    <Grid Grid.Column="3" HorizontalAlignment="Center">
+                        <Button x:Name="Button_SelectTicket" Content="Select" Margin="10,0"   Style="{DynamicResource Button_Accept}" Height="36" Click="Button_SelectTicket_Click"/>
+                    </Grid>
                 </Grid>
                 
                 <Grid Grid.Row="1">
@@ -60,6 +64,7 @@
                             <!--<DataGridTextColumn  Binding="{Binding Total,StringFormat=N1}" Header="Total" IsReadOnly="True" Width="120" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding DiscPercent}" Header="%Disc" IsReadOnly="True" Width="80" CanUserSort="False"/> -->
                             <DataGridTextColumn  Binding="{Binding ServiceType}" Header="Type" IsReadOnly="True" Width="70" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding IsNewItem}" Header="TTT" IsReadOnly="True" Width="70" CanUserSort="False"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">

@@ -33,9 +33,8 @@ namespace RestaurantManager.UserInterface.PointofSale
     {
         Brush defaultbuttonbrush = null;
         readonly Random R = new Random();
-        private readonly ObservableCollection<OrderItem> OrderItems;
-        private ObservableCollection<ProductCategory> Category_Items;
-
+        private  ObservableCollection<OrderItem> OrderItems;
+        private ObservableCollection<ProductCategory> Category_Items; 
 
         //54603228237,,,,0703070707
         public EditTicket()
@@ -521,6 +520,72 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Button_SelectTicket_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Button_SelectTicket.Content.ToString() == "Select")
+                {
+                    SelectTicketToUpdate st = new SelectTicketToUpdate();
+                    if ((bool)st.ShowDialog())
+                    {
+                        OrderItems = new ObservableCollection<OrderItem>();
+                        LoadTicketDetails(null);
+                       
+                        Button_SelectTicket.Content = "Clear";
+                    } 
+                } 
+                else if (Button_SelectTicket.Content.ToString() == "Clear")
+                {
+                    OrderItems = new ObservableCollection<OrderItem>();
+                    Button_SelectTicket.Content = "Select";
+                }
+                else
+                {
+                    MessageBox.Show("Uknown Command. Try again!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            } 
+        }
+
+        private void LoadTicketDetails(OrderMaster order)
+        {
+            try
+            {
+                //GrossTotal = 0;
+                //TicketNo = "";
+                //get ticket items
+                using (var db = new PosDbContext())
+                {
+                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
+                    Datagrid_OrderItems.ItemsSource = a;
+                }
+                //find total
+                decimal total = 0;
+                var b = Datagrid_OrderItems.Items.Cast<OrderItem>().Where(m => m.IsGiftItem == false).ToList();
+                foreach (OrderItem x in b)
+                {
+
+                    //AddNewItemToOrder(null);
+                    total += x.Price * x.Quantity * ((100 - x.DiscPercent) / 100);
+                }
+                //GrossTotal = total;
+                //TicketNo = order.OrderNo;
+                TextBlock_TicketNo.Text = order.OrderNo;
+                //TextBox_Table.Text = order.TicketTable;
+                TextBlock_TicketDate.Text = order.OrderDate.ToString();
+                TextBlock_ItemsCount.Text = b.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+        } 
     }
 
 }
