@@ -96,6 +96,11 @@ namespace RestaurantManager.UserInterface.Warehouse
                 string category = "";
                 ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
                 category = productCategory.CategoryGuid;
+                if (!decimal.TryParse(nmp.Textbox_BuyingPrice.Text.Trim(), out decimal buyingprice))
+                {
+                    MessageBox.Show("The Buying Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 if (!decimal.TryParse(nmp.Textbox_ProductPrice.Text.Trim(), out decimal price))
                 {
                     MessageBox.Show("The ProductPrice value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -113,10 +118,11 @@ namespace RestaurantManager.UserInterface.Warehouse
                         ProductGuid = Guid.NewGuid().ToString(), 
                         ProductName = nmp.Textbox_ProductName.Text, 
                         AvailabilityStatus = "Available", 
-                        HouseType = productCategory.Department,
-                        ProductPrice = price, 
+                        Department = productCategory.Department,
+                        SellingPrice = price, 
                         PackagingCost = packagingprice,
                         CategoryGuid = category ,
+                        BuyingPrice=buyingprice,
                         TotalCost=packagingprice+price
                     });
                     db.SaveChanges();

@@ -29,7 +29,7 @@
                 <Setter Property="Template" >
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border CornerRadius="8" Name="border" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}"    >
+                            <Border CornerRadius="4" Name="border" Background="{TemplateBinding Background}" Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}"    >
                                 <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center" Height="Auto" Width="Auto"  />
                             </Border>
                         </ControlTemplate>

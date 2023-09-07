@@ -27,7 +27,6 @@ namespace RestaurantManager.UserInterface.PosReports
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            GlobalVariables.SharedVariables.Main_Window.Category_Submenu.Visibility = Visibility.Collapsed;
             Listview_ReportHeads.SelectedIndex = 0;
             Frame_ReportArea.Content = new SalesReport();
         }
@@ -56,7 +55,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 }
                 else if (Listview_ReportHeads.SelectedIndex == 3)
                 {
-                    Frame_ReportArea.Content = new UsersReport();
+                    Frame_ReportArea.Content = new ProfitAnalysis();
                 }
             }
             catch (Exception ex)

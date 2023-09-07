@@ -211,6 +211,11 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         }
 
+        private void Button_EditTicket_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -445,6 +450,8 @@ namespace RestaurantManager.UserInterface.PointofSale
             topoffset += 30;
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote2, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             
-        }  
+        }
+
+        
     }
 }

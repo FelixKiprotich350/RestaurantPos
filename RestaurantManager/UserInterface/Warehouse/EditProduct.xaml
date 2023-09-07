@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Warehouse"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.Warehouse.EditProduct"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="Update Product" Height="300" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        Title="Update Product" Height="400" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
     <Grid Margin="0,0,4,0">
-        <UniformGrid Rows="6" Columns="1">
+        <UniformGrid Rows="7" Columns="1">
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
                 <Label DockPanel.Dock="Left" Content="Product Name" Width="120" FontSize="16"/>
                 <TextBox x:Name="Textbox_Productname" FontSize="16" />
@@ -33,7 +33,11 @@
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
-                <Label DockPanel.Dock="Left" Content="Product Price" Width="120" FontSize="16"/>
+                <Label DockPanel.Dock="Left" Content="Buying Price" Width="120" FontSize="16"/>
+                <TextBox  x:Name="Textbox_BuyingPrice" FontSize="16" />
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Selling Price" Width="120" FontSize="16"/>
                 <TextBox  x:Name="Textbox_ProductPrice" FontSize="16" />
             </DockPanel>
             <DockPanel LastChildFill="True" VerticalAlignment="Center">

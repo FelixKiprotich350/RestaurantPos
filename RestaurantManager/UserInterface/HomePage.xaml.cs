@@ -93,7 +93,16 @@ namespace RestaurantManager.UserInterface
                 Button x = (Button)sender;
                 if (x.IsEnabled)
                 {
-                    GlobalVariables.SharedVariables.Main_Window.Button_Category_Click(sender, e);
+                    if (SharedVariables.POS_MainWindow != null)
+                    {
+                        SharedVariables.POS_MainWindow.Button_Category_Click(sender, e);
+                        return;
+                    } 
+                    if (SharedVariables.Backend_MainWindow != null)
+                    {
+                        SharedVariables.Backend_MainWindow.Button_Category_Click(sender, e);
+                        return;
+                    } 
                 }
                
             }

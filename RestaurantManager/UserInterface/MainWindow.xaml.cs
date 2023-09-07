@@ -12,6 +12,7 @@ using DatabaseModels.Navigation;
 using DatabaseModels.Warehouse;
 using DatabaseModels.Security;
 using System.Collections.ObjectModel;
+using static RestaurantManager.GlobalVariables.PosEnums;
 
 namespace RestaurantManager.UserInterface
 {
@@ -36,18 +37,28 @@ namespace RestaurantManager.UserInterface
         {
             try
             {
+                SharedVariables.POS_MainWindow = null;
+                SharedVariables.Backend_MainWindow = this;
                 if (SharedVariables.CurrentUser == null)
                 {
+                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
                     MessageBox.Show("The current LoggedIn User is Null!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
                 }
                 if (SharedVariables.ClientInfo() == null )
                 {
+                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
                     MessageBox.Show("The Restaurant Profile does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
                 }
+                if (SharedVariables.CurrentUser.IsPosUser)
+                {
+                    Textbox_SwitchTo.Text = SwitchMainWindow.SalesPoint.ToString();
+                    StackPanel_SwitchPanels.Visibility = Visibility.Visible;
+
+                } 
                 TextBox_InstitutionTitle.Text = SharedVariables.ClientInfo().ClientTitle;
                 //GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
@@ -134,22 +145,16 @@ namespace RestaurantManager.UserInterface
                             }
 
                         }
-                    }
-                    if (tag == "E")
-                    {
-                        Category_Submenu.Visibility = Visibility.Collapsed;
-                        Frame1.Content = new UserInterface.PosReports.MasterReports();
-                        return;
-                    }
-                    var subitems = GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
-                    Category_Submenu.ItemsSource = subitems;
-                    if (subitems.Count <= 0)
-                    {
-                        Frame1.Content = "";
-                        return;
-                    }
-                    Frame1.Content = subitems[0].PageClass;
-                    Category_Submenu.Visibility = Visibility.Visible;
+                    } 
+                    //var subitems = GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.ParentModule == tag && x.PermissionLevel == "1").ToList();
+                    //Category_Submenu.ItemsSource = subitems;
+                    //if (subitems.Count <= 0)
+                    //{
+                    //    Frame1.Content = "";
+                    //    return;
+                    //}
+                    //Frame1.Content = subitems[0].PageClass;
+                    //Category_Submenu.Visibility = Visibility.Visible;
                 }
                 else
                 {
@@ -165,39 +170,39 @@ namespace RestaurantManager.UserInterface
 
         private void Button_CategoryPermissionItem_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Button a = sender as Button;
-                string tag = a.Tag.ToString();
-                if (tag != "")
-                {
-                    if (pm.GetAllPermissions().Where(k => k.PermissionCode == tag).Count() > 0)
-                    {
-                        object UiItem = pm.GetAllPermissions().Where(k => k.PermissionCode == tag).First().PageClass;
-                        if (UiItem == null)
-                        {
-                            return;
-                        }
-                        if (UiItem.GetType() != Frame1.Content.GetType())
-                        {
-                            Frame1.Content = UiItem;
-                        }
-                        //else
-                        //{
-                        //    MessageBox.Show("The following is activated");
-                        //}
-                    }
-                }
-                else
-                {
-                    Frame1.Content = "";
-                    MessageBox.Show(this, "The feature does not exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            //try
+            //{
+            //    Button a = sender as Button;
+            //    string tag = a.Tag.ToString();
+            //    if (tag != "")
+            //    {
+            //        if (pm.GetAllPermissions().Where(k => k.PermissionCode == tag).Count() > 0)
+            //        {
+            //            object UiItem = pm.GetAllPermissions().Where(k => k.PermissionCode == tag).First().PageClass;
+            //            if (UiItem == null)
+            //            {
+            //                return;
+            //            }
+            //            if (UiItem.GetType() != Frame1.Content.GetType())
+            //            {
+            //                Frame1.Content = UiItem;
+            //            }
+            //            //else
+            //            //{
+            //            //    MessageBox.Show("The following is activated");
+            //            //}
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Frame1.Content = "";
+            //        MessageBox.Show(this, "The feature does not exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
 
         }
 
@@ -235,8 +240,7 @@ namespace RestaurantManager.UserInterface
 
         private void Label_Dashboard_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Frame1.Content = new HomePage();
-            Category_Submenu.ItemsSource = null;
+            Frame1.Content = new HomePage(); 
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -257,7 +261,7 @@ namespace RestaurantManager.UserInterface
             {
                 if (window != this&&window.Name!= "Login_Window")
                 {
-                    window.Close(); 
+                    //window.Close(); 
                 }
             }
         }
@@ -277,9 +281,9 @@ namespace RestaurantManager.UserInterface
                 {
                     return;
                 }
-                //get bought item
-                MenuProductItem mpi = (MenuProductItem)Lv.SelectedItem;
-                 //do something
+                //get selected item
+                PermissionMaster mpi = (PermissionMaster)Lv.SelectedItem;
+                Frame1.Content = mpi.PageClass;
             }
             catch (Exception ex)
             {
@@ -316,6 +320,24 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-         
+
+        private void StackPanel_SwitchPanels_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (Textbox_SwitchTo.Text.ToString() == SwitchMainWindow.SalesPoint.ToString())
+                {
+                    POSMainContainer bom = new POSMainContainer();
+                    bom.Show();
+                    SharedVariables.POS_MainWindow = bom;
+                    SharedVariables.Backend_MainWindow = null;
+                    this.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static RestaurantManager.GlobalVariables.PosEnums;
 
 namespace RestaurantManager.UserInterface
 {
@@ -22,18 +23,23 @@ namespace RestaurantManager.UserInterface
     public partial class POSMainContainer : Window
     {
         readonly Permissions pm = new Permissions();
+        
         public POSMainContainer()
         {
             InitializeComponent();
             TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();
             Frame1.Content = new HomePage();
         }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+                SharedVariables.POS_MainWindow = this;
+                SharedVariables.Backend_MainWindow = null;
                 if (SharedVariables.CurrentUser == null)
                 {
+                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
                     MessageBox.Show("The current LoggedIn User is Null!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
@@ -44,8 +50,18 @@ namespace RestaurantManager.UserInterface
                     App.Current.Shutdown();
                     return;
                 }
+                if (SharedVariables.CurrentUser.IsBackendUser)
+                {
+                    Textbox_SwitchTo.Text = SwitchMainWindow.BackendSide.ToString();
+                    StackPanel_SwitchPanels.Visibility = Visibility.Visible;
+
+                }
+                else
+                {
+                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
+                }
                 TextBox_InstitutionTitle.Text = SharedVariables.ClientInfo().ClientTitle;
-                GlobalVariables.SharedVariables.Main_Window = this;
+                GlobalVariables.SharedVariables.POS_MainWindow = this;
                 SetupUIForUser(true);
 
             }
@@ -258,19 +274,15 @@ namespace RestaurantManager.UserInterface
             }
         }
          
-
-        private void StackPanel_SwitchPanels_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-           
-           
-        }
-
+        
         private void StackPanel_SwitchPanels_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (Textbox_SwitchTo.Text.ToString() == "Switch")
+            if (Textbox_SwitchTo.Text.ToString() == SwitchMainWindow.BackendSide.ToString())
             {
                 MainWindow bom = new MainWindow();
                 bom.Show();
+                SharedVariables.POS_MainWindow = null;
+                SharedVariables.Backend_MainWindow = bom;
                 this.Close();
             }
         }

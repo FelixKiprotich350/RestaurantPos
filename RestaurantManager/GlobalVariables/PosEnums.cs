@@ -59,7 +59,11 @@ namespace RestaurantManager.GlobalVariables
             Open,
             Closed
         }
-        public enum UserAccountsRoles
+        public enum SwitchMainWindow
+        {
+            SalesPoint,
+            BackendSide
+        }public enum UserAccountsRoles
         {
             Admin,
             Supervisor,

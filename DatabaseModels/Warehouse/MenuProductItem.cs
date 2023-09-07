@@ -25,15 +25,20 @@ namespace DatabaseModels.Warehouse
         public string AvailabilityStatus { get; set; } 
         [Required] 
         [MaxLength(100)]
-        public string HouseType { get; set; } 
+        public string Department { get; set; } 
         [Required]
-        public decimal ProductPrice { get; set; }
+        public decimal BuyingPrice { get; set; }
+        [Required]
+        public decimal SellingPrice { get; set; }
         [Required]
         public decimal PackagingCost { get; set; }
         [Required]
         public decimal TotalCost { get; set; }
         [Required]
         public int RemainingQuantity { get; set; }
+        [Required]
+        public bool IsPrecount { get; set; }
+        
         //properties not mapped 
         [MaxLength(100)]
         [NotMapped]

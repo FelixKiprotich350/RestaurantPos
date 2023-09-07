@@ -58,7 +58,7 @@ namespace RestaurantManager
                 {
                     ServerConfiguration isc = new ServerConfiguration();
                     isc.ShowDialog();
-
+                    isc.Close();
                 }
                 else
                 {

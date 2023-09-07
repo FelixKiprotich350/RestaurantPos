@@ -158,7 +158,6 @@
     <Compile Include="ApplicationFiles\ServerConfiguration.xaml.cs">
       <DependentUpon>ServerConfiguration.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppStaticvalues.cs" />
     <Compile Include="ActivityLogs\ChangeLog.cs" />
     <Compile Include="ApplicationFiles\DeveloperDashboard.xaml.cs">
       <DependentUpon>DeveloperDashboard.xaml</DependentUpon>
@@ -166,6 +165,23 @@
     <Compile Include="GlobalVariables\PosEnums.cs" />
     <Compile Include="GlobalVariables\SharedVariables.cs" />
     <Compile Include="MailingPlugin\POSMail.cs" />
+    <Compile Include="Migrations\202309041506497_InitialCreate.cs" />
+    <Compile Include="Migrations\202309041506497_InitialCreate.designer.cs">
+      <DependentUpon>202309041506497_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309050811349_m2.cs" />
+    <Compile Include="Migrations\202309050811349_m2.designer.cs">
+      <DependentUpon>202309050811349_m2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309051021203_m3.cs" />
+    <Compile Include="Migrations\202309051021203_m3.designer.cs">
+      <DependentUpon>202309051021203_m3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309051038153_m4.cs" />
+    <Compile Include="Migrations\202309051038153_m4.designer.cs">
+      <DependentUpon>202309051038153_m4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -232,14 +248,23 @@
     <Compile Include="UserInterface\PointofSale\DiscountsSelector.xaml.cs">
       <DependentUpon>DiscountsSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
+      <DependentUpon>EditTicket.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\ServiceType.xaml.cs">
       <DependentUpon>ServiceType.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\KitchenDisplay.xaml.cs">
       <DependentUpon>KitchenDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\TicketToEdit.xaml.cs">
+      <DependentUpon>TicketToEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\POSMainContainer.xaml.cs">
       <DependentUpon>POSMainContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\ProfitAnalysis.xaml.cs">
+      <DependentUpon>ProfitAnalysis.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\SelectWorkPeriod.xaml.cs">
       <DependentUpon>SelectWorkPeriod.xaml</DependentUpon>
@@ -473,6 +498,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\EditTicket.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\PointofSale\ServiceType.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -481,7 +510,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\TicketToEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\POSMainContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\ProfitAnalysis.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -660,6 +697,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202309041506497_InitialCreate.resx">
+      <DependentUpon>202309041506497_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309050811349_m2.resx">
+      <DependentUpon>202309050811349_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309051021203_m3.resx">
+      <DependentUpon>202309051021203_m3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309051038153_m4.resx">
+      <DependentUpon>202309051038153_m4.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

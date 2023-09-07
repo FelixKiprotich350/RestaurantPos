@@ -90,7 +90,7 @@ namespace RestaurantManager.ApplicationFiles
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
         {
-            App.Current.Shutdown();
+            Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

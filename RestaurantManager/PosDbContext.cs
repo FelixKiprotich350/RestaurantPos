@@ -27,7 +27,7 @@ namespace RestaurantManager
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
 
        //public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
-        public PosDbContext() : base(AppStaticvalues.GetMysqlDbConnectionString())
+        public PosDbContext() : base(GlobalVariables.SharedVariables.GetdevMysqlDbConnectionString())
         { 
             Database.SetInitializer<PosDbContext>(null);
             //Database.CreateIfNotExists();

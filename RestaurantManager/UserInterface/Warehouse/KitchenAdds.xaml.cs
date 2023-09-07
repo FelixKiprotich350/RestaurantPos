@@ -120,9 +120,9 @@ namespace RestaurantManager.UserInterface.Warehouse
                         InsertionDate = GlobalVariables.SharedVariables.CurrentDate(),
                         InsertionBy = GlobalVariables.SharedVariables.CurrentUser.UserName
                     };
-                    int val = db.MenuProductItem.First(x => x.ProductGuid == pi.ProductGuid).RemainingQuantity;
+                    int val = (int)db.MenuProductItem.First(x => x.ProductGuid == pi.ProductGuid).PackagingCost;
                     int total = qty + val;
-                    db.MenuProductItem.First(x => x.ProductGuid == pi.ProductGuid).RemainingQuantity = total;
+                    //db.MenuProductItem.First(x => x.ProductGuid == pi.ProductGuid).RemainingQuantity = total;
                     db.KitchenAddItem.Add(k);
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Quantity Added!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);

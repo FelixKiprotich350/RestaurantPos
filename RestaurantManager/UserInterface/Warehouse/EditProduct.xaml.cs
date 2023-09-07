@@ -41,7 +41,8 @@ namespace RestaurantManager.UserInterface.Warehouse
                     Combobox_Category.ItemsSource = db.ProductCategory.ToList();
                 }
                 Textbox_Productname.Text = pitem.ProductName;
-                Textbox_ProductPrice.Text = pitem.ProductPrice.ToString();
+                Textbox_BuyingPrice.Text = pitem.BuyingPrice.ToString();
+                Textbox_ProductPrice.Text = pitem.SellingPrice.ToString();
                 Textbox_ProductPackagePrice.Text = pitem.PackagingCost.ToString();
                 Combobox_Status.SelectedItem = pitem.AvailabilityStatus;
                 Combobox_Category.SelectedItem = Combobox_Category.Items.Cast<ProductCategory>().FirstOrDefault(x => x.CategoryGuid == pitem.CategoryGuid);
@@ -83,6 +84,12 @@ namespace RestaurantManager.UserInterface.Warehouse
                     Combobox_Status.IsDropDownOpen = true;
                     return;
                 }
+                if (!decimal.TryParse(Textbox_BuyingPrice.Text,out decimal buyingprice))
+                {
+                    MessageBox.Show("Enter correct value for the Buying  Price!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Textbox_ProductPrice.Focus(); 
+                    return;
+                }
                 if (!decimal.TryParse(Textbox_ProductPrice.Text,out decimal price))
                 {
                     MessageBox.Show("Enter correct value for the Product Price!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -105,10 +112,11 @@ namespace RestaurantManager.UserInterface.Warehouse
                         item.AvailabilityStatus = Combobox_Status.SelectedItem.ToString();
                         item.CategoryGuid = pc.CategoryGuid;
                         item.CategoryName = pc.CategoryName;
-                        item.ProductPrice = price;
+                        item.BuyingPrice = buyingprice;
+                        item.SellingPrice = price;
                         item.PackagingCost = packagingprice;
                         item.TotalCost = price + packagingprice;
-                        item.HouseType = pc.Department;
+                        item.Department = pc.Department;
                         db.SaveChanges();
                         MessageBox.Show("Product Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                         Close();

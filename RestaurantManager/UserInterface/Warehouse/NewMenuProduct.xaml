@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:RestaurantManager.UserInterface.Warehouse"
       mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
-      Height="320" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
+      Height="360" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
       Title="Add New Product" FontSize="16">
 
     <Grid Margin="20,0" VerticalAlignment="Center">
@@ -41,15 +41,35 @@
         <Grid Grid.Row="2">
             <UniformGrid Columns="2">
                 <StackPanel  >
-                    <Label Content="Price"/>
+                    <Label Content="Quantity"/>
+                    <TextBox x:Name="Textbox_InitialQuantity" FontSize="20" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel  Margin="8,0,0,0">
+                    <Label Content="IsCountable"/>
+                    <ComboBox x:Name="Combobox_Precount" FontSize="20" Height="30" VerticalAlignment="Center" >
+                        <ComboBoxItem Content="Yes"/>
+                        <ComboBoxItem Content="No"/>
+                    </ComboBox>
+                </StackPanel> 
+            </UniformGrid>
+                </Grid>
+        <Grid Grid.Row="3">
+            <UniformGrid Columns="3">
+                <StackPanel  >
+                    <Label Content="Buying Price"/>
+                    <TextBox x:Name="Textbox_BuyingPrice" FontSize="20" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel  Margin="8,0,0,0">
+                    <Label Content="Selling Price"/>
                     <TextBox x:Name="Textbox_ProductPrice" FontSize="20" Height="30" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Margin="8,0,0,0" >
-                    <Label Content="PackagingPrice"/>
+                    <Label Content="Package Cost"/>
                     <TextBox x:Name="Textbox_PackagingPrice" FontSize="20" Height="30" VerticalAlignment="Center" Text="0"/>
                 </StackPanel>
             </UniformGrid>
-                </Grid> 
+                </Grid>
+       
         <UniformGrid Grid.Row="4" Columns="2">
             <Button x:Name="Button_Close" Content="Close" Width="150"   Margin="2,4,4,2" Style="{DynamicResource Button_Cancel}" Height="40" Click="Button_Close_Click"/>
             <Button x:Name="Button_Save" Content="Save" Width="150" Click="Button_save_Click" Margin="2,4,2,2" Style="{DynamicResource Button_Accept}" Height="40"/>

@@ -29,43 +29,28 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// <summary>
     /// Interaction logic for NewOrder.xaml
     /// </summary>
-    public partial class NewOrder : Page
+    public partial class EditTicket : Page
     {
         Brush defaultbuttonbrush = null;
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
         private ObservableCollection<ProductCategory> Category_Items;
-        public bool IsTicketEdit = false;
 
 
         //54603228237,,,,0703070707
-        public NewOrder()
+        public EditTicket()
         {
             InitializeComponent();
             defaultbuttonbrush = Button_RestaurantDept.Background;
             OrderItems = new ObservableCollection<OrderItem>();
-            Category_Items = new ObservableCollection<ProductCategory>();
-            Grid_EditTicketHeader.Visibility = Visibility.Collapsed;
-        }
-        public NewOrder(string ticketid)
-        {
+            Category_Items = new ObservableCollection<ProductCategory>(); 
+        } 
 
-            InitializeComponent();
-            IsTicketEdit = true;
-            defaultbuttonbrush = Button_RestaurantDept.Background;
-            OrderItems = new ObservableCollection<OrderItem>();
-            Category_Items = new ObservableCollection<ProductCategory>();
-            Grid_EditTicketHeader.Visibility = Visibility.Visible;
-        }
         //R2711220900172
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
-            {
-                if (IsTicketEdit)
-                {
-                    MessageBox.Show("ticket load");
-                }
+            { 
                 Button_RestaurantDept_Click(Button_RestaurantDept, new RoutedEventArgs());
                 
             }
