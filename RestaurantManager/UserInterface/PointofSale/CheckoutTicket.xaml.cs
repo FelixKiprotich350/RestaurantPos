@@ -70,7 +70,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.Where(p =>  p.OrderStatus==PosEnums.OrderTicketStatuses.Pending.ToString()).ToList();
+                    LisTview_TicketsList.ItemsSource = db.OrderMaster.AsNoTracking().Where(p =>  p.OrderStatus==PosEnums.OrderTicketStatuses.Pending.ToString()).ToList().OrderByDescending(m => m.OrderDate);
                 }
             }
             catch (Exception ex)

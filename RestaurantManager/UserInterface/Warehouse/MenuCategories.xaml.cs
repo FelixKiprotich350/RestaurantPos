@@ -39,33 +39,33 @@ namespace RestaurantManager.UserInterface.Warehouse
             }
         }
 
-        private void ListView_Categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (ListView_Categories.SelectedItem == null)
-                {
-                    ClearSelectedItem();
-                    return;
-                }
-                ClearSelectedItem();
-                Button_Update.IsEnabled = false;
-                Button_Delete.IsEnabled = true;
-                CheckBox_Edit.IsChecked = false;
-                Textbox_CategoryName.IsReadOnly = true;
+        //private void ListView_Categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (ListView_Categories.SelectedItem == null)
+        //        {
+        //            ClearSelectedItem();
+        //            return;
+        //        }
+        //        ClearSelectedItem();
+        //        Button_Update.IsEnabled = false;
+        //        Button_Delete.IsEnabled = true;
+        //        CheckBox_Edit.IsChecked = false;
+        //        Textbox_CategoryName.IsReadOnly = true;
                 
-                using (var db = new PosDbContext())
-                {
-                    ProductCategory pc=(ProductCategory)ListView_Categories.SelectedItem;
-                    Textbox_CategoryName.Text = pc.CategoryName;
-                    ListView_SelectedCategoryItems.ItemsSource = db.MenuProductItem.Where(b=>b.CategoryGuid==pc.CategoryGuid).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        } 
+        //        using (var db = new PosDbContext())
+        //        {
+        //            ProductCategory pc=(ProductCategory)ListView_Categories.SelectedItem;
+        //            Textbox_CategoryName.Text = pc.CategoryName;
+        //            ListView_SelectedCategoryItems.ItemsSource = db.MenuProductItem.Where(b=>b.CategoryGuid==pc.CategoryGuid).ToList();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //} 
 
         private void RefreshCategories()
         {
@@ -73,7 +73,7 @@ namespace RestaurantManager.UserInterface.Warehouse
             {
                 using (var db = new PosDbContext())
                 {
-                    ListView_Categories.ItemsSource = db.ProductCategory.ToList();
+                    Datagrid_Categories.ItemsSource = db.ProductCategory.ToList();
                 }
             }
             catch (Exception ex)
@@ -131,14 +131,14 @@ namespace RestaurantManager.UserInterface.Warehouse
         {
             try
             {
-                if (ListView_Categories.SelectedItem == null)
+                if (Datagrid_Categories.SelectedItem == null)
                 {
                     return;
                 }
                 ProductCategory pc = null;
                 using (var db = new PosDbContext())
                 {
-                    pc = (ProductCategory)ListView_Categories.SelectedItem;
+                    pc = (ProductCategory)Datagrid_Categories.SelectedItem;
                     db.ProductCategory.Where(t => t.CategoryGuid == pc.CategoryGuid).First().CategoryName = Textbox_CategoryName.Text;
                     int x = db.SaveChanges();
                     if (x != 1)
@@ -208,6 +208,39 @@ namespace RestaurantManager.UserInterface.Warehouse
             try
             {
                 RefreshCategories();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Datagrid_ProductItems_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Datagrid_Categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (Datagrid_Categories.SelectedItem == null)
+                {
+                    ClearSelectedItem();
+                    return;
+                }
+                ClearSelectedItem();
+                Button_Update.IsEnabled = false;
+                Button_Delete.IsEnabled = true;
+                CheckBox_Edit.IsChecked = false;
+                Textbox_CategoryName.IsReadOnly = true;
+
+                using (var db = new PosDbContext())
+                {
+                    ProductCategory pc = (ProductCategory)Datagrid_Categories.SelectedItem;
+                    Textbox_CategoryName.Text = pc.CategoryName;
+                    ListView_SelectedCategoryItems.ItemsSource = db.MenuProductItem.Where(b => b.CategoryGuid == pc.CategoryGuid).ToList();
+                }
             }
             catch (Exception ex)
             {

@@ -42,7 +42,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 List<OrderMaster> items = new List<OrderMaster>();
                 using (var db = new PosDbContext())
                 {
-                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()&& p.OrderStatus!=PosEnums.OrderTicketStatuses.Completed.ToString()).ToList();
+                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()&& p.OrderStatus!=PosEnums.OrderTicketStatuses.Completed.ToString()).OrderByDescending(m=>m.OrderDate).ToList();
                 }
                 if (SharedVariables.CurrentUser.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
                 {

@@ -50,7 +50,7 @@ namespace DatabaseModels.OrderTicket
         [Required]
         public bool IsItemVoided { get; set; }
         [NotMapped]
-        public bool IsNewItem { get; set; }
+        public string OldorNew { get; set; }
 
     }
 }

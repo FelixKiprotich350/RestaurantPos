@@ -24,13 +24,13 @@
                 <Label Content="Menu Categories"   Foreground="White" FontSize="20" HorizontalAlignment="Left"/>
             </Grid>
             <Grid Grid.Row="1">
-                <ListView x:Name="ListView_Categories" SelectionChanged="ListView_Categories_SelectionChanged">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Label Content="{Binding CategoryName}" Tag="{Binding CategoryGuid}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <DataGrid    x:Name="Datagrid_Categories" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_ProductItems_MouseUp" SelectionChanged="Datagrid_Categories_SelectionChanged"  >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding CategoryGuid}"  Header="CategoryGuid" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
+                        <DataGridTextColumn Binding="{Binding CategoryName }"  Header="Category Name" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn  Binding="{Binding Department}" Header="Department" IsReadOnly="True" Width="150"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
             <Grid Grid.Row="2">
                 <UniformGrid Columns="2" Rows="1" VerticalAlignment="Center">

@@ -174,6 +174,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.DiscPercent = 0;
                         i.GiftItemGuid = "None";
                         i.ParentItemGuid = "None";
+                        i.OldorNew = "New";
                         if (disc_i != null)
                         {
                             if (disc_i.DiscType == "PricePercentage")
@@ -222,8 +223,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                             IsGiftItem = true,
                             DiscPercent = 0,
                             GiftItemGuid = "None",
-                            ParentItemGuid = disc_i.ProductGuid
-                        };
+                            ParentItemGuid = disc_i.ProductGuid,
+                            OldorNew = "New"
+                    };
                         OrderItems.Add(gift);
                     }
                 }
@@ -299,9 +301,13 @@ namespace RestaurantManager.UserInterface.PointofSale
                     OrderItem x = OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid&&h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault();
                     if (x != null)
                     {
-                        OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid && h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault().Quantity = ei.ReturningQuantity;
-                    } 
-
+                        OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid && h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault().Quantity = ei.ReturningQuantity; 
+                    }
+                    var db1 = new PosDbContext();
+                    if (db1.OrderItem.AsNoTracking().FirstOrDefault(l=>l.ProductItemGuid==item.ProductItemGuid &&l.OrderID==TextBlock_TicketNo.Text.ToString()) != null)
+                    {
+                        OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().OldorNew = "Edit";
+                    }
                     Datagrid_OrderItems.Items.Refresh();
                 }
                 CalculateTotal();
@@ -357,36 +363,28 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 if (MessageBox.Show("Are you sure you want to Make an Order ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question)==MessageBoxResult.Yes)
                 {
+                    var db1 = new PosDbContext();
                     int total = 0;
                     WorkPeriod w;
-                    using (var db = new PosDbContext())
+                    if (db1.OrderMaster.FirstOrDefault(k=>k.OrderNo== TextBlock_TicketNo.Text.ToString()) == null)
                     {
-                        w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
-                        if (w == null)
-                        {
-                            MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
+                        MessageBox.Show("There is Such Order Existing!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    var existingorder = db1.OrderMaster.FirstOrDefault(k => k.OrderNo == TextBlock_TicketNo.Text.ToString());
+                    w = db1.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
+                    if (w == null)
+                    {
+                        MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
                     }
                     string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                    Customer cust = GetCustomer();
-                    OrderMaster om = new OrderMaster
-                    {
-                        OrderGuid = Guid.NewGuid().ToString(),
-                        OrderDate = SharedVariables.CurrentDate(),
-                        CustomerRefference = cust != null ? cust.PhoneNumber : "None",
-                        TicketTable = Label_Table.Content.ToString(),
-                        OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
-                        UserServing = SharedVariables.CurrentUser.UserName,
-                        PaymentDate = SharedVariables.CurrentDate(),
-                        IsPrinted = false,
-                        OrderNo = ordno,
-                        VoidReason = "None",
-                        Workperiod = w.WorkperiodName
-                    };
+                    Customer cust = GetCustomer(); 
+
                     foreach (var a in OrderItems)
                     {
-                        a.OrderID = om.OrderNo;
+                        a.OrderID = existingorder.OrderNo;
+                        
                     }
                     foreach (var x in OrderItems)
                     {
@@ -394,8 +392,20 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                     using (var db = new PosDbContext())
                     {
-                        db.OrderMaster.Add(om);
-                        db.OrderItem.AddRange(OrderItems);
+                        foreach (var itemedit in OrderItems)
+                        {
+
+                            if (itemedit.OldorNew == "New")
+                            { 
+                                db.OrderItem.Add(itemedit);
+                            }
+                            else if (itemedit.OldorNew == "Edit")
+                            {
+                                db.OrderItem.FirstOrDefault(k=>k.ItemRowGuid==itemedit.ItemRowGuid).Quantity = itemedit.Quantity;
+                                db.OrderItem.FirstOrDefault(k => k.ItemRowGuid == itemedit.ItemRowGuid).Total = itemedit.Total;
+                            }
+                        }
+                      
                         db.SaveChanges();
                     }
                     MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -531,14 +541,32 @@ namespace RestaurantManager.UserInterface.PointofSale
                     if ((bool)st.ShowDialog())
                     {
                         OrderItems = new ObservableCollection<OrderItem>();
-                        LoadTicketDetails(null);
-                       
-                        Button_SelectTicket.Content = "Clear";
+                        var db = new PosDbContext();
+                        var a = db.OrderMaster.FirstOrDefault(k => k.OrderNo == st.SelectedTicketNumber);
+                        if (a!=null)
+                        {
+                            var b = db.OrderItem.Where(o => o.OrderID == a.OrderNo && o.IsItemVoided == false).ToList();
+                            foreach(var x in b)
+                            {
+                                x.OldorNew = "Old";
+                            }
+                            OrderItems = new ObservableCollection<OrderItem>(b);
+                            Datagrid_OrderItems.ItemsSource = OrderItems;
+                            
+                        }
+                        TextBlock_TicketNo.Text = a.OrderNo;
+                        TextBlock_TicketDate.Text = a.OrderDate.ToString(); 
+                        CalculateTotal();
+
+                        
+                        return;
                     } 
                 } 
                 else if (Button_SelectTicket.Content.ToString() == "Clear")
                 {
                     OrderItems = new ObservableCollection<OrderItem>();
+                    ResetForm();
+                    //Datagrid_OrderItems.ItemsSource = OrderItems;
                     Button_SelectTicket.Content = "Select";
                 }
                 else
@@ -552,40 +580,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             } 
         }
 
-        private void LoadTicketDetails(OrderMaster order)
-        {
-            try
-            {
-                //GrossTotal = 0;
-                //TicketNo = "";
-                //get ticket items
-                using (var db = new PosDbContext())
-                {
-                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
-                    Datagrid_OrderItems.ItemsSource = a;
-                }
-                //find total
-                decimal total = 0;
-                var b = Datagrid_OrderItems.Items.Cast<OrderItem>().Where(m => m.IsGiftItem == false).ToList();
-                foreach (OrderItem x in b)
-                {
-
-                    //AddNewItemToOrder(null);
-                    total += x.Price * x.Quantity * ((100 - x.DiscPercent) / 100);
-                }
-                //GrossTotal = total;
-                //TicketNo = order.OrderNo;
-                TextBlock_TicketNo.Text = order.OrderNo;
-                //TextBox_Table.Text = order.TicketTable;
-                TextBlock_TicketDate.Text = order.OrderDate.ToString();
-                TextBlock_ItemsCount.Text = b.Count.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-        } 
+         
     }
 
 }

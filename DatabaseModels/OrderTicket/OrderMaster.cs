@@ -59,5 +59,10 @@ namespace DatabaseModels.OrderTicket
         public bool IsPrinted { get; set; }
         [NotMapped]
         public bool IsSelected { get; set; }
+        /// <summary>
+        /// just placeholder but not a must to be used
+        /// </summary>
+        [NotMapped]
+        public decimal Total { get; set; }
     }
 }

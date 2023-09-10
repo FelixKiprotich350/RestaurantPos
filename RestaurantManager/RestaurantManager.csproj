@@ -221,9 +221,6 @@
     <Compile Include="UserInterface\CustomersManagemnt\RedeeemSettings.xaml.cs">
       <DependentUpon>RedeeemSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml.cs">
-      <DependentUpon>WelcomeWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\GeneralSettings\ClientInfo.xaml.cs">
       <DependentUpon>ClientInfo.xaml</DependentUpon>
     </Compile>
@@ -462,10 +459,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\CustomersManagemnt\RedeeemSettings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\FirstRunConfiguration\WelcomeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -789,6 +782,7 @@
       <Name>DatabaseModels</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

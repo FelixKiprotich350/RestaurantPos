@@ -5,8 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
         mc:Ignorable="d"
-        Title="SelectTicketToUpdate" Height="450" Width="800">
+        Title="SelectTicketToUpdate" Height="400" Width="600" Loaded="Window_Loaded" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
     <Grid>
-        
+        <Grid.RowDefinitions> 
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0"   x:Name="Datagrid_TicketsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp" SelectionChanged="Datagrid_TicketsList_SelectionChanged"  >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
+                <DataGridTextColumn Binding="{Binding OrderNo }"  Header="Ticket No" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                <!--<DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Balance" IsReadOnly="True" Width="Auto" CanUserSort="False"/>-->
+                <DataGridTextColumn  Binding="{Binding OrderStatus}" Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                <DataGridTextColumn  Binding="{Binding TicketTable}" Header="Table" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                <DataGridTextColumn  Binding="{Binding IsPrinted}" Header="Printed" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                <DataGridTextColumn  Binding="{Binding OrderDate}" Header="OrdertTime" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                <DataGridTextColumn  Binding="{Binding Workperiod}" Header="Workperiod" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <UniformGrid Grid.Row="1" Columns="3" VerticalAlignment="Center">
+            <Button x:Name="Button_Cancel" Width="120" Content="Close" Click="Button_Continue_Click" Style="{DynamicResource Button_Cancel}"></Button>
+            <StackPanel Orientation="Vertical">
+                <Label Content="Ticket Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                <TextBox x:Name="Textbox_TicketNumber"/> 
+            </StackPanel>
+            <Button x:Name="Button_Continue" Width="120" Content="Continue" Click="Button_Continue_Click" Style="{DynamicResource Button_Accept}"></Button>
+        </UniformGrid>
     </Grid>
 </Window>
