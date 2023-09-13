@@ -181,6 +181,18 @@
     <Compile Include="Migrations\202309051038153_m4.designer.cs">
       <DependentUpon>202309051038153_m4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309131021122_m5.cs" />
+    <Compile Include="Migrations\202309131021122_m5.designer.cs">
+      <DependentUpon>202309131021122_m5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309131041442_m6.cs" />
+    <Compile Include="Migrations\202309131041442_m6.designer.cs">
+      <DependentUpon>202309131041442_m6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309131131211_m7.cs" />
+    <Compile Include="Migrations\202309131131211_m7.designer.cs">
+      <DependentUpon>202309131131211_m7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -247,6 +259,9 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
       <DependentUpon>EditTicket.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PointofSale\Salespoint.xaml.cs">
+      <DependentUpon>Salespoint.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\SelectTicketToUpdate.xaml.cs">
       <DependentUpon>SelectTicketToUpdate.xaml</DependentUpon>
@@ -498,6 +513,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserInterface\PointofSale\Salespoint.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\PointofSale\SelectTicketToUpdate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -708,6 +727,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309051038153_m4.resx">
       <DependentUpon>202309051038153_m4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309131021122_m5.resx">
+      <DependentUpon>202309131021122_m5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309131041442_m6.resx">
+      <DependentUpon>202309131041442_m6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309131131211_m7.resx">
+      <DependentUpon>202309131131211_m7.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

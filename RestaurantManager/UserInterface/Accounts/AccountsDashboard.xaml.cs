@@ -1,5 +1,6 @@
 ﻿using DatabaseModels.Payments;
 using DatabaseModels.Security;
+using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables; 
 using System;
@@ -36,8 +37,8 @@ namespace RestaurantManager.UserInterface.Accounts
                  
                     using (var b = new PosDbContext())
                     {
-                       Combobox_UserName.ItemsSource = b.PosUser.ToList();
-                         
+                       Combobox_UserName.ItemsSource = b.PosUser.AsNoTracking().ToList();
+                    Combobox_Workperiod.ItemsSource = b.WorkPeriod.AsNoTracking().ToList();
                     }
                  
             }
@@ -55,8 +56,8 @@ namespace RestaurantManager.UserInterface.Accounts
                 List<TicketPaymentMaster> tlist = new List<TicketPaymentMaster>();
                 using (var b = new PosDbContext())
                 {
-                    b.TicketPaymentMaster.AsNoTracking();
-                    tlist = b.TicketPaymentMaster.ToList();
+                   
+                    tlist = b.TicketPaymentMaster.AsNoTracking().ToList();
 
                 }  
                 if ((bool)Checkbox_ByUser.IsChecked)
@@ -108,6 +109,18 @@ namespace RestaurantManager.UserInterface.Accounts
                     else
                     {
                         MessageBox.Show("Select Date Parameter!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                if ((bool)Checkbox_ByWorkPeriod.IsChecked)
+                {
+                    if (Combobox_Workperiod.SelectedItem != null)
+                    {
+                        tlist.RemoveAll(b => b.WorkPeriod != ((WorkPeriod)Combobox_Workperiod.SelectedItem).WorkperiodName);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Select Workperiod!", "Message Box", MessageBoxButton.OK);
                         return;
                     }
                 }

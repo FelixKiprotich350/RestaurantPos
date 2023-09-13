@@ -42,7 +42,7 @@
                                 </Button>
                             </Border>
 
-                            <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="32" PasswordChar="*" PreviewTextInput="PasswordBox_UserPin_PreviewTextInput" MaxLength="4" AllowDrop="False" Focusable="True" />
+                            <PasswordBox Style="{x:Null}" x:Name="PasswordBox_UserPin" Background="#FFFFF9EF" BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="32" PasswordChar="*" PreviewTextInput="PasswordBox_UserPin_PreviewTextInput" MaxLength="8" AllowDrop="False" Focusable="True" />
                         </DockPanel>
                     </Grid>
                 </Border>

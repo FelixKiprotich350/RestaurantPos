@@ -60,18 +60,38 @@ namespace RestaurantManager.UserInterface.Security
 
                 using (var db = new PosDbContext())
                 {
+                    if (db.PosUser.FirstOrDefault(k => k.UserName == Textbox_Username.Text.Trim().ToString()) != null)
+                    {
+                        MessageBox.Show("The Username already Exists. Try another Name!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    if (db.PosUser.FirstOrDefault(k => k.PhoneNumber == Textbox_Username.Text.Trim().ToString()) != null)
+                    {
+                        MessageBox.Show("The Phone Number already Exists. Try another Phone!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    if (!int.TryParse(Textbox_DefaultPin.Text.Trim(),out int pin))
+                    {
+                        MessageBox.Show("The Pin is not Allowed. Try another Pin!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                     PosUser user = new PosUser
                     {
                         UserGuid = Guid.NewGuid().ToString(),
-                        UserPIN = Rand.Next(1000, 9999),
-                        UserName = Textbox_UserFullName.Text.Split(' ')[0] + Rand.Next(100, 9999),
+                        UserPIN = pin,
+                        IsDefaultpin = true,
+                        UserName = Textbox_Username.Text.Trim(),
+                        PhoneNumber = Textbox_PhoneNumber.Text.Trim(),
                         UserFullName = Textbox_UserFullName.Text,
                         UserRole = ComboBox_Roles.SelectedItem.ToString(),
                         RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
                         LastLoginDate = GlobalVariables.SharedVariables.CurrentDate(),
                         UserWorkingStatus = "Active",
                         UserIsDeleted = false,
+                        IsBackendUser = false,
+                        IsPosUser=true,
                         UserRights = ","
+                        
                     };
                     db.PosUser.Add(user);
                     int x = db.SaveChanges();
@@ -79,8 +99,11 @@ namespace RestaurantManager.UserInterface.Security
                     {
                         MessageBox.Show("Failed to save the new User!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                    MessageBox.Show("Successfully Saved The default PIN is "+user.UserPIN+"\nLogin and change your PIN now!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    Close();
+                    else
+                    {
+                        MessageBox.Show("Successfully Saved The default PIN is " + user.UserPIN + "\nLogin and change your PIN now!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Close();
+                    }
                 }
             }
             catch (Exception ex)

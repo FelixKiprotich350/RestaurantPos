@@ -95,12 +95,12 @@ namespace RestaurantManager.UserInterface
                 {
                     if (SharedVariables.POS_MainWindow != null)
                     {
-                        SharedVariables.POS_MainWindow.Button_Category_Click(sender, e);
+                        //SharedVariables.POS_MainWindow.Button_Category_Click(sender, e);
                         return;
                     } 
                     if (SharedVariables.Backend_MainWindow != null)
                     {
-                        SharedVariables.Backend_MainWindow.Button_Category_Click(sender, e);
+                        //SharedVariables.Backend_MainWindow.Button_Category_Click(sender, e);
                         return;
                     } 
                 }

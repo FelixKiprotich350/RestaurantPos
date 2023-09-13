@@ -1,5 +1,6 @@
 ﻿using DatabaseModels.Navigation;
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +111,8 @@ namespace RestaurantManager.UserInterface
                     }
                 }
                 //ModulesListView.ItemsSource = modules;
+                var subitems = SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.PermissionLevel == "1" && x.ParentModule=="A").ToList();
+                Category_Submenu.ItemsSource = subitems;
             }
             catch (Exception ex)
             {
@@ -287,5 +290,26 @@ namespace RestaurantManager.UserInterface
             }
         }
 
+        private void Button_Home_Click(object sender, RoutedEventArgs e)
+        {
+            Frame1.Content = new HomePage();
+        }
+
+        private void Textbox_LoggedinUserFullName_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            PopubBox_Logout.IsPopupOpen = true;
+        }
+
+        private void Button_Logout_Click(object sender, RoutedEventArgs e)
+        {
+            Login l = new Login();
+            l.Show();
+            Close();
+        }
+
+        private void Button_Account_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

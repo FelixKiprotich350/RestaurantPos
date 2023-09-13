@@ -24,7 +24,7 @@ namespace RestaurantManager
                 List<PermissionMaster> p = new List<PermissionMaster>
                 {
 
-                     new PermissionMaster() { PermissionCode = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new NewOrder() },
+                     new PermissionMaster() { PermissionCode = "A1", ParentModule = "A", PermissionShortName = "New Order", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Salespoint() },
                      new PermissionMaster() { PermissionCode = "A2", ParentModule = "A", PermissionShortName = "Update Ticket", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new EditTicket() },
                      new PermissionMaster() { PermissionCode = "A3", ParentModule = "A", PermissionShortName = "Manage Tickets", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageTickets() },
                      new PermissionMaster() { PermissionCode = "A4", ParentModule = "A", PermissionShortName = "Check Out", PermissionFullName = "Description", PermissionLevel = "1", PageClass =new CheckoutTicket() },

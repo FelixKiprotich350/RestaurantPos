@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
-        Title="New User" Height="300" Width="300" Loaded="Window_Loaded">
+        Title="New User" Height="400" Width="300" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,8 +19,14 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Vertical">
+                    <Label Content="UserName"/>
+                    <TextBox x:Name="Textbox_Username" Margin="5"/> 
+                    <Label Content="DefaultPin"/>
+                    <TextBox x:Name="Textbox_DefaultPin" Margin="5" MaxLength="8"/>
                     <Label Content="Full Name"/>
                     <TextBox x:Name="Textbox_UserFullName" Margin="5"/>
+                    <Label Content="Phone"/>
+                    <TextBox x:Name="Textbox_PhoneNumber" Margin="5"/>
                     <Label Content="Role"/>
                     <ComboBox x:Name="ComboBox_Roles" IsEditable="False" Margin="5">
 

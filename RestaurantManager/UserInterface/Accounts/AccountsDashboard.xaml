@@ -179,9 +179,9 @@
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Label Content="{Binding UserName}"/>
-                                                            <Label Content="--"/>
-                                                            <Label Content="{Binding UserFullName}"/>
+                                                            <Label Content="{Binding WorkperiodName}"/>
+                                                            <Label Content="---"/>
+                                                            <Label Content="{Binding WorkperiodStatus}"/>
                                                         </StackPanel>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>

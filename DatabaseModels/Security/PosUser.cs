@@ -14,7 +14,7 @@ namespace DatabaseModels.Security
         [MaxLength(100)] 
         public string UserGuid { get; set; }
         [Index]
-        [Required] 
+        [Required]  
         public int UserPIN { get; set; }
         [Required]
         [Index]
@@ -24,11 +24,16 @@ namespace DatabaseModels.Security
         [Required] 
         public string UserFullName { get; set; }
         [Required] 
+        public bool IsDefaultpin { get; set; }
+        [Required] 
         public bool IsPosUser { get; set; }
         [Required] 
         public bool IsBackendUser { get; set; }
-        [Required]
-        [Index] 
+        [Required] 
+        [MaxLength(100)]
+        [Index(IsUnique =true)]
+        public string PhoneNumber { get; set; }
+        [Required] 
         [MaxLength(100)]
         public string UserRole { get; set; }
         [Required]
