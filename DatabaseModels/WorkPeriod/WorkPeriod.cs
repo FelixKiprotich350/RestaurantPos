@@ -45,6 +45,8 @@ namespace DatabaseModels.WorkPeriod
         [NotMapped]
         public int VoidTicketsCount { get; set; }
         [NotMapped]
-        public int PendingTicketsCount { get; set; }
+        public int PendingTicketsCount { get; set; }        
+        [NotMapped]
+        public bool IsSelected { get; set; }
     }
 }

@@ -1,0 +1,123 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.Inventory.NewDiscountItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.Inventory" 
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize"
+        Title="New Discount Items" Height="500" Width="600" Margin="0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/> 
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> 
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="6*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Discount Type" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" x:Name="Combobox_DiscType" IsEditable="False" Height="30" Margin="0,0,4,0"  DropDownClosed="Combobox_DiscType_DropDownClosed" >
+                        <ComboBoxItem>PricePercentage</ComboBoxItem>
+                        <ComboBoxItem>GiftItem</ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Grid x:Name="Grid_PriceDiscSelector" Visibility="Collapsed" Margin="4,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Label Content="% Disountc" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" BorderThickness="0" BorderBrush="Black" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBox  x:Name="Textbox_Pricediscount" FontSize="20" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" Width="100" />
+                        </Grid>
+                    </Grid>
+                    <Grid x:Name="Grid_GiftItemSelector" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" MinWidth="100"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Label Content="" x:Name="Label_GiftedItem" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" BorderThickness="1" BorderBrush="Black" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Button x:Name="Button_SelectGiftItem" Content="Select" FontSize="12" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" Style="{DynamicResource Button_Accept}" Click="Button_SelectGiftItem_Click"/>
+                        </Grid>
+                    </Grid>
+                    
+
+
+                </StackPanel>
+
+            </Grid>
+            <Grid Grid.Row="1" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" HorizontalAlignment="Center"  >
+                    
+                    <Grid Grid.Column="0">
+                        <CheckBox x:Name="CheckBox_RepeatWeekly" Content="Repeat Weekly" FontSize="16" VerticalAlignment="Center"/>
+                    </Grid>
+
+                   
+                </Grid>
+                <DockPanel Grid.Column="1" VerticalAlignment="Center" >
+                    <Label DockPanel.Dock="Top" Grid.Column="0" Content="Day" FontSize="16" Margin="0" HorizontalAlignment="Center"/>
+                    <ComboBox  x:Name="Combobox_WeeklyDays" IsEditable="False" Height="30" Margin="0,0,4,0" >
+                        <ComboBoxItem Content="Monday"/>
+                        <ComboBoxItem Content="Tuesday"/>
+                        <ComboBoxItem Content="Wednesday"/>
+                        <ComboBoxItem Content="Thursday"/>
+                        <ComboBoxItem Content="Friday"/>
+                        <ComboBoxItem Content="Saturday"/>
+                        <ComboBoxItem Content="Sunday"/>
+                    </ComboBox>
+                </DockPanel>
+                <Grid Grid.Column="2" VerticalAlignment="Center">
+                    <UniformGrid Columns="2">
+                        <StackPanel  >
+                            <Label Content="StartDate"/>
+                            <DatePicker x:Name="Datepicker_Startdate" FontSize="20" Height="30" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#89000000" Focusable="False"/>
+                        </StackPanel>
+                        <StackPanel Margin="8,0,0,0" >
+                            <Label Content="EndDate"/>
+                            <DatePicker  x:Name="Datepicker_Enddate" FontSize="20" Height="30" VerticalAlignment="Center" BorderThickness="1" BorderBrush="#89000000" Focusable="False"/>
+                        </StackPanel>
+                    </UniformGrid>
+                </Grid>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <DataGrid    x:Name="Datagrid_DiscountProductItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}"  Header="Select" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Visible"/>
+                    <DataGridTextColumn Binding="{Binding ProductName}"  Header="Product Name" IsReadOnly="True" Width="*" CanUserSort="False" Visibility="Visible"/>
+                  </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,8,0,12">
+            <UniformGrid Grid.Row="4" Columns="3">
+                <Button x:Name="Button_Remove" Content="Close" Width="150"   Margin="2,4,4,2" Style="{x:Null}" Height="40" Click="Button_Close_Click"/>
+                <Button x:Name="Button_Add" Content="Add Items" Width="150"   Margin="2,4,4,2" Style="{DynamicResource MaterialDesignPaperDarkButton}" Height="40" Click="Button_Add_Click"/>
+                <Button x:Name="Button_Save" Content="Save" Width="150" Click="Button_save_Click" Margin="2,4,2,2" Style="{DynamicResource Button_Accept}" Height="40"/>
+            </UniformGrid>
+        </Grid>
+    </Grid>
+</Window>

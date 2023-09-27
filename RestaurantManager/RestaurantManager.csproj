@@ -125,10 +125,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\WPF Toolkit\v3.5.50211.1\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -193,7 +189,32 @@
     <Compile Include="Migrations\202309131131211_m7.designer.cs">
       <DependentUpon>202309131131211_m7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309221845275_m8.cs" />
+    <Compile Include="Migrations\202309221845275_m8.designer.cs">
+      <DependentUpon>202309221845275_m8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309260640434_m9.cs" />
+    <Compile Include="Migrations\202309260640434_m9.designer.cs">
+      <DependentUpon>202309260640434_m9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309260903289_m10.cs" />
+    <Compile Include="Migrations\202309260903289_m10.designer.cs">
+      <DependentUpon>202309260903289_m10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309260946202_m11.cs" />
+    <Compile Include="Migrations\202309260946202_m11.designer.cs">
+      <DependentUpon>202309260946202_m11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="UserInterface\Inventory\AssetsMaster.xaml.cs">
+      <DependentUpon>AssetsMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\LPOMaster.xaml.cs">
+      <DependentUpon>LPOMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\RequisitionMaster.xaml.cs">
+      <DependentUpon>RequisitionMaster.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -260,6 +281,9 @@
     <Compile Include="UserInterface\PointofSale\EditTicket.xaml.cs">
       <DependentUpon>EditTicket.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\PriceList.xaml.cs">
+      <DependentUpon>PriceList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\Salespoint.xaml.cs">
       <DependentUpon>Salespoint.xaml</DependentUpon>
     </Compile>
@@ -278,11 +302,17 @@
     <Compile Include="UserInterface\POSMainContainer.xaml.cs">
       <DependentUpon>POSMainContainer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\ProfitAnalysis.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\ProfitAnalysis.xaml.cs">
       <DependentUpon>ProfitAnalysis.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\SelectWorkPeriod.xaml.cs">
       <DependentUpon>SelectWorkPeriod.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\WareHouseReports\WHMasterReports.xaml.cs">
+      <DependentUpon>WHMasterReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\WareHouseReports\StockCountReport.xaml.cs">
+      <DependentUpon>StockCountReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\AddNewUser.xaml.cs">
       <DependentUpon>AddNewUser.xaml</DependentUpon>
@@ -290,37 +320,40 @@
     <Compile Include="UserInterface\TicketPayments\PaymentsWindow.xaml.cs">
       <DependentUpon>PaymentsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\AddnewCategory.xaml.cs">
+    <Compile Include="UserInterface\Inventory\AddnewCategory.xaml.cs">
       <DependentUpon>AddnewCategory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\Discounts.xaml.cs">
+    <Compile Include="UserInterface\Inventory\Discounts.xaml.cs">
       <DependentUpon>Discounts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\EditDiscount.xaml.cs">
+    <Compile Include="UserInterface\Inventory\EditDiscount.xaml.cs">
       <DependentUpon>EditDiscount.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\EditProduct.xaml.cs">
+    <Compile Include="UserInterface\Inventory\EditProduct.xaml.cs">
       <DependentUpon>EditProduct.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\KitchenAdds.xaml.cs">
-      <DependentUpon>KitchenAdds.xaml</DependentUpon>
+    <Compile Include="UserInterface\Inventory\Kitchenadds.xaml.cs">
+      <DependentUpon>Kitchenadds.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\MenuCategories.xaml.cs">
+    <Compile Include="UserInterface\Inventory\ReceiveLPO.xaml.cs">
+      <DependentUpon>ReceiveLPO.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\MenuCategories.xaml.cs">
       <DependentUpon>MenuCategories.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\MenuProducts.xaml.cs">
+    <Compile Include="UserInterface\Inventory\MenuProducts.xaml.cs">
       <DependentUpon>MenuProducts.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\NewDiscountItem.xaml.cs">
+    <Compile Include="UserInterface\Inventory\NewDiscountItem.xaml.cs">
       <DependentUpon>NewDiscountItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\NewMenuProduct.xaml.cs">
+    <Compile Include="UserInterface\Inventory\NewMenuProduct.xaml.cs">
       <DependentUpon>NewMenuProduct.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\SelectProduct.xaml.cs">
+    <Compile Include="UserInterface\Inventory\SelectProduct.xaml.cs">
       <DependentUpon>SelectProduct.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Warehouse\StockEntry.xaml.cs">
+    <Compile Include="UserInterface\Inventory\StockEntry.xaml.cs">
       <DependentUpon>StockEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\EditTicketRemoveItem.xaml.cs">
@@ -371,19 +404,19 @@
     <Compile Include="UserInterface\PointofSale\SelectTableForTicket.xaml.cs">
       <DependentUpon>SelectTableForTicket.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\MasterReports.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\MasterReports.xaml.cs">
       <DependentUpon>MasterReports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\PaymentsReport.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\PaymentsReport.xaml.cs">
       <DependentUpon>PaymentsReport.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\SalesReport.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\SalesReport.xaml.cs">
       <DependentUpon>SalesReport.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\TicketsReports.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\TicketsReports.xaml.cs">
       <DependentUpon>TicketsReports.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\UsersReport.xaml.cs">
+    <Compile Include="UserInterface\PosReports\SalesReport\UsersReport.xaml.cs">
       <DependentUpon>UsersReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Security\AdminFirstTimeChangePassword.xaml.cs">
@@ -422,6 +455,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ApplicationFiles\ServerConfiguration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Inventory\AssetsMaster.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Inventory\LPOMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Inventory\RequisitionMaster.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -513,6 +558,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserInterface\PointofSale\PriceList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserInterface\PointofSale\Salespoint.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -537,11 +586,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\ProfitAnalysis.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\ProfitAnalysis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\PosReports\SelectWorkPeriod.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\SelectWorkPeriod.xaml">
+    <Page Include="UserInterface\PosReports\WareHouseReports\WHMasterReports.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\PosReports\WareHouseReports\StockCountReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -553,47 +610,51 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\AddnewCategory.xaml">
+    <Page Include="UserInterface\Inventory\AddnewCategory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\Discounts.xaml">
+    <Page Include="UserInterface\Inventory\Discounts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\EditDiscount.xaml">
+    <Page Include="UserInterface\Inventory\EditDiscount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\EditProduct.xaml">
+    <Page Include="UserInterface\Inventory\EditProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\KitchenAdds.xaml">
+    <Page Include="UserInterface\Inventory\Kitchenadds.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Inventory\ReceiveLPO.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\MenuCategories.xaml">
+    <Page Include="UserInterface\Inventory\MenuCategories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\MenuProducts.xaml">
+    <Page Include="UserInterface\Inventory\MenuProducts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\NewDiscountItem.xaml">
+    <Page Include="UserInterface\Inventory\NewDiscountItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\NewMenuProduct.xaml">
+    <Page Include="UserInterface\Inventory\NewMenuProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\SelectProduct.xaml">
+    <Page Include="UserInterface\Inventory\SelectProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Warehouse\StockEntry.xaml">
+    <Page Include="UserInterface\Inventory\StockEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -641,23 +702,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\MasterReports.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\MasterReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\PaymentsReport.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\PaymentsReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\SalesReport.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\SalesReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\TicketsReports.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\TicketsReports.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\UsersReport.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\UsersReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -736,6 +797,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309131131211_m7.resx">
       <DependentUpon>202309131131211_m7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309221845275_m8.resx">
+      <DependentUpon>202309221845275_m8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309260640434_m9.resx">
+      <DependentUpon>202309260640434_m9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309260903289_m10.resx">
+      <DependentUpon>202309260903289_m10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309260946202_m11.resx">
+      <DependentUpon>202309260946202_m11.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

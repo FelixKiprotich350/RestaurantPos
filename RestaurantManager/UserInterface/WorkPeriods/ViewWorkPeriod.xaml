@@ -26,13 +26,13 @@
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
                             <DataGridTextColumn Binding="{Binding TableGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding WorkperiodName}"  Header="Work Period Name" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding Openedby}"  Header="Opened By" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding WorkperiodStatus}"  Header="Status" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding OpeningDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Open Date" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ClosingDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Close Date" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding ClosedBy}" Header="Close By" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding TotalTicketsCount}" Header="Total Tickets" IsReadOnly="True" Width="50" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding WorkperiodName}"  Header="Work Period Name" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding Openedby}"  Header="Opened By" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding WorkperiodStatus}"  Header="Status" IsReadOnly="True" Width="100" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding OpeningDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Open Date" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding ClosingDate , StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" Header="Close Date" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding ClosedBy}" Header="Close By" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding TotalTicketsCount}" Header="Total Tickets" IsReadOnly="True" Width="50" CanUserSort="True"/>
                         </DataGrid.Columns> 
                     </DataGrid>
                 </Grid>

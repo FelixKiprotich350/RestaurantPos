@@ -31,7 +31,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class EditTicket : Page
     {
-        Brush defaultbuttonbrush = null;
+        readonly Brush defaultbuttonbrush = null;
         readonly Random R = new Random();
         private  ObservableCollection<OrderItem> OrderItems;
         private ObservableCollection<ProductCategory> Category_Items; 
@@ -109,21 +109,26 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {  
-                decimal price = 0;
+
+                decimal Sellingprice = 0;
+                decimal Buyingprice = 0;
                 int icount = 0;
                 MenuProductItem mpi = mpii;
-                ServiceType st = new ServiceType();
-                st.Topmost = true;
+                ServiceType st = new ServiceType
+                {
+                    Topmost = true
+                };
                 if ((bool)st.ShowDialog())
                 {
+                    Buyingprice = mpi.BuyingPrice;
                     if (st.ItemServiceType == "Out")
                     {
-                        price = mpi.TotalCost;
+                        Sellingprice = mpi.TotalCost;
                         icount = st.ItemQty;
                     }
                     else
                     {
-                        price = mpi.SellingPrice;
+                        Sellingprice = mpi.SellingPrice;
                         icount = st.ItemQty;
                     }
                 }
@@ -166,8 +171,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.ProductItemGuid = b.ProductGuid;
                         i.ItemName = b.ProductName;
                         i.Quantity = icount;
-                        i.Price = price;
-                        i.Total = price * icount;
+                        i.Price = Sellingprice;
+                        i.Total = Sellingprice * icount; 
+                        i.BuyingPriceTotal = Buyingprice * icount;
+                        i.BuyingPrice = Buyingprice;
                         i.ServiceType = st.ItemServiceType;
                         i.IsItemVoided = false;
                         i.IsGiftItem = false;

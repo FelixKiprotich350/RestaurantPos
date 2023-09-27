@@ -126,8 +126,9 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" VerticalAlignment="Center">
-                    <UniformGrid Columns="2" Margin="0,2">
+                    <UniformGrid Columns="3" Margin="0,2">
                         <Button x:Name="Button_RestaurantDept" Content="Restaurant" HorizontalAlignment="Center" Height="32" Width="100" Style="{x:Null}" Click="Button_RestaurantDept_Click"/>
+                        <Button x:Name="Button_Services" Content="Services" HorizontalAlignment="Center" Width="100" Height="32" Style="{x:Null}" Click="Button_Services_Click" />
                         <Button x:Name="Button_BarDept" Content="Bar" HorizontalAlignment="Center" Width="100" Height="32" Style="{x:Null}" Click="Button_BarDept_Click"/>
                     </UniformGrid>
                 </Grid>

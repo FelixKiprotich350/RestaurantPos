@@ -1,0 +1,26 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    x:Class="RestaurantManager.UserInterface.WareHouseReports.WHMasterReports"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MasterReports">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <ListView x:Name="Listview_ReportHeads"   SelectionChanged="Listview_ReportHeads_SelectionChanged" FontSize="14">
+                <ListViewItem x:Name="Item_StockFlow" Content="Stock Balance" Height="48"/> 
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="1" Background="White">
+            <Frame x:Name="Frame_ReportArea"/>
+        </Grid>
+    </Grid>
+</Page>

@@ -111,21 +111,23 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {  
-                decimal price = 0;
+                decimal Sellingprice = 0; 
+                decimal Buyingprice = 0;
                 int icount = 0;
                 MenuProductItem mpi = mpii;
                 ServiceType st = new ServiceType();
                 st.Topmost = true;
                 if ((bool)st.ShowDialog())
                 {
+                    Buyingprice = mpi.BuyingPrice;
                     if (st.ItemServiceType == "Out")
                     {
-                        price = mpi.TotalCost;
+                        Sellingprice = mpi.TotalCost;
                         icount = st.ItemQty;
                     }
                     else
                     {
-                        price = mpi.SellingPrice;
+                        Sellingprice = mpi.SellingPrice;
                         icount = st.ItemQty;
                     }
                 }
@@ -168,8 +170,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.ProductItemGuid = b.ProductGuid;
                         i.ItemName = b.ProductName;
                         i.Quantity = icount;
-                        i.Price = price;
-                        i.Total = price * icount;
+                        i.Price = Sellingprice;
+                        i.Total = Sellingprice * icount;
+                        i.BuyingPriceTotal = Buyingprice * icount;
+                        i.BuyingPrice = Buyingprice;
                         i.ServiceType = st.ItemServiceType;
                         i.IsItemVoided = false;
                         i.IsGiftItem = false;
@@ -492,13 +496,11 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-
                 Button b = sender as Button;
+                Button_Services.Background = defaultbuttonbrush;
                 Button_BarDept.Background = defaultbuttonbrush;
                 b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
-                GetMenuItems("Restaurant");
-                
-                
+                GetMenuItems(PosEnums.Departments.Restaurant.ToString());
             }
             catch (Exception ex)
             {
@@ -512,10 +514,10 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 Button b = sender as Button;
                 Button_RestaurantDept.Background = defaultbuttonbrush;
+                Button_Services.Background = defaultbuttonbrush;
                 b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
-                GetMenuItems("Bar");
-               
-                
+                GetMenuItems(PosEnums.Departments.Bar.ToString());
+
             }
             catch (Exception ex)
             {
@@ -540,6 +542,24 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             } 
+        }
+
+        private void Button_Services_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button b = sender as Button;
+                Button_RestaurantDept.Background = defaultbuttonbrush;
+                Button_BarDept.Background = defaultbuttonbrush;
+                b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
+                GetMenuItems(PosEnums.Departments.Services.ToString());
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

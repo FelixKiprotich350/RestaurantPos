@@ -28,14 +28,14 @@
                              Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
-                        <DataGridTextColumn Binding="{Binding OrderNo }"  Header="Ticket No" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="True" Visibility="Collapsed"/>
+                        <DataGridTextColumn Binding="{Binding OrderNo }"  Header="Ticket No" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                         <!--<DataGridTextColumn  Binding="{Binding Price,StringFormat=N2}" Header="Balance" IsReadOnly="True" Width="Auto" CanUserSort="False"/>-->
-                        <DataGridTextColumn  Binding="{Binding OrderStatus}" Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding TicketTable}" Header="Table" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding IsPrinted}" Header="Printed" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding OrderDate}" Header="OrdertTime" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding Workperiod}" Header="Workperiod" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn  Binding="{Binding OrderStatus}" Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        <DataGridTextColumn  Binding="{Binding TicketTable}" Header="Table" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        <DataGridTextColumn  Binding="{Binding IsPrinted}" Header="Printed" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        <DataGridTextColumn  Binding="{Binding OrderDate}" Header="OrdertTime" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        <DataGridTextColumn  Binding="{Binding Workperiod}" Header="Workperiod" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                     </DataGrid.Columns> 
                 </DataGrid>
 

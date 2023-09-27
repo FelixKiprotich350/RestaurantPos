@@ -295,21 +295,13 @@ namespace RestaurantManager.UserInterface
             Frame1.Content = new HomePage();
         }
 
-        private void Textbox_LoggedinUserFullName_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            PopubBox_Logout.IsPopupOpen = true;
-        }
+       
 
-        private void Button_Logout_Click(object sender, RoutedEventArgs e)
+        private void Label_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Login l = new Login();
             l.Show();
             Close();
-        }
-
-        private void Button_Account_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

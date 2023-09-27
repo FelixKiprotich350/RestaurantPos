@@ -8,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +22,14 @@ namespace RestaurantManager
     public partial class App : Application
     {
         private readonly string keyboardlocation = @"C:\Windows\system32\osk.exe";
+        [DllImport("user32.dll")]
+        private static extern Boolean ShowWindow(IntPtr hWnd, Int32 nCmdShow);
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            App.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
+ 
+
             SetUpDatabase();
             //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("localhost"));
             //Debug.WriteLine(new ApplicationFiles.Base64().Base64Encode("root"));

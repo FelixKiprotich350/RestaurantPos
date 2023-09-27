@@ -74,6 +74,7 @@
     <Compile Include="Security\UserRoles.cs" />
     <Compile Include="Vouchers\DiscountVoucher.cs" />
     <Compile Include="Vouchers\VoucherCard.cs" />
+    <Compile Include="Warehouse\StockFlowTransaction.cs" />
     <Compile Include="Warehouse\DiscountItem.cs" />
     <Compile Include="Warehouse\KitchenAddItem.cs" />
     <Compile Include="Warehouse\MenuProductItem.cs" />

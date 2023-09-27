@@ -20,8 +20,7 @@ namespace RestaurantManager.UserInterface
     /// MainWindow.xam
     /// </summary>
     public partial class MainWindow : Window
-    {
-        readonly Permissions pm = new Permissions();
+    { 
         public ObservableCollection<PermissionMaster> AllMenuitems =new ObservableCollection<PermissionMaster>();
         public ObservableCollection<Level1menu> Modules_Collection =new ObservableCollection<Level1menu>();
 

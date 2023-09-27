@@ -195,7 +195,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Button_CheckoutTicket_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            { 
+                List<String> errors = new List<string>();
                 R_balance = 0;
                 R_totalpaid = 0;
                 R_TotalCharged = 0;
@@ -217,7 +218,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 var a = Datagrid_TicketItems.Items.Cast<OrderItem>().Where(m => m.IsGiftItem == false).ToList();
                 foreach (OrderItem x in a)
                 {
-                    total += (x.Price * x.Quantity) * ((100 - x.DiscPercent) / 100);
+                    total += x.Price * x.Quantity * ((100 - x.DiscPercent) / 100);
                 } 
                 //get payments
                 List<PaymentMethod> pm = new List<PaymentMethod>();
@@ -318,10 +319,39 @@ namespace RestaurantManager.UserInterface.PointofSale
                             int x = db.SaveChanges();
                             if (x != 1)
                             {
-                                tr.Rollback();
+                                tr.Rollback(); 
+                                errors.Add("Failed to update Order Status");
                             }
                         }
+                        else
+                        {
+                            tr.Rollback(); 
+                            errors.Add("The Order Ticket does not exist!");
+                        }
+                        var solditems = db.OrderItem.Where(b => b.OrderID == tpm.TicketNo);
 
+                        foreach (var item_ in solditems)
+                        {
+                            db.StockFlowTransaction.Add(new DatabaseModels.Warehouse.StockFlowTransaction()
+                            {
+                                ProductGuid=item_.ProductItemGuid,
+                                ProductName=item_.ItemName,
+                                Quantity=item_.Quantity,
+                                TransactionDate=GlobalVariables.SharedVariables.CurrentDate(),
+                                FlowDirection="OUT",
+                                InTransactionCode="N/A",
+                                OutTransactionCode=result.OrderNo,
+                                IsCancelled=false,
+                            });
+                            
+                        }
+                        int transactions = db.SaveChanges();
+                        if (transactions != solditems.Count())
+                        {
+                            tr.Rollback();
+                            errors.Add("The Order Ticket does not exist!");
+
+                        }
                         db.TicketPaymentItem.AddRange(tpi);
                         db.SaveChanges();
                         db.TicketPaymentMaster.Add(tpm);
@@ -330,12 +360,19 @@ namespace RestaurantManager.UserInterface.PointofSale
                             db.CustomerPointsAccount.Add(ca);
                         }
                         db.SaveChanges();
-                        tr.Commit();
-                        R_receiptno = tpm.TransNo;
-                        PrintReceipt();
-                        MessageBox.Show("Successfuly Saved", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        Button_Discard_Click(new object(), new RoutedEventArgs());
-                        RefreshTicketList();
+                        if (errors.Count<=0)
+                        {
+                            tr.Commit();
+                            R_receiptno = tpm.TransNo;
+                            PrintReceipt();
+                            MessageBox.Show("Successfuly Saved", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            Button_Discard_Click(new object(), new RoutedEventArgs());
+                            RefreshTicketList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("The checkout Process was not completed!\n"+"ERROR : "+errors[0], "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
                     }
                 }
             }

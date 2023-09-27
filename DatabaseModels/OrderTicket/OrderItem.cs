@@ -27,6 +27,10 @@ namespace DatabaseModels.OrderTicket
         [Required]
         public decimal Price { get; set; }
         [Required]
+        public decimal BuyingPrice { get; set; }
+        [Required]
+        public decimal BuyingPriceTotal { get; set; }
+        [Required]
         public decimal Total { get; set; }
         [Required]
         [MaxLength(20)]

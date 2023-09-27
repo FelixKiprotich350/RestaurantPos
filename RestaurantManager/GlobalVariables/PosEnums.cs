@@ -8,6 +8,10 @@ namespace RestaurantManager.GlobalVariables
 {
     public static class PosEnums
     {
+
+        /// <summary>
+        /// point of sale
+        /// </summary>
         public enum OrderTicketStatuses
         {
             Pending,
@@ -15,6 +19,7 @@ namespace RestaurantManager.GlobalVariables
             Merged,
             Completed
         }
+
         public enum TicketPaymentMethods
         {
             Cash,
@@ -38,32 +43,15 @@ namespace RestaurantManager.GlobalVariables
             Expired
         }
 
+        /// <summary>
+        /// security module
+        /// </summary>
         public enum UserAccountStatuses
         {
             Active,
             Disabled
         }
-        public enum CustomerAccountActionType
-        {
-            PointsAward,
-            Redeem
-        }
-        /// <summary>
-        /// Work Period statuses
-        /// 
-        /// <p>Open: If the work period is open</p>
-        /// <p>Closed: If the work period is closed</p>
-        /// </summary>
-        public enum WorkPeriodStatuses
-        {
-            Open,
-            Closed
-        }
-        public enum SwitchMainWindow
-        {
-            SalesPoint,
-            BackendSide
-        }public enum UserAccountsRoles
+        public enum UserAccountsRoles
         {
             Admin,
             Supervisor,
@@ -73,5 +61,41 @@ namespace RestaurantManager.GlobalVariables
             KitchenCook,
             StoreKeeper
         }
+        /// <summary>
+        /// customer manager module
+        /// </summary>
+        public enum CustomerAccountActionType
+        {
+            PointsAward,
+            Redeem
+        }
+        /// <summary>
+        /// Accounts module
+        /// 
+        /// <p>Open: If the work period is open</p>
+        /// <p>Closed: If the work period is closed</p>
+        /// </summary>
+        public enum WorkPeriodStatuses
+        {
+            Open,
+            Closed
+        }
+
+
+        /// <summary>
+        /// general items
+        /// </summary>
+        public enum SwitchMainWindow
+        {
+            SalesPoint,
+            BackendSide
+        }
+        public enum Departments
+        {
+            Restaurant,
+            Bar,
+            Services
+        }
+        
     }
 }

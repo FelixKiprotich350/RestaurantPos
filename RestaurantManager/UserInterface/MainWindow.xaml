@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen" WindowStyle="None" Closing="Window_Closing" >
 
     <!--<Border CornerRadius="16" Margin="12" Background="#FFF29400">-->
-    <Grid Margin="8">
+    <Grid Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

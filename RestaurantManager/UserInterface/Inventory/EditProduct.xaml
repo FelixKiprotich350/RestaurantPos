@@ -1,0 +1,53 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.Inventory"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.Inventory.EditProduct"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="Update Product" Height="400" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+    <Grid Margin="0,0,4,0">
+        <UniformGrid Rows="7" Columns="1">
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Product Name" Width="120" FontSize="16"/>
+                <TextBox x:Name="Textbox_Productname" FontSize="16" />
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Category" Width="120" FontSize="16"/>
+                <ComboBox x:Name="Combobox_Category" IsEditable="False" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding CategoryName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Product Status" Width="120" FontSize="16"/>
+                <ComboBox x:Name="Combobox_Status" FontSize="16">
+
+                    <System:String >Available</System:String>
+                    <System:String>Not Available</System:String>
+
+                </ComboBox>
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Buying Price" Width="120" FontSize="16"/>
+                <TextBox  x:Name="Textbox_BuyingPrice" FontSize="16" />
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Selling Price" Width="120" FontSize="16"/>
+                <TextBox  x:Name="Textbox_ProductPrice" FontSize="16" />
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label DockPanel.Dock="Left" Content="Packaging Price" Width="120" FontSize="16"/>
+                <TextBox  x:Name="Textbox_ProductPackagePrice" FontSize="16" />
+            </DockPanel>
+            <UniformGrid Rows="1" Columns="2">
+                <Button x:Name="Button_Close" Content="Close" Style="{DynamicResource Button_Cancel}" Width="150" Click="Button_Close_Click"/>
+                <Button x:Name="Button_Update" Content="Update" Style="{DynamicResource Button_Accept}" Width="150" Click="Button_Update_Click"/>
+            </UniformGrid>
+        </UniformGrid>
+    </Grid>
+</Window>

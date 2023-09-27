@@ -80,6 +80,7 @@ namespace RestaurantManager
         public DbSet<StockEntryItem> StockEntryItem { get; set; }
         public DbSet<KitchenAddItem> KitchenAddItem { get; set; }
         public DbSet<DiscountItem> DiscountItem { get; set; }
+        public DbSet<StockFlowTransaction> StockFlowTransaction { get; set; }
         //pos user & security
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
