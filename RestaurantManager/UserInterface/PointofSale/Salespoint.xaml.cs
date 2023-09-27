@@ -20,7 +20,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.OrderTicket;
-using DatabaseModels.Warehouse;
+using DatabaseModels.Inventory;
 using DatabaseModels.CustomersManagement;
 using DatabaseModels.WorkPeriod;
 

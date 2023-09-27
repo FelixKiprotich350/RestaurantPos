@@ -205,6 +205,10 @@
     <Compile Include="Migrations\202309260946202_m11.designer.cs">
       <DependentUpon>202309260946202_m11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309271905049_m12.cs" />
+    <Compile Include="Migrations\202309271905049_m12.designer.cs">
+      <DependentUpon>202309271905049_m12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserInterface\Inventory\AssetsMaster.xaml.cs">
       <DependentUpon>AssetsMaster.xaml</DependentUpon>
@@ -809,6 +813,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309260946202_m11.resx">
       <DependentUpon>202309260946202_m11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309271905049_m12.resx">
+      <DependentUpon>202309271905049_m12.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

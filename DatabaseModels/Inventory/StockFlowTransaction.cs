@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseModels.Warehouse
+namespace DatabaseModels.Inventory
 {
     public class StockFlowTransaction
     {
@@ -18,6 +18,7 @@ namespace DatabaseModels.Warehouse
         public string ProductGuid { get; set; }
         [Required] 
         public string ProductName { get; set; }
+        [Required]
         [MaxLength(100)]
         public string FlowDirection { get; set; }
         [Required]
@@ -30,5 +31,11 @@ namespace DatabaseModels.Warehouse
         public DateTime TransactionDate { get; set; } 
         [Required] 
         public bool IsCancelled { get; set; }   
+
+        /// <summary>
+        /// Not mapped properties
+        /// </summary>
+        [NotMapped] 
+        public bool IsSelected { get; set; }   
     }
 }

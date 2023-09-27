@@ -2,7 +2,7 @@
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Payments;
 using DatabaseModels.Security;
-using DatabaseModels.Warehouse;
+using DatabaseModels.Inventory;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;

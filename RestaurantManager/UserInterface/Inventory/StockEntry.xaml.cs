@@ -1,4 +1,4 @@
-﻿using DatabaseModels.Warehouse;
+﻿using DatabaseModels.Inventory;
 using RestaurantManager.ApplicationFiles;
 using System;
 using System.Collections.Generic;

@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
-using DatabaseModels.Warehouse;
+using DatabaseModels.Inventory;
 
 namespace RestaurantManager.UserInterface.Accounts
 {

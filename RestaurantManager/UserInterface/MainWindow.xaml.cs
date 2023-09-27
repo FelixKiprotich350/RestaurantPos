@@ -9,7 +9,7 @@ using RestaurantManager.UserInterface;
 using RestaurantManager.UserInterface.Security;
 using RestaurantManager.GlobalVariables;
 using DatabaseModels.Navigation;
-using DatabaseModels.Warehouse;
+using DatabaseModels.Inventory;
 using DatabaseModels.Security;
 using System.Collections.ObjectModel;
 using static RestaurantManager.GlobalVariables.PosEnums;

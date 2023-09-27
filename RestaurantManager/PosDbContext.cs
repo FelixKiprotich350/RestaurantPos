@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks; 
 using System.Data.Entity.ModelConfiguration.Conventions; 
-using DatabaseModels.Warehouse;
+using DatabaseModels.Inventory;
 using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.GeneralSettings;
@@ -27,7 +27,7 @@ namespace RestaurantManager
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
 
        //public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
-        public PosDbContext() : base(GlobalVariables.SharedVariables.GetproductionMysqlDbConnectionString())
+        public PosDbContext() : base(GlobalVariables.SharedVariables.GetdevMysqlDbConnectionString())
         { 
             Database.SetInitializer<PosDbContext>(null);
             //Database.CreateIfNotExists();
@@ -74,13 +74,15 @@ namespace RestaurantManager
         //    return base.SaveChanges();
         //}
  
-        //Warehouse
+        //Inventory
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
         public DbSet<StockEntryItem> StockEntryItem { get; set; }
         public DbSet<KitchenAddItem> KitchenAddItem { get; set; }
         public DbSet<DiscountItem> DiscountItem { get; set; }
         public DbSet<StockFlowTransaction> StockFlowTransaction { get; set; }
+        public DbSet<AssetItem> AssetItem { get; set; }
+        public DbSet<AssetItemFlow> AssetsItemFlow { get; set; }
         //pos user & security
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -100,6 +102,7 @@ namespace RestaurantManager
         public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<PosVariables> PosVariables { get; set; }
         public DbSet<MailingProfile> MailingProfile { get; set; }
+        public DbSet<MeasureUnit> MeasureUnit { get; set; }
         //customers
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerPointsAccount> CustomerPointsAccount { get; set; }

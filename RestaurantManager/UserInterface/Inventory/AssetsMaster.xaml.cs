@@ -1,4 +1,4 @@
-﻿using DatabaseModels.Warehouse;
+﻿using DatabaseModels.Inventory;
 using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
@@ -47,11 +47,11 @@ namespace RestaurantManager.UserInterface.Inventory
             {
                 TextBox t = (TextBox)sender;
                 string filter = t.Text;
-                if (Datagrid_ProductItems.ItemsSource==null)
+                if (Datagrid_Assets.ItemsSource==null)
                 {
                     return;
                 }
-                ICollectionView cv = CollectionViewSource.GetDefaultView(Datagrid_ProductItems.ItemsSource);
+                ICollectionView cv = CollectionViewSource.GetDefaultView(Datagrid_Assets.ItemsSource);
                 if (filter == "")
                 {
                     cv.Filter = null;
@@ -153,8 +153,8 @@ namespace RestaurantManager.UserInterface.Inventory
                 {
                     x.CategoryName = cat.Where(y => y.CategoryGuid == x.CategoryGuid).FirstOrDefault().CategoryName;
                 }
-                Datagrid_ProductItems.ItemsSource = item;
-                TextBox_ProductsCount.Text = Datagrid_ProductItems.Items.Count.ToString() ;
+                Datagrid_Assets.ItemsSource = item;
+                TextBox_AssetsCount.Text = Datagrid_Assets.Items.Count.ToString() ;
             }
             catch (Exception ex)
             {
@@ -186,11 +186,11 @@ namespace RestaurantManager.UserInterface.Inventory
                 {
                     if (cell.Column.DisplayIndex==1)
                     {
-                        if (Datagrid_ProductItems.SelectedItem == null)
+                        if (Datagrid_Assets.SelectedItem == null)
                         {
                             return;
                         }
-                        MenuProductItem m = (MenuProductItem)Datagrid_ProductItems.SelectedItem;
+                        MenuProductItem m = (MenuProductItem)Datagrid_Assets.SelectedItem;
                         EditProduct ed = new EditProduct(m);
                         ed.ShowDialog();
                         RefreshMenuProducts();

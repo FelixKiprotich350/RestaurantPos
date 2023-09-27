@@ -96,6 +96,13 @@ namespace RestaurantManager.GlobalVariables
             Bar,
             Services
         }
-        
+        /// <summary>
+        /// Types of assets available
+        /// </summary>
+        public enum AssetTypes
+        {
+            FixedAssets,
+            Consumables
+        }
     }
 }

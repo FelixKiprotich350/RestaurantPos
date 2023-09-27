@@ -57,7 +57,10 @@
     <Compile Include="GeneralSettings\ClientInfoDetails.cs" />
     <Compile Include="GeneralSettings\MailingProfile.cs" />
     <Compile Include="GeneralSettings\PosVariables.cs" />
+    <Compile Include="GeneralSettings\MeasureUnit.cs" />
     <Compile Include="GeneralSettings\TableEntity.cs" />
+    <Compile Include="Inventory\AssetItemFlow.cs" />
+    <Compile Include="Inventory\AssetItem.cs" />
     <Compile Include="Navigation\Level2menu.cs" />
     <Compile Include="Navigation\Level1menu.cs" />
     <Compile Include="Navigation\NavigationMenu.cs" />
@@ -74,12 +77,12 @@
     <Compile Include="Security\UserRoles.cs" />
     <Compile Include="Vouchers\DiscountVoucher.cs" />
     <Compile Include="Vouchers\VoucherCard.cs" />
-    <Compile Include="Warehouse\StockFlowTransaction.cs" />
-    <Compile Include="Warehouse\DiscountItem.cs" />
-    <Compile Include="Warehouse\KitchenAddItem.cs" />
-    <Compile Include="Warehouse\MenuProductItem.cs" />
-    <Compile Include="Warehouse\ProductCategory.cs" />
-    <Compile Include="Warehouse\StockEntryItem.cs" />
+    <Compile Include="Inventory\StockFlowTransaction.cs" />
+    <Compile Include="Inventory\DiscountItem.cs" />
+    <Compile Include="Inventory\KitchenAddItem.cs" />
+    <Compile Include="Inventory\MenuProductItem.cs" />
+    <Compile Include="Inventory\ProductCategory.cs" />
+    <Compile Include="Inventory\StockEntryItem.cs" />
     <Compile Include="WorkPeriod\WorkPeriod.cs" />
     <Compile Include="WorkPeriod\WPClosureMessage.cs" />
   </ItemGroup>

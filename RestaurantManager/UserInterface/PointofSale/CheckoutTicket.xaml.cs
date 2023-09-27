@@ -332,7 +332,7 @@ namespace RestaurantManager.UserInterface.PointofSale
 
                         foreach (var item_ in solditems)
                         {
-                            db.StockFlowTransaction.Add(new DatabaseModels.Warehouse.StockFlowTransaction()
+                            db.StockFlowTransaction.Add(new DatabaseModels.Inventory.StockFlowTransaction()
                             {
                                 ProductGuid=item_.ProductItemGuid,
                                 ProductName=item_.ItemName,
