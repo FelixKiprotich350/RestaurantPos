@@ -88,7 +88,7 @@ namespace RestaurantManager.UserInterface.Inventory
         {
             try
             {
-                NewMenuProduct nmp = new NewMenuProduct();
+                AddMenuProduct nmp = new AddMenuProduct();
                 if (nmp.ShowDialog() == false)
                 {
                     return;

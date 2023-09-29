@@ -8,19 +8,16 @@ using System.Threading.Tasks;
 
 namespace DatabaseModels.Inventory
 {
-    public class AssetItem
+    public class LpoMaster
     {
         [Key]
         [MaxLength(100)]
-        public string AssetItemGuid { get; set; }
+        public string LpoGuid { get; set; }
         [Required]
         [MaxLength(200)]
-        public string AssetName { get; set; } 
+        public string LPOID { get; set; } 
         [Required] 
-        public string AssetDescription { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string AssetGroupGuid { get; set; }  
+        public string LPODescription { get; set; } 
         [Required] 
         [MaxLength(100)]
         public string UOM { get; set; } 
@@ -32,18 +29,15 @@ namespace DatabaseModels.Inventory
         [Required]
         public int InStockQuantity { get; set; }
         [Required]
-        public bool IsPrecount { get; set; }
+        public bool IsCancelled { get; set; }
         [Required]
         public DateTime RegistrationDate { get; set; }
         [Required]
-        public DateTime LastUpdateDate { get; set; }
-
-        //properties not mapped  
-        [NotMapped]
-        public string GroupName { get; set; }
-        [NotMapped]
-        public string UOMName { get; set; }
-
+        public DateTime ExpectedDate { get; set; }
+         
+        /// <summary>
+        /// NOT MAPPED
+        /// </summary>
         [NotMapped]
         public bool IsSelected { get; set; }
     }

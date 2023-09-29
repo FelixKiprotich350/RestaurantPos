@@ -101,13 +101,15 @@ namespace RestaurantManager.UserInterface.Inventory
                     IsCancelled = false,
                     OutTransactionCode = "N/A",
                     FlowDirection = "IN",
-                    InTransactionCode = "1",
+                    InTransactionCode = Textbox_BatchNumber.Text.Trim(),
                     Quantity = qty
                 };
                 db.StockFlowTransaction.Add(sft);
                 pi.RemainingQuantity += qty;
                 db.SaveChanges();
                 MessageBox.Show("Success. Item Quantity Added!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                TextBox_Quantity.Text = "";
+                Textbox_productid.Text = "";
                 RefreshEntries();
             }
             catch (Exception ex)
@@ -135,5 +137,7 @@ namespace RestaurantManager.UserInterface.Inventory
                 }
             }
         }
+
+        
     }
 }

@@ -20,6 +20,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using System.Drawing.Printing;
 
 namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
 {
@@ -55,10 +58,10 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                               where d.OrderNo==oi.OrderID
                               select new
                               {
-                                  ProductItemGuid = oi.ProductItemGuid,
-                                  ItemName = oi.ItemName,
-                                  IsItemVoided = oi.IsItemVoided,
-                                  OrderID = oi.OrderID,
+                                  oi.ProductItemGuid,
+                                  oi.ItemName,
+                                  oi.IsItemVoided,
+                                  oi.OrderID,
                                   ItemQuantity = oi.Quantity,
                                   TicketStatus=d.OrderStatus
                               }).ToList();
@@ -96,16 +99,31 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                     }
 
                     //find the items sold count
-                    
-                    MainList.Add(new 
-                    { 
-                        ProductName = pitem.ProductName ,
-                        ProductGuid = pitem.ProductGuid ,
-                        Sold = soldqty ,
-                        Received = Receivedqty,
-                        Instock = Receivedqty - soldqty,
-                        LastStockDate =  Lastdate,
-                    });
+
+                    if (pitem.IsPrecount)
+                    {
+                        MainList.Add(new
+                        {
+                            pitem.ProductName,
+                            pitem.ProductGuid,
+                            Sold = soldqty,
+                            Received = Receivedqty,
+                            Instock = Receivedqty - soldqty,
+                            LastStockDate = Lastdate,
+                        });
+                    }
+                    else
+                    {
+                        MainList.Add(new
+                        {
+                            pitem.ProductName,
+                            pitem.ProductGuid,
+                            Sold = soldqty,
+                            Received = 0,
+                            Instock = 0,
+                            LastStockDate = Lastdate,
+                        });
+                    }
                 }
                 Label_TotalItems_Count.Content = MainList.Count.ToString();
             }
@@ -177,10 +195,10 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                               where d.OrderNo == oi.OrderID
                               select new
                               {
-                                  ProductItemGuid = oi.ProductItemGuid,
-                                  ItemName = oi.ItemName,
-                                  IsItemVoided = oi.IsItemVoided,
-                                  OrderID = oi.OrderID,
+                                  oi.ProductItemGuid,
+                                  oi.ItemName,
+                                  oi.IsItemVoided,
+                                  oi.OrderID,
                                   ItemQuantity = oi.Quantity,
                                   TicketStatus = d.OrderStatus
                               }).ToList();
@@ -188,11 +206,11 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                 foreach (var pitem in MainList_ProductItems)
                 {
                     DateTime Lastdate = DateTime.MinValue;
-                    decimal soldqty = 0;
-                    decimal Receivedqty = 0;
+                    int soldqty = 0;
+                    int Receivedqty = 0;
                     if (db.StockFlowTransaction.AsNoTracking().Where(k => k.ProductGuid == pitem.ProductGuid && k.FlowDirection == "IN").Count() > 0)
                     {
-                        Receivedqty = db.StockFlowTransaction.AsNoTracking().Where(k => k.ProductGuid == pitem.ProductGuid && k.FlowDirection == "IN").Sum(s => s.Quantity);
+                        Receivedqty = (int)db.StockFlowTransaction.AsNoTracking().Where(k => k.ProductGuid == pitem.ProductGuid && k.FlowDirection == "IN").Sum(s => s.Quantity);
                         Lastdate = db.StockFlowTransaction.AsNoTracking().First(k => k.ProductGuid == pitem.ProductGuid && k.FlowDirection == "IN").TransactionDate;
                     }
                     if (pitems.Where(k => k.ProductItemGuid == pitem.ProductGuid && k.TicketStatus == PosEnums.OrderTicketStatuses.Completed.ToString()).Count() > 0)
@@ -201,16 +219,31 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                     }
 
                     //find the items sold count
-
-                    MainList.Add(new
+                    if (pitem.IsPrecount)
                     {
-                        ProductName = pitem.ProductName,
-                        ProductGuid = pitem.ProductGuid,
-                        Sold = soldqty,
-                        Received = Receivedqty,
-                        Instock = Receivedqty - soldqty,
-                        LastStockDate = Lastdate,
-                    });
+                        MainList.Add(new
+                        {
+                            pitem.ProductName,
+                            pitem.ProductGuid,
+                            Sold = soldqty,
+                            Received = Receivedqty,
+                            Instock = Receivedqty - soldqty,
+                            LastStockDate = Lastdate,
+                        });
+                    }
+                    else
+                    {
+                        MainList.Add(new
+                        {
+                            pitem.ProductName,
+                            pitem.ProductGuid,
+                            Sold = soldqty,
+                            Received = 0,
+                            Instock = 0,
+                            LastStockDate = Lastdate,
+                        });
+                    }
+                    
                 }
                 Label_TotalItems_Count.Content = MainList.Count.ToString();
             }
@@ -218,6 +251,38 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        } 
+
+        private void Button_Print_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                // Create a new PDF document
+                PdfDocument document = new PdfDocument();
+
+                // Add a page to the document
+                PdfPage page = document.AddPage();
+
+                // Create a drawing object for the page
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+
+                // Create a font
+                XFont font = new XFont("Arial", 12);
+
+                // Draw text on the page
+                gfx.DrawString("Hello, PDFsharp!", font, XBrushes.Black,
+                    new XRect(10, 10, page.Width, page.Height), XStringFormats.TopLeft);
+
+                // Save the document to a file
+                document.Save("D:\\example.pdf");
+            }
+            catch
+            {
+                MessageBox.Show("error");
+            }
         }
+        
+         
     }
 }

@@ -19,10 +19,10 @@ namespace RestaurantManager.UserInterface.Inventory
     /// <summary>
     /// Interaction logic for NewMenuProduct.xaml
     /// </summary>
-    public partial class NewMenuProduct : Window
+    public partial class AddMenuProduct : Window
     {
         bool returnvalue = false;
-        public NewMenuProduct()
+        public AddMenuProduct()
         {
             InitializeComponent();
         }

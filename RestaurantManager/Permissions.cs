@@ -47,7 +47,7 @@ namespace RestaurantManager
                       new PermissionMaster() { PermissionCode = "D4", ParentModule = "D", PermissionShortName = "Requisition", PermissionFullName = "Requisition", PermissionLevel = "1", PageClass = new RequisitionMaster() },
                      new PermissionMaster() { PermissionCode = "D5", ParentModule = "D", PermissionShortName = "Manage LPO", PermissionFullName = "Local Purchase Order", PermissionLevel = "1", PageClass = new LPOMaster() },
                      new PermissionMaster() { PermissionCode = "D6", ParentModule = "D", PermissionShortName = "Receive LPO", PermissionFullName = "Receive LPO", PermissionLevel = "1", PageClass = new ReceiveLPO() },
-                     new PermissionMaster() { PermissionCode = "D7", ParentModule = "D", PermissionShortName = "StockTaking", PermissionFullName = "Discounts", PermissionLevel = "1", PageClass = new Discounts() },
+                     new PermissionMaster() { PermissionCode = "D7", ParentModule = "D", PermissionShortName = "StockTaking", PermissionFullName = "Discounts", PermissionLevel = "1", PageClass = new Kitchenadds() },
                      //Customers
                      new PermissionMaster() { PermissionCode = "E1", ParentModule = "E", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomersList() },
                      new PermissionMaster() { PermissionCode = "E2", ParentModule = "E", PermissionShortName = "Customer Account", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new CustomerAccount() },

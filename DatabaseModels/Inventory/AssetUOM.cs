@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseModels.GeneralSettings
+namespace DatabaseModels.Inventory
 {
-    public class MeasureUnit
+    public class AssetUOM
     {
 
         [Key]

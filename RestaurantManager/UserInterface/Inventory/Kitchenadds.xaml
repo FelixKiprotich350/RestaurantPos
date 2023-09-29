@@ -25,9 +25,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding ItemGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
                             <DataGridTextColumn Binding="{Binding ProductName }"  Header="Item Name" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding Quantity }"  Header="Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding WorkPeriod }"  Header="WorkPeriod" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding InsertionDate}" Header="Date" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding RemainingQuantity }"  Header="Quantity" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding BuyingPrice }"  Header="WorkPeriod" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding SellingPrice}" Header="Date" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding InsertionBy}" Header="AddedBy" IsReadOnly="True" MinWidth="100" CanUserSort="False"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -38,7 +38,7 @@
                             <Label Content="Total : "/>
                             <Label x:Name="Label_Count"  Content="Total : " FontWeight="Bold"/>
                         </StackPanel>
-                        <Button Content="Refresh" HorizontalAlignment="Center" Width="100"/>
+                        <Button Content="Refresh" HorizontalAlignment="Center" Width="100" Click="Button_Click"/>
                     </UniformGrid>
                 </Grid>
             </Grid>

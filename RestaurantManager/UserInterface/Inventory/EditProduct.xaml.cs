@@ -45,8 +45,9 @@ namespace RestaurantManager.UserInterface.Inventory
                 Textbox_ProductPrice.Text = pitem.SellingPrice.ToString();
                 Textbox_ProductPackagePrice.Text = pitem.PackagingCost.ToString();
                 Combobox_Status.SelectedItem = pitem.AvailabilityStatus;
+                string status = pitem.IsPrecount ? "Yes" : "No";
+                Combobox_Precount.SelectedItem = Combobox_Precount.Items.Cast<ComboBoxItem>().FirstOrDefault(k => k.Content.ToString() == status);
                 Combobox_Category.SelectedItem = Combobox_Category.Items.Cast<ProductCategory>().FirstOrDefault(x => x.CategoryGuid == pitem.CategoryGuid);
-
             }
             catch (Exception ex)
             {
@@ -84,6 +85,13 @@ namespace RestaurantManager.UserInterface.Inventory
                     Combobox_Status.IsDropDownOpen = true;
                     return;
                 }
+                if (Combobox_Precount.SelectedItem==null)
+                {
+                    MessageBox.Show("Select the Product Precount Status!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    Combobox_Precount.Focus();
+                    Combobox_Precount.IsDropDownOpen = true;
+                    return;
+                }
                 if (!decimal.TryParse(Textbox_BuyingPrice.Text,out decimal buyingprice))
                 {
                     MessageBox.Show("Enter correct value for the Buying  Price!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -110,6 +118,12 @@ namespace RestaurantManager.UserInterface.Inventory
                         ProductCategory pc = Combobox_Category.SelectedItem as ProductCategory;
                         item.ProductName = Textbox_Productname.Text;
                         item.AvailabilityStatus = Combobox_Status.SelectedItem.ToString();
+                        bool isprecount = false;
+                        if (Combobox_Status.SelectedItem.ToString() == "Yes")
+                        {
+                            isprecount = true;
+                        }
+                        item.IsPrecount = isprecount;
                         item.CategoryGuid = pc.CategoryGuid;
                         item.CategoryName = pc.CategoryName;
                         item.BuyingPrice = buyingprice;

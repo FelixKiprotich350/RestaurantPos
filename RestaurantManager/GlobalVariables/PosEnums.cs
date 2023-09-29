@@ -101,8 +101,8 @@ namespace RestaurantManager.GlobalVariables
         /// </summary>
         public enum AssetTypes
         {
-            FixedAssets,
-            Consumables
+            FixedAsset,
+            Consumable
         }
     }
 }

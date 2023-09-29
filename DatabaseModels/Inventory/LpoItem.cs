@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseModels.Inventory
 {
-    public class AssetItem
+    public class LpoItem
     {
         [Key]
         [MaxLength(100)]

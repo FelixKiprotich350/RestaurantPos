@@ -27,6 +27,8 @@ namespace DatabaseModels.Inventory
         public string OutTransactionCode { get; set; } 
         [Required]  
         public string InTransactionCode { get; set; } 
+        [Required]  
+        public string Description { get; set; } 
         [Required]
         public DateTime TransactionDate { get; set; } 
         [Required] 

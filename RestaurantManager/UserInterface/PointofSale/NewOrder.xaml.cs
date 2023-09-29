@@ -419,7 +419,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         db.OrderItem.AddRange(OrderItems);
                         db.SaveChanges();
                     }
-                    MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Order Sent Successfully! Ticket Number : "+om.OrderNo, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     OrderItems.Clear();
                     ResetForm();
                 }

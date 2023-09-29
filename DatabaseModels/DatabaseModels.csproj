@@ -57,10 +57,13 @@
     <Compile Include="GeneralSettings\ClientInfoDetails.cs" />
     <Compile Include="GeneralSettings\MailingProfile.cs" />
     <Compile Include="GeneralSettings\PosVariables.cs" />
-    <Compile Include="GeneralSettings\MeasureUnit.cs" />
+    <Compile Include="Inventory\LpoItem.cs" />
+    <Compile Include="Inventory\LpoMaster.cs" />
+    <Compile Include="Inventory\AssetUOM.cs" />
     <Compile Include="GeneralSettings\TableEntity.cs" />
     <Compile Include="Inventory\AssetItemFlow.cs" />
     <Compile Include="Inventory\AssetItem.cs" />
+    <Compile Include="Inventory\AssetGroup.cs" />
     <Compile Include="Navigation\Level2menu.cs" />
     <Compile Include="Navigation\Level1menu.cs" />
     <Compile Include="Navigation\NavigationMenu.cs" />

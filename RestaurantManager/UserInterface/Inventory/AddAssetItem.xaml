@@ -1,0 +1,98 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.Inventory.AddAssetItem"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RestaurantManager.UserInterface.Inventory"
+      mc:Ignorable="d" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
+      Height="420" Width="400" Loaded="Window_Loaded" Closing="Window_Closing"
+      Title="Add New Asset" FontSize="16">
+
+    <Grid Margin="20,0" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+                <Grid Grid.Row="0">
+                    <Label Content="Asset Name" FontSize="16"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBox x:Name="Textbox_ProductName" FontSize="20" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" Width="350"/>
+                </Grid>
+                <Grid Grid.Row="0">
+                    <Label Content="Description" FontSize="16"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBox x:Name="Textbox_Description" FontSize="20" Height="Auto" VerticalAlignment="Center" Margin="0,0,4,0" Width="350"/>
+                </Grid>
+               </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <UniformGrid Columns="2">
+                <StackPanel >
+                    <Label DockPanel.Dock="Top" Content="Asset Group"/>
+                    <ComboBox x:Name="Combobox_AssetGroup" IsEditable="False" Margin="0,0,4,0" Padding="0" Height="32" VerticalContentAlignment="Center" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding GroupName}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,0"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                  
+
+                </StackPanel>
+                <StackPanel>
+                    <Label  Content="Type of Asset"/>
+                    <ComboBox x:Name="Combobox_AssetType" IsEditable="False" Margin="0,0,4,0" Padding="0" Height="32" VerticalContentAlignment="Center" >
+                         
+                    </ComboBox>
+                </StackPanel>
+            </UniformGrid>
+          
+        </Grid>
+        <Grid Grid.Row="2">
+            <UniformGrid Columns="2">
+               
+                <StackPanel  Margin="0,0,0,0">
+                    <Label  Content="Asset UOM"/>
+                    <ComboBox x:Name="Combobox_AssetUOM" IsEditable="False" Margin="0,0,4,0" Padding="0" Height="32" VerticalContentAlignment="Center" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding UnitName}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,0"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                </StackPanel>
+                <StackPanel>
+                    <Label  Content="Asset Cost"/>
+                    <TextBox x:Name="Textbox_AssetCost" FontSize="20" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+            </UniformGrid>
+                </Grid>
+        <Grid Grid.Row="3">
+            <UniformGrid Columns="2">
+                <StackPanel  >
+                    <Label Content="Quantity"/>
+                    <TextBox x:Name="Textbox_InitialQuantity" FontSize="20" Height="30" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel  Margin="8,0,0,0">
+                    <Label Content="IsCountable"/>
+                    <ComboBox x:Name="Combobox_Precount" FontSize="20" Height="30" VerticalAlignment="Center" >
+                        <ComboBoxItem Content="True"/>
+                        <ComboBoxItem Content="False"/>
+                    </ComboBox>
+                </StackPanel>
+            </UniformGrid>
+        </Grid>
+        <UniformGrid Grid.Row="4" Columns="2">
+            <Button x:Name="Button_Close" Content="Close" Width="150"   Margin="2,4,4,2" Style="{DynamicResource Button_Cancel}" Height="40" Click="Button_Close_Click"/>
+            <Button x:Name="Button_Save" Content="Save" Width="150" Click="Button_save_Click" Margin="2,4,2,2" Style="{DynamicResource Button_Accept}" Height="40"/>
+        </UniformGrid>
+    </Grid>
+</Window>

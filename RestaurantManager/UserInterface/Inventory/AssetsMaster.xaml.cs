@@ -33,7 +33,7 @@ namespace RestaurantManager.UserInterface.Inventory
         {
             try
             {
-                RefreshMenuProducts();
+                RefreshAssetsProducts();
             }
             catch (Exception ex)
             {
@@ -79,8 +79,8 @@ namespace RestaurantManager.UserInterface.Inventory
 
         public bool Contains(object de)
         { 
-            MenuProductItem item = de as MenuProductItem;
-            return item.ProductName.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) | item.CategoryName.ToLower().Contains(Textbox_SearchBox.Text.ToLower());
+            AssetItem item = de as AssetItem;
+            return item.AssetName.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) | item.GroupName.ToLower().Contains(Textbox_SearchBox.Text.ToLower());
 
         }
 
@@ -88,46 +88,44 @@ namespace RestaurantManager.UserInterface.Inventory
         {
             try
             {
-                NewMenuProduct nmp = new NewMenuProduct();
+                AddAssetItem nmp = new AddAssetItem();
                 if (nmp.ShowDialog() == false)
                 {
                     return;
                 }
                 string category = "";
-                ProductCategory productCategory = (ProductCategory)nmp.Combobox_Category.SelectedItem;
-                category = productCategory.CategoryGuid;
-                if (!decimal.TryParse(nmp.Textbox_BuyingPrice.Text.Trim(), out decimal buyingprice))
+                AssetGroup productCategory = (AssetGroup)nmp.Combobox_AssetGroup.SelectedItem;
+                category = productCategory.GroupGuid;  
+                if (!decimal.TryParse(nmp.Textbox_AssetCost.Text.Trim(), out decimal AssetCost))
                 {
-                    MessageBox.Show("The Buying Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The Cost value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (!decimal.TryParse(nmp.Textbox_ProductPrice.Text.Trim(), out decimal price))
+                if (!int.TryParse(nmp.Textbox_InitialQuantity.Text.Trim(), out int AssetCount))
                 {
-                    MessageBox.Show("The ProductPrice value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                if (!decimal.TryParse(nmp.Textbox_PackagingPrice.Text.Trim(), out decimal packagingprice))
-                {
-                    MessageBox.Show("The Packaging Cost value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The Quantity value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 using (var db = new PosDbContext())
                 {
-                    db.MenuProductItem.Add(new MenuProductItem() 
+                    db.AssetItem.Add(new AssetItem() 
                     { 
-                        ProductGuid = Guid.NewGuid().ToString(), 
-                        ProductName = nmp.Textbox_ProductName.Text, 
-                        AvailabilityStatus = "Available", 
-                        Department = productCategory.Department,
-                        SellingPrice = price, 
-                        PackagingCost = packagingprice,
-                        CategoryGuid = category ,
-                        BuyingPrice=buyingprice,
-                        TotalCost=packagingprice+price
+                        AssetItemGuid = Guid.NewGuid().ToString(), 
+                        AssetName = nmp.Textbox_Description.Text, 
+                        AssetDescription = nmp.Textbox_Description.Text.Trim(),                          
+                        AssetGroupGuid = productCategory.GroupGuid, 
+                        GroupName = productCategory.GroupName, 
+                        AssetItemCost = AssetCost,
+                        UOM = ((AssetUOM)nmp.Combobox_AssetUOM.SelectedItem).UnitGuid ,
+                        InStockQuantity=AssetCount, 
+                        IsPrecount=Convert.ToBoolean(((ComboBoxItem)nmp.Combobox_Precount.SelectedValue).Content.ToString()),
+                        typeofasset=nmp.Combobox_AssetType.SelectedItem.ToString(),
+                        RegistrationDate= GlobalVariables.SharedVariables.CurrentDate(),
+                        LastUpdateDate=GlobalVariables.SharedVariables.CurrentDate()
                     });
                     db.SaveChanges();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    RefreshMenuProducts();
+                    RefreshAssetsProducts();
                 }
             }
             catch (Exception ex)
@@ -138,20 +136,23 @@ namespace RestaurantManager.UserInterface.Inventory
 
         }
 
-        private void RefreshMenuProducts()
+        private void RefreshAssetsProducts()
         {
             try
             {
-                List<ProductCategory> cat = new List<ProductCategory>();
-                List<MenuProductItem> item = new List<MenuProductItem>();
+                List<AssetGroup> cat = new List<AssetGroup>();
+                List<AssetItem> item = new List<AssetItem>();
+                List<AssetUOM> uoms = new List<AssetUOM>();
                 using (var db = new PosDbContext())
                 {
-                    cat = db.ProductCategory.ToList();
-                    item = db.MenuProductItem.ToList();
+                    cat = db.AssetGroup.ToList();
+                    item = db.AssetItem.ToList();
+                    uoms = db.AssetUOM.ToList();
                 }
                 foreach (var x in item)
                 {
-                    x.CategoryName = cat.Where(y => y.CategoryGuid == x.CategoryGuid).FirstOrDefault().CategoryName;
+                    x.GroupName = cat.Where(y => y.GroupGuid == x.AssetGroupGuid).FirstOrDefault().GroupName;
+                    x.UOMName = uoms.Where(y => y.UnitGuid == x.UOM).FirstOrDefault().UnitName;
                 }
                 Datagrid_Assets.ItemsSource = item;
                 TextBox_AssetsCount.Text = Datagrid_Assets.Items.Count.ToString() ;
@@ -164,7 +165,7 @@ namespace RestaurantManager.UserInterface.Inventory
 
         private void Button_Refresh_Click(object sender, RoutedEventArgs e)
         {
-            RefreshMenuProducts();
+            RefreshAssetsProducts();
             MessageBox.Show("Refresh Success. Done.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -190,10 +191,10 @@ namespace RestaurantManager.UserInterface.Inventory
                         {
                             return;
                         }
-                        MenuProductItem m = (MenuProductItem)Datagrid_Assets.SelectedItem;
-                        EditProduct ed = new EditProduct(m);
+                        AssetItem m = (AssetItem)Datagrid_Assets.SelectedItem;
+                        AddAssetItem ed = new AddAssetItem(m);
                         ed.ShowDialog();
-                        RefreshMenuProducts();
+                        RefreshAssetsProducts();
                     }
                     
                 }

@@ -82,9 +82,16 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         return;
                     }
-                    //OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
-                    //TrackTicketMaster t = new TrackTicketMaster(om);
-                    //t.ShowDialog();
+                    var db = new PosDbContext();
+                    OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
+                    var items = db.OrderItem.AsNoTracking().Where(k=>k.OrderID==om.OrderNo).ToList();
+                    Textbox_TicketNumber.Text = om.OrderNo;
+                    Textbox_postedby.Text = om.UserServing;
+                    Textbox_Status.Text = om.OrderStatus;
+                    Textbox_Date.Text = om.OrderDate.ToString();
+                    Textbox_ItemsCount.Text = items.Count.ToString();
+                    Textbox_Workperiodd.Text = om.Workperiod.ToString();
+                    Datagrid_TicketItems.ItemsSource = items;
                 }
             }
             catch (Exception ex)
@@ -96,7 +103,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         public bool Contains(object de)
         {
             OrderMaster item = de as OrderMaster;
-            return item.OrderNo.ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower()) | item.OrderNo.ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower());
+            return item.OrderNo.ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower()) | item.Workperiod.ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower())| item.OrderStatus.ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower())| item.OrderDate.ToString().ToLower().Contains(Textbox_TicketSearchBox.Text.ToLower());
 
         }
 

@@ -32,7 +32,7 @@
                         <DataGridTextColumn  Binding="{Binding BuyingPrice,StringFormat=N2}" Header="Buying Price" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding SellingPrice,StringFormat=N2}" Header="Selling Price" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding PackagingCost,StringFormat=N2}" Header="PackageCost" IsReadOnly="True" Width="150" CanUserSort="True"/>
-                        <DataGridTextColumn Binding="{Binding RemainingQuantity }"  Header="R.Quantity" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        <DataGridTextColumn Binding="{Binding  IsPrecount}"  Header="PreStock" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding CategoryName}" Header="Category" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding AvailabilityStatus}" Header="Status" IsReadOnly="True" Width="100" CanUserSort="True"/>
                     </DataGrid.Columns> 

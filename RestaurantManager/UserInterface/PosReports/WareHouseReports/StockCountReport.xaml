@@ -58,7 +58,7 @@
                     <DataGridTextColumn Binding="{Binding LastStockDate}"  Header="Last Stocked" IsReadOnly="True" Width="200" CanUserSort="True"/>
                     <DataGridTextColumn  Binding="{Binding  Received}" Header="Received" Width="Auto" MinWidth="100" IsReadOnly="True" CanUserSort="True"/>
                     <DataGridTextColumn  Binding="{Binding  Sold}" Header="Sold" Width="Auto" MinWidth="100" IsReadOnly="True" CanUserSort="True"/>
-                    <DataGridTextColumn  Binding="{Binding  Instock}" Header="Total" Width="Auto" MinWidth="150" IsReadOnly="True" CanUserSort="True"/>
+                    <DataGridTextColumn  Binding="{Binding  Instock}" Header="InStock" Width="Auto" MinWidth="150" IsReadOnly="True" CanUserSort="True"/>
                 </DataGrid.Columns>
                 <DataGrid.Resources>
                     <Style TargetType="DataGridCell" >
@@ -81,7 +81,9 @@
                         <Label x:Name="Label_TotalItems_Count" Content="0" FontWeight="Bold" FontSize="20"/>
                     </StackPanel>
 
-                    <Separator/>
+                    <Grid>
+                        <Button x:Name="Button_Print" Content="Print" Width="100" Click="Button_Print_Click"/>
+                    </Grid>
                 </UniformGrid>
             </GroupBox>
         </Grid>

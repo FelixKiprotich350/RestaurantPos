@@ -83,6 +83,7 @@ namespace RestaurantManager
         public DbSet<StockFlowTransaction> StockFlowTransaction { get; set; }
         public DbSet<AssetItem> AssetItem { get; set; }
         public DbSet<AssetItemFlow> AssetsItemFlow { get; set; }
+        public DbSet<AssetGroup> AssetGroup { get; set; }
         //pos user & security
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -102,7 +103,7 @@ namespace RestaurantManager
         public DbSet<ChangeLog> ChangeLogs { get; set; }
         public DbSet<PosVariables> PosVariables { get; set; }
         public DbSet<MailingProfile> MailingProfile { get; set; }
-        public DbSet<MeasureUnit> MeasureUnit { get; set; }
+        public DbSet<AssetUOM> AssetUOM { get; set; }
         //customers
         public DbSet<Customer> Customer { get; set; }
         public DbSet<CustomerPointsAccount> CustomerPointsAccount { get; set; }

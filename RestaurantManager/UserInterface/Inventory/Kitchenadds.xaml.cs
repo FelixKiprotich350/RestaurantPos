@@ -2,6 +2,7 @@
 using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,8 +31,8 @@ namespace RestaurantManager.UserInterface.Inventory
         {
             try
             {
-                RefreshEntries();
-                LoadProducts();
+               // RefreshEntries();
+               // LoadProducts();
             }
             catch (Exception ex)
             {
@@ -140,6 +141,18 @@ namespace RestaurantManager.UserInterface.Inventory
         private void Textbox_SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                 
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

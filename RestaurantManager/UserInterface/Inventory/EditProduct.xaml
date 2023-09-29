@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.Inventory"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.Inventory.EditProduct"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="Update Product" Height="400" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        Title="Update Product" Height="450" Width="400" Loaded="Window_Loaded" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
     <Grid Margin="0,0,4,0">
-        <UniformGrid Rows="7" Columns="1">
+        <UniformGrid Rows="8" Columns="1">
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
                 <Label DockPanel.Dock="Left" Content="Product Name" Width="120" FontSize="16"/>
                 <TextBox x:Name="Textbox_Productname" FontSize="16" />
@@ -30,6 +30,13 @@
                     <System:String >Available</System:String>
                     <System:String>Not Available</System:String>
 
+                </ComboBox>
+            </DockPanel>
+            <DockPanel LastChildFill="True" VerticalAlignment="Center">
+                <Label Content="IsCountable" Width="120"/>
+                <ComboBox x:Name="Combobox_Precount" FontSize="20" Height="30" VerticalAlignment="Center" >
+                    <ComboBoxItem Content="Yes"/>
+                    <ComboBoxItem Content="No"/>
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True" VerticalAlignment="Center">
