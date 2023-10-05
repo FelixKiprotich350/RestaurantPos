@@ -18,13 +18,14 @@
             <Grid  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/> 
+                    <RowDefinition Height="Auto"/> 
+                    <RowDefinition Height="Auto"/> 
                 </Grid.RowDefinitions>
                 <Border Padding="8" CornerRadius="8" Background="#FFFFE4BA" Margin="8">
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -42,14 +43,22 @@
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <StackPanel>
-                                <TextBlock x:Name="TextBlock_ItemsCount" Text="Ticket" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" />
-                                <Label Content="Ticket Order Items" FontSize="16" HorizontalAlignment="Left" />
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="Total Amount :" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+                                <TextBox x:Name="TextBox_TotalAmount" Text="0.00" MinWidth="200" Height="40" FontWeight="Bold" FontSize="32" IsReadOnly="True" HorizontalContentAlignment="Center" BorderThickness="0"/>
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <StackPanel Orientation="Vertical" >
+                                <Label Content="Tax :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                                <TextBox x:Name="Textbox_TaxAmount" Text="0.00" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </Border>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" x:Name="Grid_ticketsview" Visibility="Collapsed">
+                     
                     <DataGrid    x:Name="Datagrid_TicketItems" AutoGenerateColumns="False"  Margin="5,0,5,5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
 
                         <DataGrid.Columns>
@@ -76,38 +85,125 @@
                             </Style>
                         </DataGrid.Resources>
                     </DataGrid>
+                   
+                </Grid>
+                <Grid Grid.Row="1" x:Name="Grid_paymentsview" Visibility="Visible">
+                    <Grid x:Name="Grid_payments">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="0,0,4,0" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <UniformGrid Columns="4" Height="32" Margin="0,4">
+                                <Button x:Name="Btn_Cash" Content="Cash" Style="{x:Null}" Margin="4,0" Click="Btn_Cash_Click"/>
+                                <Button x:Name="Btn_Mpesa" Content="Mpesa" Style="{x:Null}" Margin="0,0,4,0" Click="Btn_Mpesa_Click"/>
+                                <Button x:Name="Btn_Cards" Content="Cards" Style="{x:Null}" Margin="0,0,4,0" Click="Btn_Cards_Click"/>
+                                <Button x:Name="Btn_Invoice" Content="Invoice" Style="{x:Null}" Margin="0,0,4,0" Click="Btn_Invoice_Click" />
+                            </UniformGrid>
+                            <Grid Grid.Row="1" >
+                                <StackPanel Margin="8,0,2,8">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label x:Name="Label_SelectedModeofpayment" Content="" FontSize="20"/>
+                                        <Label  Content="Amount" FontSize="20"/>
+                                    </StackPanel>
+                                    <TextBox x:Name="Textbox_AmountToAdd" HorizontalContentAlignment="Center" FontSize="24" FontWeight="Bold" Height="32" />
+                                    <StackPanel x:Name="Stackpanel_CardGroup" Visibility="Collapsed">
+                                        <Label Content="Bank Name" FontSize="14"/>
+                                        <ComboBox x:Name="Combobos_BanksList">
 
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="4*"/>
-                        <ColumnDefinition Width="6*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0">
-                            <Label Content="Tax :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-                            <TextBox x:Name="Textbox_TaxAmount" Text="0.00" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>
-                        </StackPanel>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel x:Name="Stackpanel_InvoiceGroup" Visibility="Collapsed">
+                                        <Label Content="Account Name" FontSize="14"/>
+                                        <UniformGrid Columns="2">
+                                            <TextBox  x:Name="Textbox_SelectedAccount" IsReadOnly="True" FontWeight="Bold" MinWidth="200"/>
+                                            <UniformGrid Columns="2">
+                                                
+                                                <Button  x:Name="Button_ResetInvoiceGroup" Content="Reset" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_ResetInvoiceGroup_Click"/>
+                                                <Button  x:Name="Button_SelectInvoiceAccount" Content="Select Account" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_SelectInvoiceAccount_Click"/>
+
+                                            </UniformGrid>                                        </UniformGrid>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="4,0">
+                                <UniformGrid Columns="3" Rows="4" Margin="0,5,0,0">
+                                    <Button x:Name="Button_1" Style="{StaticResource Button_Cancel}" Content="1" FontWeight="Bold" FontSize="20" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Height="Auto" Click="Button_1_Click"  />
+                                    <Button x:Name="Button_2" Style="{StaticResource Button_Cancel}"  Content="2" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_2_Click"  />
+                                    <Button x:Name="Button_3" Style="{StaticResource Button_Cancel}"  Content="3" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_3_Click"  />
+                                    <Button x:Name="Button_4" Content="4"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_4_Click"  />
+                                    <Button x:Name="Button_5" Content="5"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_5_Click"  />
+                                    <Button x:Name="Button_6" Content="6"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_6_Click"  />
+                                    <Button x:Name="Button_7" Content="7"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_7_Click"  />
+                                    <Button x:Name="Button_8" Content="8"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_8_Click"  />
+                                    <Button x:Name="Button_9" Content="9"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_9_Click"  />
+                                    <Button x:Name="Button_Clear" Background="#FF8A151B" Content="Clear" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Clear_Click" />
+                                    <Button x:Name="Button_0" Content="0" Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_0_Click"  />
+                                    <Button x:Name="Button_AddPayment" Content="Add" Background="#FF076807"  Click="Button_AddPayment_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
+
+                                </UniformGrid>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <DataGrid x:Name="Datagrid_Payments" Grid.Row="0" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False">
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Header="Amount" Binding="{Binding AmountPaid, StringFormat=N2}" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Method" Binding="{Binding Method}" IsReadOnly="True" />
+                                    <DataGridTextColumn Header="Approved" Binding="{Binding IsInvoiceApproved}" IsReadOnly="True" />
+                                    <DataGridTemplateColumn  Width="SizeToCells" IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Image Source="/RestaurantManager;component/ImageResources/DeleteItem.png" Height="20" MouseUp="Image_MouseUp" Cursor="Hand" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Row="1">
+                                <StackPanel>
+                                    <DockPanel Margin="0,8,0,0"  >
+                                        <Label DockPanel.Dock="Left" Content="Amount Paid" FontSize="16" Width="100"/>
+                                        <TextBlock x:Name="Textblock_Amountpaid" FontWeight="Bold" FontSize="24"/>
+                                    </DockPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                        <Label Content="Discount" FontSize="16" Width="100"/>
+                                        <TextBox x:Name="Textbox_DiscountOffered" FontWeight="Bold" FontSize="24" Width="100" GotFocus="Textbox_DiscountOffered_GotFocus" TextChanged="Textbox_DiscountOffered_TextChanged" IsReadOnly="True" Text="0" VerticalContentAlignment="Center" Height="32" Focusable="False" AllowDrop="False"/>
+                                        <CheckBox x:Name="Combobox_SetDiscount" Checked="Combobox_SetDiscount_Checked" Unchecked="Combobox_SetDiscount_Unchecked" Margin="4,0,0,0"/>
+                                    </StackPanel>
+                                    <DockPanel Margin="0,8,0,0" >
+                                        <Label DockPanel.Dock="Left" Content="Balance" FontSize="16" Width="100"/>
+                                        <TextBlock x:Name="Textblock_Balance" FontWeight="Bold" FontSize="24"/>
+                                    </DockPanel> 
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    <Grid Grid.Column="1">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
-                            <Label Content="Total Amount :" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
-                            <TextBox x:Name="TextBox_TotalAmount" Text="0.00" MinWidth="200" Height="40" FontWeight="Bold" FontSize="32" IsReadOnly="True" HorizontalContentAlignment="Center" BorderThickness="0"/>
-                        </StackPanel>
-                    </Grid>
                 </Grid>
-                <Grid Grid.Row="3">
+                <Grid x:Name="Grid_TicketLowerbuttonbar" Grid.Row="2" Visibility="Collapsed">
                     <UniformGrid Columns="2" VerticalAlignment="Center" Margin="8">
                         <Button x:Name="Button_Discard" Content="Discard" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_Discard_Click" Background="#FFF29400" />
-
                         <Button x:Name="Button_CheckoutTicket" Content="Checkout" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_CheckoutTicket_Click" Style="{DynamicResource Button_Accept}"/>
-
+                    </UniformGrid>
+                </Grid>
+                <Grid x:Name="Grid_PaymentLowerbuttonbar" Grid.Row="3" Visibility="Collapsed">
+                    <UniformGrid Columns="2" VerticalAlignment="Center" Margin="8">
+                        <Button x:Name="Button_Back" Content="View Tickets" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Background="#FFF29400" Click="Button_Back_Click" />
+                        <Button x:Name="Button_CompletePayment" Content="Checkout" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20"  Style="{DynamicResource Button_Accept}" Click="Button_CompletePayment_Click"/>
                     </UniformGrid>
                 </Grid>
             </Grid>
 
         </Border>
-        <Border Grid.Column="2" Background="#FFFFFFFF" CornerRadius="12" Margin="8">
+        <Border x:Name="Border_Ticketslist" Grid.Column="2" Background="#FFFFFFFF" CornerRadius="12" Margin="8">
             <Grid  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

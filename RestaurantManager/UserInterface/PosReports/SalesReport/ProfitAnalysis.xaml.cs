@@ -20,7 +20,7 @@ using RestaurantManager.GlobalVariables;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
-using DatabaseModels.CustomersManagement;
+using DatabaseModels.CRM;
 using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
@@ -37,7 +37,7 @@ namespace RestaurantManager.UserInterface.PosReports
         List<OrderMaster> MainList_Orders = new List<OrderMaster>();
         List<MenuProductItem> MainList_ProductItems = new List<MenuProductItem>(); 
         List<PosUser> Users = new List<PosUser>();
-        List<Customer> Customers = new List<Customer>();
+        List<CustomerAccount> Customers = new List<CustomerAccount>();
         List<TicketPaymentMaster> TickPayMaster = new List<TicketPaymentMaster>();
         public ProfitAnalysis()
         {
@@ -138,7 +138,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 MainList_Orders = db.OrderMaster.AsNoTracking().ToList(); 
                 TickPayMaster = db.TicketPaymentMaster.AsNoTracking().ToList();
                 Users = db.PosUser.AsNoTracking().ToList();
-                Customers = db.Customer.AsNoTracking().ToList();
+                Customers = db.CustomerAccount.AsNoTracking().ToList();
                 MainList_ProductItems = db.MenuProductItem.AsNoTracking().ToList();
  
                 var leftOuterJoin = from e in db.OrderItem.AsNoTracking().Where(a=>a.IsItemVoided==false)
@@ -220,8 +220,8 @@ namespace RestaurantManager.UserInterface.PosReports
                                      join tb in MainList_ProductItems on ((OrderItem)ta.oi).ProductItemGuid equals tb.ProductGuid
                                      select new
                                      {
-                                         Order = ta, 
-                                         Department = tb.Department
+                                         Order = ta,
+                                         tb.Department
                                      };
                     decimal totals = 0;
                     int count = 0;
@@ -306,17 +306,17 @@ namespace RestaurantManager.UserInterface.PosReports
             }
 
         }
-        public class Customer_Comparer : IEqualityComparer<Customer>
+        public class Customer_Comparer : IEqualityComparer<CustomerAccount>
         {
-            public bool Equals(Customer x, Customer y)
+            public bool Equals(CustomerAccount x, CustomerAccount y)
             {
                 // compare multiple fields
-                return x.PhoneNumber == y.PhoneNumber;
+                return x.PersonAccNo == y.PersonAccNo;
             }
 
-            public int GetHashCode(Customer obj)
+            public int GetHashCode(CustomerAccount obj)
             {
-                return obj.PhoneNumber.GetHashCode();
+                return obj.PersonAccNo.GetHashCode();
             }
 
         }

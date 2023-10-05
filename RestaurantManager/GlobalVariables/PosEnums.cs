@@ -16,7 +16,7 @@ namespace RestaurantManager.GlobalVariables
         {
             Pending,
             Voided,
-            Merged,
+            Closed,
             Completed
         }
 
@@ -25,7 +25,8 @@ namespace RestaurantManager.GlobalVariables
             Cash,
             Mpesa,
             Card,
-            Voucher
+            Voucher,
+            Invoice
         }
 
         public enum VoucherTypes
@@ -43,15 +44,27 @@ namespace RestaurantManager.GlobalVariables
             Expired
         }
 
+        public enum InvoiceStatuses
+        {
+            Issued,
+            Approved,
+            Cancelled, 
+        }
+        public enum InvoicePaymentStatuses
+        {
+            Pending,
+            Paid
+        }
+        public enum InvoiceSources
+        {
+            SalesBill,
+            Purchase
+        }
+
         /// <summary>
         /// security module
         /// </summary>
-        public enum UserAccountStatuses
-        {
-            Active,
-            Disabled
-        }
-        public enum UserAccountsRoles
+         public enum UserAccountsRoles
         {
             Admin,
             Supervisor,
@@ -69,6 +82,20 @@ namespace RestaurantManager.GlobalVariables
             PointsAward,
             Redeem
         }
+        public enum PersonType
+        {
+            Employee,
+            Customer,
+            Supplier
+        }
+        public enum PersonAccountStatus
+        {
+            Active,
+            Disabled
+        }
+
+
+
         /// <summary>
         /// Accounts module
         /// 

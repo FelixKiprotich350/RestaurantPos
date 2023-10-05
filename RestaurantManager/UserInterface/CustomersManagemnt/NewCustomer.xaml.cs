@@ -1,4 +1,4 @@
-﻿using DatabaseModels.CustomersManagement;
+﻿using DatabaseModels.CRM;
 using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
@@ -30,18 +30,24 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
         {
             try
             {
-                Customer c = new Customer
+                string accno = "ACC-"+GlobalVariables.SharedVariables.GeneratePersonAccNo();
+                PersonalAccount c = new PersonalAccount
                 {
-                    CustomerGuid = Guid.NewGuid().ToString(),
-                    CustomerName = Textbox_FullName.Text,
+                    PersonGuid = Guid.NewGuid().ToString(),
+                    FullName = Textbox_FullName.Text,
+                    AccountNo =accno,
+                    InvoiceLimit = 0,
+                    AccountStatus = GlobalVariables.PosEnums.PersonAccountStatus.Active.ToString(),
                     PhoneNumber = Textbox_PhoneNo.Text,
-                    Gender = Combobox_Gender.SelectedItem.ToString(),
+                    Gender = Textbox_PhoneNo.Text.Trim(),
+                    Email = Combobox_Gender.SelectedItem.ToString(),
                     RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
-                    BirthDate = (DateTime)DatePicker_BirthDate.SelectedDate
+                    BirthDate = (DateTime)DatePicker_BirthDate.SelectedDate,
+                    UpdateDate = GlobalVariables.SharedVariables.CurrentDate()
                 };
                 using (var db = new PosDbContext())
                 {
-                    db.Customer.Add(c);
+                    db.PersonalAccount.Add(c);
                     db.SaveChanges();
                 }
                 MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -53,9 +59,20 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             } 
         }
 
+
         private void Button_Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Checkbox_DefaultBirthDate_Checked(object sender, RoutedEventArgs e)
+        {
+            DatePicker_BirthDate.SelectedDate = DateTime.MinValue;
+        }
+
+        private void Checkbox_DefaultBirthDate_Unchecked(object sender, RoutedEventArgs e)
+        {
+            DatePicker_BirthDate.SelectedDate = null;
         }
     }
 }

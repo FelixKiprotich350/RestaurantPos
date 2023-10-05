@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="CustomersManagement\Customer.cs" />
-    <Compile Include="CustomersManagement\CustomerPointsAccount.cs" />
+    <Compile Include="CRM\EmployeeAccount.cs" />
+    <Compile Include="CRM\CustomerAccount.cs" />
+    <Compile Include="CRM\CustomerPointsAccount.cs" />
+    <Compile Include="CRM\PersonalAccount.cs" />
     <Compile Include="GeneralSettings\ClientInfoDetails.cs" />
     <Compile Include="GeneralSettings\MailingProfile.cs" />
     <Compile Include="GeneralSettings\PosVariables.cs" />
@@ -71,7 +73,7 @@
     <Compile Include="OrderTicket\OrderItemVoided.cs" />
     <Compile Include="OrderTicket\OrderMaster.cs" />
     <Compile Include="OrderTicket\Un_OrderItem.cs" />
-    <Compile Include="Payments\PaymentMethod.cs" />
+    <Compile Include="Accounts\InvoicesMaster.cs" />
     <Compile Include="Payments\TicketPaymentItem.cs" />
     <Compile Include="Payments\TicketPaymentMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

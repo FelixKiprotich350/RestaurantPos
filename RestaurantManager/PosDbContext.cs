@@ -15,8 +15,9 @@ using System.Data.Entity.Infrastructure;
 using DatabaseModels.OrderTicket;
 using System.Diagnostics;
 using DatabaseModels.Vouchers;
-using DatabaseModels.CustomersManagement;
-using RestaurantManager.ActivityLogs; 
+using DatabaseModels.CRM;
+using RestaurantManager.ActivityLogs;
+using DatabaseModels.Accounts;
 
 namespace RestaurantManager
 {
@@ -75,6 +76,8 @@ namespace RestaurantManager
         //}
  
         //Inventory
+
+        //inventory
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<MenuProductItem> MenuProductItem { get; set; }
         public DbSet<StockEntryItem> StockEntryItem { get; set; }
@@ -88,15 +91,16 @@ namespace RestaurantManager
         public DbSet<PosUser> PosUser { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         //pos & orders
-        public DbSet<OrderMaster> OrderMaster { get; set; }
+        public DbSet<OrderMaster> OrderMaster { get; set; } 
         public DbSet<OrderItem> OrderItem { get; set; } 
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
         public DbSet<DiscountVoucher> DiscountVoucher { get; set; } 
-        //payments
+        //payments & accounts
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
-        public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; }
+        public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; } 
+        public DbSet<InvoicesMaster> InvoicesMaster { get; set; } 
         //settings
         public DbSet<ClientInfoDetails> ClientInfo { get; set; }
         public DbSet<TableEntity> TableEntity { get; set; }
@@ -104,9 +108,12 @@ namespace RestaurantManager
         public DbSet<PosVariables> PosVariables { get; set; }
         public DbSet<MailingProfile> MailingProfile { get; set; }
         public DbSet<AssetUOM> AssetUOM { get; set; }
+
         //customers
-        public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustomerAccount> CustomerAccount { get; set; }
         public DbSet<CustomerPointsAccount> CustomerPointsAccount { get; set; }
+        public DbSet<PersonalAccount> PersonalAccount { get; set; } 
+        public DbSet<EmployeeAccount> EmployeeAccount { get; set; } 
     }
     public class MyInitializer : IDatabaseInitializer<PosDbContext>
     { 

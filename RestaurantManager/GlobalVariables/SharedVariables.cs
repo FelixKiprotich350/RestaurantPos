@@ -50,6 +50,42 @@ namespace RestaurantManager.GlobalVariables
                 return w;
             }
         } 
+        public static int GenerateInvoiceNumber()
+        {
+            int w = 0;
+            try
+            {
+                var db = new PosDbContext();
+                w =  db.InvoicesMaster.Count() + 1;
+                if (db.InvoicesMaster.AsNoTracking().FirstOrDefault(k=>k.InvoiceNo=="INV-"+w)!=null)
+                {
+                    w =db.InvoicesMaster.Count() + 2;
+                }
+                return w;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        public static int GeneratePersonAccNo()
+        {
+            int w = 0;
+            try
+            {
+                var db = new PosDbContext();
+                w = db.PersonalAccount.Count() + 1;
+                if (db.PersonalAccount.AsNoTracking().FirstOrDefault(k => k.AccountNo == "ACC-" + w) != null)
+                {
+                    w = db.PersonalAccount.Count() + 2;
+                }
+                return w;
+            }
+            catch
+            {
+                return -1;
+            }
+        }
         public static ClientInfoDetails ClientInfo()
         {
             ClientInfoDetails w = null;
@@ -67,6 +103,11 @@ namespace RestaurantManager.GlobalVariables
             }
         }
 
+
+        /// <summary>
+        /// database connectiion strings
+        /// </summary>
+        /// <returns></returns>
         public static string GetproductionMysqlDbConnectionString()
         {
             try
@@ -102,7 +143,7 @@ namespace RestaurantManager.GlobalVariables
         {
             try
             {
-                return "server=127.0.0.1;user=felix;password=felix;port=3306;database=posdbv1";
+                return "server=127.0.0.1;user=felix;password=felix;port=3306;database=posdbv3";
 
 
             }
@@ -114,7 +155,7 @@ namespace RestaurantManager.GlobalVariables
 
         public static string GetSqlServerDbConnectionString()
         {
-            return "Server=DESKTOP-23HBUBN\\SQLEXPRESS;Database=posdbv1;User Id=sa;Password=felix";
+            return "Server=DESKTOP-23HBUBN\\SQLEXPRESS;Database=posdbv3;User Id=sa;Password=felix";
         }
     }
 }

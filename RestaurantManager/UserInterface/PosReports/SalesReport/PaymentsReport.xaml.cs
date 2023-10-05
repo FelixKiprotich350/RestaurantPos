@@ -84,6 +84,7 @@ namespace RestaurantManager.UserInterface.PosReports
             try
             {
                 var db = new PosDbContext();
+ 
                 //load Items 
                 //ListofPayItems = db.TicketPaymentItem.AsNoTracking().ToList();
                 //ListofPayMaster = db.TicketPaymentMaster.AsNoTracking().ToList();

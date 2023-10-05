@@ -40,6 +40,7 @@ namespace RestaurantManager
                      new PermissionMaster() { PermissionCode = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountTicketsPayments() },
                      new PermissionMaster() { PermissionCode = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
                      new PermissionMaster() { PermissionCode = "C4", ParentModule = "C", PermissionShortName = "Discounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DiscountsManager() },
+                     new PermissionMaster() { PermissionCode = "C5", ParentModule = "C", PermissionShortName = "Invoices Master", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewInvoicesmaster() },
                      //products
                      new PermissionMaster() { PermissionCode = "D1", ParentModule = "D", PermissionShortName = "Menu Categories", PermissionFullName = "Menu Categories", PermissionLevel = "1", PageClass = new MenuCategories() },
                      new PermissionMaster() { PermissionCode = "D2", ParentModule = "D", PermissionShortName = "Menu Products", PermissionFullName = "Menu Products", PermissionLevel = "1", PageClass = new MenuProducts() },
@@ -49,8 +50,10 @@ namespace RestaurantManager
                      new PermissionMaster() { PermissionCode = "D6", ParentModule = "D", PermissionShortName = "Receive LPO", PermissionFullName = "Receive LPO", PermissionLevel = "1", PageClass = new ReceiveLPO() },
                      new PermissionMaster() { PermissionCode = "D7", ParentModule = "D", PermissionShortName = "StockTaking", PermissionFullName = "Discounts", PermissionLevel = "1", PageClass = new Kitchenadds() },
                      //Customers
-                     new PermissionMaster() { PermissionCode = "E1", ParentModule = "E", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomersList() },
-                     new PermissionMaster() { PermissionCode = "E2", ParentModule = "E", PermissionShortName = "Customer Account", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new CustomerAccount() },
+                     new PermissionMaster() { PermissionCode = "E1", ParentModule = "E", PermissionShortName = "All Persons", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new PersonsList() },
+                     new PermissionMaster() { PermissionCode = "E2", ParentModule = "E", PermissionShortName = "Customers", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new CustomerAccounts() },
+                     new PermissionMaster() { PermissionCode = "E3", ParentModule = "E", PermissionShortName = "Employees", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new Employee() },
+                     new PermissionMaster() { PermissionCode = "E4", ParentModule = "E", PermissionShortName = "Suppliers", PermissionFullName = "Description", PermissionLevel = "1",PageClass=new Employee() },
                      //reports
                      new PermissionMaster() { PermissionCode = "F1", ParentModule = "F", PermissionShortName = "Sales Report", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                      new PermissionMaster() { PermissionCode = "F2", ParentModule = "F", PermissionShortName = "Stock Report", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new WHMasterReports() },

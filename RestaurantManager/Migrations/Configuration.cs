@@ -10,7 +10,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "RestaurantManager.PosDbContext";
         }
 
         protected override void Seed(RestaurantManager.PosDbContext context)

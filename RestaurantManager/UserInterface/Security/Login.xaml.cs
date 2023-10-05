@@ -109,7 +109,7 @@ namespace RestaurantManager.UserInterface.Security
                     var xuser = db.PosUser.Where(a => a.UserPIN.ToString() == PasswordBox_UserPin.Password.Trim()).First();
                     if (xuser.UserWorkingStatus.ToLower() != "active")
                     {
-                        MessageBox.Show(this, "The User Status is not Active.\nAsk the administrator to enable you!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show(this, "The User Account Status is not Active.\nKindly seek assistance from the Administrator!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         PasswordBox_UserPin.Password = "";
                         user = null;
                     }
@@ -205,10 +205,11 @@ namespace RestaurantManager.UserInterface.Security
                             UserGuid = Guid.NewGuid().ToString(),
                             UserFullName = "Admin-Default",
                             UserPIN = 1234,
+                            PhoneNumber="0712345678",
                             UserName = "Admin",
                             UserIsDeleted = false,
                             UserRole = PosEnums.UserAccountsRoles.Admin.ToString(),
-                            UserWorkingStatus = PosEnums.UserAccountStatuses.Active.ToString(),
+                            UserWorkingStatus = PosEnums.PersonAccountStatus.Active.ToString(),
                             UserRights = ",",
                             LastLoginDate = SharedVariables.CurrentDate(),
                             RegistrationDate = SharedVariables.CurrentDate(),
@@ -263,6 +264,7 @@ namespace RestaurantManager.UserInterface.Security
                 App.Current.Shutdown();
             }
         }
+
         private void Button_Clear_Click(object sender, RoutedEventArgs e)
         {
             try

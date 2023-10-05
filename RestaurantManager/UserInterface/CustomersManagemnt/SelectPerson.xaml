@@ -1,0 +1,33 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.CustomersManagemnt.SelectPerson"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
+        mc:Ignorable="d"
+        Title="Select Person" Height="400" Width="600" Loaded="Window_Loaded" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions> 
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0"   x:Name="Datagrid_PersonsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp" SelectionChanged="Datagrid_TicketsList_SelectionChanged"  >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FullName }"  Header="Name" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                <DataGridTextColumn  Binding="{Binding OrderStatus}" Header="Gender" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                <DataGridTextColumn  Binding="{Binding TicketTable}" Header="Phone No" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <UniformGrid Grid.Row="1" Columns="3" VerticalAlignment="Center">
+            <Button x:Name="Button_Cancel" Width="120" Content="Close" Click="Button_Continue_Click" Style="{DynamicResource Button_Cancel}"></Button>
+            <StackPanel Orientation="Vertical" Visibility="Hidden">
+                <Label Content="Ticket Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+                <TextBox x:Name="Textbox_TicketNumber"/> 
+            </StackPanel>
+            <Button x:Name="Button_Continue" Width="120" Content="Continue" Click="Button_Continue_Click" Style="{DynamicResource Button_Accept}"></Button>
+        </UniformGrid>
+    </Grid>
+</Window>

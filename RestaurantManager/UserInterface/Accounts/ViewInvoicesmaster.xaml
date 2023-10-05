@@ -1,0 +1,121 @@
+﻿<Page x:Class="RestaurantManager.UserInterface.PointofSale.ViewInvoicesmaster"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
+      mc:Ignorable="d" Loaded="Page_Loaded"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ViewTickets">
+    <Grid>
+
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/> 
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Ticket Number" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Textbox_TicketSearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_TicketSearchBox_TextChanged"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <UniformGrid Columns="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid    x:Name="Datagrid_TicketsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="True" Visibility="Collapsed"/>
+                                <DataGridTextColumn Binding="{Binding InvoiceNo }"  Header="Inv No" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding InvoiceStatus}" Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding InvoiceDate}" Header="OrdertTime" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding Workperiod}" Header="Workperiod" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <UniformGrid Grid.Row="1" Columns="2" VerticalAlignment="Center">
+                            <Button x:Name="Button_NewProduct" Content="null" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Visibility="Collapsed"  />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">
+                                <Label Content="Total :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+                                <TextBox x:Name="TextBox_ProductsCount" Text="0" Height="40" BorderThickness="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" FontSize="24"/>
+                            </StackPanel>
+                            <Button x:Name="Button_Refresh" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Click="Button_Refresh_Click" />
+                        </UniformGrid>
+
+                    </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <StackPanel >
+                                <UniformGrid Columns="3">
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Content="Ticket Number"/>
+                                            <TextBox x:Name="Textbox_InvoiceNumber" IsReadOnly="True"/>
+                                        </StackPanel>
+                                    </Grid> 
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Content="Ticket Status"/>
+                                            <TextBox x:Name="Textbox_Status" IsReadOnly="True"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Content="Ticket Workperiod"/>
+                                            <TextBox x:Name="Textbox_Workperiodd" IsReadOnly="True"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </UniformGrid>
+                                <UniformGrid Columns="3">
+                                  
+                                   
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Content="Posted By"/>
+                                            <TextBox x:Name="Textbox_postedby" IsReadOnly="True"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid>
+                                        <StackPanel>
+                                            <Label Content="Posting Date"/>
+                                            <TextBox x:Name="Textbox_Date" IsReadOnly="True"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Grid VerticalAlignment="Center">
+                                        <StackPanel>
+                                            <Button x:Name="Button_Approve" Content="Approve" Style="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Approve_Click"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Grid>
+                        <DataGrid  Grid.Row="1"  x:Name="Datagrid_TicketItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding IsItemVoided}" Header="Voided" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding Quantity}" Header="Qty" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding Price}" Header="Price" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding Total}" Header="Total" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </UniformGrid>
+            </Grid>
+           
+        </Grid>
+    </Grid>
+</Page>

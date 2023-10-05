@@ -30,8 +30,7 @@ namespace DatabaseModels.Security
         [Required] 
         public bool IsBackendUser { get; set; }
         [Required] 
-        [MaxLength(100)]
-        [Index(IsUnique =true)]
+        [MaxLength(100)] 
         public string PhoneNumber { get; set; }
         [Required] 
         [MaxLength(100)]

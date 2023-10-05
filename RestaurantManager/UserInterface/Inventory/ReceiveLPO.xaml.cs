@@ -101,6 +101,7 @@ namespace RestaurantManager.UserInterface.Inventory
                     IsCancelled = false,
                     OutTransactionCode = "N/A",
                     FlowDirection = "IN",
+                    Description="",
                     InTransactionCode = Textbox_BatchNumber.Text.Trim(),
                     Quantity = qty
                 };

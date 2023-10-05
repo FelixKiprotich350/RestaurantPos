@@ -104,6 +104,11 @@ namespace RestaurantManager.UserInterface
                     //    //x.BackgroundColor = Brushes.DarkGray;
                     //    modules.Add(x);
                     //}
+                   // var unwanted = x.MenuItems.Where(k => k.PermissionLevel == "2");
+                   //foreach(var m in unwanted)
+                   // {
+                   //     x.MenuItems.Remove(m);
+                   // }
                     Modules_Collection.Add(x);
                 }
                 ModulesListView.ItemsSource = Modules_Collection;

@@ -1,4 +1,4 @@
-﻿using DatabaseModels.CustomersManagement;
+﻿using DatabaseModels.CRM;
 using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class SelectCustomerName : Window
     {
-        public Customer SelectedCustomer = null;
+        public CustomerAccount SelectedCustomer = null;
         public SelectCustomerName()
         {
             InitializeComponent(); 
@@ -34,7 +34,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                  
                 using (var db = new PosDbContext())
                 {
-                    var data = db.Customer.ToList();
+                    var data = db.CustomerAccount.ToList();
                     Listview_Customers.ItemsSource = data;
                 } 
 
@@ -44,6 +44,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void Button_Cancel_Click(object sender, RoutedEventArgs e)
         {
             SelectedCustomer = null;
@@ -55,7 +56,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 if (SelectedCustomer!=null)
-                { ;
+                { 
                     this.DialogResult = true;
                 }
                 else
@@ -76,9 +77,9 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 if (Listview_Customers.SelectedItem != null)
                 {
-                    Customer cust = (Customer)Listview_Customers.SelectedItem;
-                    Textbox_SelectedCustomerPhone.Text = cust.CustomerName + " - " + cust.PhoneNumber;
-                    Textbox_SelectedCustomerPhone.Tag = cust.PhoneNumber;
+                    CustomerAccount cust = (CustomerAccount)Listview_Customers.SelectedItem;
+                    Textbox_SelectedCustomerPhone.Text = cust.FullName + " - " + cust.PersonAccNo;
+                    Textbox_SelectedCustomerPhone.Tag = cust.PhoneNo;
                     SelectedCustomer = cust;
                 }
                 

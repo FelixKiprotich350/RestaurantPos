@@ -1,4 +1,4 @@
-﻿using DatabaseModels.CustomersManagement;
+﻿using DatabaseModels.CRM;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Payments;
 using DatabaseModels.Security;

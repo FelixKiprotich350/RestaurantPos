@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
-using DatabaseModels.CustomersManagement;
+using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
 
 namespace RestaurantManager.UserInterface.PointofSale
@@ -31,7 +31,7 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class Salespoint : Page
     {
-        Brush defaultbuttonbrush = null;
+        readonly Brush defaultbuttonbrush = null;
         readonly Random R = new Random();
         private readonly ObservableCollection<OrderItem> OrderItems;
         private ObservableCollection<ProductCategory> Category_Items;
@@ -115,8 +115,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                 decimal Buyingprice = 0;
                 int icount = 0;
                 MenuProductItem mpi = mpii;
-                ServiceType st = new ServiceType();
-                st.Topmost = true;
+                ServiceType st = new ServiceType
+                {
+                    Topmost = true
+                };
                 if ((bool)st.ShowDialog())
                 {
                     Buyingprice = mpi.BuyingPrice;
@@ -375,12 +377,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                         }
                     }
                     string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                    Customer cust = GetCustomer();
+                    CustomerAccount cust = GetCustomer();
                     OrderMaster om = new OrderMaster
                     {
                         OrderGuid = Guid.NewGuid().ToString(),
                         OrderDate = SharedVariables.CurrentDate(),
-                        CustomerRefference = cust != null ? cust.PhoneNumber : "None",
+                        CustomerRefference = cust != null ? cust.PersonAccNo : "None",
                         TicketTable = Label_Table.Content.ToString(),
                         OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
                         UserServing = SharedVariables.CurrentUser.UserName,
@@ -415,17 +417,17 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         } 
 
-        private Customer GetCustomer()
+        private CustomerAccount GetCustomer()
         {
             try
             {
                 if (LabelCustomer.Tag!=null)
                 {
-                    if (LabelCustomer.Tag.GetType() == typeof(Customer))
+                    if (LabelCustomer.Tag.GetType() == typeof(CustomerAccount))
                     {
-                        if ((Customer)LabelCustomer.Tag != null)
+                        if ((CustomerAccount)LabelCustomer.Tag != null)
                         {
-                            return (Customer)LabelCustomer.Tag;
+                            return (CustomerAccount)LabelCustomer.Tag;
                         }
                         else
                         {
@@ -463,7 +465,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             if (sc.SelectedCustomer != null)
             {
                 LabelCustomer.Tag = sc.SelectedCustomer;
-                LabelCustomer.Content = sc.SelectedCustomer.CustomerName;
+                LabelCustomer.Content = sc.SelectedCustomer.PersonAccNo;
             }
             else
             {

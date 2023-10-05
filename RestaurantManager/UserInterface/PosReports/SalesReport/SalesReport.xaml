@@ -71,8 +71,7 @@
                         </DataGrid.Resources>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="4">
-                            <Separator/>
+                        <UniformGrid Columns="3"> 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Items : " FontSize="20"/>
                                 <Label x:Name="Label_Products_Count" Content="0" FontWeight="Bold" FontSize="20"/>
@@ -81,7 +80,11 @@
                                 <Label Content="Total Sales: " FontSize="20"/>
                                 <Label x:Name="Label_Products_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
                             </StackPanel>
-                            <Separator/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Label Content="Sales Profit: " FontSize="20"/>
+                                <Label x:Name="Label_Profit" Content="0.00" FontWeight="Bold" FontSize="20"/>
+                            </StackPanel>
+                            
                         </UniformGrid>
                     </GroupBox>
                 </Grid>

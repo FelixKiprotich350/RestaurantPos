@@ -37,20 +37,20 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 int credit = 0;
                 using (var db = new PosDbContext())
                 {
-                    var list = db.CustomerPointsAccount.Where(y => y.CustomerPhoneNo == custno).ToList();
-                    if (list.Count > 0)
-                    {
-                        foreach (var x in list)
-                        {
-                            debit += x.Debit;
-                            credit += x.Credit;
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No History exists for this Customer!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        DialogResult = false;
-                    }
+                    //var list = db.CustomerPointsAccount.Where(y => y.CustomerAccNo == custno).ToList();
+                    //if (list.Count > 0)
+                    //{
+                    //    foreach (var x in list)
+                    //    {
+                    //        debit += x.Debit;
+                    //        credit += x.Credit;
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("No History exists for this Customer!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //    DialogResult = false;
+                    //}
                 }
                 TextBox_AvailablePoints.Text = (debit - credit).ToString();
                 TextBox_BalancePoints.Text = (debit - credit).ToString();

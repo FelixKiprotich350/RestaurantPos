@@ -153,7 +153,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 }
                 else if (position == 1)
                 {
-                    var merged = MainList.Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Merged.ToString());
+                    var merged = MainList.Where(k => k.OrderStatus == "Merged");
                     if (merged.Count() > 0)
                     {
                         Label_CompletedTicketsCount_Count.Content = merged.Count().ToString();

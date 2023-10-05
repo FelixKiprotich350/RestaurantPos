@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
-using DatabaseModels.CustomersManagement;
+using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
 
 namespace RestaurantManager.UserInterface.PointofSale
@@ -386,7 +386,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                     string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                    Customer cust = GetCustomer(); 
+                    CustomerAccount cust = GetCustomer(); 
 
                     foreach (var a in OrderItems)
                     {
@@ -426,17 +426,17 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         } 
 
-        private Customer GetCustomer()
+        private CustomerAccount GetCustomer()
         {
             try
             {
                 if (LabelCustomer.Tag!=null)
                 {
-                    if (LabelCustomer.Tag.GetType() == typeof(Customer))
+                    if (LabelCustomer.Tag.GetType() == typeof(CustomerAccount))
                     {
-                        if ((Customer)LabelCustomer.Tag != null)
+                        if ((CustomerAccount)LabelCustomer.Tag != null)
                         {
-                            return (Customer)LabelCustomer.Tag;
+                            return (CustomerAccount)LabelCustomer.Tag;
                         }
                         else
                         {
@@ -474,7 +474,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             if (sc.SelectedCustomer != null)
             {
                 LabelCustomer.Tag = sc.SelectedCustomer;
-                LabelCustomer.Content = sc.SelectedCustomer.CustomerName;
+                LabelCustomer.Content = sc.SelectedCustomer.FullName;
             }
             else
             {
@@ -509,11 +509,12 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
 
                 Button b = sender as Button;
+                Button_Services.Background = defaultbuttonbrush;
                 Button_BarDept.Background = defaultbuttonbrush;
                 b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
-                GetMenuItems("Restaurant");
-                
-                
+                GetMenuItems(PosEnums.Departments.Restaurant.ToString());
+
+
             }
             catch (Exception ex)
             {
@@ -527,10 +528,29 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 Button b = sender as Button;
                 Button_RestaurantDept.Background = defaultbuttonbrush;
+                Button_Services.Background = defaultbuttonbrush;
                 b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
-                GetMenuItems("Bar");
-               
-                
+                GetMenuItems(PosEnums.Departments.Bar.ToString());
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Services_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Button b = sender as Button;
+                Button_RestaurantDept.Background = defaultbuttonbrush;
+                Button_BarDept.Background = defaultbuttonbrush;
+                b.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFF29400");
+                GetMenuItems(PosEnums.Departments.Services.ToString());
+
+
             }
             catch (Exception ex)
             {

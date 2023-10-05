@@ -1,22 +1,11 @@
-﻿using DatabaseModels.CustomersManagement;
+﻿using DatabaseModels.CRM;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.WorkPeriod;
-using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -94,7 +83,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if ((bool)s.ShowDialog())
                 {
                     Button_SelectCustomer.Tag = s.SelectedCustomer;
-                    Button_SelectCustomer.Content = s.SelectedCustomer.CustomerName;
+                    Button_SelectCustomer.Content = s.SelectedCustomer.FullName;
                 }
             }
             catch (Exception Ex)
@@ -103,7 +92,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         } 
 
-        private Customer GetCustomer()
+        private CustomerAccount GetCustomer()
         {
             try
             {
@@ -112,11 +101,11 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return null;
                 }
 
-                if (Button_SelectCustomer.Tag.GetType() == typeof(Customer))
+                if (Button_SelectCustomer.Tag.GetType() == typeof(CustomerAccount))
                 {
-                    if ((Customer)Button_SelectCustomer.Tag != null)
+                    if ((CustomerAccount)Button_SelectCustomer.Tag != null)
                     {
-                        return (Customer)Button_SelectCustomer.Tag;
+                        return (CustomerAccount)Button_SelectCustomer.Tag;
                     }
                     else
                     {
@@ -161,7 +150,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         OrderMaster x = db.OrderMaster.Where(a => a.OrderNo == t.OrderNo).First();
                         x.MergedChild = ordguid;
-                        x.OrderStatus = PosEnums.OrderTicketStatuses.Merged.ToString();
+                        x.OrderStatus = "Merged";
                         var y=db.OrderItem.Where(a => a.OrderID == x.OrderNo && a.IsItemVoided == false);
                         foreach (var m in y)
                         {
@@ -186,7 +175,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         IsPrinted = false,
                         OrderNo = ordno,
                         VoidReason = "None",
-                        CustomerRefference = GetCustomer() != null ? GetCustomer().PhoneNumber : "None",
+                        CustomerRefference = GetCustomer() != null ? GetCustomer().PersonAccNo : "None",
                         TicketTable = Button_SelectTable.Content.ToString(),
                         UserServing = GlobalVariables.SharedVariables.CurrentUser.UserName,
                         OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),

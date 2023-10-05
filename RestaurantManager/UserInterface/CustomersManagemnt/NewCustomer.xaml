@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.CustomersManagemnt"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.CustomersManagemnt.NewCustomer"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="NewCustomer" Height="350" Width="400">
+        Title="New Person" Height="400" Width="400">
     <Grid>
         <Border  CornerRadius="12,0,0,12"  Background="White">
             <Grid Margin="12">
@@ -20,15 +20,34 @@
                     <StackPanel>
                         <Label Content="Full Name"/>
                         <TextBox x:Name="Textbox_FullName"/>
-                        <Label Content="Gender"/>
-                        <ComboBox x:Name="Combobox_Gender" IsEditable="False">
-                            <System:String>Male</System:String>
-                            <System:String>Female</System:String>
-                        </ComboBox>
+                        
+                        <UniformGrid Columns="2" >
+                            <StackPanel>
+                                <Label Content="Gender"/>
+                                <ComboBox x:Name="Combobox_Gender" IsEditable="False">
+                                    <System:String>Male</System:String>
+                                    <System:String>Female</System:String>
+                                </ComboBox>
+                                
+                            </StackPanel>
+                            <StackPanel>
+                                <UniformGrid Columns="2">
+                                    <Label Content="Date of Birth"/>
+                                    <CheckBox x:Name="Checkbox_DefaultBirthDate" Content="Set Default" Checked="Checkbox_DefaultBirthDate_Checked" Unchecked="Checkbox_DefaultBirthDate_Unchecked"/>
+                                </UniformGrid>
+                                <DatePicker  x:Name="DatePicker_BirthDate"/>
+                              
+                            </StackPanel>
+                        </UniformGrid>
                         <Label Content="Phone Number"/>
                         <TextBox  x:Name="Textbox_PhoneNo"/>
-                        <Label Content="Date of Birth"/>
-                        <DatePicker  x:Name="DatePicker_BirthDate"/>
+                        <Label Content="Email"/>
+                        <TextBox  x:Name="Textbox_Email"/>
+                        <UniformGrid Columns="3" Margin="0,8,0,0">
+                            <CheckBox x:Name="Checkbox_IsStaff" Content="Is Staff"/>
+                            <CheckBox x:Name="Checkbox_IsCustomer" Content="Is Customer"/>
+                            <CheckBox x:Name="Checkbox_IsSupplier" Content="Is Supplier"/>
+                        </UniformGrid>
                     </StackPanel>
                 </GroupBox>
                 <Grid Grid.Row="1">

@@ -20,7 +20,7 @@ using RestaurantManager.GlobalVariables;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
-using DatabaseModels.CustomersManagement;
+using DatabaseModels.CRM;
 using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
@@ -37,7 +37,7 @@ namespace RestaurantManager.UserInterface.PosReports
         List<OrderMaster> MainList_Orders = new List<OrderMaster>();
         List<MenuProductItem> MainList_ProductItems = new List<MenuProductItem>(); 
         List<PosUser> Users = new List<PosUser>();
-        List<Customer> Customers = new List<Customer>();
+        List<CustomerAccount> Customers = new List<CustomerAccount>();
         List<TicketPaymentMaster> TickPayMaster = new List<TicketPaymentMaster>(); 
         public SalesReport()
         {
@@ -70,7 +70,8 @@ namespace RestaurantManager.UserInterface.PosReports
                 Customers.Clear();
                 //grids
                 Datagrid_OrderItems.ItemsSource=null; 
-                Datagrid_OrderItems.Items.Clear();  
+                Datagrid_OrderItems.Items.Clear();
+                Label_Profit.Content = "0.00";
             }
             catch (Exception ex)
             {
@@ -148,7 +149,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 MainList_Orders = db.OrderMaster.AsNoTracking().ToList(); 
                 TickPayMaster = db.TicketPaymentMaster.AsNoTracking().ToList();
                 Users = db.PosUser.AsNoTracking().ToList();
-                Customers = db.Customer.AsNoTracking().ToList();
+                Customers = db.CustomerAccount.AsNoTracking().ToList();
                 MainList_ProductItems = db.MenuProductItem.AsNoTracking().ToList();
  
                 var leftOuterJoin = from e in db.OrderItem.AsNoTracking().Where(a=>a.IsItemVoided==false)
@@ -210,14 +211,17 @@ namespace RestaurantManager.UserInterface.PosReports
                             displist.Add(item);
                         }
                         decimal totals = 0;
+                        decimal profitstotal = 0;
                         int count = 0;
                         foreach (var x in displist)
                         {
                             totals += x.Total;
+                            profitstotal += x.BuyingPriceTotal;
                             count++;
                         }
                         Label_Products_Count.Content = count.ToString();
                         Label_Products_Total.Content = totals.ToString();
+                        Label_Profit.Content = profitstotal.ToString();
                         Datagrid_OrderItems.ItemsSource = displist.OrderBy(k=>k.ItemName);
                     }
                 }
@@ -256,7 +260,7 @@ namespace RestaurantManager.UserInterface.PosReports
                     var Distorders = orders.Distinct(new OrderMaster_Comparer()).ToList();
                     foreach (var cust in Customers)
                     {
-                        var ordnos = Distorders.Where(a => a != null && a.CustomerRefference == cust.PhoneNumber).ToList();
+                        var ordnos = Distorders.Where(a => a != null && a.CustomerRefference == cust.PersonAccNo).ToList();
                         decimal total = 0;
                         int custcount = 0;
                         foreach (var ordm in ordnos)
@@ -264,7 +268,7 @@ namespace RestaurantManager.UserInterface.PosReports
                             total += TickPayMaster.Where(a => a.TicketNo == ordm.OrderNo).Sum(p => p.TotalAmountCharged);
                             custcount++;
                         }
-                        percustomer.Add(new { Phone = cust.PhoneNumber, FullName = cust.CustomerName, AppearanceCount = custcount, Total = total });
+                        percustomer.Add(new { Phone = cust.PersonAccNo, FullName = cust.FullName, AppearanceCount = custcount, Total = total });
                     }
                     //unregistered customers
                     int X_CustCount = 0;
@@ -399,17 +403,17 @@ namespace RestaurantManager.UserInterface.PosReports
             }
 
         }
-        public class Customer_Comparer : IEqualityComparer<Customer>
+        public class Customer_Comparer : IEqualityComparer<CustomerAccount>
         {
-            public bool Equals(Customer x, Customer y)
+            public bool Equals(CustomerAccount x, CustomerAccount y)
             {
                 // compare multiple fields
-                return x.PhoneNumber == y.PhoneNumber;
+                return x.PersonAccNo == y.PersonAccNo;
             }
 
-            public int GetHashCode(Customer obj)
+            public int GetHashCode(CustomerAccount obj)
             {
-                return obj.PhoneNumber.GetHashCode();
+                return obj.PersonAccNo.GetHashCode();
             }
 
         }
