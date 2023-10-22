@@ -66,6 +66,17 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     tlist = db.TicketPaymentMaster.Where(k => k.WorkPeriod == period.WorkperiodName).ToList();
                     GetAccountsTotal(tlist);
                 }
+                using (var db = new PosDbContext())
+                {
+                    decimal pendingtotal = 0;
+                    var wp = SharedVariables.CurrentOpenWorkPeriod().WorkperiodName;
+                    var list = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus==PosEnums.OrderTicketStatuses.Pending.ToString()& k.Workperiod==wp).ToList();
+                   foreach (var x in list)
+                    {
+                        pendingtotal += db.OrderItem.AsNoTracking().Where(i => i.OrderID == x.OrderNo).Sum(k => k.Total);
+                    }
+                    TextBox_PendingTotal.Text = pendingtotal.ToString("N2");
+                }
             }
             catch (Exception ex)
             {
@@ -82,6 +93,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 decimal cash = 0;
                 decimal cards = 0;
                 decimal voucher = 0;
+                decimal invoice = 0;
                 decimal cashbalance = 0;
                 decimal unknown = 0;
 
@@ -111,6 +123,10 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         else if (x.t.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
                         {
                             voucher += x.t.AmountPaid;
+                        }
+                        else if (x.t.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
+                        {
+                            invoice += x.t.AmountPaid;
                         }
                         else
                         {

@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.CustomersManagemnt"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.CustomersManagemnt.NewCustomer"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="RestaurantManager.UserInterface.CustomersManagemnt.NewPersonalAccount"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="New Person" Height="400" Width="400">
+        Title="New Person" Height="360" Width="400" Loaded="Window_Loaded">
     <Grid>
         <Border  CornerRadius="12,0,0,12"  Background="White">
             <Grid Margin="12">
@@ -20,7 +20,16 @@
                     <StackPanel>
                         <Label Content="Full Name"/>
                         <TextBox x:Name="Textbox_FullName"/>
-                        
+                        <UniformGrid Columns="2">
+                            <StackPanel>
+                                <Label Content="Phone Number"/>
+                                <TextBox  x:Name="Textbox_PhoneNo"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="National ID"/>
+                                <TextBox  x:Name="Textbox_National"/>
+                            </StackPanel>
+                        </UniformGrid>
                         <UniformGrid Columns="2" >
                             <StackPanel>
                                 <Label Content="Gender"/>
@@ -39,15 +48,10 @@
                               
                             </StackPanel>
                         </UniformGrid>
-                        <Label Content="Phone Number"/>
-                        <TextBox  x:Name="Textbox_PhoneNo"/>
+                       
                         <Label Content="Email"/>
                         <TextBox  x:Name="Textbox_Email"/>
-                        <UniformGrid Columns="3" Margin="0,8,0,0">
-                            <CheckBox x:Name="Checkbox_IsStaff" Content="Is Staff"/>
-                            <CheckBox x:Name="Checkbox_IsCustomer" Content="Is Customer"/>
-                            <CheckBox x:Name="Checkbox_IsSupplier" Content="Is Supplier"/>
-                        </UniformGrid>
+                        
                     </StackPanel>
                 </GroupBox>
                 <Grid Grid.Row="1">

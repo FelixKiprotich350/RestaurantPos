@@ -19,22 +19,23 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Menu Product Items" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="Search Parameter" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
             <TextBox x:Name="Textbox_SearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_SearchBox_TextChanged"/>
 
         </Grid>
         <Grid Grid.Row="1">
-            <GroupBox   Header="Loyalty Points Account History">
-                <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0"   Header="Customers List">
+                <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" SelectionChanged="Datagrid_CustomersList_SelectionChanged"  >
                     <DataGrid.Columns>
-                        <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
-                        <DataGridTextColumn Binding="{Binding AccActionGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding TransactionNo}"  Header="ID" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding Debit}"  Header="Debit" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding Credit}"  Header="Credit" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding TransactionType}"  Header="Action" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        <DataGridTextColumn Binding="{Binding ApprovedBy}"  Header="ApprovedBy" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                        <DataGridTextColumn  Binding="{Binding ActionDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="Date" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding PersonAccNo}"  Header="A/C NO" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding FullName}"  Header="Full Name" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding AccountStatus}"  Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTextColumn Binding="{Binding InvoiceLimit}"  Header="Limit" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                     </DataGrid.Columns>
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -47,11 +48,72 @@
                     </DataGrid.Resources>
                 </DataGrid>
             </GroupBox>
+            <Grid Grid.Column="1">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0" Header="Customer Information">
+                        <StackPanel >
+                            <UniformGrid Columns="2">
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Content="Full Name"/>
+                                        <TextBox x:Name="Textbox_FullName" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Content="Gender"/>
+                                        <TextBox x:Name="Textbox_Gender" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Grid> 
+                            </UniformGrid>
+                            <UniformGrid Columns="3">
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Content="Account Number"/>
+                                        <TextBox x:Name="Textbox_AccNumber" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Content="Account Status"/>
+                                        <TextBox x:Name="Textbox_Status" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid>
+                                    <StackPanel>
+                                        <Label Content="Total Pending Amount"/>
+                                        <TextBox x:Name="Textbox_Amount" IsReadOnly="True"/>
+                                    </StackPanel>
+                                </Grid>
+                            </UniformGrid> 
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Row="1" Header="Invoice History">
+                        <DataGrid  Grid.Row="1"  x:Name="Datagrid_Invoices" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding InvoiceNo }"  Header="InvNo" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn Binding="{Binding InvoiceSource }"  Header="Source" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding InvoiceAmount,StringFormat=N2}" Header="Amount" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding InvoicePaymentStatus}" Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                                <DataGridTextColumn  Binding="{Binding PrimaryRefference}" Header="Refference" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </GroupBox> 
+                </Grid>
+            </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <UniformGrid Columns="2">
                 <Button  x:Name="Button_NewCustomer"  Content="Add Customer" Width="150"  Height="Auto" Click="Button_NewCustomer_Click" />
-                <Button x:Name="Button_Save" Content="Save" Width="150" Style="{DynamicResource Button_Accept}" Height="Auto" />
+                <Button x:Name="Button_Refresh" Content="Refresh" Width="150" Style="{DynamicResource Button_Accept}" Height="Auto" Click="Button_Refresh_Click" />
             </UniformGrid>
         </Grid>
     </Grid>

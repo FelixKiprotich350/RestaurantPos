@@ -1,4 +1,5 @@
-﻿using DatabaseModels.CRM;
+﻿using DatabaseModels.Accounts;
+using DatabaseModels.CRM;
 using DatabaseModels.Vouchers;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
@@ -44,13 +45,23 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void LoadCustomers()
         {
             try
             {
                 using (var db = new PosDbContext())
                 {
-                    var data = db.CustomerAccount.ToList();
+                    var data = db.CustomerAccount.AsNoTracking().ToList();
+                    foreach(var x in data)
+                    {
+                        var p = db.PersonalAccount.AsNoTracking().FirstOrDefault(k => k.AccountNo == x.PersonAccNo);
+                        if (p!=null)
+                        {
+                            x.FullName = p.FullName;
+                            x.Gender = p.Gender;
+                        }
+                    }
                     Datagrid_CustomersList.ItemsSource = data;
                 }
             }
@@ -144,37 +155,23 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             //    MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             //}
         }
-
-        private void Button_Select_Click(object sender, RoutedEventArgs e)
+         
+        private void GetInvoiceHistory(string accno)
         {
             try
             {
-                 
-            }
-            catch (Exception exception1)
-            {
-                MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-           
-        }
-
-        private void GetHistory(string phoneno)
-        {
-            try
-            {
-                int total = 0;
-                int credit = 0;
+                decimal total = 0; 
                 using (var db = new PosDbContext())
                 {
-                    //var list = db.CustomerPointsAccount.Where(x => x.CustomerPhoneNo == phoneno).ToList();
-                    //foreach(var x in list)
-                    //{
-                    //    total += x.Debit;
-                    //    credit += x.Credit;
-                    //}
-                    
-                    //Datagrid_CustomersList.ItemsSource = list;
-                } 
+                    var list = db.InvoicesMaster.AsNoTracking().Where(x => x.CustomerAccNo == accno).ToList();
+                    foreach (var x in list)
+                    {
+                        total += x.InvoiceAmount; 
+                    }
+
+                    Datagrid_Invoices.ItemsSource = list;
+                }
+                Textbox_Amount.Text = total.ToString();
             }
             catch (Exception exception1)
             {
@@ -215,6 +212,31 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             catch (Exception exception1)
             {
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadCustomers();
+        }
+
+        private void Datagrid_CustomersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                //var items = db.OrderItem.AsNoTracking().Where(k=>k.OrderID==om.OrderNo).ToList();
+                if (Datagrid_CustomersList.SelectedItem is CustomerAccount om)
+                {
+                    Textbox_AccNumber.Text = om.PersonAccNo;
+                    Textbox_FullName.Text = om.FullName;
+                    Textbox_Status.Text = om.AccountStatus;
+                    Textbox_Gender.Text = om.Gender;
+                    GetInvoiceHistory(om.PersonAccNo);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

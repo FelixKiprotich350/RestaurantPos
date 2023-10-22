@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Accounts\InvoicePaymentItem.cs" />
     <Compile Include="CRM\EmployeeAccount.cs" />
     <Compile Include="CRM\CustomerAccount.cs" />
     <Compile Include="CRM\CustomerPointsAccount.cs" />
@@ -71,6 +71,7 @@
     <Compile Include="Navigation\NavigationMenu.cs" />
     <Compile Include="OrderTicket\OrderItem.cs" />
     <Compile Include="OrderTicket\OrderItemVoided.cs" />
+    <Compile Include="OrderTicket\OrderMasterVoided.cs" />
     <Compile Include="OrderTicket\OrderMaster.cs" />
     <Compile Include="OrderTicket\Un_OrderItem.cs" />
     <Compile Include="Accounts\InvoicesMaster.cs" />

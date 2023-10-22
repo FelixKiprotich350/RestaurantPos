@@ -110,7 +110,7 @@ namespace RestaurantManager.UserInterface.PosReports
             {
                 var db = new PosDbContext(); 
                 var t = db.OrderMaster.AsNoTracking().ToList();
-                MainList_VoidedItems = db.OrderItem.AsNoTracking().Where(o => o.IsItemVoided == true).ToList();
+                MainList_VoidedItems = db.OrderItem.AsNoTracking().ToList();
                 if (wp != null)
                 {
                     t = t.Where(a => a.Workperiod == wp.WorkperiodName).ToList();

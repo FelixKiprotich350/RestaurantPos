@@ -141,7 +141,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 Customers = db.CustomerAccount.AsNoTracking().ToList();
                 MainList_ProductItems = db.MenuProductItem.AsNoTracking().ToList();
  
-                var leftOuterJoin = from e in db.OrderItem.AsNoTracking().Where(a=>a.IsItemVoided==false)
+                var leftOuterJoin = from e in db.OrderItem.AsNoTracking()
                                     join d in db.OrderMaster.AsNoTracking() on e.OrderID equals d.OrderNo into dept
                                     from department in dept.DefaultIfEmpty().Where(d=>d.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString())
                                     select new

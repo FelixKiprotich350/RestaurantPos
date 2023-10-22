@@ -32,7 +32,7 @@ namespace RestaurantManager.UserInterface.PosReports
             {
                 using (var db = new PosDbContext())
                 {
-                    AllWorkPeriods = db.WorkPeriod.AsNoTracking().ToList();
+                    AllWorkPeriods = db.WorkPeriod.AsNoTracking().OrderBy(k => k.WorkperiodName).ToList();
                 }
                 Datagrid_AllWorkPeriods.ItemsSource = AllWorkPeriods;
             }

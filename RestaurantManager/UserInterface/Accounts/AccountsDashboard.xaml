@@ -30,6 +30,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid>
                     <Label Content="General Accounts" Margin="5,0,0,0"/>
@@ -105,7 +106,36 @@
                         </Grid> 
                     </Grid>
                 </Border>
+               
                 <Border Grid.Row="5" CornerRadius="12" Background="White" Margin="0,10" Padding="10,0,0,0">
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Invoice Account" FontSize="16"/>
+                            <TextBox x:Name="TextBox_Invoice" Grid.Row="1" Text="0.00" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+
+                        </Grid> 
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Content="Checked Out Invoices" FontSize="16"/>
+                            <TextBox x:Name="TextBox_CheckedInvoice" Grid.Row="1" Text="0.00" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+
+                        </Grid> 
+                    </Grid>
+                </Border>
+                <Border Grid.Row="6" CornerRadius="12" Background="White" Margin="0,10" Padding="10,0,0,0">
                     <Grid Margin="8">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -138,28 +168,16 @@
                                     </GroupBox.Header>
                                     <GroupBox.Content >
                                         <StackPanel>
-                                            <Grid x:Name="Grid_SingleDay">
-                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <RadioButton x:Name="RadioButton_SingleDay" GroupName="DateSelector" Content="Day" HorizontalAlignment="Left" FontWeight="Bold" Checked="RadioButton_SingleDay_Checked"/>
-                                                <DatePicker x:Name="DatePicker_SingleDay" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Grid.ColumnSpan="2" Focusable="False" />
-                                            </Grid>
+                                            
                                             <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <RadioButton x:Name="Radiobutton_Period" GroupName="DateSelector" Content="Period" HorizontalAlignment="Left" FontWeight="Bold" Margin="0,8,0,0" Checked="Radiobutton_Period_Checked"/>
                                                 <UniformGrid x:Name="UniformGrid_Period" Grid.Row="1" Columns="2" Rows="1" Margin="0,4,0,0">
                                                     <StackPanel Orientation="Vertical">
-                                                        <Label Content="From" FontSize="16"/>
+                                                        <Label Content="StartDate" FontSize="16"/>
                                                         <DatePicker x:Name="Datepicker_From" Grid.Row="1" VerticalAlignment="Center" FontSize="16" BorderThickness="1,1,0,1" BorderBrush="Black" Focusable="False" />
 
                                                     </StackPanel>
                                                     <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                                                        <Label Content="To" FontSize="16"/>
+                                                        <Label Content="EndDate" FontSize="16"/>
                                                         <DatePicker x:Name="Datepicker_To" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Focusable="False" />
 
                                                     </StackPanel>
@@ -175,17 +193,7 @@
                                     <GroupBox.Content>
                                         <StackPanel>
                                             <Label Content="Work Period Name" FontSize="16"/>
-                                            <ComboBox x:Name="Combobox_Workperiod">
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <Label Content="{Binding WorkperiodName}"/>
-                                                            <Label Content="---"/>
-                                                            <Label Content="{Binding WorkperiodStatus}"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            <Button x:Name="Button_SelectWorkPeriod" Height="32" Content="All" Style="{x:Null}" Click="Button_SelectWorkPeriod_Click"/>
                                         </StackPanel>
                                     </GroupBox.Content>
                                 </GroupBox>

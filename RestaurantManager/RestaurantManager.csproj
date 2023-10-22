@@ -221,9 +221,56 @@
     <Compile Include="Migrations\202310051458408_M11.designer.cs">
       <DependentUpon>202310051458408_M11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310051539108_M12.cs" />
+    <Compile Include="Migrations\202310051539108_M12.designer.cs">
+      <DependentUpon>202310051539108_M12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051845190_M13.cs" />
+    <Compile Include="Migrations\202310051845190_M13.designer.cs">
+      <DependentUpon>202310051845190_M13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310051954358_M14.cs" />
+    <Compile Include="Migrations\202310051954358_M14.designer.cs">
+      <DependentUpon>202310051954358_M14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310101431411_M15.cs" />
+    <Compile Include="Migrations\202310101431411_M15.designer.cs">
+      <DependentUpon>202310101431411_M15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310101704437_M16.cs" />
+    <Compile Include="Migrations\202310101704437_M16.designer.cs">
+      <DependentUpon>202310101704437_M16.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310121035392_M17.cs" />
+    <Compile Include="Migrations\202310121035392_M17.designer.cs">
+      <DependentUpon>202310121035392_M17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310131429508_M18.cs" />
+    <Compile Include="Migrations\202310131429508_M18.designer.cs">
+      <DependentUpon>202310131429508_M18.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310131436209_M19.cs" />
+    <Compile Include="Migrations\202310131436209_M19.designer.cs">
+      <DependentUpon>202310131436209_M19.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310131818217_M20.cs" />
+    <Compile Include="Migrations\202310131818217_M20.designer.cs">
+      <DependentUpon>202310131818217_M20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310131916449_M21.cs" />
+    <Compile Include="Migrations\202310131916449_M21.designer.cs">
+      <DependentUpon>202310131916449_M21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310141815474_M22.cs" />
+    <Compile Include="Migrations\202310141815474_M22.designer.cs">
+      <DependentUpon>202310141815474_M22.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserInterface\Accounts\ApproveInvoice.xaml.cs">
       <DependentUpon>ApproveInvoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\ViewInvoicesPayments.xaml.cs">
+      <DependentUpon>ViewInvoicesPayments.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Accounts\ViewInvoicesmaster.xaml.cs">
       <DependentUpon>ViewInvoicesmaster.xaml</DependentUpon>
@@ -239,6 +286,10 @@
     </Compile>
     <Compile Include="UserInterface\CustomersManagemnt\SelectPerson.xaml.cs">
       <DependentUpon>SelectPerson.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\FilterObjects\PaymentsFilter.cs" />
+    <Compile Include="UserInterface\Help\UpdateGuide.xaml.cs">
+      <DependentUpon>UpdateGuide.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Inventory\AddAssetItem.xaml.cs">
       <DependentUpon>AddAssetItem.xaml</DependentUpon>
@@ -282,8 +333,8 @@
     <Compile Include="UserInterface\CustomersManagemnt\PersonsList.xaml.cs">
       <DependentUpon>PersonsList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\CustomersManagemnt\NewCustomer.xaml.cs">
-      <DependentUpon>NewCustomer.xaml</DependentUpon>
+    <Compile Include="UserInterface\CustomersManagemnt\NewPersonalAccount.xaml.cs">
+      <DependentUpon>NewPersonalAccount.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\CustomersManagemnt\RedeeemSettings.xaml.cs">
       <DependentUpon>RedeeemSettings.xaml</DependentUpon>
@@ -312,6 +363,9 @@
     <Compile Include="UserInterface\Payments\InvoiceSalesBill.xaml.cs">
       <DependentUpon>InvoiceSalesBill.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\PointofSale\CheckoutInvoice.xaml.cs">
+      <DependentUpon>CheckoutInvoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\PointofSale\DiscountsSelector.xaml.cs">
       <DependentUpon>DiscountsSelector.xaml</DependentUpon>
     </Compile>
@@ -338,6 +392,15 @@
     </Compile>
     <Compile Include="UserInterface\POSMainContainer.xaml.cs">
       <DependentUpon>POSMainContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\Payments\TicketDetails.xaml.cs">
+      <DependentUpon>TicketDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\Payments\Paymentsmaster.xaml.cs">
+      <DependentUpon>Paymentsmaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\PosReports\Payments\PaymentTransactionDetails.xaml.cs">
+      <DependentUpon>PaymentTransactionDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\SalesReport\ProfitAnalysis.xaml.cs">
       <DependentUpon>ProfitAnalysis.xaml</DependentUpon>
@@ -426,8 +489,8 @@
     <Compile Include="UserInterface\PosReports\SalesReport\PaymentsReport.xaml.cs">
       <DependentUpon>PaymentsReport.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\PosReports\SalesReport\SalesReport.xaml.cs">
-      <DependentUpon>SalesReport.xaml</DependentUpon>
+    <Compile Include="UserInterface\PosReports\SalesReport\MSalesReport.xaml.cs">
+      <DependentUpon>MSalesReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\SalesReport\TicketsReports.xaml.cs">
       <DependentUpon>TicketsReports.xaml</DependentUpon>
@@ -478,6 +541,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserInterface\Accounts\ViewInvoicesPayments.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\Accounts\ViewInvoicesmaster.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -497,6 +564,10 @@
     <Page Include="UserInterface\CustomersManagemnt\SelectPerson.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Help\UpdateGuide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\Inventory\AddAssetItem.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -554,7 +625,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\CustomersManagemnt\NewCustomer.xaml">
+    <Page Include="UserInterface\CustomersManagemnt\NewPersonalAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -594,6 +665,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\PointofSale\CheckoutInvoice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\PointofSale\DiscountsSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -627,6 +702,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\POSMainContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\Payments\TicketDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\Payments\Paymentsmaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\PosReports\Payments\PaymentTransactionDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -746,7 +833,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\PosReports\SalesReport\SalesReport.xaml">
+    <Page Include="UserInterface\PosReports\SalesReport\MSalesReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -845,6 +932,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310051458408_M11.resx">
       <DependentUpon>202310051458408_M11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051539108_M12.resx">
+      <DependentUpon>202310051539108_M12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051845190_M13.resx">
+      <DependentUpon>202310051845190_M13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310051954358_M14.resx">
+      <DependentUpon>202310051954358_M14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310101431411_M15.resx">
+      <DependentUpon>202310101431411_M15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310101704437_M16.resx">
+      <DependentUpon>202310101704437_M16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310121035392_M17.resx">
+      <DependentUpon>202310121035392_M17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310131429508_M18.resx">
+      <DependentUpon>202310131429508_M18.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310131436209_M19.resx">
+      <DependentUpon>202310131436209_M19.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310131818217_M20.resx">
+      <DependentUpon>202310131818217_M20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310131916449_M21.resx">
+      <DependentUpon>202310131916449_M21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310141815474_M22.resx">
+      <DependentUpon>202310141815474_M22.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

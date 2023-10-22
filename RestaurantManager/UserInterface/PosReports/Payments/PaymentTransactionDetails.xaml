@@ -1,0 +1,88 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.PosReports.Payments.PaymentTransactionDetails"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.PosReports.Payments"
+        mc:Ignorable="d" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="Payment Transaction Details" Height="450" Width="600">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel >
+                    <UniformGrid Columns="4">
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Transaction Number"/>
+                                <TextBox x:Name="Textbox_TransactionNumber" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="ChekedOut By"/>
+                                <TextBox x:Name="Textbox_postedby" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Workperiod"/>
+                                <TextBox x:Name="Textbox_Workperiodd" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Posting Date"/>
+                                <TextBox x:Name="Textbox_Date" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+                    </UniformGrid>
+                    <UniformGrid Columns="4">
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Total Amount Paid"/>
+                                <TextBox x:Name="Textbox_TotalPaid" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Amount Charged"/>
+                                <TextBox x:Name="Textbox_amountcharged" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+
+
+                        <Grid>
+                            <StackPanel>
+                                <Label Content="Change"/>
+                                <TextBox x:Name="Textbox_change" IsReadOnly="True"/>
+                            </StackPanel>
+                        </Grid>
+
+
+                    </UniformGrid>
+                </StackPanel>
+            </Grid>
+            <DataGrid  Grid.Row="1"  x:Name="Datagrid_PaymentItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"   >
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Method }"  Header="Method" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                    <DataGridTextColumn  Binding="{Binding AmountPaid}" Header="Amount" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                    <DataGridTextColumn  Binding="{Binding PaymentDate}" Header="Date" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2">
+                <UniformGrid Columns="2">
+                    <Button x:Name="Button_Close" Width="200" Content="Close" Click="Button_Close_Click"/>
+                    <Button x:Name="Button_Reprint" Width="200" Content="Reprint Receipt"  Background="{DynamicResource Laxco_AcceptGreencolor}" Click="Button_Reprint_Click"/>
+                </UniformGrid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

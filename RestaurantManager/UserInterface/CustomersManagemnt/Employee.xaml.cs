@@ -159,30 +159,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
            
         }
 
-        private void GetHistory(string phoneno)
-        {
-            try
-            {
-                int total = 0;
-                int credit = 0;
-                using (var db = new PosDbContext())
-                {
-                    //var list = db.CustomerPointsAccount.Where(x => x.CustomerPhoneNo == phoneno).ToList();
-                    //foreach(var x in list)
-                    //{
-                    //    total += x.Debit;
-                    //    credit += x.Credit;
-                    //}
-                    
-                    //Datagrid_CustomersList.ItemsSource = list;
-                } 
-            }
-            catch (Exception exception1)
-            {
-                MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+        
         private void Button_NewCustomer_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -23,8 +23,6 @@ namespace DatabaseModels.Accounts
         public decimal InvoiceAmount { get; set; }
         [Required] 
         public string InvoiceStatus { get; set; }
-        [Required] 
-        public string InvoicePaymentStatus { get; set; }
         [Required]
         public DateTime InvoiceDate { get; set; }
         [Required]

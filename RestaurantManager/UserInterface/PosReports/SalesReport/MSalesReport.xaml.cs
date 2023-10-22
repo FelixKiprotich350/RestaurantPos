@@ -25,12 +25,12 @@ using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
 
-namespace RestaurantManager.UserInterface.PosReports
+namespace RestaurantManager.UserInterface.PosReports.SalesReport
 {
     /// <summary>
     /// Interaction logic for SalesReport.xaml
     /// </summary>
-    public partial class SalesReport : Page
+    public partial class MSalesReport : Page
     {
         readonly List<dynamic> MainList = new List<dynamic>();
         List<OrderItem> MainList_OItems = new List<OrderItem>();  
@@ -39,7 +39,7 @@ namespace RestaurantManager.UserInterface.PosReports
         List<PosUser> Users = new List<PosUser>();
         List<CustomerAccount> Customers = new List<CustomerAccount>();
         List<TicketPaymentMaster> TickPayMaster = new List<TicketPaymentMaster>(); 
-        public SalesReport()
+        public MSalesReport()
         {
             InitializeComponent();
 
@@ -152,7 +152,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 Customers = db.CustomerAccount.AsNoTracking().ToList();
                 MainList_ProductItems = db.MenuProductItem.AsNoTracking().ToList();
  
-                var leftOuterJoin = from e in db.OrderItem.AsNoTracking().Where(a=>a.IsItemVoided==false)
+                var leftOuterJoin = from e in db.OrderItem.AsNoTracking()
                                     join d in db.OrderMaster.AsNoTracking() on e.OrderID equals d.OrderNo into dept
                                     from department in dept.DefaultIfEmpty().Where(d=>d.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString())
                                     select new
@@ -268,7 +268,7 @@ namespace RestaurantManager.UserInterface.PosReports
                             total += TickPayMaster.Where(a => a.TicketNo == ordm.OrderNo).Sum(p => p.TotalAmountCharged);
                             custcount++;
                         }
-                        percustomer.Add(new { Phone = cust.PersonAccNo, FullName = cust.FullName, AppearanceCount = custcount, Total = total });
+                        percustomer.Add(new { Phone = cust.PersonAccNo, cust.FullName, AppearanceCount = custcount, Total = total });
                     }
                     //unregistered customers
                     int X_CustCount = 0;

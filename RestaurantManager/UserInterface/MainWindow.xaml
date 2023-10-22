@@ -104,7 +104,7 @@
                                             <ListView      ItemsSource="{Binding MenuItems}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" VerticalContentAlignment="Stretch" SelectionChanged="ListView_SelectionChanged"  >
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Border Height="Auto" CornerRadius="8" Tag="{Binding ProductGuid}" Background="#FFFFE4BA" Margin="0,-4">
+                                                        <Border Height="Auto" CornerRadius="8"  Background="#FFFFE4BA" Margin="0,-4">
                                                             <TextBlock Tag="{Binding PermissionCode}" Margin="4,0"  Text="{Binding PermissionShortName}" 
                                                        VerticalAlignment="Center" 
                                                        Foreground="Black" HorizontalAlignment="Left" FontWeight="Normal" FontSize="20"  />

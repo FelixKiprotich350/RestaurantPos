@@ -1,4 +1,5 @@
-﻿using DatabaseModels.OrderTicket;
+﻿using DatabaseModels.Inventory;
+using DatabaseModels.OrderTicket;
 using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
@@ -101,7 +102,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //get ticket items
                 using (var db = new PosDbContext())
                 {
-                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
+                    var a = db.OrderItem.Where(o => o.OrderID == order.OrderNo).ToList();
                     Datagrid_OrderItems.ItemsSource = a;
                 }
                 //find total
@@ -141,6 +142,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                     using (var db = new PosDbContext())
                     {
                         db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus = PosEnums.OrderTicketStatuses.Voided.ToString();
+                        foreach (var K in db.OrderItem.Where(m=>m.OrderID== TextBlock_TicketNo.Text.Trim()).ToList())
+                        {
+                            db.OrderItem.Remove(K);
+                        }
                         db.SaveChanges();
                     }
                     MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -210,12 +215,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
 
         }
-
-        private void Button_EditTicket_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+         
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -270,19 +270,19 @@ namespace RestaurantManager.UserInterface.PointofSale
                         using (var db = new PosDbContext())
                         {
                             OrderItem x = db.OrderItem.Where(a => a.OrderID == TextBlock_TicketNo.Text.Trim() && a.ItemRowGuid == o.ItemRowGuid).First();
-                            x.IsItemVoided = true; 
-                            //OrderItemVoided ov = new OrderItemVoided
-                            //{
-                            //    ItemRowGuid = x.ItemRowGuid,
-                            //    ParentProductItemGuid = x.ParentProductItemGuid,
-                            //    ItemName = x.ItemName,
-                            //    OrderID = x.OrderID,
-                            //    VoidTime = GlobalVariables.SharedVariables.CurrentDate(),
-                            //    ApprovedBy = p.ApprovingAdmin,
-                            //    VoidReason = ei.Textbox_Description.Text,
-                            //    WorkPeriod = wp.WorkperiodName
-                            //};
-                            //db.OrderItemVoided.Add(ov);
+                            db.OrderItem.Remove(x);
+                            OrderItemVoided ov = new OrderItemVoided
+                            {
+                                ItemRowGuid = Guid.NewGuid().ToString(),
+                                ProductItemGuid = x.ProductItemGuid,
+                                ItemName = x.ItemName,
+                                OrderID = x.OrderID,
+                                VoidTime = SharedVariables.CurrentDate(),
+                                SystemUser = p.ApprovingAdmin,
+                                VoidReason = ei.Textbox_Description.Text,
+                                WorkPeriod = wp.WorkperiodName
+                            };
+                            db.OrderItemVoided.Add(ov);
                             db.SaveChanges();
                         }
                         MessageBox.Show("Item Voided Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -311,7 +311,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_Print_Click(object sender, RoutedEventArgs e)
+        private void Button_PrintFull_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -330,7 +330,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                             MessageBox.Show("The Ticket Number is Invalid!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
-                        PrintReceipt();
+                        PrintReceipt("Ticket");
                         order.IsPrinted = true;
                         db.SaveChanges();
                     }
@@ -345,36 +345,50 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        public void PrintReceipt()
+        private void Button_PrintKotchenorder_Click(object sender, RoutedEventArgs e)
+        {
+            TicketNo = TextBlock_TicketNo.Text; 
+            PrintReceipt("Kitchen");
+        }
+
+        public void PrintReceipt(string printtype)
         {
             try
-            {
-                Debug.WriteLine(PrinterSettings.InstalledPrinters.Count);
+            { 
                 PrintDocument document = new PrintDocument();
-                document.PrintPage += new PrintPageEventHandler(this.ProvideContentForTicket);
+                if (printtype == "Kitchen")
+                {
+                    document.PrintPage += new PrintPageEventHandler(ProvideContentForKitchenorder);
+                }
+                else if (printtype == "Ticket")
+                {
+                    document.PrintPage += new PrintPageEventHandler(ProvideContentForFullTicket);
+                }
+                else
+                {
+                    return;
+                }
                 document.PrintController = new StandardPrintController();
                 //document.PrinterSettings.PrintFileName = "Ticket.pdf";
                 //document.PrinterSettings.PrintToFile = true;
                 document.Print();
+
             }
             catch (Exception exception1)
             {
                 MessageBox.Show(exception1.Message, "Failed to print Receipt", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+ 
         string TicketNo = "";
-        decimal GrossTotal = 0;
-        public void ProvideContentForTicket(object sender, PrintPageEventArgs e)
-        {
-           
+        decimal GrossTotal = 0; 
+        public void ProvideContentForFullTicket(object sender, PrintPageEventArgs e)
+        { 
             int Center_X = 150; 
-            List<OrderItem> receiptitems = Datagrid_OrderItems.Items.Cast<OrderItem>().ToList();
-
-            decimal taxamount = SharedVariables.ClientInfo().TaxPercentage * GrossTotal / 100;
+            List<OrderItem> receiptitems = Datagrid_OrderItems.Items.Cast<OrderItem>().ToList(); 
             winformdrawing.Graphics graphics = e.Graphics;
             //begin receipt
-            int topoffset = 20;
+            int topoffset = 10;
             winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
             {
                 LineAlignment = winformdrawing.StringAlignment.Center,
@@ -449,9 +463,100 @@ namespace RestaurantManager.UserInterface.PointofSale
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
             topoffset += 30;
             graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote2, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+        }
+ 
+        public void ProvideContentForKitchenorder(object sender, PrintPageEventArgs e)
+        { 
+            int Center_X = 150;
+            List<OrderItem> receiptitems = new List<OrderItem>();
+            var db = new PosDbContext(); 
+            List<MenuProductItem> menu = db.MenuProductItem.AsNoTracking().ToList();
+            foreach (var m in Datagrid_OrderItems.Items.Cast<OrderItem>().ToList())
+            {
+                var menuitem = menu.FirstOrDefault(k => k.ProductGuid == m.ProductItemGuid);
+                if (menuitem!=null)
+                {
+                    if (menuitem.Department == PosEnums.Departments.Restaurant.ToString() && menuitem.IsPrecount == false)
+                    {
+                        receiptitems.Add(m);
+                        //Debug.WriteLine(m.ItemName);
+                    }
+                }
+            }
+             
+            if (receiptitems.Count <= 0)
+            {
+                e.Cancel = true;
+                return;
+            }
             
+            winformdrawing.Graphics graphics = e.Graphics;
+            //begin receipt
+            int topoffset = 10;
+            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
+            {
+                LineAlignment = winformdrawing.StringAlignment.Center,
+                Alignment = winformdrawing.StringAlignment.Center
+            }; 
+            winformdrawing.StringFormat format = format1;
+            graphics.DrawString("Kitchen Order", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString("Ticket No:" + TicketNo, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Ticket Time:" + TextBlock_TicketDate.Text.ToString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Served By: " + SharedVariables.CurrentUser.UserFullName, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("Item                              Qty   Price ", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("______________________________________", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            foreach (OrderItem ord_i in receiptitems)
+            {
+                if (ord_i.ItemName.ToString().Length <= 0x1f)
+                {
+                    graphics.DrawString(ord_i.ItemName.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                }
+                else
+                {
+                    Array array = ord_i.ItemName.ToString().ToCharArray(0, 30);
+                    string s = "";
+                    int index = 0;
+                    while (true)
+                    {
+                        string text1;
+                        if (index >= array.Length)
+                        {
+                            graphics.DrawString(s, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                            break;
+                        }
+                        object obj1 = array.GetValue(index);
+                        if (obj1 != null)
+                        {
+                            text1 = obj1.ToString();
+                        }
+                        else
+                        {
+                            object local1 = obj1;
+                            text1 = null;
+                        }
+                        s += text1;
+                        index++;
+                    }
+                }
+                topoffset += 15;
+                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ((int)ord_i.Price).ToString(), "   " };
+                graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
+                topoffset += 15;
+            }
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Printing Time:" + SharedVariables.CurrentDate().ToString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+         
         }
 
-        
+
     }
 }

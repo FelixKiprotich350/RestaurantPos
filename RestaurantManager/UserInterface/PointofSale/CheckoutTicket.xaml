@@ -124,7 +124,7 @@
                                             <TextBox  x:Name="Textbox_SelectedAccount" IsReadOnly="True" FontWeight="Bold" MinWidth="200"/>
                                             <UniformGrid Columns="2">
                                                 
-                                                <Button  x:Name="Button_ResetInvoiceGroup" Content="Reset" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_ResetInvoiceGroup_Click"/>
+                                                <Button  x:Name="Button_ResetInvoiceGroup" Content="Reset" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_ResetPayparameters_Click"/>
                                                 <Button  x:Name="Button_SelectInvoiceAccount" Content="Select Account" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_SelectInvoiceAccount_Click"/>
 
                                             </UniformGrid>                                        </UniformGrid>

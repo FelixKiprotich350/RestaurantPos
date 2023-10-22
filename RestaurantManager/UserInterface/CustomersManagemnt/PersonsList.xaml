@@ -25,12 +25,12 @@
                     <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_CustomersList_MouseUp"  >
                         <DataGrid.Columns>
                             <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
-                            <DataGridTextColumn Binding="{Binding CustomerGuid}" Visibility="Hidden" Header="TableGuid" IsReadOnly="True" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding FullName}"  Header="Full Name" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn Binding="{Binding PhoneNumber}"  Header="Phone" IsReadOnly="True" Width="100" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="RegistrationDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
-                            <DataGridTextColumn  Binding="{Binding BirthDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="BirthDate" IsReadOnly="True" Width="150" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding AccountNo}"   Header="A/C NO" IsReadOnly="True" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding FullName}"  Header="Full Name" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding PhoneNumber}"  Header="Phone" IsReadOnly="True" Width="100" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding BirthDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="BirthDate" IsReadOnly="True" Width="150" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding RegistrationDate , StringFormat='{}{0:dd/MM/yyyy}'}" Header="RegistrationDate" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         </DataGrid.Columns>
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -47,12 +47,12 @@
                 </Grid>
                 <Grid Grid.Row="2" >
                     <UniformGrid Rows="1" Columns="3">
-                        <Button x:Name="Button_NewCustomer" Content="New Customer" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_NewCustomer_Click" />
+                        <Button x:Name="Button_NewCustomer" Content="Add New Person" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_NewCustomer_Click" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Total : " VerticalAlignment="Center"/>
                             <TextBox x:Name="TextBox_TotalCount" Width="100" VerticalAlignment="Center"/>
                         </StackPanel>
-                        <Button Content="Refresh" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" />
+                        <Button x:Name="Button_Refreshpersons" Content="Refresh" HorizontalAlignment="Center" Margin="8,2,8,-2" Padding="8" Height="Auto" Click="Button_Refreshpersons_Click" />
                     </UniformGrid>
                 </Grid>
             </Grid>

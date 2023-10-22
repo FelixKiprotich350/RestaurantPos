@@ -218,6 +218,7 @@ namespace RestaurantManager.UserInterface.Security
                         };
                         db.PosUser.Add(user);
                         db.SaveChanges();
+
                     }
 
                 }
@@ -418,6 +419,10 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-         
+
+        private void Border_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Button_Clear_Click(null, new RoutedEventArgs());
+        }
     }
 }

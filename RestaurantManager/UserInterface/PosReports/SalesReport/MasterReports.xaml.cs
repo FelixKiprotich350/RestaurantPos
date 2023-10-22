@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantManager.UserInterface.PosReports.SalesReport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ namespace RestaurantManager.UserInterface.PosReports
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Listview_ReportHeads.SelectedIndex = 0;
-            Frame_ReportArea.Content = new SalesReport();
+            Frame_ReportArea.Content = new MSalesReport();
         }
 
         private void Listview_ReportHeads_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,7 +44,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 ListViewItem Lv = Listview_ReportHeads.SelectedItem as ListViewItem;
                 if(Listview_ReportHeads.SelectedIndex==0)
                 {
-                    Frame_ReportArea.Content = new SalesReport();
+                    Frame_ReportArea.Content = new MSalesReport();
                 }
                 else if (Listview_ReportHeads.SelectedIndex == 1)
                 {

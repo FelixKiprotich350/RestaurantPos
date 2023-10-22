@@ -36,6 +36,10 @@ namespace DatabaseModels.Payments
         [Required]
         [MaxLength(100)]
         public string ReceivingUsername { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Workperiod { get; set; }
         [Required]
         public bool IsVoided { get; set; }
 

@@ -55,8 +55,11 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 List<PersonalAccount> rawlist = db.PersonalAccount.AsNoTracking().Where(p => p.AccountStatus == PosEnums.PersonAccountStatus.Active.ToString()).ToList();
                 foreach (var x in rawlist)
                 {
+                    if (db.CustomerAccount.AsNoTracking().FirstOrDefault(k=>k.PersonAccNo==x.AccountNo) == null)
+                    {
+                        billableaccounts.Add(x);
+                    }
                     
-                    billableaccounts.Add(x);
                 }
             }
             catch (Exception ex)

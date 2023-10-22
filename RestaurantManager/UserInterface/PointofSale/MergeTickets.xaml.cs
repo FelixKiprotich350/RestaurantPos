@@ -151,15 +151,14 @@ namespace RestaurantManager.UserInterface.PointofSale
                         OrderMaster x = db.OrderMaster.Where(a => a.OrderNo == t.OrderNo).First();
                         x.MergedChild = ordguid;
                         x.OrderStatus = "Merged";
-                        var y=db.OrderItem.Where(a => a.OrderID == x.OrderNo && a.IsItemVoided == false);
+                        var y=db.OrderItem.Where(a => a.OrderID == x.OrderNo );
                         foreach (var m in y)
                         {
                             OrderItem item = new OrderItem()
                             {
                                 ItemRowGuid = Guid.NewGuid().ToString(),
                                 ItemName = m.ItemName,
-                                OrderID = ordno,
-                                IsItemVoided = false,
+                                OrderID = ordno, 
                                 ProductItemGuid = m.ProductItemGuid,
                                 Price = m.Price,
                                 Quantity = m.Quantity, 

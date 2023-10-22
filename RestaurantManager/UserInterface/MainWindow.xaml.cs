@@ -104,11 +104,9 @@ namespace RestaurantManager.UserInterface
                     //    //x.BackgroundColor = Brushes.DarkGray;
                     //    modules.Add(x);
                     //}
-                   // var unwanted = x.MenuItems.Where(k => k.PermissionLevel == "2");
-                   //foreach(var m in unwanted)
-                   // {
-                   //     x.MenuItems.Remove(m);
-                   // }
+                   
+                    var subitems = SharedVariables.CurrentUser.User_Permissions_final.Where(k=>k.ParentModule==x.GroupCode&k.PermissionLevel=="1").ToList(); 
+                    x.MenuItems = new ObservableCollection<PermissionMaster>(subitems);
                     Modules_Collection.Add(x);
                 }
                 ModulesListView.ItemsSource = Modules_Collection;
@@ -314,7 +312,7 @@ namespace RestaurantManager.UserInterface
                     else
                     {
                         x.IsSelected = true;
-                        x.MenuItems = new ObservableCollection<PermissionMaster>(new Permissions().GetAllPermissions().Where(k => k.ParentModule == x.GroupCode).ToList());
+                       // x.MenuItems = new ObservableCollection<PermissionMaster>(new Permissions().GetAllPermissions().Where(k => k.ParentModule == x.GroupCode).ToList());
                     }
                 }
                 ModulesListView.Items.Refresh();

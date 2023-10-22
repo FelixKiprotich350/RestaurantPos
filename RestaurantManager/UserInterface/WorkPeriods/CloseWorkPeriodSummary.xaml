@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.WorkPeriods"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
-        Title="Closing WorkPeriod Summary" Height="600" Width="440" Loaded="Window_Loaded">
+        Title="Closing WorkPeriod Summary" Height="640" Width="440" Loaded="Window_Loaded">
     <Grid>
         <StackPanel Orientation="Vertical" Margin="8,0,8,0">
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
@@ -47,6 +47,10 @@
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                 <Label Content="Vouchers Total" Width="200" FontSize="16"/>
                 <TextBox x:Name="TextBox_Vouchers" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" IsReadOnly="True"/> 
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                <Label Content="Pending Total" Width="200" FontSize="16"/>
+                <TextBox x:Name="TextBox_PendingTotal" Width="200" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" IsReadOnly="True"/> 
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                 <Label Content="Summary Total" Width="200" FontSize="16" FontWeight="Bold"/>

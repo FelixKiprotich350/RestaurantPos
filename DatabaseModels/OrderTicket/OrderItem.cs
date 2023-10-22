@@ -50,9 +50,7 @@ namespace DatabaseModels.OrderTicket
         [Required]
         public string ParentItemGuid { get; set; }
         [Required]
-        public decimal DiscPercent { get; set; }
-        [Required]
-        public bool IsItemVoided { get; set; }
+        public decimal DiscPercent { get; set; } 
         [NotMapped]
         public string OldorNew { get; set; }
 

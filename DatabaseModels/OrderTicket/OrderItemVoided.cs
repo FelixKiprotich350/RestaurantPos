@@ -14,7 +14,7 @@ namespace DatabaseModels.OrderTicket
         public string ItemRowGuid { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ParentProductItemGuid { get; set; }
+        public string ProductItemGuid { get; set; }
         [Required]
         [MaxLength(100)]
         public string OrderID { get; set; }
@@ -26,7 +26,7 @@ namespace DatabaseModels.OrderTicket
         public string VoidReason { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ApprovedBy { get; set; }
+        public string SystemUser { get; set; }
         [Required]
         [MaxLength(200)]
         public string WorkPeriod { get; set; }

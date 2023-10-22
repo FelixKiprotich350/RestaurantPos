@@ -17,6 +17,7 @@
             <SolidColorBrush   x:Key="KD_Color1"   Color="#FFFFE4BA"/>
             <SolidColorBrush   x:Key="KD_Color2"   Color="#FFF0F0F0"/>
             <SolidColorBrush   x:Key="Myorangethemecolor"   Color="#FFF29400"/>
+            <SolidColorBrush   x:Key="Laxco_AcceptGreencolor"   Color="#FF076807"/>
             <!--Buttons-->
             <Style   TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" />

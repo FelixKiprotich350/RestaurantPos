@@ -34,7 +34,7 @@
                     <Grid >
                         <DockPanel LastChildFill="True" >
 
-                            <Border DockPanel.Dock="Right" Margin="12,0,0,0"  Padding="4" CornerRadius="16" Background="#FF8A151B" VerticalAlignment="Center">
+                            <Border DockPanel.Dock="Right" Margin="4,0,4,0"  Padding="6" CornerRadius="16" Background="#FF8A151B" VerticalAlignment="Center" MouseUp="Border_MouseUp" Cursor="Hand">
                                 <Button x:Name="Button_Clear" Padding="6" Click="Button_Clear_Click">
                                     <Button.Background>
                                         <ImageBrush ImageSource="/RestaurantManager;component/ImageResources/icons8-close.png"/>

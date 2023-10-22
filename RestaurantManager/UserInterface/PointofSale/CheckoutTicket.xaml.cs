@@ -70,10 +70,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                 Grid_paymentsview.Visibility = Visibility.Collapsed;
                 Grid_PaymentLowerbuttonbar.Visibility = Visibility.Collapsed;
                 Border_Ticketslist.Visibility = Visibility.Visible;
+
             }
             else
             {
-                Button_ResetInvoiceGroup_Click(null, new RoutedEventArgs());
+                 
+                Button_ResetPayparameters_Click(null, new RoutedEventArgs());
                 Grid_ticketsview.Visibility = Visibility.Collapsed;
                 Grid_TicketLowerbuttonbar.Visibility = Visibility.Collapsed;
                 Grid_paymentsview.Visibility = Visibility.Visible;
@@ -165,6 +167,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
+                
+                
                 ListView Lv = sender as ListView;
                 if (Lv.SelectedItem == null)
                 {
@@ -187,12 +191,16 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 AmountPaid = 0;
-                AmountToPay = 0;
-                discount = 0;
                 balance = 0;
+                R_receiptno = "";
+                R_totalpaid = 0;
+                R_TotalCharged = 0;
+                R_balance = 0;
+                TextBlock_TicketNo.Text = "";
+                Datagrid_TicketItems.ItemsSource = null;
                 //get ticket items
                 var db = new PosDbContext(); 
-                var a = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo && o.IsItemVoided == false).ToList();
+                var a = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo ).ToList();
                 Datagrid_TicketItems.ItemsSource = a;
                 //find total
                 decimal total = 0;
@@ -254,7 +262,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return;
                 }  
 
-                SwitchView(false); 
+                SwitchView(false);
+                LoadTicketCheckoutDetails(om);
                 LoadBankCards();
                 GetPartialPayments(); 
                 
@@ -266,169 +275,37 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         }
 
-
-        /// <summary>
-        /// printing begins here
-        /// </summary>
-        string R_receiptno = "";
-        decimal R_totalpaid = 0;
-        decimal R_TotalCharged = 0;
-        decimal R_balance = 0;
-        private void Button_Print_Click(object sender, RoutedEventArgs e)
+        private void LoadTicketCheckoutDetails(OrderMaster order)
         {
             try
             {
-                if (TextBlock_TicketNo.Text.Trim() == "")
+                AmountToPay = 0;
+                AmountPaid = 0;
+                balance = 0;
+                discount = 0;
+                //get ticket items
+                var db = new PosDbContext();
+                var b = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo &&o.IsGiftItem==false).ToList();
+                //find total
+                decimal total = 0;
+                foreach (OrderItem x in b)
                 {
-                    MessageBox.Show("Select a Ticket To Print!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
+                    total += x.Price * x.Quantity * ((100 - x.DiscPercent) / 100);
                 }
-                if (MessageBox.Show("You are about to print a ticket.\n\nAre you sure ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-                {
-                    using (var db = new PosDbContext())
-                    {
-                        var order = db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).FirstOrDefault();
-                        if (order is null)
-                        {
-                            MessageBox.Show("The Ticket Number is Invalid!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            return;
-                        }
-                        PrintReceipt();
-                        order.IsPrinted = true;
-                        db.SaveChanges();
-                    }
-                    MessageBox.Show("Completed. Ticket Printed!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    RefreshTicketList();
-                }
+                TextBox_TotalAmount.Text = total.ToString("N2");
+                AmountToPay = total;
+                Textbox_TaxAmount.Text = (total * SharedVariables.ClientInfo().TaxPercentage / 100).ToString("N2");
+                TextBlock_TicketNo.Text = order.OrderNo;
+                TextBlock_TicketDate.Text = order.OrderDate.ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
-        public void PrintReceipt()
-        {
-            try
-            {
-                PrintDocument document = new PrintDocument();
-                document.PrintPage += new PrintPageEventHandler(this.ProvideContentforsalesreceipt);
-                document.PrintController = new StandardPrintController();
-                //document.PrinterSettings.PrintFileName = "Receipt.pdf";
-                //document.PrinterSettings.PrintToFile = true;
-                document.Print();
-            }
-            catch (Exception exception1)
-            {
-                MessageBox.Show(exception1.Message, "Failed to print Receipt", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        public void ProvideContentforsalesreceipt(object sender, PrintPageEventArgs e)
-        {
-            int Center_X = 150;
-            List<OrderItem> receiptitems = Datagrid_TicketItems.Items.Cast<OrderItem>().ToList();
-
-            winformdrawing.Graphics graphics = e.Graphics;
-            //begin receipt
-            int topoffset = 10;
-            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
-            {
-                LineAlignment = winformdrawing.StringAlignment.Center,
-                Alignment = winformdrawing.StringAlignment.Center
-            };
-            winformdrawing.StringFormat format = format1;
-            graphics.DrawString(SharedVariables.ClientInfo().ClientTitle.ToUpper(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().PhysicalAddress, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Phone, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().Email, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ClientKRAPIN.ToUpper(), new winformdrawing.Font("Arial", 12f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString("Payment Receipt", new winformdrawing.Font("Palatino Linotype", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
-            graphics.DrawString("Receipt No:" + R_receiptno, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Date:" + SharedVariables.CurrentDate().ToShortDateString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("Counter : " + SharedVariables.LogInCounter, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Time : " + SharedVariables.CurrentDate().ToShortTimeString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("Served By: " + SharedVariables.CurrentUser.UserFullName, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("Item                              Qty Price    Total", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            graphics.DrawString("______________________________________", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
-            foreach (OrderItem ord_i in receiptitems)
-            {
-                if (ord_i.ItemName.ToString().Length <= 0x1f)
-                {
-                    graphics.DrawString(ord_i.ItemName.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-                }
-                else
-                {
-                    Array array = ord_i.ItemName.ToString().ToCharArray(0, 30);
-                    string s = "";
-                    int index = 0;
-                    while (true)
-                    {
-                        string text1;
-                        if (index >= array.Length)
-                        {
-                            graphics.DrawString(s, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-                            break;
-                        }
-                        object obj1 = array.GetValue(index);
-                        if (obj1 != null)
-                        {
-                            text1 = obj1.ToString();
-                        }
-                        else
-                        {
-                            object local1 = obj1;
-                            text1 = null;
-                        }
-                        s += text1;
-                        index++;
-                    }
-                }
-                topoffset += 15;
-                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ord_i.Price.ToString(), "   ", decimal.Parse(ord_i.Total.ToString()).ToString("N2") };
-                graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
-                topoffset += 15;
-            }
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString("TOTAL :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(R_TotalCharged.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Amount Paid :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(R_totalpaid.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString("Balance", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
-            graphics.DrawString(R_balance.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString("Tax%        TaxAmt", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Underline), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 70f, (float)topoffset);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 80f, (float)topoffset);
-            graphics.DrawString((SharedVariables.ClientInfo().TaxPercentage / 100 * R_TotalCharged).ToString("N2"), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
-            topoffset += 10;
-            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 20;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Italic), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-            topoffset += 15;
-            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
-        }
-
+       
         #endregion
 
         /// <summary>
@@ -673,9 +550,11 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_ResetInvoiceGroup_Click(object sender, RoutedEventArgs e)
+        private void Button_ResetPayparameters_Click(object sender, RoutedEventArgs e)
         {
             Textbox_SelectedAccount.Text = "";
+            Label_SelectedModeofpayment.Content = "";
+            Textbox_AmountToAdd.Text = ""; 
             Textbox_SelectedAccount.Tag = null;
         }
 
@@ -727,12 +606,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                CustomerAccount cust = (CustomerAccount)Textbox_SelectedAccount.Tag;
-                if (cust==null)
-                {
-                    MessageBox.Show("The Customer Account Does Not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                } 
+               
                 if (!int.TryParse(Textbox_AmountToAdd.Text.Trim(), out int amount))
                 {
                     MessageBox.Show("Enter Valid Amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -744,6 +618,43 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return;
                 }
                 GetPartialPayments();
+                //validate payments
+                var requiredamount = AmountToPay - AmountPaid;
+                if (AmountPaid>=AmountToPay)
+                {
+                    MessageBox.Show("The payment is Enough Already!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Cash.ToString())
+                {
+                    
+                    if (amount > requiredamount + 1000)
+                    {
+                        MessageBox.Show("The Cash Amount Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                }
+                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Invoice.ToString())
+                {
+                   
+                    if (amount > requiredamount )
+                    {
+                        MessageBox.Show("The Invoice Amount Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                }
+                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Mpesa.ToString()|Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Card.ToString())
+                {
+                   
+                    if (amount > requiredamount )
+                    {
+                        MessageBox.Show("The Amount Entered Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                }
                 var db = new PosDbContext();
                 InvoicesMaster invm = null;
                 TicketPaymentMaster tpm = null;
@@ -779,6 +690,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     Method = Label_SelectedModeofpayment.Content.ToString(),
                     SecondaryRefference = "None",
                     IsVoided = false,
+                    Workperiod=SharedVariables.CurrentOpenWorkPeriod().WorkperiodName,
                     ParentTransNo = tpm.TransNo,
                     ReceivingUsername = SharedVariables.CurrentUser.UserName,
                 };
@@ -794,6 +706,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
                 else if(pp.Method==PosEnums.TicketPaymentMethods.Invoice.ToString())
                 {
+                    CustomerAccount cust = (CustomerAccount)Textbox_SelectedAccount.Tag;
+                    if (cust == null)
+                    {
+                        MessageBox.Show("The Customer Account Does Not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    if (cust.InvoiceLimit < amount)
+                    {
+                        MessageBox.Show("The Amount invoiced Exceeds the Limit !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                     var newno = SharedVariables.GenerateInvoiceNumber();
                     if (newno<1 )
                     {
@@ -803,7 +726,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     invm = new InvoicesMaster()
                     {
                         InvoiceGuid = Guid.NewGuid().ToString(),
-                        InvoiceNo = "INV-" + newno,
+                        InvoiceNo = "INV/S/" + newno,
                         InvoiceAmount = amount,
                         InvoiceStatus = PosEnums.InvoiceStatuses.Issued.ToString(),
                         InvoiceSource = PosEnums.InvoiceSources.SalesBill.ToString(),
@@ -811,8 +734,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         SystemUser = SharedVariables.CurrentUser.UserName,
                         CustomerAccNo=cust.PersonAccNo,
                         InvoiceDate = SharedVariables.CurrentDate(),
-                        LastPaymentDate = SharedVariables.CurrentDate(),
-                        InvoicePaymentStatus=PosEnums.InvoicePaymentStatuses.Pending.ToString(),
+                        LastPaymentDate = SharedVariables.CurrentDate(), 
                         PrimaryRefference = tpm.TransNo,
                         ExpectedPayDate = SharedVariables.CurrentDate().AddMonths(1),
                         Notes="Invoiced due to Pending Bills",
@@ -836,16 +758,18 @@ namespace RestaurantManager.UserInterface.PointofSale
                 db.TicketPaymentItem.Add(pp);
                 db.SaveChanges();
                 MessageBox.Show("Payment Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                Button_ResetInvoiceGroup_Click(null, new RoutedEventArgs());
-                Label_SelectedModeofpayment.Content = "";
-                //this point means everything is okay,,,,get transaction numner 
-                GetPartialPayments();
-                Textbox_AmountToAdd.Text = "";
-                Label_SelectedModeofpayment.Content = "";
+                
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                Button_ResetPayparameters_Click(null, new RoutedEventArgs());
+                
+                GetPartialPayments();
             }
         }
 
@@ -854,11 +778,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 AmountPaid = 0;
-                //if (IsInitializing)
-                //{
-                //    return;
-                //}
-                var approved = payments.Where(k => k.IsInvoiceApproved); 
+                var approved = payments.Where(k => k.IsInvoiceApproved&&k.IsVoided==false); 
                 foreach (var x in approved)
                 {
                     AmountPaid += x.AmountPaid;
@@ -962,31 +882,59 @@ namespace RestaurantManager.UserInterface.PointofSale
                     TicketPaymentItem selected_payment = (TicketPaymentItem)Datagrid_Payments.SelectedItem;
                     if (MessageBox.Show("Are you sure you wnat to Cancel the Payment?", "Message Box", MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
+                        WorkPeriod wp = SharedVariables.CurrentOpenWorkPeriod();
+                        if (wp == null)
+                        {
+                            MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
                         PromptAdminPin p = new PromptAdminPin();
                         if ((bool)p.ShowDialog())
                         {
-                            WorkPeriod wp = SharedVariables.CurrentOpenWorkPeriod();
-                            if (wp == null)
-                            {
-                                MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                                return;
-                            }
-
-                            //remove item and add voided item
                             using (var db = new PosDbContext())
                             {
                                 TicketPaymentItem x = db.TicketPaymentItem.Where(a => a.PaymentGuid == selected_payment.PaymentGuid).FirstOrDefault();
-                                //if(x!=null)
-                                //{
-                                //    db.PartialPaymentItem.Remove(x);
-                                //}
-                                x.IsVoided = true;
+
+                                if (x.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
+                                {
+                                    var invpay = db.InvoicesMaster.FirstOrDefault(k => k.InvoiceNo == x.PrimaryRefference);
+                                    if (invpay != null)
+                                    {
+                                        if (invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString())
+                                        {
+                                            MessageBox.Show("The INVOICE of the following code has been Approved. Kindly ask the administrator to cancel the Invoice before proceeding!\n" + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            return;
+                                        }
+                                        else if (invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Paid.ToString())
+                                        {
+                                            MessageBox.Show("The INVOICE of the following code has been Paid. Kindly ask the administrator to Intervene!\nRefference Number : " + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            return;
+                                        }
+                                        else
+                                        {
+                                            x.IsVoided = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("The INVOICE of the following code does not Exist!\n" + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    x.IsVoided = true;
+                                }
+
 
                                 db.SaveChanges();
                                 GetPartialPayments();
+                                MessageBox.Show("Payment Canecelled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
                             }
-                            MessageBox.Show("Payment Canecelled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
                         }
+
                     }
                 }
             }
@@ -1008,7 +956,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         if (x.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                         {
                             var inv = db.InvoicesMaster.FirstOrDefault(k => k.InvoiceNo == x.PrimaryRefference);
-                            if (inv !=null & inv.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString())
+                            if (inv !=null & (inv.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString()| inv.InvoiceStatus == PosEnums.InvoiceStatuses.Paid.ToString()))
                             {
                                 x.IsInvoiceApproved = true;
                             }
@@ -1037,26 +985,19 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             SwitchView(true);
         }
-      
-
         
-        private void Button_CompletePayment_Click(object sender, RoutedEventArgs e)
+        private async void Button_CompletePayment_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 GetPartialPayments();
                 List<String> errors = new List<string>();
-                R_balance = 0;
+                //R_balance = 0;
                 R_totalpaid = 0;
-                R_TotalCharged = 0;
-                decimal total = 0;
+                R_TotalCharged = 0; 
                 var a = Datagrid_TicketItems.Items.Cast<OrderItem>().Where(m => m.IsGiftItem == false).ToList();
-                foreach (OrderItem x in a)
-                {
-                    total += x.Price * x.Quantity * ((100 - x.DiscPercent) / 100);
-                }
                 var db1 = new PosDbContext();
-                DateTime Tdate = GlobalVariables.SharedVariables.CurrentDate();
+                DateTime Tdate = SharedVariables.CurrentDate();
                 WorkPeriod wp = db1.WorkPeriod.Where(h => h.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).FirstOrDefault();
                 OrderMaster om = db1.OrderMaster.Where(h => h.OrderNo == TextBlock_TicketNo.Text).FirstOrDefault();
                 TicketPaymentMaster FinalTPM = db1.TicketPaymentMaster.Where(h => h.TicketNo == TextBlock_TicketNo.Text).FirstOrDefault();
@@ -1107,12 +1048,13 @@ namespace RestaurantManager.UserInterface.PointofSale
                             //        db.VoucherCard.Where(i => i.VoucherNumber == item.PrimaryRefference).First().VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Redeemed.ToString();
                             //    }
                             //}
+                            FinalTPM.TicketBalanceReturned = AmountPaid - AmountToPay;
                             db.SaveChanges();
-                            var result = db.OrderMaster.FirstOrDefault(b => b.OrderNo == FinalTPM.TicketNo);
-                            if (result != null)
+                            var order = db.OrderMaster.FirstOrDefault(b => b.OrderNo == FinalTPM.TicketNo);
+                            if (order != null)
                             {
-                                result.OrderStatus = GlobalVariables.PosEnums.OrderTicketStatuses.Completed.ToString();
-                                result.PaymentDate = GlobalVariables.SharedVariables.CurrentDate();
+                                order.OrderStatus = GlobalVariables.PosEnums.OrderTicketStatuses.Completed.ToString();
+                                order.PaymentDate = GlobalVariables.SharedVariables.CurrentDate();
                                 int x = db.SaveChanges();
                                 if (x != 1)
                                 {
@@ -1125,7 +1067,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 tr.Rollback();
                                 errors.Add("The Order Ticket does not exist!");
                             }
-                            var solditems = db.OrderItem.Where(b => b.OrderID == FinalTPM.TicketNo&&b.IsItemVoided==false);
+                            var solditems = db.OrderItem.Where(b => b.OrderID == FinalTPM.TicketNo);
 
                             foreach (var item_ in solditems)
                             {
@@ -1138,7 +1080,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                                     FlowDirection = "OUT",
                                     InTransactionCode = "N/A",
                                     Description = "Item Sold",
-                                    OutTransactionCode = result.OrderNo,
+                                    OutTransactionCode = order.OrderNo,
                                     IsCancelled = false,
                                 });
 
@@ -1152,15 +1094,22 @@ namespace RestaurantManager.UserInterface.PointofSale
                             }
                             if (ca != null)
                             {
-                               // db.CustomerPointsAccount.Add(ca);
+                                // db.CustomerPointsAccount.Add(ca);
                             }
                             db.SaveChanges();
                             if (errors.Count <= 0)
                             {
                                 tr.Commit();
                                 R_receiptno = FinalTPM.TransNo;
-                                PrintReceipt();
+                                R_totalpaid = FinalTPM.TotalAmountPaid;
+                                R_TotalCharged = FinalTPM.TotalAmountCharged;
+                                R_balance = FinalTPM.TicketBalanceReturned;
+                                
                                 MessageBox.Show("Checkout Completed Successfuly!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                if (MessageBox.Show("Print Payment Receipt?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question,MessageBoxResult.No)==MessageBoxResult.Yes)
+                                {
+                                    await PrintReceipt();
+                                }
                                 Button_Discard_Click(new object(), new RoutedEventArgs());
                                 SwitchView(true);
                                 RefreshTicketList();
@@ -1171,7 +1120,6 @@ namespace RestaurantManager.UserInterface.PointofSale
                             }
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -1181,9 +1129,142 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
+        /// <summary>
+        /// printing begins here
+        /// </summary>
+        string R_receiptno = "";
+        decimal R_totalpaid = 0;
+        decimal R_TotalCharged = 0;
+        decimal R_balance = 0;
+
+        public async Task PrintReceipt()
+        {
+            try
+            { 
+                await Task.Run(() =>
+                {
+                    PrintDocument document = new PrintDocument();
+                    document.PrintPage += new PrintPageEventHandler(this.ProvideContentforsalesreceipt);
+                    document.PrintController = new StandardPrintController();
+                    //document.PrinterSettings.PrintFileName = "Receipt.pdf";
+                    //document.PrinterSettings.PrintToFile = true;
+                    document.Print();
+                });
+            }
+            catch (Exception exception1)
+            {
+                MessageBox.Show(exception1.Message, "Failed to print Receipt", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void ProvideContentforsalesreceipt(object sender, PrintPageEventArgs e)
+        {
+            int Center_X = 150;
+            List<OrderItem> receiptitems = Datagrid_TicketItems.Items.Cast<OrderItem>().ToList();
+
+            winformdrawing.Graphics graphics = e.Graphics;
+            //begin receipt
+            int topoffset = 10;
+            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
+            {
+                LineAlignment = winformdrawing.StringAlignment.Center,
+                Alignment = winformdrawing.StringAlignment.Center
+            };
+            winformdrawing.StringFormat format = format1;
+            graphics.DrawString(SharedVariables.ClientInfo().ClientTitle.ToUpper(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().PhysicalAddress, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().Phone, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().Email, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().ClientKRAPIN.ToUpper(), new winformdrawing.Font("Arial", 12f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString("Payment Receipt", new winformdrawing.Font("Palatino Linotype", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 15;
+            graphics.DrawString("Receipt No:" + R_receiptno, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Date:" + SharedVariables.CurrentDate().ToShortDateString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("Counter : " + SharedVariables.LogInCounter, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Time : " + SharedVariables.CurrentDate().ToShortTimeString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("Served By: " + SharedVariables.CurrentUser.UserFullName, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 120f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("Item                              Qty Price    Total", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("______________________________________", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            foreach (OrderItem ord_i in receiptitems)
+            {
+                if (ord_i.ItemName.ToString().Length <= 0x1f)
+                {
+                    graphics.DrawString(ord_i.ItemName.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                }
+                else
+                {
+                    Array array = ord_i.ItemName.ToString().ToCharArray(0, 30);
+                    string s = "";
+                    int index = 0;
+                    while (true)
+                    {
+                        string text1;
+                        if (index >= array.Length)
+                        {
+                            graphics.DrawString(s, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                            break;
+                        }
+                        object obj1 = array.GetValue(index);
+                        if (obj1 != null)
+                        {
+                            text1 = obj1.ToString();
+                        }
+                        else
+                        {
+                            object local1 = obj1;
+                            text1 = null;
+                        }
+                        s += text1;
+                        index++;
+                    }
+                }
+                topoffset += 15;
+                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ord_i.Price.ToString(), "   ", decimal.Parse(ord_i.Total.ToString()).ToString("N2") };
+                graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
+                topoffset += 15;
+            }
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 15;
+            graphics.DrawString("TOTAL :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
+            graphics.DrawString(R_TotalCharged.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Amount Paid :", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
+            graphics.DrawString(R_totalpaid.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Balance", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 50f, (float)topoffset);
+            graphics.DrawString(R_balance.ToString("N2"), new winformdrawing.Font("Arial", 12f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 150f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 15;
+            graphics.DrawString("Tax%        TaxAmt", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Underline), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 70f, (float)topoffset);
+            topoffset += 15;
+            graphics.DrawString(SharedVariables.ClientInfo().TaxPercentage.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 80f, (float)topoffset);
+            graphics.DrawString((SharedVariables.ClientInfo().TaxPercentage / 100 * R_TotalCharged).ToString("N2"), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 135f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Italic), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 15;
+            graphics.DrawString(SharedVariables.ClientInfo().ReceiptNote1, new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+        }
+
 
         #endregion
 
-        
+
     }
 }

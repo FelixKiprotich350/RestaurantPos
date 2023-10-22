@@ -30,7 +30,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <DataGrid    x:Name="Datagrid_TicketsList" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
-                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp" SelectionChanged="Datagrid_TicketsList_SelectionChanged"  >
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding OrderGuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="True" Visibility="Collapsed"/>
@@ -102,11 +102,10 @@
                             </StackPanel>
                         </Grid>
                         <DataGrid  Grid.Row="1"  x:Name="Datagrid_TicketItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" 
-                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_TicketsList_MouseUp"  >
+                             Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"   >
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding ItemName }"  Header="ItemName" IsReadOnly="True" Width="*" CanUserSort="True"/>
-                                <DataGridTextColumn  Binding="{Binding IsItemVoided}" Header="Voided" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                                 <DataGridTextColumn  Binding="{Binding Quantity}" Header="Qty" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                                 <DataGridTextColumn  Binding="{Binding Price}" Header="Price" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                                 <DataGridTextColumn  Binding="{Binding Total}" Header="Total" IsReadOnly="True" Width="Auto" CanUserSort="True"/>

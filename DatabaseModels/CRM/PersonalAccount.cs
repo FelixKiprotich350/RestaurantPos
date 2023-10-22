@@ -25,6 +25,10 @@ namespace DatabaseModels.CRM
         [Index(IsUnique = true)]
         public string AccountNo { get; set; }
         [Required]
+        [MaxLength(100)]
+        [Index(IsUnique = true)]
+        public string NationalID { get; set; }
+        [Required]
         public decimal InvoiceLimit { get; set; }
         [Required]
         [MaxLength(200)]

@@ -20,7 +20,7 @@
                 <DataGrid  x:Name="Datagrid_AllWorkPeriods" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Binding="{Binding IsSelected, Mode=TwoWay}"  Header="Select" IsReadOnly="False" Width="80" CanUserSort="False" Visibility="Visible"/>
-                        <DataGridTextColumn Binding="{Binding WorkperiodName}"  Header="Product Name" IsReadOnly="True" Width="*" CanUserSort="True" Visibility="Visible"/>
+                        <DataGridTextColumn Binding="{Binding WorkperiodName}"  Header="WorkPerio Name" IsReadOnly="True" Width="*" CanUserSort="True" Visibility="Visible"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

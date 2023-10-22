@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseModels
+namespace RestaurantManager.UserInterface.FilterObjects
 {
-    public class Class1
+    public class PaymentsFilter
     {
+
     }
 }

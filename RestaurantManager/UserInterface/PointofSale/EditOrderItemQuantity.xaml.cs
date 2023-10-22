@@ -24,9 +24,23 @@ namespace RestaurantManager.UserInterface.PointofSale
         public EditOrderItemQuantity()
         {
             InitializeComponent();
+            Buton_Subtract.IsEnabled = false;
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (GlobalVariables.SharedVariables.CurrentUser.User_Permissions_final.FirstOrDefault(k=>k.PermissionCode=="A9")!=null)
+                {
+                    Buton_Subtract.IsEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-       
 
         private void Buton_Add_Click(object sender, RoutedEventArgs e)
         {
@@ -37,16 +51,19 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                int a = Convert.ToInt32(TextBox_Quantity.Text);
-                if (a <= 1)
+                if (Convert.ToInt32(TextBox_Quantity.Text) > 1)
                 {
-                    return;
+                    TextBox_Quantity.Text = (Convert.ToInt32(TextBox_Quantity.Text) - 1).ToString();
                 }
-                TextBox_Quantity.Text = (a - 1).ToString();
+                else
+                {
+                    TextBox_Quantity.Text = "1";
+                }
+
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                TextBox_Quantity.Text = "1";
             }
         }
 
@@ -84,6 +101,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
- 
+
+        
     }
 }

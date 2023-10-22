@@ -119,7 +119,7 @@ namespace RestaurantManager.UserInterface.Inventory
                         item.ProductName = Textbox_Productname.Text;
                         item.AvailabilityStatus = Combobox_Status.SelectedItem.ToString();
                         bool isprecount = false;
-                        if (Combobox_Status.SelectedItem.ToString() == "Yes")
+                        if (((ComboBoxItem)Combobox_Precount.SelectedItem).Content.ToString() == "Yes")
                         {
                             isprecount = true;
                         }

@@ -23,6 +23,8 @@ using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
 using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
+using winformdrawing = System.Drawing;
+using System.Drawing.Printing;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -108,7 +110,11 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void AddNewItemToOrder(MenuProductItem mpii)
         {
             try
-            {  
+            {
+                if (TextBlock_TicketNo.Text.Trim()=="")
+                {
+                    return;
+                }
 
                 decimal Sellingprice = 0;
                 decimal Buyingprice = 0;
@@ -175,8 +181,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.Total = Sellingprice * icount; 
                         i.BuyingPriceTotal = Buyingprice * icount;
                         i.BuyingPrice = Buyingprice;
-                        i.ServiceType = st.ItemServiceType;
-                        i.IsItemVoided = false;
+                        i.ServiceType = st.ItemServiceType; 
                         i.IsGiftItem = false;
                         i.DiscPercent = 0;
                         i.GiftItemGuid = "None";
@@ -225,8 +230,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                             Quantity = icount,
                             Price = giftoriginalproduct.TotalCost,
                             Total = icount* giftoriginalproduct.TotalCost,
-                            ServiceType = st.ItemServiceType,
-                            IsItemVoided = false,
+                            ServiceType = st.ItemServiceType, 
                             IsGiftItem = true,
                             DiscPercent = 0,
                             GiftItemGuid = "None",
@@ -298,12 +302,15 @@ namespace RestaurantManager.UserInterface.PointofSale
                         OrderItems.Remove(x);
                     }
                     OrderItems.Remove(item);
+                    
                 }
                 else if (ei.ReturningAction == "Update")
                 {
-                    decimal total = (decimal)ei.ReturningQuantity * item.Price;
+                    decimal sellingtotal = (decimal)ei.ReturningQuantity * item.Price;
+                    decimal buyingtotal = (decimal)ei.ReturningQuantity * item.BuyingPrice;
                     OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().Quantity = ei.ReturningQuantity;
-                    OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().Total = total;
+                    OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().Total = sellingtotal;
+                    OrderItems.Where(h => h.ProductItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType).First().BuyingPriceTotal = buyingtotal;
                     //update gifts quantity also
                     OrderItem x = OrderItems.Where(h => h.ProductItemGuid == item.GiftItemGuid&&h.ParentItemGuid == item.ProductItemGuid && h.ServiceType == item.ServiceType && h.IsGiftItem == true).FirstOrDefault();
                     if (x != null)
@@ -357,6 +364,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 Textbox_TotalAmount.Text = "0.00";
                 Label_Table.Content = "";
                 LabelCustomer.Content = "";
+                TextBlock_TicketNo.Text = "";
+                TextBlock_TicketDate.Text = "";
             }
             catch (Exception ex)
             {
@@ -364,7 +373,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_Complete_Click(object sender, RoutedEventArgs e)
+        private  void Button_Complete_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -410,12 +419,14 @@ namespace RestaurantManager.UserInterface.PointofSale
                             {
                                 db.OrderItem.FirstOrDefault(k=>k.ItemRowGuid==itemedit.ItemRowGuid).Quantity = itemedit.Quantity;
                                 db.OrderItem.FirstOrDefault(k => k.ItemRowGuid == itemedit.ItemRowGuid).Total = itemedit.Total;
+                                db.OrderItem.FirstOrDefault(k => k.ItemRowGuid == itemedit.ItemRowGuid).BuyingPriceTotal = itemedit.BuyingPriceTotal;
                             }
                         }
                       
                         db.SaveChanges();
+                        MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                         
                     }
-                    MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                     OrderItems.Clear();
                     ResetForm();
                 }
@@ -561,7 +572,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Button_SelectTicket_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            { 
                 if (Button_SelectTicket.Content.ToString() == "Select")
                 {
                     SelectTicketToUpdate st = new SelectTicketToUpdate();
@@ -572,7 +583,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         var a = db.OrderMaster.FirstOrDefault(k => k.OrderNo == st.SelectedTicketNumber);
                         if (a!=null)
                         {
-                            var b = db.OrderItem.Where(o => o.OrderID == a.OrderNo && o.IsItemVoided == false).ToList();
+                            var b = db.OrderItem.Where(o => o.OrderID == a.OrderNo ).ToList();
                             foreach(var x in b)
                             {
                                 x.OldorNew = "Old";
@@ -606,8 +617,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             } 
         }
-
-         
+        
     }
 
 }

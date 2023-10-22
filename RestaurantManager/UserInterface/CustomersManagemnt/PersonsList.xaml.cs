@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using RestaurantManager.ApplicationFiles;
+using DatabaseModels.CRM;
 
 namespace RestaurantManager.UserInterface.CustomersManagemnt
 {
@@ -37,8 +38,9 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             { 
                 using (var db = new PosDbContext())
                 {
-                    var data = db.PersonalAccount.ToList();
-                    Datagrid_CustomersList.ItemsSource = data;
+                    Datagrid_CustomersList.ItemsSource = null;
+                    var data = db.PersonalAccount.AsNoTracking().OrderBy(k=>k.AccountNo).ToList();
+                    Datagrid_CustomersList.ItemsSource = data; 
                 } 
             }
             catch (Exception exception1)
@@ -49,7 +51,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
 
         private void Button_NewCustomer_Click(object sender, RoutedEventArgs e)
         {
-            NewCustomer cust = new NewCustomer();
+            NewPersonalAccount cust = new NewPersonalAccount();
             cust.ShowDialog();
                     }
 
@@ -69,17 +71,28 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 }
                 if (dep is DataGridCell)
                 {
-                    if (Datagrid_CustomersList.CurrentCell.Column.Header.ToString() == "BirthDate")
+                    if (Datagrid_CustomersList.CurrentCell.Column.DisplayIndex==0)
                     {
-                       // MessageBox.Show("Birthdate");
+                        PersonalAccount p = (PersonalAccount)Datagrid_CustomersList.SelectedItem;
+                        NewPersonalAccount NP = new NewPersonalAccount(p.AccountNo);
+
+                        NP.ShowDialog();
+                        LoadPersons();
                     }
-                     
+
+                    
+
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Button_Refreshpersons_Click(object sender, RoutedEventArgs e)
+        {
+            LoadPersons();
         }
     }
 }

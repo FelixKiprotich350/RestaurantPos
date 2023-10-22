@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
         mc:Ignorable="d" WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
-        WindowStartupLocation="CenterScreen"   
+        WindowStartupLocation="CenterScreen"   Loaded="Window_Loaded"
         Title="Edit OrderItem" Height="250" Width="350">
     <Grid>
         <Grid.RowDefinitions>

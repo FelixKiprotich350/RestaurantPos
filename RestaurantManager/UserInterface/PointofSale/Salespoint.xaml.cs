@@ -23,6 +23,8 @@ using DatabaseModels.OrderTicket;
 using DatabaseModels.Inventory;
 using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
+using winformdrawing = System.Drawing;
+using System.Drawing.Printing;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -110,7 +112,11 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void AddNewItemToOrder(MenuProductItem mpii)
         {
             try
-            {  
+            {
+                if (TextBlock_TicketNo.Text.Trim() == "")
+                {
+                    return;
+                }
                 decimal Sellingprice = 0; 
                 decimal Buyingprice = 0;
                 int icount = 0;
@@ -176,8 +182,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         i.Total = Sellingprice * icount;
                         i.BuyingPriceTotal = Buyingprice * icount;
                         i.BuyingPrice = Buyingprice;
-                        i.ServiceType = st.ItemServiceType;
-                        i.IsItemVoided = false;
+                        i.ServiceType = st.ItemServiceType; 
                         i.IsGiftItem = false;
                         i.DiscPercent = 0;
                         i.GiftItemGuid = "None";
@@ -225,8 +230,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                             Quantity = icount,
                             Price = giftoriginalproduct.TotalCost,
                             Total = icount* giftoriginalproduct.TotalCost,
-                            ServiceType = st.ItemServiceType,
-                            IsItemVoided = false,
+                            ServiceType = st.ItemServiceType, 
                             IsGiftItem = true,
                             DiscPercent = 0,
                             GiftItemGuid = "None",
@@ -352,6 +356,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 Textbox_TotalAmount.Text = "0.00";
                 Label_Table.Content = "";
                 LabelCustomer.Content = "";
+                TextBlock_TicketNo.Text = "";
+                TextBlock_TicketDate.Text = "";
             }
             catch (Exception ex)
             {
@@ -359,57 +365,66 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        private void Button_Complete_Click(object sender, RoutedEventArgs e)
+        private async void Button_Complete_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
-                if (MessageBox.Show("Are you sure you want to Make an Order ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question)==MessageBoxResult.Yes)
+            { 
+                if (MessageBox.Show("Are you sure you want to Make an Order ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question)!=MessageBoxResult.Yes)
                 {
-                    int total = 0;
-                    WorkPeriod w;
-                    using (var db = new PosDbContext())
-                    {
-                        w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
-                        if (w == null)
-                        {
-                            MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
-                    }
-                    string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                    CustomerAccount cust = GetCustomer();
-                    OrderMaster om = new OrderMaster
-                    {
-                        OrderGuid = Guid.NewGuid().ToString(),
-                        OrderDate = SharedVariables.CurrentDate(),
-                        CustomerRefference = cust != null ? cust.PersonAccNo : "None",
-                        TicketTable = Label_Table.Content.ToString(),
-                        OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
-                        UserServing = SharedVariables.CurrentUser.UserName,
-                        PaymentDate = SharedVariables.CurrentDate(),
-                        IsPrinted = false,
-                        OrderNo = ordno,
-                        VoidReason = "None",
-                        Workperiod = w.WorkperiodName
-                    };
-                    foreach (var a in OrderItems)
-                    {
-                        a.OrderID = om.OrderNo;
-                    }
-                    foreach (var x in OrderItems)
-                    {
-                        total += (int)(x.Quantity * x.Price);
-                    }
-                    using (var db = new PosDbContext())
-                    {
-                        db.OrderMaster.Add(om);
-                        db.OrderItem.AddRange(OrderItems);
-                        db.SaveChanges();
-                    }
-                    MessageBox.Show("Order Sent Successfully! Ticket Number : " + om.OrderNo, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    OrderItems.Clear();
-                    ResetForm();
+                    return;
                 }
+                if (OrderItems.Count <=0)
+                {
+                    MessageBox.Show("Please Add Items To the Bill!", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    return;
+                }
+                int total = 0;
+                WorkPeriod w;
+                using (var db = new PosDbContext())
+                {
+                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).First();
+                    if (w == null)
+                    {
+                        MessageBox.Show("There is No Work Period Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                }
+                string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
+                CustomerAccount cust = GetCustomer();
+                OrderMaster om = new OrderMaster
+                {
+                    OrderGuid = Guid.NewGuid().ToString(),
+                    OrderDate = SharedVariables.CurrentDate(),
+                    CustomerRefference = cust != null ? cust.PersonAccNo : "None",
+                    TicketTable = Label_Table.Content.ToString(),
+                    OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
+                    UserServing = SharedVariables.CurrentUser.UserName,
+                    PaymentDate = SharedVariables.CurrentDate(),
+                    IsPrinted = false,
+                    OrderNo = ordno,
+                    VoidReason = "None",
+                    Workperiod = w.WorkperiodName
+                };
+                foreach (var a in OrderItems)
+                {
+                    a.OrderID = om.OrderNo;
+                }
+                foreach (var x in OrderItems)
+                {
+                    total += (int)(x.Quantity * x.Price);
+                }
+                using (var db = new PosDbContext())
+                {
+                    db.OrderMaster.Add(om);
+                    db.OrderItem.AddRange(OrderItems);
+                    db.SaveChanges();
+                }
+                ordertime = om.OrderDate;
+                TicketNo = om.OrderNo;
+                await PrintKitchenOrder();
+                MessageBox.Show("Order Sent Successfully! Ticket Number : " + om.OrderNo, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                OrderItems.Clear();
+                ResetForm();
             }
             catch (Exception ex)
             {
@@ -563,6 +578,119 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public async Task PrintKitchenOrder()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    Debug.WriteLine(PrinterSettings.InstalledPrinters.Count);
+                    PrintDocument document = new PrintDocument();
+                    document.PrintPage += new PrintPageEventHandler(this.ProvideContentForTicket);
+                    document.PrintController = new StandardPrintController();
+                    //document.PrinterSettings.PrintFileName = "Ticket.pdf";
+                    //document.PrinterSettings.PrintToFile = true;
+                    if (canprint)
+                    {
+                        document.Print();
+                    }
+                });
+            }
+            catch (Exception exception1)
+            {
+                MessageBox.Show(exception1.Message, "Failed to print Receipt", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        string TicketNo = "";
+        DateTime? ordertime = null;
+        bool canprint = false;
+        public void ProvideContentForTicket(object sender, PrintPageEventArgs e)
+        {
+
+            int Center_X = 150;
+            List<OrderItem> receiptitems = new List<OrderItem>();
+            var db = new PosDbContext();
+            List<MenuProductItem> menu = db.MenuProductItem.AsNoTracking().ToList();
+            foreach (var m in Datagrid_OrderItems.Items.Cast<OrderItem>().ToList())
+            {
+                if (menu.FirstOrDefault(k=>k.ProductGuid==m.ProductItemGuid&&k.Department==PosEnums.Departments.Restaurant.ToString() && k.IsPrecount==false) != null)
+                {
+                    receiptitems.Add(m);
+                }
+            }
+            if (receiptitems.Count <= 0)
+            {
+                return;
+            }
+            winformdrawing.Graphics graphics = e.Graphics;
+            //begin receipt
+            int topoffset = 10;
+            winformdrawing.StringFormat format1 = new winformdrawing.StringFormat
+            {
+                LineAlignment = winformdrawing.StringAlignment.Center,
+                Alignment = winformdrawing.StringAlignment.Center
+            };
+            winformdrawing.StringFormat format = format1; 
+            graphics.DrawString("Kitchen Order", new winformdrawing.Font("Palatino Linotype", 15f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            graphics.DrawString("____________", new winformdrawing.Font("Palatino Linotype", 15f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), (float)Center_X, (float)topoffset, format);
+            topoffset += 20;
+            graphics.DrawString("Ticket No:" + this.TicketNo, new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Ticket Time:" + ordertime.ToString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Served By: " + SharedVariables.CurrentUser.UserFullName, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 10;
+            graphics.DrawString("Item                              Qty   Price ", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            graphics.DrawString("______________________________________", new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            foreach (OrderItem ord_i in receiptitems)
+            {
+                if (ord_i.ItemName.ToString().Length <= 0x1f)
+                {
+                    graphics.DrawString(ord_i.ItemName.ToString(), new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                }
+                else
+                {
+                    Array array = ord_i.ItemName.ToString().ToCharArray(0, 30);
+                    string s = "";
+                    int index = 0;
+                    while (true)
+                    {
+                        string text1;
+                        if (index >= array.Length)
+                        {
+                            graphics.DrawString(s, new winformdrawing.Font("Arial", 10f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+                            break;
+                        }
+                        object obj1 = array.GetValue(index);
+                        if (obj1 != null)
+                        {
+                            text1 = obj1.ToString();
+                        }
+                        else
+                        {
+                            object local1 = obj1;
+                            text1 = null;
+                        }
+                        s += text1;
+                        index++;
+                    }
+                }
+                topoffset += 15;
+                string[] textArray1 = new string[] { "                                                     ", ord_i.Quantity.ToString().Trim(), " *  ", ((int)ord_i.Price).ToString(), "   " };
+                graphics.DrawString(string.Concat(textArray1), new winformdrawing.Font("Arial", 8f), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 0f, (float)topoffset);
+                topoffset += 15;
+            }
+            graphics.DrawString("----------------------------------------------------------------", new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Bold), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            topoffset += 20;
+            graphics.DrawString("Printing Time:" + SharedVariables.CurrentDate().ToString(), new winformdrawing.Font("Arial", 10f, winformdrawing.FontStyle.Regular), new winformdrawing.SolidBrush(winformdrawing.Color.Black), 10f, (float)topoffset);
+            canprint = true;
+        }
+
     }
 
 }

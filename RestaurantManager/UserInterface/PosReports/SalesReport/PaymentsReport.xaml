@@ -51,7 +51,7 @@
                     <DataGrid Grid.Row="0"   x:Name="Datagrid_Payments" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" SelectionChanged="Datagrid_Payments_SelectionChanged" >
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding TransNo }"  Header="TransNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
+                            <DataGridTextColumn Binding="{Binding TransNo }"  Header="TransNo" IsReadOnly="True" Width="*" CanUserSort="True"/>
                             <DataGridTextColumn  Binding="{Binding AmountCharged,StringFormat=N2}" Header="AmountCharged" IsReadOnly="True" Width="*" CanUserSort="True"/>
                             <DataGridTextColumn  Binding="{Binding AmountPaid,StringFormat=N2}" Header="AmountPaid" IsReadOnly="True" Width="*" CanUserSort="True"/>
                             <DataGridTextColumn  Binding="{Binding Balance,StringFormat=N2}" Header="Balance" IsReadOnly="True" Width="*" CanUserSort="True"/>

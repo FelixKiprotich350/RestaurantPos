@@ -19,7 +19,11 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// </summary>
     public partial class ApproveInvoice : Window
     { 
-        public bool IsApproved = false; 
+        /// <summary>
+        /// approved=1
+        /// cancelled =0
+        /// </summary>
+        public int IsApproved = -1; 
         public ApproveInvoice()
         {
             InitializeComponent();
@@ -29,12 +33,14 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Buton_Add_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+            IsApproved = 1;
             Close();
         }
 
         private void Buton_Subtract_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            this.DialogResult = true;
+            IsApproved = 0;
             Close();
         }
  

@@ -57,7 +57,7 @@ namespace RestaurantManager.GlobalVariables
             {
                 var db = new PosDbContext();
                 w =  db.InvoicesMaster.Count() + 1;
-                if (db.InvoicesMaster.AsNoTracking().FirstOrDefault(k=>k.InvoiceNo=="INV-"+w)!=null)
+                if (db.InvoicesMaster.AsNoTracking().FirstOrDefault(k=>k.InvoiceNo=="INV/S/"+w)!=null)
                 {
                     w =db.InvoicesMaster.Count() + 2;
                 }

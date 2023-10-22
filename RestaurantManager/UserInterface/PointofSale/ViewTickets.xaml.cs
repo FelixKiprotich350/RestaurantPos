@@ -82,16 +82,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         return;
                     }
-                    var db = new PosDbContext();
-                    OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
-                    var items = db.OrderItem.AsNoTracking().Where(k=>k.OrderID==om.OrderNo).ToList();
-                    Textbox_TicketNumber.Text = om.OrderNo;
-                    Textbox_postedby.Text = om.UserServing;
-                    Textbox_Status.Text = om.OrderStatus;
-                    Textbox_Date.Text = om.OrderDate.ToString();
-                    Textbox_ItemsCount.Text = items.Count.ToString();
-                    Textbox_Workperiodd.Text = om.Workperiod.ToString();
-                    Datagrid_TicketItems.ItemsSource = items;
+                   
                 }
             }
             catch (Exception ex)
@@ -136,6 +127,27 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //        return p.ProductName.ToLower().Contains(filter.ToLower()) || p.AvailabilityStatus.ToString().ToLower().Contains(filter.ToLower());
                 //    };
                 //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Datagrid_TicketsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                var db = new PosDbContext();
+                OrderMaster om = Datagrid_TicketsList.SelectedItem as OrderMaster;
+                var items = db.OrderItem.AsNoTracking().Where(k => k.OrderID == om.OrderNo).ToList();
+                Textbox_TicketNumber.Text = om.OrderNo;
+                Textbox_postedby.Text = om.UserServing;
+                Textbox_Status.Text = om.OrderStatus;
+                Textbox_Date.Text = om.OrderDate.ToString();
+                Textbox_ItemsCount.Text = items.Count.ToString();
+                Textbox_Workperiodd.Text = om.Workperiod.ToString();
+                Datagrid_TicketItems.ItemsSource = items;
             }
             catch (Exception ex)
             {

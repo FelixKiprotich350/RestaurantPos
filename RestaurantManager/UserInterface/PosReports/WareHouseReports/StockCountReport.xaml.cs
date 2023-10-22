@@ -59,8 +59,7 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                               select new
                               {
                                   oi.ProductItemGuid,
-                                  oi.ItemName,
-                                  oi.IsItemVoided,
+                                  oi.ItemName, 
                                   oi.OrderID,
                                   ItemQuantity = oi.Quantity,
                                   TicketStatus=d.OrderStatus
@@ -196,8 +195,7 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                               select new
                               {
                                   oi.ProductItemGuid,
-                                  oi.ItemName,
-                                  oi.IsItemVoided,
+                                  oi.ItemName, 
                                   oi.OrderID,
                                   ItemQuantity = oi.Quantity,
                                   TicketStatus = d.OrderStatus

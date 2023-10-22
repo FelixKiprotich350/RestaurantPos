@@ -46,15 +46,12 @@ namespace RestaurantManager.GlobalVariables
 
         public enum InvoiceStatuses
         {
-            Issued,
+            Issued, 
+            Rejected,
             Approved,
-            Cancelled, 
-        }
-        public enum InvoicePaymentStatuses
-        {
-            Pending,
             Paid
-        }
+
+        } 
         public enum InvoiceSources
         {
             SalesBill,

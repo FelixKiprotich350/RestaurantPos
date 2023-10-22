@@ -117,7 +117,7 @@ namespace RestaurantManager.UserInterface.Payments
 
         private void Button_Accept_Click(object sender, RoutedEventArgs e)
         {
-            var acc = (PersonalAccount)Textbox_SelectedCustomerPhone.Tag;
+            var acc = (CustomerAccount)Textbox_SelectedCustomerPhone.Tag;
             if (acc!=null)
             {
                 this.DialogResult = true;
@@ -161,7 +161,7 @@ namespace RestaurantManager.UserInterface.Payments
         {
             try
             {
-                PersonalAccount acc = (PersonalAccount)Datagrid_billableaccounts.SelectedItem;
+                CustomerAccount acc = (CustomerAccount)Datagrid_billableaccounts.SelectedItem;
                 if (acc != null)
                 { 
                     Textbox_SelectedCustomerPhone.Text = acc.FullName;

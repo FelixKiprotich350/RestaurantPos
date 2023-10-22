@@ -13,6 +13,7 @@ using DatabaseModels.GeneralSettings;
 using DatabaseModels.WorkPeriod;
 using System.Data.Entity.Infrastructure;
 using DatabaseModels.OrderTicket;
+
 using System.Diagnostics;
 using DatabaseModels.Vouchers;
 using DatabaseModels.CRM;
@@ -28,14 +29,14 @@ namespace RestaurantManager
         //Server=LAPTOP-FELIX;Database=LaxcPosDb;User Id=sa;Password=1234;
 
        //public PosDbContext() : base("server=" + AppStaticvalues.DbServer + ";port=" + AppStaticvalues.DbPort + ";database=restpos;uid=" + AppStaticvalues.DbUser + ";password=" + AppStaticvalues.DbPassword + ";")
-        public PosDbContext() : base(GlobalVariables.SharedVariables.GetdevMysqlDbConnectionString())
+        public PosDbContext() : base(GlobalVariables.SharedVariables.GetproductionMysqlDbConnectionString())
         { 
             Database.SetInitializer<PosDbContext>(null);
             //Database.CreateIfNotExists();
             //Database.SetInitializer<PosDbContext>(new MyInitializer());
             //this.Database.CommandTimeout=10; 
             // Database.Initialize(false);
-
+            //Database.Log = Console.Write;
         }
  
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -93,6 +94,8 @@ namespace RestaurantManager
         //pos & orders
         public DbSet<OrderMaster> OrderMaster { get; set; } 
         public DbSet<OrderItem> OrderItem { get; set; } 
+        public DbSet<OrderItemVoided> OrderItemVoided { get; set; } 
+        public DbSet<OrderMasterVoided> OrderMasterVoided { get; set; } 
         public DbSet<WorkPeriod> WorkPeriod { get; set; }
         //Vouchers
         public DbSet<VoucherCard> VoucherCard { get; set; }
@@ -101,6 +104,7 @@ namespace RestaurantManager
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; } 
         public DbSet<InvoicesMaster> InvoicesMaster { get; set; } 
+        public DbSet<InvoicePaymentItem> InvoicePaymentItem { get; set; } 
         //settings
         public DbSet<ClientInfoDetails> ClientInfo { get; set; }
         public DbSet<TableEntity> TableEntity { get; set; }

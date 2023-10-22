@@ -2,9 +2,11 @@
 using DatabaseModels.Security;
 using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles; 
-using RestaurantManager.GlobalVariables; 
+using RestaurantManager.GlobalVariables;
+using RestaurantManager.UserInterface.PosReports;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +40,6 @@ namespace RestaurantManager.UserInterface.Accounts
                     using (var b = new PosDbContext())
                     {
                        Combobox_UserName.ItemsSource = b.PosUser.AsNoTracking().ToList();
-                    Combobox_Workperiod.ItemsSource = b.WorkPeriod.AsNoTracking().ToList();
                     }
                  
             }
@@ -48,16 +49,18 @@ namespace RestaurantManager.UserInterface.Accounts
             }
         }
 
-        private void Button_Apply_Click(object sender, RoutedEventArgs e)
+        private void Button_Apply1_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 ClearTotals();
                 List<TicketPaymentMaster> tlist = new List<TicketPaymentMaster>();
+                List<InvoicePaymentItem> invlist = new List<InvoicePaymentItem>();
                 using (var b = new PosDbContext())
                 {
                    
                     tlist = b.TicketPaymentMaster.AsNoTracking().ToList();
+                    invlist = b.InvoicePaymentItem.AsNoTracking().ToList();
 
                 }  
                 if ((bool)Checkbox_ByUser.IsChecked)
@@ -73,58 +76,8 @@ namespace RestaurantManager.UserInterface.Accounts
                     }
                 }
                 if ((bool)Checkbox_PaymentByDate.IsChecked)
-                {
-                    if ((bool)RadioButton_SingleDay.IsChecked)
-                    {
-                        DateTime sday = (DateTime)DatePicker_SingleDay.SelectedDate;
-                        if (sday == null)
-                        {
-                            MessageBox.Show("Select Date Parameter!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
-                        if (sday.ToString().Trim() == "")
-                        {
-                            MessageBox.Show("Select Date Parameter!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
-                        tlist.RemoveAll(b => b.PaymentDate.ToShortDateString() != sday.ToShortDateString());
-
-                    }
-                    else if ((bool)Radiobutton_Period.IsChecked)
-                    {
-                        DateTime from_day = (DateTime)Datepicker_From.SelectedDate;
-                        DateTime to_day = (DateTime)Datepicker_To.SelectedDate;
-                        if (from_day == null | to_day == null)
-                        {
-                            MessageBox.Show("Select the Start Date and End Date of the Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
-                        if (from_day.ToShortDateString().Trim() == "" | to_day.ToShortDateString().Trim() == "")
-                        {
-                            MessageBox.Show("Select the Start Date and End Date of the Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
-                        }
-                        tlist.RemoveAll(b => b.PaymentDate.Date < from_day.Date && b.PaymentDate > to_day.Date);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Select Date Parameter!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                }
-                if ((bool)Checkbox_ByWorkPeriod.IsChecked)
-                {
-                    if (Combobox_Workperiod.SelectedItem != null)
-                    {
-                        tlist.RemoveAll(b => b.WorkPeriod != ((WorkPeriod)Combobox_Workperiod.SelectedItem).WorkperiodName);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Select Workperiod!", "Message Box", MessageBoxButton.OK);
-                        return;
-                    }
-                }
-                GetAccountsTotal(tlist);
+                { }
+                GetAccountsTotal(tlist,invlist);
             }
             catch (Exception ex)
             {
@@ -141,14 +94,16 @@ namespace RestaurantManager.UserInterface.Accounts
             Textbox_Totals.Text="0.00";
         }
 
-        private void GetAccountsTotal(List<TicketPaymentMaster> tlist)
+        private void GetAccountsTotal(List<TicketPaymentMaster> tlist, List<InvoicePaymentItem> invlist)
         {
             try
             {
                 decimal mpesa = 0;
                 decimal cash = 0;
-                decimal cards = 0;
+                decimal cards = 0; 
                 decimal voucher = 0;
+                decimal invoice = 0;
+                decimal invoicecheked = 0;
                 decimal cashbalance = 0;
                 decimal unknown = 0;
 
@@ -158,7 +113,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     return;
                 }
                 var innerGroupJoinQuery = from m in tlist
-                                          join t in db.TicketPaymentItem on m.TicketNo equals t.ParentOrderNo
+                                          join t in db.TicketPaymentItem.AsNoTracking().Where(k=>k.IsVoided==false) on m.TicketNo equals t.ParentOrderNo
                                           select new { m, t };
 
 
@@ -181,6 +136,10 @@ namespace RestaurantManager.UserInterface.Accounts
                     {
                         voucher += x.t.AmountPaid;
                     }
+                    else if (x.t.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
+                    {
+                        invoice += x.t.AmountPaid;
+                    }
                     else
                     {
                         unknown += x.t.AmountPaid;
@@ -190,12 +149,17 @@ namespace RestaurantManager.UserInterface.Accounts
                 {
                     cashbalance += y.TicketBalanceReturned;
                 }
-
+                foreach (var m in invlist)
+                {
+                    invoicecheked += m.AmountPaid;
+                }
                 Textbox_CashTotal.Text = (cash-cashbalance).ToString();
                 Textbox_Mpesa.Text = mpesa.ToString();
                 TextBox_Vouchers.Text = voucher.ToString();
                 Textbox_Cards.Text = cards.ToString();
-                Textbox_Totals.Text = (cash + mpesa + cards-cashbalance).ToString();
+                TextBox_Invoice.Text = invoice.ToString();
+                TextBox_CheckedInvoice.Text = invoicecheked.ToString();
+                Textbox_Totals.Text = (cash +invoice+ mpesa + cards-cashbalance).ToString();
                 if (unknown > 0)
                 {
                     MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -207,13 +171,96 @@ namespace RestaurantManager.UserInterface.Accounts
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
- 
-    
-        private void RadioButton_SingleDay_Checked(object sender, RoutedEventArgs e)
+
+        private void Button_Apply_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                DatePicker_SingleDay.SelectedDate = null;
+                ClearTotals();
+                DateTime? startdate = null;
+                DateTime? enddate = null;
+                WorkPeriod wperiod = null;
+                if (Button_SelectWorkPeriod.Content.ToString() == "All")
+                {
+                    wperiod = (WorkPeriod)Button_SelectWorkPeriod.Tag;
+                }
+                else
+                {
+                    wperiod = (WorkPeriod)Button_SelectWorkPeriod.Tag;
+                }
+                if ((bool)Checkbox_PaymentByDate.IsChecked)
+                {
+                    if (Datepicker_From.SelectedDate==null| Datepicker_To.SelectedDate==null)
+                    {
+                        MessageBox.Show("Select Start Date & End Date!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    startdate = Datepicker_From.SelectedDate;
+                    enddate = Datepicker_To.SelectedDate;
+
+                } 
+                LoadPayments(wperiod, startdate, enddate);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        void LoadPayments(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
+        {
+            try
+            {
+                decimal total = 0;
+                decimal cash = 0;
+                decimal mpesa = 0;
+                decimal cards = 0;
+                decimal invoice = 0;
+                decimal change = 0;
+                ObservableCollection<TicketPaymentItem> payments = new ObservableCollection<TicketPaymentItem>();
+                ObservableCollection<InvoicePaymentItem> invpayments = new ObservableCollection<InvoicePaymentItem>();
+                var db = new PosDbContext();
+                var paylist = db.TicketPaymentItem.AsNoTracking().ToList();
+                var invlist = db.InvoicePaymentItem.AsNoTracking().ToList();
+
+                if (wp != null)
+                {
+                    paylist.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
+                }
+                if (startdate != null)
+                {
+                    paylist.RemoveAll(w => w.PaymentDate < startdate);
+
+                }
+                if (enddate != null)
+                {
+                    paylist.RemoveAll(w => w.PaymentDate > enddate);
+                }
+                payments = new ObservableCollection<TicketPaymentItem>(paylist);
+                var forsum = paylist.Where(k => k.IsVoided == false);
+                total = forsum.Sum(t => t.AmountPaid);
+                cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountPaid);
+                mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountPaid);
+                cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountPaid);
+                invoice = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountPaid);
+                Textbox_CashTotal.Text = (cash - change).ToString();
+                Textbox_Mpesa.Text = mpesa.ToString(); 
+                Textbox_Cards.Text = cards.ToString();
+                TextBox_Invoice.Text = invoice.ToString(); 
+                Textbox_Totals.Text = (cash + invoice + mpesa + cards - change).ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void RadioButton_SingleDay_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {  
                 Datepicker_From.SelectedDate = null;
                 Datepicker_To.SelectedDate = null;
             }
@@ -226,8 +273,7 @@ namespace RestaurantManager.UserInterface.Accounts
         private void Radiobutton_Period_Checked(object sender, RoutedEventArgs e)
         {
             try
-            {
-                DatePicker_SingleDay.SelectedDate = null;
+            { 
                 Datepicker_From.SelectedDate = null;
                 Datepicker_To.SelectedDate = null;
             }
@@ -240,8 +286,7 @@ namespace RestaurantManager.UserInterface.Accounts
         private void Checkbox_PaymentByDate_Unchecked(object sender, RoutedEventArgs e)
         {
             try
-            {
-                DatePicker_SingleDay.SelectedDate = null;
+            { 
                 Datepicker_From.SelectedDate = null;
                 Datepicker_To.SelectedDate = null;
             }
@@ -256,6 +301,36 @@ namespace RestaurantManager.UserInterface.Accounts
             try
             {
                 Combobox_UserName.SelectedItem = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_SelectWorkPeriod_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SelectWorkPeriod w = new SelectWorkPeriod();
+                if ((bool)w.ShowDialog())
+                {
+                    if (w.SelectedWorkperiod != null)
+                    {
+                        Button_SelectWorkPeriod.Tag = w.SelectedWorkperiod;
+                        Button_SelectWorkPeriod.Content = w.SelectedWorkperiod.WorkperiodName;
+                    }
+                    else
+                    {
+                        Button_SelectWorkPeriod.Tag = null;
+                        Button_SelectWorkPeriod.Content = "All";
+                    }
+                }
+                else
+                {
+                    Button_SelectWorkPeriod.Tag = null;
+                    Button_SelectWorkPeriod.Content = "All";
+                }
             }
             catch (Exception ex)
             {
