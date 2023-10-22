@@ -3,16 +3,14 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class M9 : DbMigration
+    public partial class M23 : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.InvoicesMaster", "Workperiod", c => c.String(nullable: false, maxLength: 100, storeType: "nvarchar"));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.InvoicesMaster", "Workperiod");
         }
     }
 }

@@ -177,93 +177,21 @@
     <Compile Include="GlobalVariables\PosEnums.cs" />
     <Compile Include="GlobalVariables\SharedVariables.cs" />
     <Compile Include="MailingPlugin\POSMail.cs" />
-    <Compile Include="Migrations\202310041844584_M1.cs" />
-    <Compile Include="Migrations\202310041844584_M1.designer.cs">
-      <DependentUpon>202310041844584_M1.cs</DependentUpon>
+    <Compile Include="Migrations\202310221552094_M23.cs" />
+    <Compile Include="Migrations\202310221552094_M23.designer.cs">
+      <DependentUpon>202310221552094_M23.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310051055064_M2.cs" />
-    <Compile Include="Migrations\202310051055064_M2.designer.cs">
-      <DependentUpon>202310051055064_M2.cs</DependentUpon>
+    <Compile Include="Migrations\202310221559023_M24.cs" />
+    <Compile Include="Migrations\202310221559023_M24.designer.cs">
+      <DependentUpon>202310221559023_M24.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310051104177_M3.cs" />
-    <Compile Include="Migrations\202310051104177_M3.designer.cs">
-      <DependentUpon>202310051104177_M3.cs</DependentUpon>
+    <Compile Include="Migrations\202310221602422_M25.cs" />
+    <Compile Include="Migrations\202310221602422_M25.designer.cs">
+      <DependentUpon>202310221602422_M25.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310051105190_M4.cs" />
-    <Compile Include="Migrations\202310051105190_M4.designer.cs">
-      <DependentUpon>202310051105190_M4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051124424_M5.cs" />
-    <Compile Include="Migrations\202310051124424_M5.designer.cs">
-      <DependentUpon>202310051124424_M5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051127420_M6.cs" />
-    <Compile Include="Migrations\202310051127420_M6.designer.cs">
-      <DependentUpon>202310051127420_M6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051129321_M7.cs" />
-    <Compile Include="Migrations\202310051129321_M7.designer.cs">
-      <DependentUpon>202310051129321_M7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051213215_M8.cs" />
-    <Compile Include="Migrations\202310051213215_M8.designer.cs">
-      <DependentUpon>202310051213215_M8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051251309_M9.cs" />
-    <Compile Include="Migrations\202310051251309_M9.designer.cs">
-      <DependentUpon>202310051251309_M9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051343316_M10.cs" />
-    <Compile Include="Migrations\202310051343316_M10.designer.cs">
-      <DependentUpon>202310051343316_M10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051458408_M11.cs" />
-    <Compile Include="Migrations\202310051458408_M11.designer.cs">
-      <DependentUpon>202310051458408_M11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051539108_M12.cs" />
-    <Compile Include="Migrations\202310051539108_M12.designer.cs">
-      <DependentUpon>202310051539108_M12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051845190_M13.cs" />
-    <Compile Include="Migrations\202310051845190_M13.designer.cs">
-      <DependentUpon>202310051845190_M13.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310051954358_M14.cs" />
-    <Compile Include="Migrations\202310051954358_M14.designer.cs">
-      <DependentUpon>202310051954358_M14.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310101431411_M15.cs" />
-    <Compile Include="Migrations\202310101431411_M15.designer.cs">
-      <DependentUpon>202310101431411_M15.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310101704437_M16.cs" />
-    <Compile Include="Migrations\202310101704437_M16.designer.cs">
-      <DependentUpon>202310101704437_M16.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310121035392_M17.cs" />
-    <Compile Include="Migrations\202310121035392_M17.designer.cs">
-      <DependentUpon>202310121035392_M17.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310131429508_M18.cs" />
-    <Compile Include="Migrations\202310131429508_M18.designer.cs">
-      <DependentUpon>202310131429508_M18.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310131436209_M19.cs" />
-    <Compile Include="Migrations\202310131436209_M19.designer.cs">
-      <DependentUpon>202310131436209_M19.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310131818217_M20.cs" />
-    <Compile Include="Migrations\202310131818217_M20.designer.cs">
-      <DependentUpon>202310131818217_M20.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310131916449_M21.cs" />
-    <Compile Include="Migrations\202310131916449_M21.designer.cs">
-      <DependentUpon>202310131916449_M21.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310141815474_M22.cs" />
-    <Compile Include="Migrations\202310141815474_M22.designer.cs">
-      <DependentUpon>202310141815474_M22.cs</DependentUpon>
+    <Compile Include="Migrations\202310221618486_M26.cs" />
+    <Compile Include="Migrations\202310221618486_M26.designer.cs">
+      <DependentUpon>202310221618486_M26.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="UserInterface\Accounts\ApproveInvoice.xaml.cs">
@@ -900,71 +828,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\202310041844584_M1.resx">
-      <DependentUpon>202310041844584_M1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310221552094_M23.resx">
+      <DependentUpon>202310221552094_M23.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051055064_M2.resx">
-      <DependentUpon>202310051055064_M2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310221559023_M24.resx">
+      <DependentUpon>202310221559023_M24.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051104177_M3.resx">
-      <DependentUpon>202310051104177_M3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310221602422_M25.resx">
+      <DependentUpon>202310221602422_M25.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051105190_M4.resx">
-      <DependentUpon>202310051105190_M4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051124424_M5.resx">
-      <DependentUpon>202310051124424_M5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051127420_M6.resx">
-      <DependentUpon>202310051127420_M6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051129321_M7.resx">
-      <DependentUpon>202310051129321_M7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051213215_M8.resx">
-      <DependentUpon>202310051213215_M8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051251309_M9.resx">
-      <DependentUpon>202310051251309_M9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051343316_M10.resx">
-      <DependentUpon>202310051343316_M10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051458408_M11.resx">
-      <DependentUpon>202310051458408_M11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051539108_M12.resx">
-      <DependentUpon>202310051539108_M12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051845190_M13.resx">
-      <DependentUpon>202310051845190_M13.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310051954358_M14.resx">
-      <DependentUpon>202310051954358_M14.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310101431411_M15.resx">
-      <DependentUpon>202310101431411_M15.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310101704437_M16.resx">
-      <DependentUpon>202310101704437_M16.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310121035392_M17.resx">
-      <DependentUpon>202310121035392_M17.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310131429508_M18.resx">
-      <DependentUpon>202310131429508_M18.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310131436209_M19.resx">
-      <DependentUpon>202310131436209_M19.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310131818217_M20.resx">
-      <DependentUpon>202310131818217_M20.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310131916449_M21.resx">
-      <DependentUpon>202310131916449_M21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310141815474_M22.resx">
-      <DependentUpon>202310141815474_M22.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310221618486_M26.resx">
+      <DependentUpon>202310221618486_M26.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

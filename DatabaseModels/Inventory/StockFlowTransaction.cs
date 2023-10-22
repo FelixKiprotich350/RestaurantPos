@@ -29,7 +29,7 @@ namespace DatabaseModels.Inventory
         public string InTransactionCode { get; set; } 
         [Required]  
         public string Description { get; set; } 
-        [Required]
+        [Required] 
         public DateTime TransactionDate { get; set; } 
         [Required] 
         public bool IsCancelled { get; set; }   

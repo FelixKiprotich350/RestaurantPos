@@ -23,6 +23,7 @@ using System.Windows.Shapes;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using System.Drawing.Printing;
+using System.Diagnostics;
 
 namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
 {
@@ -38,11 +39,13 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
             InitializeComponent();
 
         }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Datagrid_ProductItems.ItemsSource = MainList;
             Combobox_Department.ItemsSource = Enum.GetNames(typeof(PosEnums.Departments));
         }
+
         private void Button_Apply_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -255,7 +258,7 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
         {
 
             try
-            {
+            { 
                 // Create a new PDF document
                 PdfDocument document = new PdfDocument();
 
@@ -273,14 +276,12 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                     new XRect(10, 10, page.Width, page.Height), XStringFormats.TopLeft);
 
                 // Save the document to a file
-                document.Save("D:\\example.pdf");
+                //document.Save("D:\\example.pdf");
             }
             catch
             {
                 MessageBox.Show("error");
             }
-        }
-        
-         
+        }  
     }
 }

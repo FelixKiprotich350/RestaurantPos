@@ -143,7 +143,7 @@ namespace RestaurantManager.GlobalVariables
         {
             try
             {
-                return "server=127.0.0.1;user=felix;password=felix;port=3306;database=posdbv3";
+                return "server=127.0.0.1;user=felix;password=felix;port=3306;database=posdbv2";
 
 
             }
