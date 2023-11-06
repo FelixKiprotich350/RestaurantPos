@@ -1,8 +1,10 @@
-﻿using DatabaseModels.Payments;
+﻿using DatabaseModels.OrderTicket;
+using DatabaseModels.Payments;
 using DatabaseModels.Security;
 using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.UserInterface.Accounts.ReportModels;
 using RestaurantManager.UserInterface.PosReports;
 using ScottPlot;
 using System;
@@ -28,6 +30,7 @@ namespace RestaurantManager.UserInterface.Accounts
     /// </summary>
     public partial class AccountsDashboard2 : Page
     {
+        public bool IsChartsView = false;
         public AccountsDashboard2()
         {
             InitializeComponent();
@@ -47,41 +50,289 @@ namespace RestaurantManager.UserInterface.Accounts
             }
         }
 
-        private void Button_Apply1_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Get top summaries
+        /// </summary> 
+
+        private void Checkbox_PaymentByDate_Unchecked(object sender, RoutedEventArgs e)
         {
             try
             {
-                ClearTotals();
-                List<TicketPaymentMaster> tlist = new List<TicketPaymentMaster>();
-                List<InvoicePaymentItem> invlist = new List<InvoicePaymentItem>();
-                using (var b = new PosDbContext())
-                {
-                   
-                    tlist = b.TicketPaymentMaster.AsNoTracking().ToList(); 
-
-                }  
-                 
-                if ((bool)Checkbox_PaymentByDate.IsChecked)
-                { }
-                GetAccountsTotal(tlist,invlist);
+                Datepicker_From.SelectedDate = null;
+                Datepicker_To.SelectedDate = null;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void ClearTotals()
+        private void Button_SelectWorkPeriod_Click(object sender, RoutedEventArgs e)
         {
-             
+            try
+            {
+                SelectWorkPeriod w = new SelectWorkPeriod();
+                if ((bool)w.ShowDialog())
+                {
+                    if (w.SelectedWorkperiod != null)
+                    {
+                        Button_SelectWorkPeriod.Tag = w.SelectedWorkperiod;
+                        Button_SelectWorkPeriod.Content = w.SelectedWorkperiod.WorkperiodName;
+                    }
+                    else
+                    {
+                        Button_SelectWorkPeriod.Tag = null;
+                        Button_SelectWorkPeriod.Content = "All";
+                    }
+                }
+                else
+                {
+                    Button_SelectWorkPeriod.Tag = null;
+                    Button_SelectWorkPeriod.Content = "All";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Apply_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                
+                DateTime? startdate = null;
+                DateTime? enddate = null;
+                WorkPeriod wperiod = null;
+                if (Button_SelectWorkPeriod.Content.ToString() == "All")
+                {
+                    wperiod = null;
+                }
+                else
+                {
+                    wperiod = (WorkPeriod)Button_SelectWorkPeriod.Tag;
+                }
+                if ((bool)Checkbox_PaymentByDate.IsChecked)
+                {
+                    if (Datepicker_From.SelectedDate == null | Datepicker_To.SelectedDate == null)
+                    {
+                        MessageBox.Show("Select Start Date & End Date!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+                    startdate = Datepicker_From.SelectedDate;
+                    enddate = Datepicker_To.SelectedDate;
+
+                }
+                LoadUIData(wperiod, startdate, enddate);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private void Button_ToggleView_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsChartsView) { IsChartsView = false; }
+            else { IsChartsView = true; }
+            SwitchTableGraphView();
+        }
+        private void SwitchTableGraphView()
+        {
+            try
+            {
+                if (IsChartsView)
+                {
+                    //received payments
+                    GridPanel_Receivedpayments.Visibility = Visibility.Visible;
+                    Datagrid_SalesPaymentsSummary.Visibility = Visibility.Collapsed;
+                    //invoice payments
+                    GridPanel_Invoicepayments.Visibility = Visibility.Visible;
+                    Datagrid_InvoicePaymentsSummary.Visibility = Visibility.Collapsed;
+                    //sales department
+                    GridPanel_Departmentsales.Visibility = Visibility.Visible;
+                    Datagrid_DepartmentsSalesSummary.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    //received payments
+                    GridPanel_Receivedpayments.Visibility = Visibility.Collapsed;
+                    Datagrid_SalesPaymentsSummary.Visibility = Visibility.Visible;
+                    //invoice payments
+                    GridPanel_Invoicepayments.Visibility = Visibility.Collapsed;
+                    Datagrid_InvoicePaymentsSummary.Visibility = Visibility.Visible;
+                    //sales department
+                    GridPanel_Departmentsales.Visibility = Visibility.Collapsed;
+                    Datagrid_DepartmentsSalesSummary.Visibility = Visibility.Visible;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+         
+        void LoadUIData(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
+        {
+            try
+            { 
+                  var db = new PosDbContext();
+                var paylist = db.TicketPaymentItem.AsNoTracking().ToList();
+                var sales = from item in db.OrderItem.AsNoTracking()
+                            join master in db.OrderMaster.AsNoTracking() on item.OrderID equals master.OrderNo
+                            join inventory in db.MenuProductItem.AsNoTracking() on item.ProductItemGuid equals inventory.ProductGuid
+                            select new { master.Workperiod, inventory.Department, item.PostDate, item.Total,item.BuyingPriceTotal };
+                var allsales = sales.ToList();
+                if (wp != null)
+                {
+                    paylist.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
+                    allsales.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
+                }
+                if (startdate != null)
+                {
+                    paylist.RemoveAll(w => w.PaymentDate < startdate);
+                    allsales.RemoveAll(w => w.PostDate < startdate);
+
+                }
+                if (enddate != null)
+                {
+                    paylist.RemoveAll(w => w.PaymentDate > enddate);
+                    allsales.RemoveAll(w => w.PostDate > enddate);
+                }
+                
+
+                GetSalesPayment(paylist.Where(k => k.PayForSource == PosEnums.PaymentForSources.SalesBill.ToString()).ToList());
+                GetInvoicePayments(paylist.Where(k => k.PayForSource == PosEnums.PaymentForSources.InvoicePay.ToString()).ToList());
+                GetSalesSummary(allsales);
+
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        
+        void GetSalesPayment(List<TicketPaymentItem> salesp)
+        {
+            try
+            {
+                decimal total = 0;
+                decimal cash = 0;
+                decimal mpesa = 0;
+                decimal cards = 0;
+                decimal invoice = 0;
+                var forsum = salesp;
+                total = forsum.Sum(t => t.AmountUsed);
+                cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountUsed);
+                mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountUsed);
+                cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountUsed);
+                invoice = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountUsed);
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>();
+                rowRecords.Add(new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Invoices", DecimalValue1 = invoice });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                Datagrid_SalesPaymentsSummary.ItemsSource = rowRecords;
+                //charts
+                var plt = Plot_Receivedpayments.Plot;
+                plt.Clear();
+                double[] values = { Convert.ToDouble(cash), Convert.ToDouble(mpesa), Convert.ToDouble(cards),  Convert.ToDouble(invoice) };
+                string[] labels = { "Cash", "Mpesa", "Cards" ,"Invoice"};
+                var pie = plt.AddPie(values);
+                pie.SliceLabels = labels;
+                pie.ShowPercentages = true;
+                pie.ShowValues = false;
+                pie.ShowLabels = true;
+                 plt.Legend().UpdateLegendItems(plt,false); 
+                Plot_Receivedpayments.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        
+        void GetInvoicePayments(List<TicketPaymentItem> salesp)
+        {
+            try
+            {
+                decimal total = 0;
+                decimal cash = 0;
+                decimal mpesa = 0;
+                decimal cards = 0; 
+                var forsum = salesp;
+                total = forsum.Sum(t => t.AmountUsed);
+                cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountUsed);
+                mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountUsed);
+                cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountUsed);
+                 List<RowRecordObject> rowRecords = new List<RowRecordObject>();
+                rowRecords.Add(new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards }); 
+                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                Datagrid_InvoicePaymentsSummary.ItemsSource = rowRecords;
+                //charts
+                var plt = Plot_Invoicepayments.Plot;
+                plt.Clear();
+                double[] values = { Convert.ToDouble(cash), Convert.ToDouble(mpesa), Convert.ToDouble(cards)};
+                string[] labels = { "Cash", "Mpesa", "Cards" };
+                var pie = plt.AddPie(values);
+                pie.SliceLabels = labels;
+                pie.ShowPercentages = true; 
+                pie.ShowValues = false;
+                pie.ShowLabels = true;
+                plt.Legend();
+
+                Plot_Invoicepayments.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        void GetSalesSummary(dynamic salesp)
+        {
+            try
+            {
+                IEnumerable<dynamic> salesitems = salesp;
+                decimal total = salesitems.Sum(t => Convert.ToInt32(t.Total));
+                decimal restaurant = salesitems.Where(k => k.Department == PosEnums.Departments.Restaurant.ToString()).Sum(t => Convert.ToInt32(t.Total));
+                decimal bar = salesitems.Where(k => k.Department == PosEnums.Departments.Bar.ToString()).Sum(t => Convert.ToInt32(t.Total));
+                decimal services = salesitems.Where(k => k.Department == PosEnums.Departments.Services.ToString()).Sum(t => Convert.ToInt32(t.Total));
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>();
+                rowRecords.Add(new RowRecordObject() { VariableName = "Restaurant", DecimalValue1 = restaurant });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Bar", DecimalValue1 = bar });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Services", DecimalValue1 = services });
+                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                Datagrid_DepartmentsSalesSummary.ItemsSource = rowRecords;
+                //charts
+                var plt = Plot_departmentsales.Plot;  
+                plt.Clear();
+                double[] values = { Convert.ToDouble(restaurant), Convert.ToDouble(bar), Convert.ToDouble(services) };
+                string[] labels = { "Restaurant", "Bar", "Services"};
+                var pie = plt.AddPie(values);
+                pie.SliceLabels = labels;
+                pie.ShowPercentages = true;
+                pie.ShowValues = false;
+                pie.ShowLabels = true;
+                plt.Legend(); 
+                Plot_departmentsales.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
 
         /// <summary>
         /// General division data
-        /// </summary>
-        /// <param name="tlist"></param>
-        /// <param name="invlist"></param>
+        /// </summary> 
 
         private void GetTopSellingProducts()
         {
@@ -206,155 +457,6 @@ namespace RestaurantManager.UserInterface.Accounts
             }
         }
 
-        private void Button_Apply_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ClearTotals();
-                DateTime? startdate = null;
-                DateTime? enddate = null;
-                WorkPeriod wperiod = null;
-                if (Button_SelectWorkPeriod.Content.ToString() == "All")
-                {
-                    wperiod = (WorkPeriod)Button_SelectWorkPeriod.Tag;
-                }
-                else
-                {
-                    wperiod = (WorkPeriod)Button_SelectWorkPeriod.Tag;
-                }
-                if ((bool)Checkbox_PaymentByDate.IsChecked)
-                {
-                    if (Datepicker_From.SelectedDate==null| Datepicker_To.SelectedDate==null)
-                    {
-                        MessageBox.Show("Select Start Date & End Date!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
-                    startdate = Datepicker_From.SelectedDate;
-                    enddate = Datepicker_To.SelectedDate;
-
-                } 
-                LoadPayments(wperiod, startdate, enddate);
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        void LoadPayments(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
-        {
-            try
-            {
-                decimal total = 0;
-                decimal cash = 0;
-                decimal mpesa = 0;
-                decimal cards = 0;
-                decimal invoice = 0;
-                decimal change = 0;
-                ObservableCollection<TicketPaymentItem> payments = new ObservableCollection<TicketPaymentItem>();
-                ObservableCollection<InvoicePaymentItem> invpayments = new ObservableCollection<InvoicePaymentItem>();
-                var db = new PosDbContext();
-                var paylist = db.TicketPaymentItem.AsNoTracking().ToList(); 
-
-                if (wp != null)
-                {
-                    paylist.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
-                }
-                if (startdate != null)
-                {
-                    paylist.RemoveAll(w => w.PaymentDate < startdate);
-
-                }
-                if (enddate != null)
-                {
-                    paylist.RemoveAll(w => w.PaymentDate > enddate);
-                }
-                payments = new ObservableCollection<TicketPaymentItem>(paylist);
-                var forsum = paylist;
-                total = forsum.Sum(t => t.AmountPaid);
-                cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountPaid);
-                mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountPaid);
-                cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountPaid);
-                invoice = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountPaid);
-              
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void RadioButton_SingleDay_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {  
-                Datepicker_From.SelectedDate = null;
-                Datepicker_To.SelectedDate = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Radiobutton_Period_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            { 
-                Datepicker_From.SelectedDate = null;
-                Datepicker_To.SelectedDate = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
- 
-        private void Checkbox_PaymentByDate_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            { 
-                Datepicker_From.SelectedDate = null;
-                Datepicker_To.SelectedDate = null;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
- 
-       
-        private void Button_SelectWorkPeriod_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SelectWorkPeriod w = new SelectWorkPeriod();
-                if ((bool)w.ShowDialog())
-                {
-                    if (w.SelectedWorkperiod != null)
-                    {
-                        Button_SelectWorkPeriod.Tag = w.SelectedWorkperiod;
-                        Button_SelectWorkPeriod.Content = w.SelectedWorkperiod.WorkperiodName;
-                    }
-                    else
-                    {
-                        Button_SelectWorkPeriod.Tag = null;
-                        Button_SelectWorkPeriod.Content = "All";
-                    }
-                }
-                else
-                {
-                    Button_SelectWorkPeriod.Tag = null;
-                    Button_SelectWorkPeriod.Content = "All";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
+        
     }
 }

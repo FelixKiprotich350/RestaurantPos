@@ -281,6 +281,18 @@
     <Compile Include="Migrations\202311051643151_M42.designer.cs">
       <DependentUpon>202311051643151_M42.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202311061633210_M43.cs" />
+    <Compile Include="Migrations\202311061633210_M43.designer.cs">
+      <DependentUpon>202311061633210_M43.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311061638147_M44.cs" />
+    <Compile Include="Migrations\202311061638147_M44.designer.cs">
+      <DependentUpon>202311061638147_M44.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311061639308_M441.cs" />
+    <Compile Include="Migrations\202311061639308_M441.designer.cs">
+      <DependentUpon>202311061639308_M441.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Printing\PrintPaymentReceipt.cs" />
     <Compile Include="UserInterface\Accounts\AccountsDashboard2.xaml.cs">
@@ -292,6 +304,7 @@
     <Compile Include="UserInterface\Accounts\ApproveInvoice.xaml.cs">
       <DependentUpon>ApproveInvoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\Accounts\ReportModels\RowRecordObject.cs" />
     <Compile Include="UserInterface\Accounts\ViewInvoicesPayments.xaml.cs">
       <DependentUpon>ViewInvoicesPayments.xaml</DependentUpon>
     </Compile>
@@ -1012,6 +1025,15 @@
     <EmbeddedResource Include="Migrations\202311051643151_M42.resx">
       <DependentUpon>202311051643151_M42.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311061633210_M43.resx">
+      <DependentUpon>202311061633210_M43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311061638147_M44.resx">
+      <DependentUpon>202311061638147_M44.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311061639308_M441.resx">
+      <DependentUpon>202311061639308_M441.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1083,9 +1105,7 @@
       <Name>DatabaseModels</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UserInterface\Accounts\ReportModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

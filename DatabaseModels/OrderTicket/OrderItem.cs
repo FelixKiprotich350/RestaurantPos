@@ -37,6 +37,8 @@ namespace DatabaseModels.OrderTicket
         public string ServiceType { get; set; }
         [Required]
         public bool IsGiftItem { get; set; }
+        [Required]
+        public DateTime PostDate { get; set; }
         /// <summary>
         /// If the item is a gift - default value is None
         /// If the item is not a gift and it has a gift item  use the giftitem_productid
@@ -53,6 +55,7 @@ namespace DatabaseModels.OrderTicket
         public decimal DiscPercent { get; set; } 
         [NotMapped]
         public string OldorNew { get; set; }
+        
 
     }
 }

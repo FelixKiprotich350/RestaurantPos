@@ -408,14 +408,15 @@ namespace RestaurantManager.UserInterface.PointofSale
                     VoidReason = "None",
                     Workperiod = w.WorkperiodName
                 };
+                var orderitemdate = SharedVariables.CurrentDate();
                 foreach (var a in OrderItems)
                 {
                     a.OrderID = om.OrderNo;
+                    a.PostDate = orderitemdate;
+                    total += (int)(a.Quantity * a.Price);
+
                 }
-                foreach (var x in OrderItems)
-                {
-                    total += (int)(x.Quantity * x.Price);
-                }
+                 
                 using (var db = new PosDbContext())
                 {
                     db.OrderMaster.Add(om);

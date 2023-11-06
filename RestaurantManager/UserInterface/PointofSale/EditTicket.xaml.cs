@@ -400,19 +400,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                     foreach (var a in OrderItems)
                     {
                         a.OrderID = existingorder.OrderNo;
-                        
+                        total += (int)(a.Quantity * a.Price);
                     }
-                    foreach (var x in OrderItems)
-                    {
-                        total += (int)(x.Quantity * x.Price);
-                    }
+                     
                     using (var db = new PosDbContext())
                     {
                         foreach (var itemedit in OrderItems)
                         {
 
                             if (itemedit.OldorNew == "New")
-                            { 
+                            {
+                                itemedit.PostDate = SharedVariables.CurrentDate();
                                 db.OrderItem.Add(itemedit);
                             }
                             else if (itemedit.OldorNew == "Edit")

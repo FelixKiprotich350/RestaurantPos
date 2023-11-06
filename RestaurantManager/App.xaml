@@ -368,7 +368,7 @@
                 <Setter Property="Height" Value="Auto" />
             </Style>
             <Style x:Key="DasboardColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
-                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Background" Value="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="Padding" Value="6,4,4,6" />
                 <Setter Property="FontSize" Value="16" />

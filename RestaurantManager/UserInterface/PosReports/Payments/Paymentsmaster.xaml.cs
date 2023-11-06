@@ -211,8 +211,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
 
                 //new DateTime(2023, 10, 28, 17, 34, 11)
                 var db = new PosDbContext();
-                 
-                decimal tot = 0;
+                  
                 var completed = db.TicketPaymentItem.Where(k=>k.Method==GlobalVariables.PosEnums.TicketPaymentMethods.Invoice.ToString()).ToList();
                 var trans = db.InvoicesMaster.ToList();
                 

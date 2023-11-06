@@ -55,29 +55,8 @@ namespace RestaurantManager.UserInterface.Accounts
         {
              
 
-        }
-        public List<test> Data { get; private set; }
-
-        public void SampleDataVM()
-        {
-            Data = new List<test>();
-            Data.Add(new test() { name = "Felix", amount = 20 });
-            Data.Add(new test() { name = "value1", amount = 30 });
-            Data.Add(new test() { name = "value 2", amount = 50 });
-            Data.Add(new test() { name = "value3", amount = 60 });
-
-         }
-
-        private void Button_Apply1_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void ClearTotals()
-        {
-            
-        }
-
+        } 
+         
         private void GetAccountsTotal(List<TicketPaymentMaster> tlist, List<InvoicePaymentItem> invlist)
         {
             try
@@ -161,8 +140,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 decimal cash = 0;
                 decimal mpesa = 0;
                 decimal cards = 0;
-                decimal invoice = 0;
-                decimal change = 0;
+                decimal invoice = 0; 
                 ObservableCollection<TicketPaymentItem> payments = new ObservableCollection<TicketPaymentItem>();
                 ObservableCollection<InvoicePaymentItem> invpayments = new ObservableCollection<InvoicePaymentItem>();
                 var db = new PosDbContext();
@@ -256,9 +234,5 @@ namespace RestaurantManager.UserInterface.Accounts
 
        
     }
-    public class test
-    {
-        public string name { get; set; }
-        public int amount { get; set; }
-    }
+    
 }

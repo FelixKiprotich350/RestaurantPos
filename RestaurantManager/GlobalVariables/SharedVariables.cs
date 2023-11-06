@@ -75,7 +75,7 @@ namespace RestaurantManager.GlobalVariables
                 }
                 return bignumber;
             }
-            catch(Exception ex)
+            catch 
             {
                 return -1;
             }
