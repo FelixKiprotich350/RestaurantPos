@@ -18,8 +18,9 @@ namespace DatabaseModels.Navigation
             MenuCategories.Add(new Level1menu() { GroupCode = "C", GroupName="Accounts", IsEnabled = true });
             MenuCategories.Add(new Level1menu() { GroupCode = "D", GroupName="Inventory", IsEnabled = true });
             MenuCategories.Add(new Level1menu() { GroupCode = "E", GroupName="C.R.M", IsEnabled = true });
-            MenuCategories.Add(new Level1menu() { GroupCode = "F", GroupName = "Reports", IsEnabled = true });
-            MenuCategories.Add(new Level1menu() { GroupCode = "G", GroupName="Settings", IsEnabled = true }); 
+            MenuCategories.Add(new Level1menu() { GroupCode = "F", GroupName="H.R Office", IsEnabled = true });
+            MenuCategories.Add(new Level1menu() { GroupCode = "G", GroupName = "Reports", IsEnabled = true });
+            MenuCategories.Add(new Level1menu() { GroupCode = "H", GroupName="Settings", IsEnabled = true }); 
         }
         
     }

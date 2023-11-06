@@ -239,5 +239,36 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Button_EditClick(object sender, RoutedEventArgs e)
+        {
+            try { 
+                if(Datagrid_CustomersList.SelectedItem !=null)
+                {
+
+                    //var cust = new PosDbContext().CustomerAccount.FirstOrDefault(k => k.AccountGuid == bb.Tag.ToString());
+                    //if (cust == null)
+                    //{
+                    //    MessageBox.Show("The Customer Account does not exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    //    return;   
+                    //}
+                    if(Datagrid_CustomersList.SelectedItem is CustomerAccount cust1)
+                    {
+                        var form = new EditInvoiceLimit(cust1);
+                        if ((bool)form.ShowDialog())
+                        {
+                            LoadCustomers();
+                        }
+
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

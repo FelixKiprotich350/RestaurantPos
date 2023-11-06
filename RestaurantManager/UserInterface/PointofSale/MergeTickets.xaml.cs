@@ -79,12 +79,12 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                SelectCustomerName s = new SelectCustomerName();
-                if ((bool)s.ShowDialog())
-                {
-                    Button_SelectCustomer.Tag = s.SelectedCustomer;
-                    Button_SelectCustomer.Content = s.SelectedCustomer.FullName;
-                }
+                //SelectCustomerName s = new SelectCustomerName();
+                //if ((bool)s.ShowDialog())
+                //{
+                //    Button_SelectCustomer.Tag = s.SelectedCustomer;
+                //    Button_SelectCustomer.Content = s.SelectedCustomer.FullName;
+                //}
             }
             catch (Exception Ex)
             {

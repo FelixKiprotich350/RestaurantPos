@@ -66,6 +66,7 @@
     <Compile Include="Inventory\AssetItemFlow.cs" />
     <Compile Include="Inventory\AssetItem.cs" />
     <Compile Include="Inventory\AssetGroup.cs" />
+    <Compile Include="Inventory\StockTakingMaster.cs" />
     <Compile Include="Navigation\Level2menu.cs" />
     <Compile Include="Navigation\Level1menu.cs" />
     <Compile Include="Navigation\NavigationMenu.cs" />

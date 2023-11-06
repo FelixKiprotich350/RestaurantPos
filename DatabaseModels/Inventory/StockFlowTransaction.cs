@@ -24,9 +24,11 @@ namespace DatabaseModels.Inventory
         [Required]
         public decimal Quantity { get; set; }
         [Required]  
-        public string OutTransactionCode { get; set; } 
+        public string StockFlowTrigger { get; set; }  
         [Required]  
-        public string InTransactionCode { get; set; } 
+        public string PrimaryRefference { get; set; }  
+        [Required]  
+        public string SecondaryRefference { get; set; } 
         [Required]  
         public string Description { get; set; } 
         [Required] 

@@ -395,8 +395,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                     string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                    CustomerAccount cust = GetCustomer(); 
-
+                    CustomerAccount cust = GetCustomer();
+                    
                     foreach (var a in OrderItems)
                     {
                         a.OrderID = existingorder.OrderNo;
@@ -480,7 +480,7 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Button_SelectCustomer_Click(object sender, RoutedEventArgs e)
         {
-            SelectCustomerName sc = new SelectCustomerName();
+            SelectEmployee sc = new SelectEmployee();
             sc.ShowDialog();
             if (sc.SelectedCustomer != null)
             {

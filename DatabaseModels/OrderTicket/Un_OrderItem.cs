@@ -20,6 +20,7 @@ namespace DatabaseModels.OrderTicket
         [Required]
         public decimal Total { get; set; } 
         public decimal BuyingPriceTotal { get; set; } 
+        public decimal ProfitTotal { get; set; } 
          
     }
 }

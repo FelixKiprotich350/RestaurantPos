@@ -36,6 +36,14 @@
                         <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding AccountStatus}"  Header="Status" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding InvoiceLimit}"  Header="Limit" IsReadOnly="True" Width="Auto" CanUserSort="False"/>
+                        <DataGridTemplateColumn> 
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Height="20" Width="20" Source="/RestaurantManager;component/ImageResources/edit.png"/>
+                                    <!--<Button Tag="{Binding AccountGuid}" Style="{x:Null}" Margin="0" BorderThickness="0"  Content="Edit" Click="Button_EditClick"/>-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">

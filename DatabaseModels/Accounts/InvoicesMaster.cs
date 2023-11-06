@@ -45,8 +45,7 @@ namespace DatabaseModels.Accounts
         public string CustomerAccNo { get; set; }
         [Required]
         [MaxLength(100)]
-        public string Workperiod { get; set; }
-         
+        public string Workperiod { get; set; } 
 
 
         [NotMapped]

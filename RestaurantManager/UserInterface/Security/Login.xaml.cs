@@ -75,6 +75,9 @@ namespace RestaurantManager.UserInterface.Security
                         }
                     }
                     PasswordBox_UserPin.Focus();
+#if DEBUG
+                    PasswordBox_UserPin.Password = "36945194";
+#endif
                 }
 
                 catch (Exception ex)

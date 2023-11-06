@@ -108,7 +108,7 @@
 
                     <UniformGrid Margin="0,8,0,8" Columns="3" Rows="1" VerticalAlignment="Center" >
 
-                        <Button x:Name="Button_SelectCustomer" Content="Customer" Margin="10,0" Click="Button_SelectCustomer_Click"  Style="{DynamicResource Button_Accept}" Height="Auto"/>
+                        <Button x:Name="Button_SelectCustomer" Content="Attach Waiter" Margin="10,0" Click="Button_SelectCustomer_Click"  Style="{DynamicResource Button_Accept}" Height="Auto"/>
                         <Button x:Name="Button_SelectTable" Content="Table" Margin="10,0" Click="Button_SelectTable_Click"  Style="{DynamicResource Button_Accept}" Height="Auto"/>
                         <Button x:Name="Button_Complete" Content="Complete" Margin="10,0" Click="Button_Complete_Click"   Style="{DynamicResource Button_Accept}" Height="Auto"/>
 
@@ -149,7 +149,7 @@
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <Border CornerRadius="4" Width="Auto" Margin="8" Height="Auto" Background="{DynamicResource KD_Color1}" >
-                                                            <Button Tag="{Binding Path=ProductGuid}" Content="{Binding ProductName}"  Style="{Binding ButtonStyle}" Click="Button_Click" Height="32" />
+                                                            <Button Tag="{Binding ProductGuid}" Content="{Binding ProductName}"  Style="{Binding ButtonStyle}" Click="Button_Click" Height="32" />
 
                                                         </Border>
                                                     </DataTemplate>

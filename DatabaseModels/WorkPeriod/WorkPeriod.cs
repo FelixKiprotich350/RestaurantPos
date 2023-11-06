@@ -13,8 +13,8 @@ namespace DatabaseModels.WorkPeriod
         [Key]
         [MaxLength(100)]
         public string WorkPeriodGuid { get; set; }
-        [Required]
-        [Index]
+        [Required] 
+        [Index(IsUnique = true)]
         [MaxLength(100)]
         public string WorkperiodName { get; set; }
         [Required]

@@ -23,11 +23,11 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
     /// </summary>
     public partial class SelectPerson : Window
     {
-        public string SelectedTicketNumber = null;
+        public string SelectedPersonNumber = null;
         public SelectPerson()
         {
             InitializeComponent();
-            SelectedTicketNumber = null;
+            SelectedPersonNumber = null;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +43,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                 var a = db.PersonalAccount.FirstOrDefault(k => k.PersonGuid == Textbox_TicketNumber.Text.ToString());
                 if (a != null)
                 {
-                    SelectedTicketNumber = Textbox_TicketNumber.Text.ToString();
+                    SelectedPersonNumber = Textbox_TicketNumber.Text.ToString();
                     DialogResult = true;
                 }
                 else

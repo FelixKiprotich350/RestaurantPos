@@ -101,7 +101,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 if (tlist.Count > 0)
                 {
                     var innerGroupJoinQuery = from m in tlist
-                                              join t in db.TicketPaymentItem on m.TicketNo equals t.ParentOrderNo
+                                              join t in db.TicketPaymentItem on m.TicketNo equals t.ParentSourceRef
                                               select new { m, t };
 
 

@@ -10,20 +10,27 @@ namespace DatabaseModels.Payments
 {
     public class TicketPaymentItem
     {
-        [Key]
-        [MaxLength(100)]
-        public string PaymentGuid { get; set; }
+        [Key] 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int PaymentGuid { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ParentOrderNo { get; set; }
+        public string ParentSourceRef { get; set; }
         [Required]
         [MaxLength(100)]
-        public string ParentTransNo { get; set; }
+        public string MasterTransNo { get; set; }
         [Required]
         public decimal AmountPaid { get; set; }
         [Required]
+        public decimal AmountUsed { get; set; }
+        [Required]
+        public decimal PaymentBalance { get; set; }
+        [Required]
         [MaxLength(100)]
         public string Method { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string PayForSource { get; set; }
         [Required]
         public DateTime PaymentDate { get; set; }
         [Required]
@@ -39,9 +46,7 @@ namespace DatabaseModels.Payments
 
         [Required]
         [MaxLength(100)]
-        public string Workperiod { get; set; }
-        [Required]
-        public bool IsVoided { get; set; }
+        public string Workperiod { get; set; } 
 
 
         [NotMapped]

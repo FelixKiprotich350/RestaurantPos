@@ -2,6 +2,7 @@
 using DatabaseModels.Vouchers;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
+using RestaurantManager.UserInterface.CustomersManagemnt;
 using RestaurantManager.UserInterface.PointofSale;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static RestaurantManager.GlobalVariables.PosEnums;
 
-namespace RestaurantManager.UserInterface.CustomersManagemnt
+namespace RestaurantManager.UserInterface.HR
 {
     /// <summary>
     /// Interaction logic for CustomerAccount.xaml
@@ -51,7 +52,15 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             {
                 using (var db = new PosDbContext())
                 {
-                    var data = db.EmployeeAccount.ToList();
+                    var data = db.EmployeeAccount.AsNoTracking().ToList();
+                    foreach (var x in data)
+                    {
+                        var p = db.PersonalAccount.AsNoTracking().FirstOrDefault(k => k.AccountNo == x.PersonAccNo);
+                        x.FullName = p.FullName;
+                        x.Gender = p.Gender;
+                        x.PhoneNo = p.PhoneNumber;
+                        x.PersonAccNo = p.AccountNo;
+                    }
                     Datagrid_CustomersList.ItemsSource = data;
                 }
             }
@@ -96,7 +105,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             //    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             //}
         }
- 
+
         private void Button_RedeemPoints_Click(object sender, RoutedEventArgs e)
         {
             //try
@@ -107,8 +116,8 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             //        return;
             //    }
             //    DateTime dtime = GlobalVariables.SharedVariables.CurrentDate();
-               
-             
+
+
             //    VoucherCard vc = new VoucherCard
             //    {
             //        //VoucherBatchNo = v.BatchNumber,
@@ -146,28 +155,16 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
             //}
         }
 
-        private void Button_Select_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                 
-            }
-            catch (Exception exception1)
-            {
-                MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-           
-        }
 
-        
-        private void Button_NewCustomer_Click(object sender, RoutedEventArgs e)
+        private void Button_NewEmployee_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                SelectCustomertoadd sc = new SelectCustomertoadd();
+                SelectPerson sc = new SelectPerson();
                 if ((bool)sc.ShowDialog())
                 {
-                    PersonalAccount p = (PersonalAccount)sc.Textbox_SelectedCustomerPhone.Tag;
+                    var db = new PosDbContext();
+                    PersonalAccount p = db.PersonalAccount.AsNoTracking().FirstOrDefault(k => k.PersonGuid == sc.SelectedPersonNumber);
                     if (p != null)
                     {
                         EmployeeAccount ca = new EmployeeAccount()
@@ -182,13 +179,25 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                             RegDate = SharedVariables.CurrentDate(),
                         };
 
-                        var db = new PosDbContext();
                         db.EmployeeAccount.Add(ca);
                         db.SaveChanges();
                         MessageBox.Show("Employee Added Successfully", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        LoadEmployees();
                     }
                 }
-                
+
+            }
+            catch (Exception exception1)
+            {
+                MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadEmployees();
             }
             catch (Exception exception1)
             {

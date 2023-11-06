@@ -64,5 +64,7 @@ namespace DatabaseModels.OrderTicket
         /// </summary>
         [NotMapped]
         public decimal Total { get; set; }
+        [NotMapped]
+        public string WaiterName { get; set; }
     }
 }

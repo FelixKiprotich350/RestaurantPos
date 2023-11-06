@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +22,7 @@ namespace RestaurantManager
     /// </summary>
     public partial class App : Application
     {
+        private static Mutex _mutex = null;
         private readonly string keyboardlocation = @"C:\Windows\system32\osk.exe";
         [DllImport("user32.dll")]
         private static extern Boolean ShowWindow(IntPtr hWnd, Int32 nCmdShow);
@@ -42,7 +44,22 @@ namespace RestaurantManager
             //EventManager.RegisterClassHandler(typeof(TextBox), FrameworkElement.LostKeyboardFocusEvent, new RoutedEventHandler(Textbox_LostFocus), true);
 
         }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            const string appName = "MyAppName";
+            bool createdNew;
 
+            _mutex = new Mutex(true, appName, out createdNew);
+
+            if (!createdNew)
+            {
+                MessageBox.Show("The App is Already Running!","Message Box",MessageBoxButton.OK,MessageBoxImage.Information);
+                //app is already running! Exiting the application
+                Application.Current.Shutdown();
+            }
+
+            base.OnStartup(e);
+        }
         private void SetUpDatabase()
         {
             try

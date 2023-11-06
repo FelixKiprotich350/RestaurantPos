@@ -71,14 +71,17 @@
                         </DataGrid.Resources>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">
-                        <UniformGrid Columns="3"> 
+                        <UniformGrid Columns="4"> 
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Label Content="Total Items : " FontSize="20"/>
-                                <Label x:Name="Label_Products_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                                <Button Content="Export List" x:Name="Button_ExportProducts" Click="Button_ExportProducts_Click"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Sales: " FontSize="20"/>
                                 <Label x:Name="Label_Products_Total" Content="0.00" FontWeight="Bold" FontSize="20"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Label Content="Purchase Cost: " FontSize="20"/>
+                                <Label x:Name="Label_Products_BuyingpriceTotal" Content="0.00" FontWeight="Bold" FontSize="20"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Sales Profit: " FontSize="20"/>
@@ -172,7 +175,9 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding DepartmentName }"  Header="DepartmentName" IsReadOnly="True" Width="6*" CanUserSort="False"/>
                             <DataGridTextColumn  Binding="{Binding  DepartmentSalesCount,Mode=OneWay,UpdateSourceTrigger=PropertyChanged}" Header="Qty" Width="2*" CanUserSort="False" IsReadOnly="True"/>
-                            <DataGridTextColumn  Binding="{Binding DepartmentSalesTotal,StringFormat=N2}" Header="Total" IsReadOnly="True" Width="2*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding DepartmentSalesTotal,StringFormat=N2}" Header="Total Sales" IsReadOnly="True" Width="2*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding DepartmentSalesPurchaseTotal,StringFormat=N2}" Header="Purchase Cost" IsReadOnly="True" Width="2*" CanUserSort="False"/>
+                            <DataGridTextColumn  Binding="{Binding DepartmentSalesProfit,StringFormat=N2}" Header="Profit" IsReadOnly="True" Width="2*" CanUserSort="False"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <GroupBox Grid.Row="1" Header="Summary" Height="80">

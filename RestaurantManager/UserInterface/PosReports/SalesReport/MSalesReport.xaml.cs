@@ -24,6 +24,12 @@ using DatabaseModels.CRM;
 using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
+using System.IO;
+using CsvHelper;
+using System.Globalization;
+using winforms=System.Windows.Forms;
+using System.Threading;
+using CsvHelper.Configuration;
 
 namespace RestaurantManager.UserInterface.PosReports.SalesReport
 {
@@ -38,7 +44,8 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
         List<MenuProductItem> MainList_ProductItems = new List<MenuProductItem>(); 
         List<PosUser> Users = new List<PosUser>();
         List<CustomerAccount> Customers = new List<CustomerAccount>();
-        List<TicketPaymentMaster> TickPayMaster = new List<TicketPaymentMaster>(); 
+        List<TicketPaymentMaster> TickPayMaster = new List<TicketPaymentMaster>();
+        List<Un_OrderItem> productwise = new List<Un_OrderItem>();
         public MSalesReport()
         {
             InitializeComponent();
@@ -68,6 +75,7 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                 Users.Clear();
                 TickPayMaster.Clear(); 
                 Customers.Clear();
+                productwise.Clear();
                 //grids
                 Datagrid_OrderItems.ItemsSource=null; 
                 Datagrid_OrderItems.Items.Clear();
@@ -202,27 +210,31 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                             Un_OrderItem item = new Un_OrderItem();
                             int qty = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.Quantity);
                             decimal total = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.Total);
-                            decimal buyingtotal = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.BuyingPriceTotal);
+                             decimal buyingtotal = items2.Where(k => k.ProductItemGuid == x.ProductItemGuid).Sum(l => l.BuyingPriceTotal);
                             item.ParentProductItemGuid = x.ProductItemGuid;
                             item.ItemName = x.ItemName;
                             item.Quantity = qty;
                             item.Total = total; 
-                            item.BuyingPriceTotal = total-buyingtotal;
+                            item.ProfitTotal = total-buyingtotal;
+                            item.BuyingPriceTotal = buyingtotal;
                             displist.Add(item);
                         }
                         decimal totals = 0;
                         decimal profitstotal = 0;
+                        decimal buyingpricetotal = 0;
                         int count = 0;
                         foreach (var x in displist)
                         {
                             totals += x.Total;
-                            profitstotal += x.BuyingPriceTotal;
+                            profitstotal += x.ProfitTotal;
+                            buyingpricetotal += x.BuyingPriceTotal;
                             count++;
-                        }
-                        Label_Products_Count.Content = count.ToString();
+                        } 
                         Label_Products_Total.Content = totals.ToString();
+                        Label_Products_BuyingpriceTotal.Content = buyingpricetotal.ToString();
                         Label_Profit.Content = profitstotal.ToString();
                         Datagrid_OrderItems.ItemsSource = displist.OrderBy(k=>k.ItemName);
+                        productwise = displist;
                     }
                 }
                 else if (position == 1)
@@ -306,18 +318,21 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                                          Order = ta,
                                          tb.Department
                                      };
-                    decimal totals = 0;
+                    decimal totals = 0; 
                     int count = 0;
                     //MessageBox.Show(finalitems.Count().ToString());
                     foreach (var x in departments)
                     {
                         var xtotal = finalitems.Where(a=>a.Department==x).ToList().Sum(xa => ((OrderItem)xa.Order.oi).Total);
+                        var xPurchasetotal = finalitems.Where(a=>a.Department==x).ToList().Sum(xa => ((OrderItem)xa.Order.oi).BuyingPriceTotal);
                         var xcount = finalitems.Where(a => a.Department == x).ToList().Count();
                         departmentsobject.Add(new
                         {
                             DepartmentName=x,
                             DepartmentSalesCount=xcount,
                             DepartmentSalesTotal=xtotal,
+                            DepartmentSalesPurchaseTotal=xPurchasetotal,
+                            DepartmentSalesProfit = xtotal-xPurchasetotal,
                         });
                     }
                     Label_PerDepartment_Count.Content = count.ToString();
@@ -417,6 +432,47 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
             }
 
         }
-             
+
+        private   void Button_ExportProducts_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (productwise.Count <= 0)
+                {
+                    MessageBox.Show("There are no items to Export!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+                string path = "";
+                using (var fbd = new winforms.FolderBrowserDialog())
+                {
+                    winforms.DialogResult result = fbd.ShowDialog();
+
+                    if (result == winforms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                    {
+                        path = fbd.SelectedPath + "\\Export-" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".csv";
+                        // File.Create(path);
+                        Thread.Sleep(1000);
+
+                    }
+                } 
+                //StreamWriter writer = new StreamWriter(new FileStream(path,FileMode.Create, FileAccess.Write,FileShare.Read));
+                var configPersons = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true
+                }; 
+                using (var writer = new StreamWriter(path))
+                using (var csv = new CsvWriter(writer, configPersons))
+                {
+                    csv.WriteRecords(productwise.OrderBy(k=>k.ItemName));
+                }
+                 
+                MessageBox.Show("Data Exported Successfully!\n" + "File Path: " + path, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

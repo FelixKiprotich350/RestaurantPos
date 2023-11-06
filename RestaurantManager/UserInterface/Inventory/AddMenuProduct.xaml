@@ -42,7 +42,7 @@
             <UniformGrid Columns="2">
                 <StackPanel  >
                     <Label Content="Quantity"/>
-                    <TextBox x:Name="Textbox_InitialQuantity" FontSize="20" Height="30" VerticalAlignment="Center"/>
+                    <TextBox x:Name="Textbox_InitialQuantity" FontSize="20" Height="30" VerticalAlignment="Center" Text="0" IsReadOnly="True"/>
                 </StackPanel>
                 <StackPanel  Margin="8,0,0,0">
                     <Label Content="IsCountable"/>

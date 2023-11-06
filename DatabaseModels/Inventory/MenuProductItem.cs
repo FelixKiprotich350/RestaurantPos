@@ -46,5 +46,13 @@ namespace DatabaseModels.Inventory
 
         [NotMapped]
         public bool IsSelected { get; set; }
+        [NotMapped]
+        public int SoldQuantity { get; set; }
+        [NotMapped]
+        public int ReceivedQuantity { get; set; } 
+        [NotMapped]
+        public string AvailableQuantity { get; set; } 
+        [NotMapped]
+        public int PendingQuantity { get; set; } 
     }
 }

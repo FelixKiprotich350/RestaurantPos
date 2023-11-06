@@ -51,8 +51,8 @@
         <Grid Grid.Row="2">
             <DataGrid    x:Name="Datagrid_PaymentItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_PaymentItems_MouseUp"  >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding ParentTransNo }"  Header="RecNo" IsReadOnly="True" Width="*" CanUserSort="True"/>
-                    <DataGridTextColumn Binding="{Binding ParentOrderNo }"  Header="TickNo" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                    <DataGridTextColumn Binding="{Binding MasterTransNo }"  Header="RecNo" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                    <DataGridTextColumn Binding="{Binding ParentSourceRef }"  Header="TickNo" IsReadOnly="True" Width="*" CanUserSort="True"/>
                     <DataGridTextColumn  Binding="{Binding Method}" Header="Method" IsReadOnly="True" Width="*" CanUserSort="True"/>
                     <DataGridTextColumn  Binding="{Binding AmountPaid,StringFormat=N2}" Header="Amount" IsReadOnly="True" Width="*" CanUserSort="True"/>
                     <DataGridTextColumn  Binding="{Binding PaymentDate}" Header="PaymentDate" IsReadOnly="True" Width="*" CanUserSort="True"/>

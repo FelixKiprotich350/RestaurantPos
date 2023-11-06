@@ -351,15 +351,13 @@ namespace RestaurantManager.UserInterface.TicketPayments
                 }
                 
                 TicketPaymentItem pp = new TicketPaymentItem
-                {
-                    PaymentGuid=Guid.NewGuid().ToString(),
-                    ParentOrderNo=ParentOrderNo,
+                { 
+                    ParentSourceRef = ParentOrderNo,
                     PaymentDate=SharedVariables.CurrentDate(),
                     AmountPaid=amount,
                     Method = SelectedPaymentMethod,
-                    SecondaryRefference = "None",
-                    IsVoided=false, 
-                    ParentTransNo= tpm.TransNo,
+                    SecondaryRefference = "None", 
+                    MasterTransNo= tpm.TransNo,
                     ReceivingUsername =SharedVariables.CurrentUser.UserName, 
                 };
                   
@@ -556,8 +554,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
                                 //if(x!=null)
                                 //{
                                 //    db.PartialPaymentItem.Remove(x);
-                                //}
-                                x.IsVoided = true;
+                                //} 
                                 
                                 db.SaveChanges();
                                 GetPartialPayments();
@@ -580,7 +577,7 @@ namespace RestaurantManager.UserInterface.TicketPayments
                 using (var db = new PosDbContext())
                 {
                     Datagrid_Payments.ItemsSource = null;
-                    var items = db.TicketPaymentItem.Where(k => k.ParentOrderNo == ParentOrderNo && k.IsVoided == false).ToList();
+                    var items = db.TicketPaymentItem.Where(k => k.ParentSourceRef == ParentOrderNo ).ToList();
                     payments = new ObservableCollection<TicketPaymentItem>(items);
                     Datagrid_Payments.ItemsSource = payments;
                     Calculatetotal();

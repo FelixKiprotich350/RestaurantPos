@@ -83,6 +83,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper, Version=30.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.30.0.1\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -95,17 +98,32 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.5.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.4.5.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.0.0\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.30.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.30\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.EntityFramework, Version=8.0.30.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.EntityFramework.8.0.30\lib\net452\MySql.Data.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="ScottPlot, Version=4.1.68.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.4.1.68\lib\net462\ScottPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="ScottPlot.WPF, Version=4.1.68.0, Culture=neutral, PublicKeyToken=e53b06131e34a3aa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.WPF.4.1.68\lib\net472\ScottPlot.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -117,9 +135,12 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.4.7.3\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System.Management" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -135,6 +156,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
@@ -193,7 +217,78 @@
     <Compile Include="Migrations\202310221618486_M26.designer.cs">
       <DependentUpon>202310221618486_M26.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310222048252_M27.cs" />
+    <Compile Include="Migrations\202310222048252_M27.designer.cs">
+      <DependentUpon>202310222048252_M27.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310222055362_M28.cs" />
+    <Compile Include="Migrations\202310222055362_M28.designer.cs">
+      <DependentUpon>202310222055362_M28.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310231716489_M29.cs" />
+    <Compile Include="Migrations\202310231716489_M29.designer.cs">
+      <DependentUpon>202310231716489_M29.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310260959340_M30.cs" />
+    <Compile Include="Migrations\202310260959340_M30.designer.cs">
+      <DependentUpon>202310260959340_M30.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261011209_M31.cs" />
+    <Compile Include="Migrations\202310261011209_M31.designer.cs">
+      <DependentUpon>202310261011209_M31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261013291_M32.cs" />
+    <Compile Include="Migrations\202310261013291_M32.designer.cs">
+      <DependentUpon>202310261013291_M32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261015090_M33.cs" />
+    <Compile Include="Migrations\202310261015090_M33.designer.cs">
+      <DependentUpon>202310261015090_M33.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310261020107_M34.cs" />
+    <Compile Include="Migrations\202310261020107_M34.designer.cs">
+      <DependentUpon>202310261020107_M34.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202310281353483_M35.cs" />
+    <Compile Include="Migrations\202310281353483_M35.designer.cs">
+      <DependentUpon>202310281353483_M35.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311012033431_M36.cs" />
+    <Compile Include="Migrations\202311012033431_M36.designer.cs">
+      <DependentUpon>202311012033431_M36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311012140303_M37.cs" />
+    <Compile Include="Migrations\202311012140303_M37.designer.cs">
+      <DependentUpon>202311012140303_M37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051127435_M38.cs" />
+    <Compile Include="Migrations\202311051127435_M38.designer.cs">
+      <DependentUpon>202311051127435_M38.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051209137_M39.cs" />
+    <Compile Include="Migrations\202311051209137_M39.designer.cs">
+      <DependentUpon>202311051209137_M39.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051251385_M40.cs" />
+    <Compile Include="Migrations\202311051251385_M40.designer.cs">
+      <DependentUpon>202311051251385_M40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051347333_M41.cs" />
+    <Compile Include="Migrations\202311051347333_M41.designer.cs">
+      <DependentUpon>202311051347333_M41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202311051643151_M42.cs" />
+    <Compile Include="Migrations\202311051643151_M42.designer.cs">
+      <DependentUpon>202311051643151_M42.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Printing\PrintPaymentReceipt.cs" />
+    <Compile Include="UserInterface\Accounts\AccountsDashboard2.xaml.cs">
+      <DependentUpon>AccountsDashboard2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\AccountsDashboard1.xaml.cs">
+      <DependentUpon>AccountsDashboard1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Accounts\ApproveInvoice.xaml.cs">
       <DependentUpon>ApproveInvoice.xaml</DependentUpon>
     </Compile>
@@ -206,8 +301,11 @@
     <Compile Include="UserInterface\correctionpage.xaml.cs">
       <DependentUpon>correctionpage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\CustomersManagemnt\Employee.xaml.cs">
+    <Compile Include="UserInterface\HR\Employee.xaml.cs">
       <DependentUpon>Employee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\CustomersManagemnt\EditInvoiceLimit.xaml.cs">
+      <DependentUpon>EditInvoiceLimit.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\CustomersManagemnt\SelectCustomertoadd.xaml.cs">
       <DependentUpon>SelectCustomertoadd.xaml</DependentUpon>
@@ -219,24 +317,30 @@
     <Compile Include="UserInterface\Help\UpdateGuide.xaml.cs">
       <DependentUpon>UpdateGuide.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Inventory\AddAssetItem.xaml.cs">
+    <Compile Include="UserInterface\Inventory\AssetManagement\AddAssetItem.xaml.cs">
       <DependentUpon>AddAssetItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Inventory\AssetsMaster.xaml.cs">
+    <Compile Include="UserInterface\Inventory\AssetManagement\AssetPurchase.xaml.cs">
+      <DependentUpon>AssetPurchase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\StockControl\ViewProductStockHistory.xaml.cs">
+      <DependentUpon>ViewProductStockHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\StockControl\AddStockTakingNumber.xaml.cs">
+      <DependentUpon>AddStockTakingNumber.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Inventory\AssetManagement\AssetsMaster.xaml.cs">
       <DependentUpon>AssetsMaster.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Inventory\LPOMaster.xaml.cs">
       <DependentUpon>LPOMaster.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\Inventory\RequisitionMaster.xaml.cs">
-      <DependentUpon>RequisitionMaster.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Permissions.cs" />
     <Compile Include="PosDbContext.cs" />
-    <Compile Include="Printing\PrintTicket.cs" />
+    <Compile Include="Printing\PrintSalesTicket.cs" />
     <Compile Include="ApplicationFiles\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
@@ -363,8 +467,8 @@
     <Compile Include="UserInterface\Inventory\Kitchenadds.xaml.cs">
       <DependentUpon>Kitchenadds.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Inventory\ReceiveLPO.xaml.cs">
-      <DependentUpon>ReceiveLPO.xaml</DependentUpon>
+    <Compile Include="UserInterface\Inventory\StockControl\StockControlForm.xaml.cs">
+      <DependentUpon>StockControlForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Inventory\MenuCategories.xaml.cs">
       <DependentUpon>MenuCategories.xaml</DependentUpon>
@@ -381,7 +485,7 @@
     <Compile Include="UserInterface\Inventory\SelectProduct.xaml.cs">
       <DependentUpon>SelectProduct.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Inventory\StockEntry.xaml.cs">
+    <Compile Include="UserInterface\Inventory\StockControl\StockEntry.xaml.cs">
       <DependentUpon>StockEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PointofSale\EditTicketRemoveItem.xaml.cs">
@@ -465,6 +569,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserInterface\Accounts\AccountsDashboard2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Accounts\AccountsDashboard1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserInterface\Accounts\ApproveInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -481,7 +593,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\CustomersManagemnt\Employee.xaml">
+    <Page Include="UserInterface\HR\Employee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\CustomersManagemnt\EditInvoiceLimit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -497,19 +613,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Inventory\AddAssetItem.xaml">
+    <Page Include="UserInterface\Inventory\AssetManagement\AddAssetItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserInterface\Inventory\AssetsMaster.xaml">
+    <Page Include="UserInterface\Inventory\AssetManagement\AssetPurchase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Inventory\StockControl\ViewProductStockHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Inventory\StockControl\AddStockTakingNumber.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Inventory\AssetManagement\AssetsMaster.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\Inventory\LPOMaster.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\Inventory\RequisitionMaster.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -689,7 +813,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserInterface\Inventory\ReceiveLPO.xaml">
+    <Page Include="UserInterface\Inventory\StockControl\StockControlForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -713,7 +837,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Inventory\StockEntry.xaml">
+    <Page Include="UserInterface\Inventory\StockControl\StockEntry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -840,6 +964,54 @@
     <EmbeddedResource Include="Migrations\202310221618486_M26.resx">
       <DependentUpon>202310221618486_M26.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310222048252_M27.resx">
+      <DependentUpon>202310222048252_M27.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310222055362_M28.resx">
+      <DependentUpon>202310222055362_M28.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310231716489_M29.resx">
+      <DependentUpon>202310231716489_M29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310260959340_M30.resx">
+      <DependentUpon>202310260959340_M30.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261011209_M31.resx">
+      <DependentUpon>202310261011209_M31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261013291_M32.resx">
+      <DependentUpon>202310261013291_M32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261015090_M33.resx">
+      <DependentUpon>202310261015090_M33.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310261020107_M34.resx">
+      <DependentUpon>202310261020107_M34.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310281353483_M35.resx">
+      <DependentUpon>202310281353483_M35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311012033431_M36.resx">
+      <DependentUpon>202311012033431_M36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311012140303_M37.resx">
+      <DependentUpon>202311012140303_M37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051127435_M38.resx">
+      <DependentUpon>202311051127435_M38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051209137_M39.resx">
+      <DependentUpon>202311051209137_M39.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051251385_M40.resx">
+      <DependentUpon>202311051251385_M40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051347333_M41.resx">
+      <DependentUpon>202311051347333_M41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202311051643151_M42.resx">
+      <DependentUpon>202311051643151_M42.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -876,9 +1048,6 @@
     <Resource Include="ImageResources\icons8-subtract.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageResources\img3.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="ImageResources\Accounts.png" />
     <Resource Include="ImageResources\menu.png" />
     <Resource Include="ImageResources\point of sale.png" />
@@ -900,6 +1069,11 @@
     <Content Include="FilesResources\PeriodClosure.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="ImageResources\edit1.png" />
+    <Resource Include="ImageResources\edit.png" />
+    <Resource Include="ImageResources\view2.png" />
+    <Resource Include="ImageResources\view3.png" />
+    <Resource Include="ImageResources\view1.png" />
     <Resource Include="ImageResources\ActiveItem.png" />
     <Resource Include="ImageResources\DeleteItem.png" />
   </ItemGroup>
@@ -909,7 +1083,9 @@
       <Name>DatabaseModels</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UserInterface\Accounts\ReportModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

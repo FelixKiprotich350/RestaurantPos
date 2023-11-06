@@ -41,7 +41,7 @@ namespace RestaurantManager.GlobalVariables
             {
                 using (var db = new PosDbContext())
                 {
-                    w = db.WorkPeriod.Where(x => x.WorkperiodStatus == "Open").First();
+                    w = db.WorkPeriod.FirstOrDefault(x => x.WorkperiodStatus == "Open");
                 }
                 return w;
             }
@@ -52,18 +52,30 @@ namespace RestaurantManager.GlobalVariables
         } 
         public static int GenerateInvoiceNumber()
         {
-            int w = 0;
+            int bignumber = 0;
             try
             {
-                var db = new PosDbContext();
-                w =  db.InvoicesMaster.Count() + 1;
-                if (db.InvoicesMaster.AsNoTracking().FirstOrDefault(k=>k.InvoiceNo=="INV/S/"+w)!=null)
+                var db = new PosDbContext(); 
+                
+                var data = db.InvoicesMaster.AsNoTracking().ToList().OrderBy(k=>k.InvoiceDate).LastOrDefault();
+
+                if (data!=null)
                 {
-                    w =db.InvoicesMaster.Count() + 2;
+                    if (data.InvoiceNo.Contains("INV/S/"))
+                    {
+                        if (data.InvoiceNo.Split('/').Length == 3)
+                        {
+                            bignumber = Convert.ToInt32(data.InvoiceNo.Split('/').ToArray()[2])+1;
+                        }
+                    }
                 }
-                return w;
+                else
+                {
+                    bignumber = 1;
+                }
+                return bignumber;
             }
-            catch
+            catch(Exception ex)
             {
                 return -1;
             }

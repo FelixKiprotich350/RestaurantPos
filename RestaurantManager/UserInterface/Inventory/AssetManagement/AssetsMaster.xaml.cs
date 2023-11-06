@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.Inventory
+namespace RestaurantManager.UserInterface.Inventory.AssetManagement
 {
     /// <summary>
     /// Interaction logic for MenuProducts.xaml
@@ -33,7 +33,7 @@ namespace RestaurantManager.UserInterface.Inventory
         {
             try
             {
-                RefreshAssetsProducts();
+                //RefreshAssetsProducts();
             }
             catch (Exception ex)
             {
@@ -89,44 +89,7 @@ namespace RestaurantManager.UserInterface.Inventory
             try
             {
                 AddAssetItem nmp = new AddAssetItem();
-                if (nmp.ShowDialog() == false)
-                {
-                    return;
-                }
-                string category = "";
-                AssetGroup productCategory = (AssetGroup)nmp.Combobox_AssetGroup.SelectedItem;
-                category = productCategory.GroupGuid;  
-                if (!decimal.TryParse(nmp.Textbox_AssetCost.Text.Trim(), out decimal AssetCost))
-                {
-                    MessageBox.Show("The Cost value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                if (!int.TryParse(nmp.Textbox_InitialQuantity.Text.Trim(), out int AssetCount))
-                {
-                    MessageBox.Show("The Quantity value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-                using (var db = new PosDbContext())
-                {
-                    db.AssetItem.Add(new AssetItem() 
-                    { 
-                        AssetItemGuid = Guid.NewGuid().ToString(), 
-                        AssetName = nmp.Textbox_Description.Text, 
-                        AssetDescription = nmp.Textbox_Description.Text.Trim(),                          
-                        AssetGroupGuid = productCategory.GroupGuid, 
-                        GroupName = productCategory.GroupName, 
-                        AssetItemCost = AssetCost,
-                        UOM = ((AssetUOM)nmp.Combobox_AssetUOM.SelectedItem).UnitGuid ,
-                        InStockQuantity=AssetCount, 
-                        IsPrecount=Convert.ToBoolean(((ComboBoxItem)nmp.Combobox_Precount.SelectedValue).Content.ToString()),
-                        typeofasset=nmp.Combobox_AssetType.SelectedItem.ToString(),
-                        RegistrationDate= GlobalVariables.SharedVariables.CurrentDate(),
-                        LastUpdateDate=GlobalVariables.SharedVariables.CurrentDate()
-                    });
-                    db.SaveChanges();
-                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                    RefreshAssetsProducts();
-                }
+                nmp.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -203,6 +166,27 @@ namespace RestaurantManager.UserInterface.Inventory
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+
+        /// <summary>
+        /// tab 2 : categories
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Datagrid_AssetsGroups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_SaveCategory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_UpdateCategory_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

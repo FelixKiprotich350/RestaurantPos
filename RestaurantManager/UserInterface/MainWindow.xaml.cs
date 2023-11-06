@@ -13,6 +13,7 @@ using DatabaseModels.Inventory;
 using DatabaseModels.Security;
 using System.Collections.ObjectModel;
 using static RestaurantManager.GlobalVariables.PosEnums;
+using System.Windows.Threading;
 
 namespace RestaurantManager.UserInterface
 {
@@ -27,9 +28,24 @@ namespace RestaurantManager.UserInterface
         public MainWindow()
         {
             InitializeComponent();
-            TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();  
-            Frame1.Content = new HomePage();
-            
+            TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();
+            DispatcherTimer dt = new DispatcherTimer();
+            Timer_Tick(null, new EventArgs());
+            dt.Tick += new EventHandler(Timer_Tick);
+            dt.Interval = new TimeSpan(0, 0, 1);
+            dt.Start();
+            Frame1.Content = new Accounts.AccountsDashboard2();
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            { 
+                TextBox_Date.Text = TextBox_Date.Text = SharedVariables.CurrentDate().ToLongDateString() + " " + SharedVariables.CurrentDate().ToLongTimeString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

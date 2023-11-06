@@ -90,7 +90,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 //ListofPayMaster = db.TicketPaymentMaster.AsNoTracking().ToList();
 
                 var leftOuterJoin = from pitem in db.TicketPaymentItem.AsNoTracking()
-                                    join m in db.TicketPaymentMaster.AsNoTracking() on pitem.ParentTransNo equals m.TransNo into masterlist
+                                    join m in db.TicketPaymentMaster.AsNoTracking() on pitem.MasterTransNo equals m.TransNo into masterlist
                                     from master in masterlist.DefaultIfEmpty()
                                     select new
                                     {
@@ -170,19 +170,15 @@ namespace RestaurantManager.UserInterface.PosReports
                         decimal cards = 0;
                         foreach (var x in master)
                         {
-                            cash = items.Where(k => k.ParentTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(j => j.AmountPaid);
-                            mpesa = items.Where(k => k.ParentTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(j => j.AmountPaid);
-                            voucher = items.Where(k => k.ParentTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Voucher.ToString()).Sum(j => j.AmountPaid);
-                            cards = items.Where(k => k.ParentTransNo == x.TransNo && k.Method.Contains(PosEnums.TicketPaymentMethods.Card.ToString())).Sum(j => j.AmountPaid);
+                            cash += items.Where(k => k.MasterTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(j => j.AmountPaid);
+                            mpesa += items.Where(k => k.MasterTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(j => j.AmountPaid);
+                            voucher += items.Where(k => k.MasterTransNo == x.TransNo && k.Method == PosEnums.TicketPaymentMethods.Voucher.ToString()).Sum(j => j.AmountPaid);
+                            cards += items.Where(k => k.MasterTransNo == x.TransNo && k.Method.Contains(PosEnums.TicketPaymentMethods.Card.ToString())).Sum(j => j.AmountPaid);
                             percheckout.Add(new { x.TransNo, AmountCharged = x.TotalAmountCharged, AmountPaid = x.TotalAmountPaid, Balance = x.TicketBalanceReturned, Cash = cash, Mpesa = mpesa, Cards = cards, Voucher = voucher });
                         }
-                        decimal totals = 0;
-                        int count = 0;
-                        foreach (var x in master)
-                        {
-                            totals += x.TotalAmountCharged;
-                            count++;
-                        }
+                        decimal totals = cash + mpesa + voucher + cards;
+                        int count = master.Count;
+                        
                         Label_Transactions_Count.Content = count.ToString();
                         Label_Transactions_Total.Content = totals.ToString();
                         Datagrid_Payments.ItemsSource = percheckout;
@@ -202,7 +198,7 @@ namespace RestaurantManager.UserInterface.PosReports
                         decimal cards = 0;
                         foreach (var x in master)
                         {
-                            var a = cardpaymentsonly.Where(k => k.ParentTransNo == x.TransNo).ToList();
+                            var a = cardpaymentsonly.Where(k => k.MasterTransNo == x.TransNo).ToList();
                             cards += a.Sum(j => j.AmountPaid);
                             foreach (var y in a)
                             {
@@ -235,7 +231,7 @@ namespace RestaurantManager.UserInterface.PosReports
                         int count = 0;
                         foreach (var x in master)
                         {
-                            var a = mpesapaymentsonly.Where(k => k.ParentTransNo == x.TransNo).ToList();
+                            var a = mpesapaymentsonly.Where(k => k.MasterTransNo == x.TransNo).ToList();
                             total += a.Sum(j => j.AmountPaid);
                             count += a.Count;
                             foreach (var y in a)
@@ -262,7 +258,7 @@ namespace RestaurantManager.UserInterface.PosReports
                         int count = 0;
                         foreach (var x in master)
                         {
-                            var a = voucherpaymentsonly.Where(k => k.ParentTransNo == x.TransNo).ToList();
+                            var a = voucherpaymentsonly.Where(k => k.MasterTransNo == x.TransNo).ToList();
                             total += a.Sum(j => j.AmountPaid);
                             count += a.Count;
                             foreach (var y in a)

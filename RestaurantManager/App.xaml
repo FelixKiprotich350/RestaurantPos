@@ -367,6 +367,14 @@
                 <Setter Property="FontWeight" Value="Normal" />
                 <Setter Property="Height" Value="Auto" />
             </Style>
+            <Style x:Key="DasboardColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Padding" Value="6,4,4,6" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="Height" Value="Auto" />
+            </Style>
 
             <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -395,13 +403,13 @@
                 </Setter> 
                 <Setter Property="Template">
                     <Setter.Value>
-                        <ControlTemplate TargetType="TabItem">
-                            <Border Name="Border"  BorderBrush="Gainsboro" CornerRadius="8,8,0,0" Margin="2,0">
+                        <ControlTemplate TargetType="TabItem" >
+                            <Border Name="Border"  BorderBrush="Gainsboro" CornerRadius="8,8,0,0" Margin="1,0">
                                 <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         ContentSource="Header"
-                                        Margin="8,2"/>
+                                        Margin="8,2" Height="24"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsSelected" Value="True">

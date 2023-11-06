@@ -19,10 +19,10 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// <summary>
     /// Interaction logic for SelectCustomerName.xaml
     /// </summary>
-    public partial class SelectCustomerName : Window
+    public partial class SelectEmployee : Window
     {
-        public CustomerAccount SelectedCustomer = null;
-        public SelectCustomerName()
+        public EmployeeAccount SelectedCustomer = null;
+        public SelectEmployee()
         {
             InitializeComponent(); 
         }
@@ -34,8 +34,16 @@ namespace RestaurantManager.UserInterface.PointofSale
                  
                 using (var db = new PosDbContext())
                 {
-                    var data = db.CustomerAccount.ToList();
-                    Listview_Customers.ItemsSource = data;
+                    var data = db.EmployeeAccount.ToList();
+                    foreach (var x in data)
+                    {
+                        var p = db.PersonalAccount.AsNoTracking().FirstOrDefault(k => k.AccountNo == x.PersonAccNo);
+                        x.FullName = p.FullName;
+                        x.Gender = p.Gender;
+                        x.PhoneNo = p.PhoneNumber;
+                        x.PersonAccNo = p.AccountNo;
+                    }
+                    Listview_Employees.ItemsSource = data;
                 } 
 
             }
@@ -75,9 +83,9 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                if (Listview_Customers.SelectedItem != null)
+                if (Listview_Employees.SelectedItem != null)
                 {
-                    CustomerAccount cust = (CustomerAccount)Listview_Customers.SelectedItem;
+                    EmployeeAccount cust = (EmployeeAccount)Listview_Employees.SelectedItem;
                     Textbox_SelectedCustomerPhone.Text = cust.FullName + " - " + cust.PersonAccNo;
                     Textbox_SelectedCustomerPhone.Tag = cust.PhoneNo;
                     SelectedCustomer = cust;
@@ -88,7 +96,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error); 
             }
-            Listview_Customers.SelectedItem = null;
+            Listview_Employees.SelectedItem = null;
         }
     }
 }

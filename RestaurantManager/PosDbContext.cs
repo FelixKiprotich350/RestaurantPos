@@ -85,6 +85,7 @@ namespace RestaurantManager
         public DbSet<KitchenAddItem> KitchenAddItem { get; set; }
         public DbSet<DiscountItem> DiscountItem { get; set; }
         public DbSet<StockFlowTransaction> StockFlowTransaction { get; set; }
+        public DbSet<StockTakingMaster> StockTakingMaster { get; set; }
         public DbSet<AssetItem> AssetItem { get; set; }
         public DbSet<AssetItemFlow> AssetsItemFlow { get; set; }
         public DbSet<AssetGroup> AssetGroup { get; set; }
@@ -104,7 +105,7 @@ namespace RestaurantManager
         public DbSet<TicketPaymentMaster> TicketPaymentMaster { get; set; }
         public DbSet<TicketPaymentItem> TicketPaymentItem { get; set; } 
         public DbSet<InvoicesMaster> InvoicesMaster { get; set; } 
-        public DbSet<InvoicePaymentItem> InvoicePaymentItem { get; set; } 
+       // public DbSet<InvoicePaymentItem> InvoicePaymentItem { get; set; } 
         //settings
         public DbSet<ClientInfoDetails> ClientInfo { get; set; }
         public DbSet<TableEntity> TableEntity { get; set; }

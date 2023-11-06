@@ -113,10 +113,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                if (TextBlock_TicketNo.Text.Trim() == "")
-                {
-                    return;
-                }
+                
                 decimal Sellingprice = 0; 
                 decimal Buyingprice = 0;
                 int icount = 0;
@@ -213,6 +210,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                      
                     return;
                 }
+                //check quantityhere vs stock
                 //finally add item
                 OrderItems.Add(i);
                 //add gift item if present
@@ -246,7 +244,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
+        } 
 
         private void Datagrid_OrderItems_MouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -390,12 +388,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                 }
                 string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                CustomerAccount cust = GetCustomer();
+                EmployeeAccount cust = GetCustomer();
+                if (cust == null)
+                {
+                    MessageBox.Show("There is No Waiter Selected!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 OrderMaster om = new OrderMaster
                 {
                     OrderGuid = Guid.NewGuid().ToString(),
                     OrderDate = SharedVariables.CurrentDate(),
-                    CustomerRefference = cust != null ? cust.PersonAccNo : "None",
+                    CustomerRefference = cust.PersonAccNo,
                     TicketTable = Label_Table.Content.ToString(),
                     OrderStatus = PosEnums.OrderTicketStatuses.Pending.ToString(),
                     UserServing = SharedVariables.CurrentUser.UserName,
@@ -432,22 +435,15 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         } 
 
-        private CustomerAccount GetCustomer()
+        private EmployeeAccount GetCustomer()
         {
             try
             {
                 if (LabelCustomer.Tag!=null)
                 {
-                    if (LabelCustomer.Tag.GetType() == typeof(CustomerAccount))
+                    if (LabelCustomer.Tag is EmployeeAccount emp)
                     {
-                        if ((CustomerAccount)LabelCustomer.Tag != null)
-                        {
-                            return (CustomerAccount)LabelCustomer.Tag;
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return emp;
                     }
                     else
                     {
@@ -475,12 +471,12 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Button_SelectCustomer_Click(object sender, RoutedEventArgs e)
         {
-            SelectCustomerName sc = new SelectCustomerName();
+            SelectEmployee sc = new SelectEmployee();
             sc.ShowDialog();
             if (sc.SelectedCustomer != null)
             {
                 LabelCustomer.Tag = sc.SelectedCustomer;
-                LabelCustomer.Content = sc.SelectedCustomer.PersonAccNo;
+                LabelCustomer.Content = sc.SelectedCustomer.FullName;
             }
             else
             {

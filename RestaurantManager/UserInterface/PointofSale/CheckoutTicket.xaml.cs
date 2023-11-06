@@ -28,6 +28,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using winformdrawing = System.Drawing;
 using DatabaseModels.Accounts;
+using RestaurantManager.Printing;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -35,10 +36,10 @@ namespace RestaurantManager.UserInterface.PointofSale
     /// Interaction logic for CheckoutTicket.xaml
     /// </summary>
     public partial class CheckoutTicket : Page
-    { 
+    {
         public decimal AmountToPay = 0;
         public decimal AmountPaid = 0;
-        public decimal balance = 0;
+        public decimal Current_balance = 0;
         public decimal discount = 0;
         //public bool IsInitializing = true;
         public ObservableCollection<TicketPaymentItem> payments = new ObservableCollection<TicketPaymentItem>();
@@ -74,7 +75,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
             else
             {
-                 
+
                 Button_ResetPayparameters_Click(null, new RoutedEventArgs());
                 Grid_ticketsview.Visibility = Visibility.Collapsed;
                 Grid_TicketLowerbuttonbar.Visibility = Visibility.Collapsed;
@@ -109,7 +110,20 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 using (var db = new PosDbContext())
                 {
-                    LisTview_TicketsList.ItemsSource = db.OrderMaster.AsNoTracking().Where(p =>  p.OrderStatus==PosEnums.OrderTicketStatuses.Pending.ToString()).ToList().OrderByDescending(m => m.OrderDate);
+                    var data = db.OrderMaster.AsNoTracking().Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).ToList().OrderByDescending(m => m.OrderDate);
+                    foreach (var x in data)
+                    {
+                        var t = db.PersonalAccount.AsNoTracking().SingleOrDefault(k => k.AccountNo == x.CustomerRefference);
+                        if (t != null)
+                        {
+                            x.WaiterName = t.FullName.Split(' ')[0];
+                        }
+                        else
+                        {
+                            x.WaiterName = "None";
+                        }
+                    }
+                    LisTview_TicketsList.ItemsSource = data;
                 }
             }
             catch (Exception ex)
@@ -131,7 +145,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 DatabaseModels.CRM.CustomerAccount cust = db.CustomerAccount.Where(x => x.PersonAccNo == custno).FirstOrDefault();
                 if (cust != null)
                 {
-                   return cust;
+                    return cust;
                 }
                 else
                 {
@@ -155,7 +169,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //}
                 points = PurchaseAmount / 100;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 points = -1;
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -167,8 +181,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                
-                
+
+
                 ListView Lv = sender as ListView;
                 if (Lv.SelectedItem == null)
                 {
@@ -191,7 +205,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 AmountPaid = 0;
-                balance = 0;
+                Current_balance = 0;
                 R_receiptno = "";
                 R_totalpaid = 0;
                 R_TotalCharged = 0;
@@ -199,8 +213,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 TextBlock_TicketNo.Text = "";
                 Datagrid_TicketItems.ItemsSource = null;
                 //get ticket items
-                var db = new PosDbContext(); 
-                var a = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo ).ToList();
+                var db = new PosDbContext();
+                var a = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo).ToList();
                 Datagrid_TicketItems.ItemsSource = a;
                 //find total
                 decimal total = 0;
@@ -213,7 +227,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 AmountToPay = total;
                 Textbox_TaxAmount.Text = (total * SharedVariables.ClientInfo().TaxPercentage / 100).ToString("N2");
                 TextBlock_TicketNo.Text = order.OrderNo;
-                TextBlock_TicketDate.Text = order.OrderDate.ToString(); 
+                TextBlock_TicketDate.Text = order.OrderDate.ToString();
             }
             catch (Exception ex)
             {
@@ -228,7 +242,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 TextBox_TotalAmount.Text = "0.00";
                 TextBlock_TicketNo.Text = "";
-                TextBlock_TicketDate.Text = ""; 
+                TextBlock_TicketDate.Text = "";
                 Datagrid_TicketItems.ItemsSource = null;
                 Button_CheckoutTicket.IsEnabled = false;
             }
@@ -242,8 +256,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Button_CheckoutTicket_Click(object sender, RoutedEventArgs e)
         {
             try
-            {  
-                var db1 = new PosDbContext(); 
+            {
+                var db1 = new PosDbContext();
                 WorkPeriod wp = db1.WorkPeriod.Where(h => h.WorkperiodStatus == PosEnums.WorkPeriodStatuses.Open.ToString()).FirstOrDefault();
                 OrderMaster om = db1.OrderMaster.Where(h => h.OrderNo == TextBlock_TicketNo.Text).FirstOrDefault();
                 if (wp == null)
@@ -255,18 +269,18 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     MessageBox.Show("The Ticket does not Exist. Select a ticket to Check it out!", "Message Box", MessageBoxButton.OK);
                     return;
-                }  
+                }
                 if (om.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString())
                 {
                     MessageBox.Show("The Ticket has been Checked Out. Select another ticket to Check it out also!", "Message Box", MessageBoxButton.OK);
                     return;
-                }  
+                }
 
                 SwitchView(false);
                 LoadTicketCheckoutDetails(om);
                 LoadBankCards();
-                GetPartialPayments(); 
-                
+                GetPartialPayments();
+
             }
             catch (Exception ex)
             {
@@ -281,11 +295,11 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
                 AmountToPay = 0;
                 AmountPaid = 0;
-                balance = 0;
+                Current_balance = 0;
                 discount = 0;
                 //get ticket items
                 var db = new PosDbContext();
-                var b = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo &&o.IsGiftItem==false).ToList();
+                var b = db.OrderItem.AsNoTracking().Where(o => o.OrderID == order.OrderNo && o.IsGiftItem == false).ToList();
                 //find total
                 decimal total = 0;
                 foreach (OrderItem x in b)
@@ -305,7 +319,7 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         }
 
-       
+
         #endregion
 
         /// <summary>
@@ -325,7 +339,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private void Button_1_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -535,7 +549,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             {
 
                 InvoiceSalesBill inv = new InvoiceSalesBill();
-               
+
                 if (!(bool)inv.ShowDialog())
                 {
                     return;
@@ -554,7 +568,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             Textbox_SelectedAccount.Text = "";
             Label_SelectedModeofpayment.Content = "";
-            Textbox_AmountToAdd.Text = ""; 
+            Textbox_AmountToAdd.Text = "";
             Textbox_SelectedAccount.Tag = null;
         }
 
@@ -565,34 +579,34 @@ namespace RestaurantManager.UserInterface.PointofSale
                 Label_SelectedModeofpayment.Content = method;
                 if (method == PosEnums.TicketPaymentMethods.Cash.ToString())
                 {
-                     
+
                     Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
                     Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
 
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Card.ToString())
-                { 
+                {
                     Stackpanel_CardGroup.Visibility = Visibility.Visible;
                     Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
-                { 
+                {
                     Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
                     Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Voucher.ToString())
-                { 
+                {
                     Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
                     Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
                     Label_SelectedModeofpayment.Content = "Enter Voucher Number";
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Invoice.ToString())
-                { 
+                {
                     Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Visible; 
+                    Stackpanel_InvoiceGroup.Visibility = Visibility.Visible;
                 }
                 else
-                { 
+                {
                     Label_SelectedModeofpayment.Content = "Payment Not Selected";
                 }
             }
@@ -601,59 +615,73 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private void Button_AddPayment_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-               
+                string pmethod = Label_SelectedModeofpayment.Content.ToString();
                 if (!int.TryParse(Textbox_AmountToAdd.Text.Trim(), out int amount))
                 {
                     MessageBox.Show("Enter Valid Amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (Label_SelectedModeofpayment.Content.ToString() == "" | Label_SelectedModeofpayment.Content.ToString() == "Discount")
+                if (pmethod == "" | pmethod == "Discount")
                 {
                     MessageBox.Show("Select Payment Method!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
                 GetPartialPayments();
                 //validate payments
-                var requiredamount = AmountToPay - AmountPaid;
-                if (AmountPaid>=AmountToPay)
+                //var requiredamount = AmountToPay - AmountPaid;
+                decimal New_balance = amount + Current_balance;
+                decimal AmountUsednow = 0;
+                decimal Amountpaidnow = amount;
+
+                if (Current_balance >= 0)
                 {
-                    MessageBox.Show("The payment is Enough Already!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The payment is Enough Already. Do not add any Payment!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Cash.ToString())
+                if (pmethod == PosEnums.TicketPaymentMethods.Cash.ToString())
                 {
-                    
-                    if (amount > requiredamount + 1000)
+
+                    Amountpaidnow = amount;
+                    if (New_balance > 0)
                     {
-                        MessageBox.Show("The Cash Amount Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
+
+                        if (New_balance > 1000)
+                        {
+                            MessageBox.Show("The Cash Balance Exceeds 1000!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        if (New_balance > CalculateCashtotal() + amount)
+                        {
+                            MessageBox.Show("The Cash balance is more than the cash paid!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        AmountUsednow = amount - New_balance;
+                    }
+                    else
+                    {
+                        AmountUsednow = amount;
                     }
 
                 }
-                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Invoice.ToString())
+                else if (pmethod == PosEnums.TicketPaymentMethods.Mpesa.ToString() | pmethod == PosEnums.TicketPaymentMethods.Card.ToString() | pmethod == PosEnums.TicketPaymentMethods.Invoice.ToString())
                 {
-                   
-                    if (amount > requiredamount )
-                    {
-                        MessageBox.Show("The Invoice Amount Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
 
-                }
-                if (Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Mpesa.ToString()|Label_SelectedModeofpayment.Content.ToString() == PosEnums.TicketPaymentMethods.Card.ToString())
-                {
-                   
-                    if (amount > requiredamount )
+                    if (New_balance > 0)
                     {
                         MessageBox.Show("The Amount Entered Exceeds the required amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
-
+                    AmountUsednow = amount;
+                    Amountpaidnow = amount;
+                }
+                else
+                {
+                    return;
                 }
                 var db = new PosDbContext();
                 InvoicesMaster invm = null;
@@ -661,8 +689,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if (db.TicketPaymentMaster.AsNoTracking().FirstOrDefault(k => k.TicketNo == TextBlock_TicketNo.Text) != null)
                 {
                     tpm = db.TicketPaymentMaster.FirstOrDefault(k => k.TicketNo == TextBlock_TicketNo.Text);
-                    tpm.TotalAmountPaid = AmountPaid + amount;
-                    tpm.TicketBalanceReturned = AmountPaid + amount - AmountToPay;
+                    tpm.TotalAmountPaid = AmountPaid + AmountUsednow;
+                    tpm.TicketBalanceReturned = New_balance;
                 }
                 else
                 {
@@ -672,9 +700,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                         TicketNo = TextBlock_TicketNo.Text,
                         TransNo = "C" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString(),
                         PosUser = SharedVariables.CurrentUser.UserName.ToString(),
-                        TotalAmountPaid = AmountPaid + amount,
+                        TotalAmountPaid = AmountPaid + AmountUsednow,
                         TotalAmountCharged = AmountToPay,
-                        TicketBalanceReturned = amount + AmountPaid - AmountToPay,
+                        TicketBalanceReturned = New_balance,
                         PaymentDate = SharedVariables.CurrentDate(),
                         WorkPeriod = SharedVariables.CurrentOpenWorkPeriod().WorkperiodName
                     };
@@ -682,19 +710,26 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
 
                 TicketPaymentItem pp = new TicketPaymentItem
-                {
-                    PaymentGuid = Guid.NewGuid().ToString(),
-                    ParentOrderNo = TextBlock_TicketNo.Text,
+                { 
+                    ParentSourceRef = TextBlock_TicketNo.Text,
                     PaymentDate = SharedVariables.CurrentDate(),
-                    AmountPaid = amount,
+                    AmountPaid = Amountpaidnow,
+                    AmountUsed = AmountUsednow,
+                    PayForSource=PosEnums.PaymentForSources.SalesBill.ToString(),
                     Method = Label_SelectedModeofpayment.Content.ToString(),
-                    SecondaryRefference = "None",
-                    IsVoided = false,
-                    Workperiod=SharedVariables.CurrentOpenWorkPeriod().WorkperiodName,
-                    ParentTransNo = tpm.TransNo,
+                    SecondaryRefference = "None", 
+                    Workperiod = SharedVariables.CurrentOpenWorkPeriod().WorkperiodName,
+                    MasterTransNo = tpm.TransNo,
                     ReceivingUsername = SharedVariables.CurrentUser.UserName,
                 };
-
+                if (New_balance < 0)
+                {
+                    pp.PaymentBalance = 0;
+                }
+                else
+                {
+                    pp.PaymentBalance = New_balance;
+                }
                 if (pp.Method == PosEnums.TicketPaymentMethods.Card.ToString())
                 {
                     if (Combobos_BanksList.Text.Trim() == "")
@@ -704,7 +739,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                     pp.PrimaryRefference = Combobos_BanksList.Text;
                 }
-                else if(pp.Method==PosEnums.TicketPaymentMethods.Invoice.ToString())
+                else if (pp.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                 {
                     CustomerAccount cust = (CustomerAccount)Textbox_SelectedAccount.Tag;
                     if (cust == null)
@@ -712,13 +747,13 @@ namespace RestaurantManager.UserInterface.PointofSale
                         MessageBox.Show("The Customer Account Does Not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
-                    if (cust.InvoiceLimit < amount)
+                    if (cust.InvoiceLimit < AmountUsednow)
                     {
                         MessageBox.Show("The Amount invoiced Exceeds the Limit !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
                     var newno = SharedVariables.GenerateInvoiceNumber();
-                    if (newno<1 )
+                    if (newno < 1)
                     {
                         return;
                     }
@@ -727,21 +762,21 @@ namespace RestaurantManager.UserInterface.PointofSale
                     {
                         InvoiceGuid = Guid.NewGuid().ToString(),
                         InvoiceNo = "INV/S/" + newno,
-                        InvoiceAmount = amount,
+                        InvoiceAmount = AmountUsednow,
                         InvoiceStatus = PosEnums.InvoiceStatuses.Issued.ToString(),
                         InvoiceSource = PosEnums.InvoiceSources.SalesBill.ToString(),
                         CancelReason = "None",
                         SystemUser = SharedVariables.CurrentUser.UserName,
-                        CustomerAccNo=cust.PersonAccNo,
+                        CustomerAccNo = cust.PersonAccNo,
                         InvoiceDate = SharedVariables.CurrentDate(),
-                        LastPaymentDate = SharedVariables.CurrentDate(), 
+                        LastPaymentDate = SharedVariables.CurrentDate(),
                         PrimaryRefference = tpm.TransNo,
                         ExpectedPayDate = SharedVariables.CurrentDate().AddMonths(1),
-                        Notes="Invoiced due to Pending Bills",
-                        Workperiod=SharedVariables.CurrentOpenWorkPeriod().WorkperiodName
+                        Notes = "Invoiced due to Pending Bills",
+                        Workperiod = SharedVariables.CurrentOpenWorkPeriod().WorkperiodName
 
                     };
-                    pp.PrimaryRefference =invm.InvoiceNo;
+                    pp.PrimaryRefference = invm.InvoiceNo;
                     db.InvoicesMaster.Add(invm);
                 }
 
@@ -754,12 +789,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                 //{
                 //    db.VoucherCard.Where(i => i.VoucherNumber == pp.PrimaryRefference).First().VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Redeemed.ToString();
                 //}
-                
+
                 db.TicketPaymentItem.Add(pp);
                 db.SaveChanges();
                 MessageBox.Show("Payment Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                
-               
+
+
             }
             catch (Exception ex)
             {
@@ -768,7 +803,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             finally
             {
                 Button_ResetPayparameters_Click(null, new RoutedEventArgs());
-                
+
                 GetPartialPayments();
             }
         }
@@ -778,7 +813,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 AmountPaid = 0;
-                var approved = payments.Where(k => k.IsInvoiceApproved&&k.IsVoided==false); 
+                var approved = payments.Where(k => k.IsInvoiceApproved );
                 foreach (var x in approved)
                 {
                     AmountPaid += x.AmountPaid;
@@ -791,9 +826,9 @@ namespace RestaurantManager.UserInterface.PointofSale
                 {
                     discount = 0;
                 }
-                balance = AmountPaid - (AmountToPay - discount);
+                Current_balance = AmountPaid - (AmountToPay - discount);
                 Textblock_Amountpaid.Text = AmountPaid.ToString();
-                Textblock_Balance.Text = balance.ToString();
+                Textblock_Balance.Text = Current_balance.ToString();
                 if (AmountPaid + discount >= AmountToPay)
                 {
                     Button_CompletePayment.IsEnabled = true;
@@ -806,6 +841,25 @@ namespace RestaurantManager.UserInterface.PointofSale
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private decimal CalculateCashtotal()
+        {
+            try
+            {
+                decimal casht = 0;
+                var approved = payments.Where(k => k.IsInvoiceApproved  && k.Method == PosEnums.TicketPaymentMethods.Cash.ToString());
+                foreach (var x in approved)
+                {
+                    casht += x.AmountPaid;
+                }
+                return casht;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                return -1;
             }
         }
 
@@ -851,7 +905,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             try
             {
-                
+
             }
             catch (Exception ex)
             {
@@ -880,7 +934,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
                     TicketPaymentItem selected_payment = (TicketPaymentItem)Datagrid_Payments.SelectedItem;
-                    if (MessageBox.Show("Are you sure you wnat to Cancel the Payment?", "Message Box", MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("Are you sure you wnat to Cancel the Payment?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         WorkPeriod wp = SharedVariables.CurrentOpenWorkPeriod();
                         if (wp == null)
@@ -900,19 +954,25 @@ namespace RestaurantManager.UserInterface.PointofSale
                                     var invpay = db.InvoicesMaster.FirstOrDefault(k => k.InvoiceNo == x.PrimaryRefference);
                                     if (invpay != null)
                                     {
-                                        if (invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString())
+                                        if (invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString()| invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Rejected.ToString())
                                         {
                                             MessageBox.Show("The INVOICE of the following code has been Approved. Kindly ask the administrator to cancel the Invoice before proceeding!\n" + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                                             return;
                                         }
                                         else if (invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Paid.ToString())
                                         {
-                                            MessageBox.Show("The INVOICE of the following code has been Paid. Kindly ask the administrator to Intervene!\nRefference Number : " + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                            MessageBox.Show("The INVOICE of the following Number has been Paid. Kindly ask the administrator to Intervene!\nRefference Number : " + x.PrimaryRefference, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                                             return;
                                         }
                                         else
                                         {
-                                            x.IsVoided = true;
+                                            db.TicketPaymentItem.Remove(x);
+                                            if(invpay.InvoiceStatus == PosEnums.InvoiceStatuses.Issued.ToString())
+                                            {
+                                                db.InvoicesMaster.Remove(invpay);
+                                            } 
+                                            
+ 
                                         }
                                     }
                                     else
@@ -923,14 +983,14 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 }
                                 else
                                 {
-                                    x.IsVoided = true;
+                                    db.TicketPaymentItem.Remove(x);
+
                                 }
 
 
                                 db.SaveChanges();
+                                MessageBox.Show("Payment Cancelled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                                 GetPartialPayments();
-                                MessageBox.Show("Payment Canecelled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-
                             }
 
                         }
@@ -949,14 +1009,14 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 using (var db = new PosDbContext())
-                { 
-                    var items = db.TicketPaymentItem.AsNoTracking().Where(k => k.ParentOrderNo == TextBlock_TicketNo.Text && k.IsVoided == false).ToList();
+                {
+                    var items = db.TicketPaymentItem.AsNoTracking().Where(k => k.ParentSourceRef == TextBlock_TicketNo.Text ).ToList();
                     foreach (var x in items)
                     {
                         if (x.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                         {
                             var inv = db.InvoicesMaster.FirstOrDefault(k => k.InvoiceNo == x.PrimaryRefference);
-                            if (inv !=null & (inv.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString()| inv.InvoiceStatus == PosEnums.InvoiceStatuses.Paid.ToString()))
+                            if (inv != null & (inv.InvoiceStatus == PosEnums.InvoiceStatuses.Approved.ToString() | inv.InvoiceStatus == PosEnums.InvoiceStatuses.Paid.ToString()))
                             {
                                 x.IsInvoiceApproved = true;
                             }
@@ -985,7 +1045,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             SwitchView(true);
         }
-        
+
         private async void Button_CompletePayment_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -994,7 +1054,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 List<String> errors = new List<string>();
                 //R_balance = 0;
                 R_totalpaid = 0;
-                R_TotalCharged = 0; 
+                R_TotalCharged = 0;
                 var a = Datagrid_TicketItems.Items.Cast<OrderItem>().Where(m => m.IsGiftItem == false).ToList();
                 var db1 = new PosDbContext();
                 DateTime Tdate = SharedVariables.CurrentDate();
@@ -1004,123 +1064,98 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if (AmountPaid < AmountToPay - discount)
                 {
                     MessageBox.Show("Failed! Insufficient Amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-
+                    return;
                 }
-                else
+                //customer service
+                DatabaseModels.CRM.CustomerAccount cust = GetCustomer(om.CustomerRefference);
+                CustomerPointsAccount ca = null;
+
+                //saving data
+                using (var db = new PosDbContext())
                 {
-
-                    //customer service
-                    DatabaseModels.CRM.CustomerAccount cust = GetCustomer(om.CustomerRefference);
-                    CustomerPointsAccount ca = null;
-                    //if (cust != null)
-                    //{
-                    //    ca = new CustomerPointsAccount
-                    //    {
-                    //        AccActionGuid = Guid.NewGuid().ToString(),
-                    //        TransactionNo = SharedVariables.CurrentDate().ToString("yyMMddHHmmssffff"),
-                    //        CustomerPhoneNo = cust.PhoneNumber,
-                    //        ApprovedBy = SharedVariables.CurrentUser.UserName,
-                    //        ActionDate = SharedVariables.CurrentDate(),
-                    //        Credit = 0,
-                    //        TransactionType = PosEnums.CustomerAccountActionType.PointsAward.ToString()
-                    //    };
-                    //    int points = GetLoyaltyPoints((int)total);
-                    //    if (points > 0)
-                    //    {
-                    //        ca.Debit = points;
-                    //    }
-                    //    else
-                    //    {
-
-                    //        ca = null;
-                    //    }
-                    //}
-
-                    //saving data
-                    using (var db = new PosDbContext())
+                    using (DbContextTransaction tr = db.Database.BeginTransaction())
                     {
-                        using (DbContextTransaction tr = db.Database.BeginTransaction())
+                        //foreach (var item in tpi)
+                        //{
+                        //    if (item.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
+                        //    {
+                        //        db.VoucherCard.Where(i => i.VoucherNumber == item.PrimaryRefference).First().VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Redeemed.ToString();
+                        //    }
+                        //}
+                        FinalTPM.TicketBalanceReturned = AmountPaid - AmountToPay;
+                        db.SaveChanges();
+                        var order = db.OrderMaster.FirstOrDefault(b => b.OrderNo == FinalTPM.TicketNo);
+                        if (order != null)
                         {
-                            //foreach (var item in tpi)
-                            //{
-                            //    if (item.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
-                            //    {
-                            //        db.VoucherCard.Where(i => i.VoucherNumber == item.PrimaryRefference).First().VoucherStatus = GlobalVariables.PosEnums.VoucherStatuses.Redeemed.ToString();
-                            //    }
-                            //}
-                            FinalTPM.TicketBalanceReturned = AmountPaid - AmountToPay;
-                            db.SaveChanges();
-                            var order = db.OrderMaster.FirstOrDefault(b => b.OrderNo == FinalTPM.TicketNo);
-                            if (order != null)
-                            {
-                                order.OrderStatus = GlobalVariables.PosEnums.OrderTicketStatuses.Completed.ToString();
-                                order.PaymentDate = GlobalVariables.SharedVariables.CurrentDate();
-                                int x = db.SaveChanges();
-                                if (x != 1)
-                                {
-                                    tr.Rollback();
-                                    errors.Add("Failed to update Order Status");
-                                }
-                            }
-                            else
+                            order.OrderStatus = GlobalVariables.PosEnums.OrderTicketStatuses.Completed.ToString();
+                            order.PaymentDate = GlobalVariables.SharedVariables.CurrentDate();
+                            int x = db.SaveChanges();
+                            if (x != 1)
                             {
                                 tr.Rollback();
-                                errors.Add("The Order Ticket does not exist!");
+                                errors.Add("Failed to update Order Status");
                             }
-                            var solditems = db.OrderItem.Where(b => b.OrderID == FinalTPM.TicketNo);
+                        }
+                        else
+                        {
+                            tr.Rollback();
+                            errors.Add("The Order Ticket does not exist!");
+                        }
+                        var solditems = db.OrderItem.Where(b => b.OrderID == FinalTPM.TicketNo);
 
-                            foreach (var item_ in solditems)
+                        foreach (var item_ in solditems)
+                        {
+                            db.StockFlowTransaction.Add(new DatabaseModels.Inventory.StockFlowTransaction()
                             {
-                                db.StockFlowTransaction.Add(new DatabaseModels.Inventory.StockFlowTransaction()
-                                {
-                                    ProductGuid = item_.ProductItemGuid,
-                                    ProductName = item_.ItemName,
-                                    Quantity = item_.Quantity,
-                                    TransactionDate = GlobalVariables.SharedVariables.CurrentDate(),
-                                    FlowDirection = "OUT",
-                                    InTransactionCode = "N/A",
-                                    Description = "Item Sold",
-                                    OutTransactionCode = order.OrderNo,
-                                    IsCancelled = false,
-                                });
+                                ProductGuid = item_.ProductItemGuid,
+                                ProductName = item_.ItemName,
+                                Quantity = item_.Quantity,
+                                SecondaryRefference = "Item Sold ",
+                                TransactionDate = GlobalVariables.SharedVariables.CurrentDate(),
+                                FlowDirection = "OUT",
+                                StockFlowTrigger = PosEnums.StockFlowTriggerSource.Sold.ToString(),
+                                Description = "Item Sold Out",
+                                PrimaryRefference = order.OrderNo,
+                                IsCancelled = false,
+                            });
 
-                            }
-                            int transactions = db.SaveChanges();
-                            if (transactions != solditems.Count())
-                            {
-                                tr.Rollback();
-                                errors.Add("The Order Ticket does not exist!");
+                        }
+                        int transactions = db.SaveChanges();
+                        if (transactions != solditems.Count())
+                        {
+                            tr.Rollback();
+                            errors.Add("The Order Ticket does not exist!");
 
-                            }
-                            if (ca != null)
+                        }
+                        if (ca != null)
+                        {
+                            // db.CustomerPointsAccount.Add(ca);
+                        }
+                        db.SaveChanges();
+                        if (errors.Count <= 0)
+                        {
+                            tr.Commit();
+                            R_receiptno = FinalTPM.TransNo;
+                            R_totalpaid = FinalTPM.TotalAmountPaid;
+                            R_TotalCharged = FinalTPM.TotalAmountCharged;
+                            R_balance = FinalTPM.TicketBalanceReturned;
+
+                            MessageBox.Show("Checkout Completed Successfuly!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            if (MessageBox.Show("Print Payment Receipt?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                             {
-                                // db.CustomerPointsAccount.Add(ca);
+                                await PrintReceipt();
                             }
-                            db.SaveChanges();
-                            if (errors.Count <= 0)
-                            {
-                                tr.Commit();
-                                R_receiptno = FinalTPM.TransNo;
-                                R_totalpaid = FinalTPM.TotalAmountPaid;
-                                R_TotalCharged = FinalTPM.TotalAmountCharged;
-                                R_balance = FinalTPM.TicketBalanceReturned;
-                                
-                                MessageBox.Show("Checkout Completed Successfuly!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                                if (MessageBox.Show("Print Payment Receipt?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question,MessageBoxResult.No)==MessageBoxResult.Yes)
-                                {
-                                    await PrintReceipt();
-                                }
-                                Button_Discard_Click(new object(), new RoutedEventArgs());
-                                SwitchView(true);
-                                RefreshTicketList();
-                            }
-                            else
-                            {
-                                MessageBox.Show("The checkout Process was not completed!\n" + "ERROR : " + errors[0], "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
+                            Button_Discard_Click(new object(), new RoutedEventArgs());
+                            SwitchView(true);
+                            RefreshTicketList();
+                        }
+                        else
+                        {
+                            MessageBox.Show("The checkout Process was not completed!\n" + "ERROR : " + errors[0], "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
@@ -1140,16 +1175,26 @@ namespace RestaurantManager.UserInterface.PointofSale
         public async Task PrintReceipt()
         {
             try
-            { 
-                await Task.Run(() =>
+            {
+                var print = new PrintPaymentReceipt
                 {
-                    PrintDocument document = new PrintDocument();
-                    document.PrintPage += new PrintPageEventHandler(this.ProvideContentforsalesreceipt);
-                    document.PrintController = new StandardPrintController();
-                    //document.PrinterSettings.PrintFileName = "Receipt.pdf";
-                    //document.PrinterSettings.PrintToFile = true;
-                    document.Print();
-                });
+                    R_receiptno = R_receiptno,
+                    R_TotalCharged = R_TotalCharged,
+                    R_totalpaid = R_totalpaid,
+                    R_balance = R_balance,
+                    Receiptitems = Datagrid_TicketItems.Items.Cast<OrderItem>().ToList()
+                };
+                print.PrepareReceiptInfoAsync();
+                await print.PrintReceipt();
+                //await Task.Run(() =>
+                //{
+                //    PrintDocument document = new PrintDocument();
+                //    document.PrintPage += new PrintPageEventHandler(this.ProvideContentforsalesreceipt);
+                //    document.PrintController = new StandardPrintController();
+                //    //document.PrinterSettings.PrintFileName = "Receipt.pdf";
+                //    //document.PrinterSettings.PrintToFile = true;
+                //    document.Print();
+                //});
             }
             catch (Exception exception1)
             {
@@ -1264,7 +1309,5 @@ namespace RestaurantManager.UserInterface.PointofSale
 
 
         #endregion
-
-
     }
 }

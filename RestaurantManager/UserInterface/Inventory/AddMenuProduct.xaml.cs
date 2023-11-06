@@ -1,4 +1,5 @@
-﻿using RestaurantManager.ApplicationFiles; 
+﻿using DatabaseModels.Inventory;
+using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,12 @@ namespace RestaurantManager.UserInterface.Inventory
                 {
                     MessageBox.Show("Select Category", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
-                } 
+                }
+                if (!decimal.TryParse(Textbox_BuyingPrice.Text.Trim(), out decimal buyingprice))
+                {
+                    MessageBox.Show("The Buying Price value entered is not allowed!.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
                 if (!decimal.TryParse(Textbox_ProductPrice.Text.Trim(), out decimal productprice))
                 {
                     MessageBox.Show("The ProductPrice value entered is not allowed !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -52,6 +58,27 @@ namespace RestaurantManager.UserInterface.Inventory
                     MessageBox.Show("The Packaging Cost value entered is not allowed !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     Textbox_PackagingPrice.Focus();
                         return;
+                }
+
+                string category = "";
+                ProductCategory productCategory = (ProductCategory)Combobox_Category.SelectedItem;
+                category = productCategory.CategoryGuid; 
+                using (var db = new PosDbContext())
+                {
+                    db.MenuProductItem.Add(new MenuProductItem()
+                    {
+                        ProductGuid = Guid.NewGuid().ToString(),
+                        ProductName = Textbox_ProductName.Text,
+                        AvailabilityStatus = "Available",
+                        Department = productCategory.Department,
+                        SellingPrice = productprice,
+                        PackagingCost = packagingprice,
+                        CategoryGuid = category,
+                        BuyingPrice = buyingprice,
+                        TotalCost = packagingprice + productprice
+                    });
+                    db.SaveChanges();
+                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information); 
                 }
                 returnvalue = true;
                 this.Close();

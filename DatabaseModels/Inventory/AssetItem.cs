@@ -20,19 +20,12 @@ namespace DatabaseModels.Inventory
         public string AssetDescription { get; set; }
         [Required]
         [MaxLength(100)]
-        public string AssetGroupGuid { get; set; }  
+        public string AssetGroupGuid { get; set; }
         [Required] 
         [MaxLength(100)]
         public string UOM { get; set; } 
-        [Required] 
-        [MaxLength(100)]
-        public string typeofasset { get; set; } 
-        [Required]
-        public decimal AssetItemCost { get; set; }  
-        [Required]
-        public int InStockQuantity { get; set; }
-        [Required]
-        public bool IsPrecount { get; set; }
+        [Required]   
+        public bool IsFoodMaterial { get; set; }
         [Required]
         public DateTime RegistrationDate { get; set; }
         [Required]

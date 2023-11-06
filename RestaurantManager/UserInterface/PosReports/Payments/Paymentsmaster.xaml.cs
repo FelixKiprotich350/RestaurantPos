@@ -34,7 +34,6 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
             Datagrid_PaymentItems.ItemsSource = payments;
         }
          
-
         private void Datagrid_ProductItems_MouseUp(object sender, MouseButtonEventArgs e)
         {
             try
@@ -73,6 +72,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void Textbox_SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -112,13 +112,12 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
         public bool Contains(object de)
         {
             TicketPaymentItem item = de as TicketPaymentItem;
-            return item.ParentTransNo.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
+            return item.MasterTransNo.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
                 item.Method.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
                 item.Workperiod.ToLower().Contains(Textbox_SearchBox.Text.ToLower());
 
         }
-
-        
+         
         void LoadPayments(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
         {
             try
@@ -143,7 +142,50 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                     final.RemoveAll(w => w.PaymentDate > enddate);
                 }
                 payments = new ObservableCollection<TicketPaymentItem>(final);
-                var forsum = final.Where(k => k.IsVoided == false);
+                var forsum = final;
+                total = forsum.Sum(t => t.AmountUsed);
+                cash = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountUsed);
+                mpesa = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountUsed);
+                cards = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountUsed);
+                invoice = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountUsed);
+                TextBox_Total.Text = total.ToString();
+                TextBox_Cards.Text = cards.ToString();
+                TextBox_Mpesa.Text = mpesa.ToString();
+                TextBox_Cash.Text = cash.ToString();
+                TextBox_Invoice.Text = invoice.ToString();
+                Datagrid_PaymentItems.ItemsSource = payments;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        void LoadPayments1(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
+        {
+            try
+            {
+                decimal total = 0;
+                decimal cash = 0;
+                decimal mpesa = 0;
+                decimal cards = 0;
+                decimal invoice = 0;
+                var db = new PosDbContext();
+                var final = db.TicketPaymentItem.AsNoTracking().ToList();
+                if (wp != null)
+                {
+                    final.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
+                }
+                if (startdate != null)
+                {
+                    final.RemoveAll(w => w.PaymentDate <startdate);
+                }
+                if (enddate != null)
+                {
+                    final.RemoveAll(w => w.PaymentDate > enddate);
+                }
+                payments = new ObservableCollection<TicketPaymentItem>(final);
+                var forsum = final;
                 total = forsum.Sum(t => t.AmountPaid);
                 cash = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountPaid);
                 mpesa = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountPaid);
@@ -166,8 +208,17 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
         {
             try
             {
-                
+
+                //new DateTime(2023, 10, 28, 17, 34, 11)
+                var db = new PosDbContext();
                  
+                decimal tot = 0;
+                var completed = db.TicketPaymentItem.Where(k=>k.Method==GlobalVariables.PosEnums.TicketPaymentMethods.Invoice.ToString()).ToList();
+                var trans = db.InvoicesMaster.ToList();
+                
+                MessageBox.Show("done");
+
+
             }
             catch (Exception ex)
             {
@@ -265,7 +316,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                         if (Datagrid_PaymentItems.SelectedItem is TicketPaymentItem item)
                         {
 
-                            var master = new PosDbContext().TicketPaymentMaster.AsNoTracking().FirstOrDefault(k => k.TransNo == item.ParentTransNo);
+                            var master = new PosDbContext().TicketPaymentMaster.AsNoTracking().FirstOrDefault(k => k.TransNo == item.MasterTransNo);
                             if (master!=null)
                             {
                                 PaymentTransactionDetails P = new PaymentTransactionDetails(master);
@@ -281,7 +332,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                         if (Datagrid_PaymentItems.SelectedItem is TicketPaymentItem item)
                         {
 
-                            var master = new PosDbContext().OrderMaster.AsNoTracking().FirstOrDefault(k => k.OrderNo == item.ParentOrderNo);
+                            var master = new PosDbContext().OrderMaster.AsNoTracking().FirstOrDefault(k => k.OrderNo == item.ParentSourceRef);
                             if (master!=null)
                             {
                                 TicketDetails P = new TicketDetails(master);
@@ -290,8 +341,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                             }
                         }
 
-                    }
-
+                    } 
                 }
             }
             catch (Exception ex)

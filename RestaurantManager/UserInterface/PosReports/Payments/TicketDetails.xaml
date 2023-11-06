@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PosReports.Payments"
         mc:Ignorable="d" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
          WindowStyle="SingleBorderWindow" ResizeMode="NoResize" 
-        Title="PaidTicketDetails" Height="450" Width="600">
+        Title="Ticket Details" Height="450" Width="600">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

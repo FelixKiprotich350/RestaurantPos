@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using static RestaurantManager.GlobalVariables.PosEnums;
 
 namespace RestaurantManager.UserInterface
@@ -27,11 +28,26 @@ namespace RestaurantManager.UserInterface
         
         public POSMainContainer()
         {
-            InitializeComponent();
-            TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();
+            InitializeComponent(); 
+            DispatcherTimer dt = new DispatcherTimer();
+            Timer_Tick(null, new EventArgs());
+            dt.Tick += new EventHandler(Timer_Tick);
+            dt.Interval = new TimeSpan(0, 0,1); 
+            dt.Start();
             Frame1.Content = new HomePage();
         }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
 
+                TextBox_Date.Text= TextBox_Date.Text = SharedVariables.CurrentDate().ToLongDateString()+" "+ SharedVariables.CurrentDate().ToLongTimeString();
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show(ex.Message , "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try

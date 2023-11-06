@@ -59,8 +59,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 using (var b = new PosDbContext())
                 {
                    
-                    tlist = b.TicketPaymentMaster.AsNoTracking().ToList();
-                    invlist = b.InvoicePaymentItem.AsNoTracking().ToList();
+                    tlist = b.TicketPaymentMaster.AsNoTracking().ToList(); 
 
                 }  
                 if ((bool)Checkbox_ByUser.IsChecked)
@@ -113,7 +112,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     return;
                 }
                 var innerGroupJoinQuery = from m in tlist
-                                          join t in db.TicketPaymentItem.AsNoTracking().Where(k=>k.IsVoided==false) on m.TicketNo equals t.ParentOrderNo
+                                          join t in db.TicketPaymentItem.AsNoTracking() on m.TicketNo equals t.ParentSourceRef
                                           select new { m, t };
 
 
@@ -222,8 +221,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 ObservableCollection<TicketPaymentItem> payments = new ObservableCollection<TicketPaymentItem>();
                 ObservableCollection<InvoicePaymentItem> invpayments = new ObservableCollection<InvoicePaymentItem>();
                 var db = new PosDbContext();
-                var paylist = db.TicketPaymentItem.AsNoTracking().ToList();
-                var invlist = db.InvoicePaymentItem.AsNoTracking().ToList();
+                var paylist = db.TicketPaymentItem.AsNoTracking().ToList(); 
 
                 if (wp != null)
                 {
@@ -239,7 +237,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     paylist.RemoveAll(w => w.PaymentDate > enddate);
                 }
                 payments = new ObservableCollection<TicketPaymentItem>(paylist);
-                var forsum = paylist.Where(k => k.IsVoided == false);
+                var forsum = paylist;
                 total = forsum.Sum(t => t.AmountPaid);
                 cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountPaid);
                 mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountPaid);

@@ -28,6 +28,11 @@ namespace RestaurantManager.GlobalVariables
             Voucher,
             Invoice
         }
+        public enum PaymentForSources
+        {
+            InvoicePay,
+            SalesBill
+        }
 
         public enum VoucherTypes
         {
@@ -46,7 +51,7 @@ namespace RestaurantManager.GlobalVariables
 
         public enum InvoiceStatuses
         {
-            Issued, 
+            Issued,  
             Rejected,
             Approved,
             Paid
@@ -119,6 +124,22 @@ namespace RestaurantManager.GlobalVariables
             Restaurant,
             Bar,
             Services
+        }
+        /// <summary>
+        /// INVENTORY
+        /// </summary>
+        public enum StockFlowTriggerSource
+        {
+            Purchased,
+            Sold, 
+            Adjusted
+        }
+        public enum StockFlowAdjustmentReason
+        {
+            Expired,
+            Faulty, 
+            Missing,
+            Others
         }
         /// <summary>
         /// Types of assets available

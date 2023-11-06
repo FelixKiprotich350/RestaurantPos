@@ -44,7 +44,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                 Textbox_TotalPaid.Text = masterpayment.TotalAmountPaid.ToString("N2");
                 Textbox_change.Text = masterpayment.TicketBalanceReturned.ToString("N2");
                 var db = new PosDbContext();
-                var items = db.TicketPaymentItem.AsNoTracking().Where(k => k.ParentTransNo == masterpayment.TransNo).ToList();
+                var items = db.TicketPaymentItem.AsNoTracking().Where(k => k.MasterTransNo == masterpayment.TransNo).ToList();
                 Datagrid_PaymentItems.ItemsSource = items;
             }
             catch (Exception ex)

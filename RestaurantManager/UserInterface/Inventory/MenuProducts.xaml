@@ -25,9 +25,8 @@
                 <TextBox x:Name="Textbox_SearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_SearchBox_TextChanged"/>
             </Grid>
             <Grid Grid.Row="1">
-                <DataGrid    x:Name="Datagrid_ProductItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_ProductItems_MouseUp"  >
+                <DataGrid    x:Name="Datagrid_ProductItems" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding ItemDbuid}"  Header="ItemCode" IsReadOnly="True" Width="80" CanUserSort="False" Visibility="Collapsed"/>
                         <DataGridTextColumn Binding="{Binding ProductName }"  Header="Product Name" IsReadOnly="True" Width="*" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding BuyingPrice,StringFormat=N2}" Header="Buying Price" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding SellingPrice,StringFormat=N2}" Header="Selling Price" IsReadOnly="True" Width="150" CanUserSort="True"/>
@@ -35,12 +34,21 @@
                         <DataGridTextColumn Binding="{Binding  IsPrecount}"  Header="PreStock" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding CategoryName}" Header="Category" IsReadOnly="True" Width="150" CanUserSort="True"/>
                         <DataGridTextColumn  Binding="{Binding AvailabilityStatus}" Header="Status" IsReadOnly="True" Width="100" CanUserSort="True"/>
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate >
+                                
+                                <DataTemplate>
+                                    <Image Style="{x:Null}" Height="20" Width="20" Source="/RestaurantManager;component/ImageResources/edit1.png" MouseUp="EditItem_MouseUp" Cursor="Hand"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns> 
                 </DataGrid>
 
             </Grid>
             <Grid Grid.Row="2">
-                <UniformGrid Columns="3" VerticalAlignment="Center">
+                <UniformGrid Columns="4" VerticalAlignment="Center">
+                    <Button x:Name="Button_ExportProducts" Content="Export Product" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Click="Button_ExportProducts_Click"  />
                     <Button x:Name="Button_NewProduct" Content="New Product" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="40" FontWeight="Bold" FontSize="16" Click="Button_NewProduct_Click"  />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0">
                         <Label Content="Total :" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
