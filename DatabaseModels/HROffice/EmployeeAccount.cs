@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseModels.CRM
+namespace DatabaseModels.HROffice
 {
     public class EmployeeAccount
     {

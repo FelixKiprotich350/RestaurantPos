@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
              xmlns:local="clr-namespace:RestaurantManager"
              StartupUri="UserInterface/Security/Login.xaml" Startup="Application_Startup" ShutdownMode="OnLastWindowClose" >
-    <Application.Resources>
+    <Application.Resources> 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -19,7 +19,8 @@
             <SolidColorBrush   x:Key="Myorangethemecolor"   Color="#FFF29400"/>
             <SolidColorBrush   x:Key="Laxco_AcceptGreencolor"   Color="#FF076807"/>
             <!--Buttons-->
-            <Style   TargetType="Button" >
+            <local:HalfValueConverter x:Key="HalfConverter"/>
+            <Style TargetType="Button" >
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Padding" Value="8" />
@@ -47,6 +48,7 @@
                         <BeginStoryboard
                             Name="zoomIn">
                             <Storyboard>
+                               
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleX"
                                     To="0.96"
@@ -54,7 +56,7 @@
                                 <DoubleAnimation
                                     Storyboard.TargetProperty="RenderTransform.ScaleY"
                                     To="0.96"
-                                    Duration="00:00:00.25"></DoubleAnimation>
+                                    Duration="00:00:00.25"></DoubleAnimation> 
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
@@ -76,7 +78,7 @@
                     </EventTrigger>
                 </Style.Triggers>
             </Style>
-
+         
             <Style  x:Key="Button_Accept" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="Margin" Value="4" />
@@ -423,6 +425,6 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-        </ResourceDictionary>
+        </ResourceDictionary> 
     </Application.Resources>
 </Application>

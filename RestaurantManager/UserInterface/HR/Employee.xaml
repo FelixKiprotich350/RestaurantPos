@@ -24,15 +24,24 @@
 
         </Grid>
         <Grid Grid.Row="1">
-            <GroupBox   Header="Loyalty Points Account History">
-                <DataGrid x:Name="Datagrid_CustomersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
+            <GroupBox   Header="Employees List">
+                <DataGrid x:Name="Datagrid_EmployeeList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"  >
                     <DataGrid.Columns>
                         <!--<DataGridCheckBoxColumn x:Name="Select" Header="Select"  IsReadOnly="False"/>-->
                         <DataGridTextColumn Binding="{Binding FullName}"  Header="FullName" IsReadOnly="True" Width="*" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding PersonAccNo}"  Header="AccNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding Gender}"  Header="Gender" IsReadOnly="True" Width="*" CanUserSort="False"/>
                         <DataGridTextColumn Binding="{Binding PhoneNo}"  Header="PhoneNo" IsReadOnly="True" Width="*" CanUserSort="False"/>
-                      </DataGrid.Columns>
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate >
+
+                                <DataTemplate>
+                                    <Image Style="{x:Null}" Height="20" Width="20" Source="/RestaurantManager;component/ImageResources/edit1.png" MouseUp="EditItem_MouseUp" Cursor="Hand"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                    
                     <DataGrid.Resources>
                         <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />

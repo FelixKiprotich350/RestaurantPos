@@ -113,6 +113,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
         {
             TicketPaymentItem item = de as TicketPaymentItem;
             return item.MasterTransNo.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
+                item.ParentSourceRef.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
                 item.Method.ToLower().Contains(Textbox_SearchBox.Text.ToLower()) |
                 item.Workperiod.ToLower().Contains(Textbox_SearchBox.Text.ToLower());
 

@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" UseLayoutRounding="True">
-                <Image x:Name="Imale_Logo" Source="/RestaurantManager;component/ImageResources/laxco pos.png" Width="240" Height="240" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" >
+                <Image x:Name="Imale_Logo" Source="/RestaurantManager;component/ImageResources/laxco pos.png" Width="240" Height="240" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality" SnapsToDevicePixels="True" MouseUp="Imale_Logo_MouseUp" >
                   
 
                 </Image>
@@ -59,7 +59,7 @@
                         <Button x:Name="Button_9" Content="9"  Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_9_Click"  />
                         <Button x:Name="Button_Cancel" Background="#FF8A151B" Content="Close" BorderBrush="White" Foreground="White" FontWeight="Bold" Click="Button_Exit_Click" />
                         <Button x:Name="Button_0" Content="0" Style="{StaticResource Button_Cancel}" FontWeight="Bold" FontSize="20" Height="Auto" Click="Button_0_Click"  />
-                        <Button x:Name="Button_Login" Content="Login" Background="#FF076807"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"/>
+                        <Button x:Name="Button_Login" Content="Login" Background="#FF076807"  Click="Button_Login_Click" IsDefault="True" Foreground="White" FontWeight="Bold"  />
 
                     </UniformGrid>
 

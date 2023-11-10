@@ -149,14 +149,14 @@
             </TabItem>
             <TabItem >
                 <TabItem.Header>
-                    <Label Content="Voided Items"/>
+                    <Label Content="Pending Tickets"/>
                 </TabItem.Header>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="Datagrid_VoidedItemsTickets" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
+                    <DataGrid x:Name="Datagrid_PendingTickets" Grid.Row="0" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" >
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding OrderNo}"  Header="TicketNo" IsReadOnly="True" Width="100" CanUserSort="False" />
@@ -170,7 +170,7 @@
                             <Separator/>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Label Content="Total Customers : " FontSize="20"/>
-                                <Label x:Name="Label_VoidedItemsCount_Count" Content="0" FontWeight="Bold" FontSize="20"/>
+                                <Label x:Name="Label_PendingItemsCount" Content="0" FontWeight="Bold" FontSize="20"/>
                             </StackPanel> 
                             <Separator/>
                         </UniformGrid>

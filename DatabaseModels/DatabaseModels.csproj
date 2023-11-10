@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\InvoicePaymentItem.cs" />
-    <Compile Include="CRM\EmployeeAccount.cs" />
+    <Compile Include="HROffice\EmployeeAccount.cs" />
     <Compile Include="CRM\CustomerAccount.cs" />
     <Compile Include="CRM\CustomerPointsAccount.cs" />
     <Compile Include="CRM\PersonalAccount.cs" />

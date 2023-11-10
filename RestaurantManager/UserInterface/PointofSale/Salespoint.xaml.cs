@@ -25,6 +25,7 @@ using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
 using winformdrawing = System.Drawing;
 using System.Drawing.Printing;
+using DatabaseModels.HROffice;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {

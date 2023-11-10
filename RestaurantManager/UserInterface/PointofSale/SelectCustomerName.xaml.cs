@@ -1,4 +1,5 @@
 ﻿using DatabaseModels.CRM;
+using DatabaseModels.HROffice;
 using RestaurantManager.ApplicationFiles; 
 using System;
 using System.Collections.Generic;

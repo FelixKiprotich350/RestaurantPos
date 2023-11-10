@@ -1,8 +1,10 @@
 ﻿using DatabaseModels.Navigation;
+using DatabaseModels.Security;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,38 +22,107 @@ using static RestaurantManager.GlobalVariables.PosEnums;
 namespace RestaurantManager.UserInterface
 {
     /// <summary>
-    /// Interaction logic for POSMainContainer.xaml
+    /// Interaction logic for BackOfficeMainWindow.xaml
     /// </summary>
-    public partial class POSMainContainer : Window
-    {
+    public partial class POSMainWindow : Window
+    { 
+        bool isfirsttime = true;
         readonly Permissions pm = new Permissions();
-        
-        public POSMainContainer()
+        public POSMainWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            StateChanged += MainWindowStateChangeRaised;
+                        TextBox_Date.Text = GlobalVariables.SharedVariables.CurrentDate().ToLongDateString();
             DispatcherTimer dt = new DispatcherTimer();
             Timer_Tick(null, new EventArgs());
             dt.Tick += new EventHandler(Timer_Tick);
-            dt.Interval = new TimeSpan(0, 0,1); 
+            dt.Interval = new TimeSpan(0, 0, 1);
             dt.Start();
-            Frame1.Content = new HomePage();
+            Frame1.Content = new HomePage(); 
         }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
 
-                TextBox_Date.Text= TextBox_Date.Text = SharedVariables.CurrentDate().ToLongDateString()+" "+ SharedVariables.CurrentDate().ToLongTimeString();
+        #region
+        // Can execute
+        private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        // Minimize
+        private void CommandBinding_Executed_Minimize(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this);
+        }
+
+        // Maximize
+        private void CommandBinding_Executed_Maximize(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.MaximizeWindow(this);
+        }
+
+        // Restore
+        private void CommandBinding_Executed_Restore(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.RestoreWindow(this);
+        }
+
+        // Close
+        private void CommandBinding_Executed_Close(object sender, ExecutedRoutedEventArgs e)
+        {
+            SystemCommands.CloseWindow(this);
+        }
+
+        // State change
+        private void MainWindowStateChangeRaised(object sender, EventArgs e)
+        {
+            if (isfirsttime)
+            {
+                isfirsttime = false;
+                SystemCommands.MaximizeWindow(this);
             }
-            catch (Exception ex)
-            { 
-                MessageBox.Show(ex.Message , "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            if (WindowState == WindowState.Maximized)
+            {
+                MainWindowBorder.BorderThickness = new Thickness(8);
+                RestoreButton.Visibility = Visibility.Visible;
+                MaximizeButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MainWindowBorder.BorderThickness = new Thickness(0);
+                RestoreButton.Visibility = Visibility.Collapsed;
+                MaximizeButton.Visibility = Visibility.Visible;
             }
         }
+
+#endregion
+         
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //foreach (Window window in Application.Current.Windows)
+            //{
+            //    if (window != this && window.Name != "Login_Window")
+            //    { 
+            //        window.Activate();
+            //        return;
+            //    }
+            //} 
+            if (Application.Current.Windows.Count > 1)
+            {
+                Application.Current.Windows[0].Activate();
+                e.Cancel = false;
+                return;
+            }
+            if (MessageBox.Show("Are you sure you want to EXIT ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+
                 SharedVariables.POS_MainWindow = this;
                 SharedVariables.Backend_MainWindow = null;
                 if (SharedVariables.CurrentUser == null)
@@ -63,33 +134,47 @@ namespace RestaurantManager.UserInterface
                 }
                 if (SharedVariables.ClientInfo() == null)
                 {
+                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
                     MessageBox.Show("The Restaurant Profile does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
                 }
-                if (SharedVariables.CurrentUser.IsBackendUser)
+                if (SharedVariables.CurrentUser.IsPosUser)
                 {
-                    Textbox_SwitchTo.Text = SwitchMainWindow.BackendSide.ToString();
+                    Textbox_SwitchTo.Text = SwitchMainWindow.SalesPoint.ToString();
                     StackPanel_SwitchPanels.Visibility = Visibility.Visible;
 
                 }
-                else
-                {
-                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
-                }
                 TextBox_InstitutionTitle.Text = SharedVariables.ClientInfo().ClientTitle;
-                GlobalVariables.SharedVariables.POS_MainWindow = this;
+                //GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
-
+                WindowState = WindowState.Maximized;
+                Task.Delay(100);
             }
             catch (Exception ex)
             {
                 string help = "\nKindly contact Technical Support Team for HELP!";
                 MessageBox.Show(ex.Message + help, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                 
+            }
         }
+        
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
 
-
+                TextBox_Date.Text = TextBox_Date.Text = SharedVariables.CurrentDate().ToLongDateString() + " " + SharedVariables.CurrentDate().ToLongTimeString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        
         private void SetupUIForUser(bool UserLoggedIn)
         {
             if (UserLoggedIn)
@@ -104,7 +189,7 @@ namespace RestaurantManager.UserInterface
             }
 
         }
-
+         
         private void SetupMenu()
         {
             try
@@ -127,7 +212,7 @@ namespace RestaurantManager.UserInterface
                     }
                 }
                 //ModulesListView.ItemsSource = modules;
-                var subitems = SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.PermissionLevel == "1" && x.ParentModule=="A").ToList();
+                var subitems = SharedVariables.CurrentUser.User_Permissions_final.Where(x => x.PermissionLevel == "1" && x.ParentModule == "A").ToList();
                 Category_Submenu.ItemsSource = subitems;
             }
             catch (Exception ex)
@@ -232,20 +317,6 @@ namespace RestaurantManager.UserInterface
 
         }
 
-        private void Image_Close_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to EXIT ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
-            {
-                this.Close();
-            }
-
-        }
-
-        private void Image_Minimize_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
-
         private void Btn_Logout_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -263,7 +334,6 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void Label_Dashboard_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Frame1.Content = new HomePage();
@@ -281,30 +351,23 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show("DeActivated");
             }
         }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+ 
+        private void StackPanel_SwitchPanels_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            foreach (Window window in Application.Current.Windows)
+            if (MessageBox.Show("Are you sure you want to switch?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question)==MessageBoxResult.Yes)
             {
-                if (window == this | window.Name == "Login_Window" |window.Name== "BackofficMainContainer")
+                if (Textbox_SwitchTo.Text.ToString() == SwitchMainWindow.BackendSide.ToString())
                 {
-                    //window.Close();
+                    BackOfficeMainWindow bom = new BackOfficeMainWindow();
+                    bom.Show();
+                    SharedVariables.POS_MainWindow = null;
+                    SharedVariables.Backend_MainWindow = bom;
+                    this.Close();
                 }
             }
         }
-         
-        
-        private void StackPanel_SwitchPanels_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (Textbox_SwitchTo.Text.ToString() == SwitchMainWindow.BackendSide.ToString())
-            {
-                MainWindow bom = new MainWindow();
-                bom.Show();
-                SharedVariables.POS_MainWindow = null;
-                SharedVariables.Backend_MainWindow = bom;
-                this.Close();
-            }
-        }
+    
+
 
         private void Button_Home_Click(object sender, RoutedEventArgs e)
         {
@@ -313,11 +376,14 @@ namespace RestaurantManager.UserInterface
 
        
 
-        private void Label_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Login l = new Login();
-            l.Show();
-            Close();
-        }
+
+
+
+
+
+
+
+
+
     }
 }

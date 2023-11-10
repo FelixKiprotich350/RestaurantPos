@@ -295,14 +295,17 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Printing\PrintPaymentReceipt.cs" />
+    <Compile Include="UserInterface\Accounts\AccountsDashboard.xaml.cs">
+      <DependentUpon>AccountsDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Accounts\AccountsDashboard2.xaml.cs">
       <DependentUpon>AccountsDashboard2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\Accounts\AccountsDashboard1.xaml.cs">
-      <DependentUpon>AccountsDashboard1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\Accounts\ApproveInvoice.xaml.cs">
       <DependentUpon>ApproveInvoice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\Accounts\DisplayFullChart.xaml.cs">
+      <DependentUpon>DisplayFullChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Accounts\ReportModels\RowRecordObject.cs" />
     <Compile Include="UserInterface\Accounts\ViewInvoicesPayments.xaml.cs">
@@ -310,6 +313,12 @@
     </Compile>
     <Compile Include="UserInterface\Accounts\ViewInvoicesmaster.xaml.cs">
       <DependentUpon>ViewInvoicesmaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\POSMainWindow.xaml.cs">
+      <DependentUpon>POSMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\BackOfficeMainWindow.xaml.cs">
+      <DependentUpon>BackOfficeMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\correctionpage.xaml.cs">
       <DependentUpon>correctionpage.xaml</DependentUpon>
@@ -330,6 +339,9 @@
     <Compile Include="UserInterface\Help\UpdateGuide.xaml.cs">
       <DependentUpon>UpdateGuide.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\HR\EmployeeProfile.xaml.cs">
+      <DependentUpon>EmployeeProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\Inventory\AssetManagement\AddAssetItem.xaml.cs">
       <DependentUpon>AddAssetItem.xaml</DependentUpon>
     </Compile>
@@ -348,17 +360,11 @@
     <Compile Include="UserInterface\Inventory\LPOMaster.xaml.cs">
       <DependentUpon>LPOMaster.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Permissions.cs" />
     <Compile Include="PosDbContext.cs" />
     <Compile Include="Printing\PrintSalesTicket.cs" />
     <Compile Include="ApplicationFiles\SplashScreen.xaml.cs">
       <DependentUpon>SplashScreen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\Accounts\AccountsDashboard.xaml.cs">
-      <DependentUpon>AccountsDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\Accounts\AccountTicketsPayments.xaml.cs">
       <DependentUpon>AccountTicketsPayments.xaml</DependentUpon>
@@ -434,9 +440,6 @@
     </Compile>
     <Compile Include="UserInterface\PointofSale\TicketToEdit.xaml.cs">
       <DependentUpon>TicketToEdit.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\POSMainContainer.xaml.cs">
-      <DependentUpon>POSMainContainer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\PosReports\Payments\TicketDetails.xaml.cs">
       <DependentUpon>TicketDetails.xaml</DependentUpon>
@@ -582,17 +585,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\Accounts\AccountsDashboard2.xaml">
+    <Page Include="UserInterface\Accounts\AccountsDashboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserInterface\Accounts\AccountsDashboard1.xaml">
+    <Page Include="UserInterface\Accounts\AccountsDashboard2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\Accounts\ApproveInvoice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\Accounts\DisplayFullChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\Accounts\ViewInvoicesPayments.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -601,6 +608,14 @@
     <Page Include="UserInterface\Accounts\ViewInvoicesmaster.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\POSMainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\BackOfficeMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\correctionpage.xaml">
       <SubType>Designer</SubType>
@@ -623,6 +638,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\Help\UpdateGuide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\HR\EmployeeProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -650,19 +669,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ApplicationFiles\SplashScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\Accounts\AccountsDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -763,10 +774,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\PointofSale\TicketToEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\POSMainContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

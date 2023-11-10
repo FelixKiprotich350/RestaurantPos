@@ -1,0 +1,293 @@
+﻿<Window x:Class="RestaurantManager.UserInterface.HR.EmployeeProfile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RestaurantManager.UserInterface.HR" xmlns:System="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow" ResizeMode="NoResize"
+        Title="EmployeeProfile" Height="450" Width="450">
+    <Grid Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}">
+
+        <TabControl TabStripPlacement="Left"  Style="{x:Null}" VerticalContentAlignment="Stretch">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <!--<Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <ContentPresenter Content="{TemplateBinding Content}">
+                                    <ContentPresenter.LayoutTransform>
+                                        <RotateTransform Angle="270" />
+                                    </ContentPresenter.LayoutTransform>
+                                </ContentPresenter>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter> -->
+
+                    <Setter Property="Padding" Value="3" />
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="Height" Value="40" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem Margin="-2,2,0,2"  >
+                <TabItem.Header >
+                    <Label Content="Personal Info"  HorizontalAlignment="Center"/>
+                </TabItem.Header>
+                <GroupBox Grid.Row="0" Header="Personal Details">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Employee Number" />
+                            <TextBlock x:Name="Textbox_EmployeeNumber" FontSize="20"/>
+
+                        </StackPanel>
+                        <Label Content="Full Name" />
+                        <TextBox x:Name="Textbox_FullName"/>
+
+                        <UniformGrid Columns="2">
+                            <StackPanel>
+                                <Label Content="Phone Number"/>
+                                <TextBox  x:Name="Textbox_PhoneNo"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <Label Content="National ID"/>
+                                <TextBox  x:Name="Textbox_National"/>
+                            </StackPanel>
+                        </UniformGrid>
+                        <UniformGrid Columns="2" >
+                            <StackPanel>
+                                <Label Content="Gender"/>
+                                <ComboBox x:Name="Combobox_Gender" IsEditable="False">
+                                    <System:String>Male</System:String>
+                                    <System:String>Female</System:String>
+                                </ComboBox>
+
+                            </StackPanel>
+                            <StackPanel>
+                                <UniformGrid Columns="2">
+                                    <Label Content="Date of Birth"/>
+                                    <CheckBox x:Name="Checkbox_DefaultBirthDate" Content="Set Default" Checked="Checkbox_DefaultBirthDate_Checked" Unchecked="Checkbox_DefaultBirthDate_Unchecked"/>
+                                </UniformGrid>
+                                <DatePicker  x:Name="DatePicker_BirthDate"/>
+
+                            </StackPanel>
+                        </UniformGrid>
+
+                        <UniformGrid Columns="2">
+                            <StackPanel>
+                                <Label Content="Email"/>
+                                <TextBox  x:Name="Textbox_Email"/>
+
+                            </StackPanel>
+
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <Button Content="Save" Width="160"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem  Header="Employment" Margin="-2,2,0,2">
+                <GroupBox Grid.Row="0" Header="Employment Details">
+                    <StackPanel>
+                        <Label Content="Job Title"/>
+                        <ComboBox x:Name="Combobox_JobTitle" IsEditable="False">
+                            <System:String>Male</System:String>
+                            <System:String>Female</System:String>
+                        </ComboBox>
+                        <Label Content="Work StartDate"/>
+                        <TextBlock  x:Name="Textbox_StartDate"   FontSize="16"/>
+                        <Label Content=" Work Department"/>
+                        <ComboBox x:Name="Combobox_WorkDepartment" IsEditable="False">
+                            <System:String>Male</System:String>
+                            <System:String>Female</System:String>
+                        </ComboBox>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Status"/>
+                            <TextBlock  x:Name="Textbox_Status" FontWeight="Bold" FontSize="16"/>
+
+                        </StackPanel>
+                       
+                        <UniformGrid>
+                            <Button Content="Save" Width="160"/>
+
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+
+            </TabItem>
+
+            <TabItem  Header="Payment" Margin="-2,2,0,2">
+                <GroupBox  Header="Payment Details">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Pay Frequency" Width="120" />
+                            <TextBox x:Name="Textbox_PayFrequency" FontSize="20" Width="180"/>
+
+                        </StackPanel>  
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Pay Group" Width="120" />
+                            <ComboBox x:Name="ComboBox_PayGroup" FontSize="20" Width="180"/>
+
+                        </StackPanel> 
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Payment Method" Width="120" />
+                            <ComboBox x:Name="ComboBox_PaymentMode" FontSize="20" Width="180"/>
+
+                        </StackPanel>
+
+                        <StackPanel>
+                            <Label Content="Bank Name"/>
+                            <ComboBox x:Name="Combobox_BankName" IsEditable="False">
+
+                            </ComboBox>
+
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Bank Name"/>
+                            <ComboBox x:Name="Combobox_BankBranch" IsEditable="False">
+
+                            </ComboBox>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Bank Account Number"/>
+                            <TextBox x:Name="Textbox_BankAccountNumber" Width="180"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Mpesa Mobile Number"/>
+                            <TextBox x:Name="Textbox_mpesanumber" Width="180"/>
+
+                        </StackPanel >
+                        <UniformGrid Rows="1">
+                            <Button Content="Save" Width="160"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem  Header="Basic Pay" Margin="-2,2,0,2" >
+                <GroupBox  >
+                    <GroupBox.Header>
+                        <Label Content="Basic Salary"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Content="Use Pay Group Rates" Margin="8,4,0,4"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="Monthly Rate" Width="120" />
+                            <TextBox x:Name="Textbox_MonthlyRate" FontSize="20" Width="180"/>
+
+                        </StackPanel> 
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="Daily Rate" Width="120"/>
+                            <TextBox x:Name="Textbox_DailyRate" Width="180"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="Hourly Rate" Width="120"/>
+                            <TextBox x:Name="Textbox_HourlyRate" Width="180"/>
+
+                        </StackPanel >
+                        <UniformGrid Rows="1">
+                            <Button Content="Save" Width="160"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem  Header="Housing" Margin="-2,2,0,2">
+                <GroupBox  >
+                    <GroupBox.Header>
+                        <Label Content="Employee Housing"/>
+                    </GroupBox.Header>
+                    <StackPanel Orientation="Vertical">
+                         <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="Housing Type" Width="120" />
+                            <ComboBox x:Name="ComboBox_Housingtype" FontSize="20" Width="180"/>
+
+                        </StackPanel>
+                        <GroupBox Header="Housed by Employer">
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <Label Content="Owner House Allowance" Width="140"/>
+                                <TextBox x:Name="Textbox_EmployerHouseAllowance" Width="140"/>
+
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Living Own House">
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <Label Content="Owner House Allowance" Width="140"/>
+                                <TextBox x:Name="Textbox_OwnerHouseAllowance" Width="140"/>
+
+                            </StackPanel>
+                        </GroupBox>
+                        
+                        <UniformGrid Rows="1">
+                            <Button Content="Save" Width="160"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem  Header="PAYE" Margin="-2,2,0,2">
+                <GroupBox Header="Pay As You Earnn">
+                    <StackPanel >
+                        <CheckBox Content="Deduct PAYE"/>
+                        <CheckBox Content="Allow Disability Exemption"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="KRA PIN" Width="140"/>
+                            <TextBox x:Name="Textbox_KRAPIN" Width="140"/>
+
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="Insuraance Relief" Width="140"/>
+                            <TextBox x:Name="Textbox_InsuranceRelief" Width="140"/>
+
+                        </StackPanel>
+                        <UniformGrid Rows="1">
+                            <Button Content="Save" Width="160"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+            <TabItem  Header="NHIF &amp; NSSF" Margin="-2,2,0,2" >
+                <StackPanel>
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <CheckBox Content="Deduct NSSF"/>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="NSSF Number" Width="140"/>
+                            <TextBox x:Name="Textbox_NSSFNumber" Width="140"/>
+
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox >
+                        <GroupBox.Header>
+                            <CheckBox Content="Deduct NHIF"/>
+                        </GroupBox.Header>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <Label Content="NHIF Number" Width="140"/>
+                            <TextBox x:Name="Textbox_NHIFNumber" Width="140"/>
+
+                        </StackPanel>
+                        
+                    </GroupBox>
+                    <UniformGrid Rows="1">
+                        <Button Content="Save" Width="160"/>
+                    </UniformGrid>
+                </StackPanel>
+            </TabItem>
+            <TabItem  Header="Deductions" Margin="-2,2,0,2" >
+                
+            </TabItem>
+            <TabItem  Header="More" Margin="-2,2,0,2">
+                <UniformGrid Rows="2">
+                    <Button Content="Print Profile" Width="160"/>
+                    <Button Content="Save All" Width="160"/>
+                </UniformGrid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</Window>

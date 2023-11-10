@@ -1,8 +1,10 @@
 ﻿using DatabaseModels.CRM;
+using DatabaseModels.HROffice;
+using DatabaseModels.Inventory;
 using DatabaseModels.Vouchers;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
-using RestaurantManager.UserInterface.CustomersManagemnt;
+using RestaurantManager.UserInterface.CustomersManagemnt; 
 using RestaurantManager.UserInterface.PointofSale;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -61,7 +64,7 @@ namespace RestaurantManager.UserInterface.HR
                         x.PhoneNo = p.PhoneNumber;
                         x.PersonAccNo = p.AccountNo;
                     }
-                    Datagrid_CustomersList.ItemsSource = data;
+                    Datagrid_EmployeeList.ItemsSource = data;
                 }
             }
             catch (Exception exception1)
@@ -204,5 +207,41 @@ namespace RestaurantManager.UserInterface.HR
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void EditItem_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DependencyObject dep = (DependencyObject)e.OriginalSource;
+                // iteratively traverse the visual tree
+                while ((dep != null) & !(dep is DataGridCell) & !(dep is DataGridColumnHeader))
+                {
+                    dep = VisualTreeHelper.GetParent(dep);
+                }
+                if (dep == null)
+                {
+                    return;
+                }
+                if (dep is DataGridCell cell)
+                {
+                    if (cell.Column.DisplayIndex == 4)
+                    {
+                        if (Datagrid_EmployeeList.SelectedItem == null)
+                        {
+                            return;
+                        }
+                        EmployeeAccount m = (EmployeeAccount)Datagrid_EmployeeList.SelectedItem;
+                        EmployeeProfile ed = new EmployeeProfile(m);
+                        ed.ShowDialog(); 
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

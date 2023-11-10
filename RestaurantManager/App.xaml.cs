@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -46,10 +47,9 @@ namespace RestaurantManager
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            const string appName = "MyAppName";
-            bool createdNew;
+            const string appName = "MyAppName"; 
 
-            _mutex = new Mutex(true, appName, out createdNew);
+            _mutex = new Mutex(true, appName, out bool createdNew);
 
             if (!createdNew)
             {
@@ -162,4 +162,25 @@ namespace RestaurantManager
             throw new NotSupportedException();
         }
     }
+    public class HalfValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double doubleValue)
+            {
+                return doubleValue * 0.8;
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double doubleValue)
+            {
+                return doubleValue * 1.25;
+            }
+            return value;
+        }
+    }
+
 }

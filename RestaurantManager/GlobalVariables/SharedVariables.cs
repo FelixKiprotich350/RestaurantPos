@@ -16,8 +16,8 @@ namespace RestaurantManager.GlobalVariables
     public static class SharedVariables
     {
      
-        public static POSMainContainer POS_MainWindow = null;
-        public static MainWindow Backend_MainWindow = null;
+        public static POSMainWindow POS_MainWindow = null;
+        public static BackOfficeMainWindow Backend_MainWindow = null;
         public static string DbConnectionstring = "server=127.0.0.1;user=root;password=toor;port=3306;database=restpos";
          
         public static PosUser CurrentUser = null;

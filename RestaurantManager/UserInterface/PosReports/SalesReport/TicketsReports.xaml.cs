@@ -162,20 +162,40 @@ namespace RestaurantManager.UserInterface.PosReports
                 }
                 else if (position == 2)
                 {
-                    var voided = MainList_VoidedItems;
-                    if (voided.Count() > 0)
-                    {
-                        Label_VoidedItemsCount_Count.Content = voided.Count().ToString();
-                        Datagrid_VoidedItemsTickets.ItemsSource = voided;
-                    }
-                }
-                else if (position == 3)
-                {
                     var voideditems = MainList.Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Voided.ToString());
                     if (voideditems.Count() > 0)
                     {
                         Label_VoidedTicketsCount_Count.Content = voideditems.Count().ToString();
                         Datagrid_VoidedTickets.ItemsSource = voideditems;
+                    }
+                }
+                else if (position == 3)
+                {
+                    
+                    var pending = MainList.Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString());
+                    var completed = MainList.Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString());
+                    var voided = MainList.Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Voided.ToString());
+                    if (pending.Count() > 0)
+                    {
+                        var allsales = new PosDbContext().OrderItem.AsNoTracking().ToList();
+                        decimal pendingt = 0;
+                        decimal complt = 0;
+                        decimal voidt = 0;
+                        foreach(var x in pending)
+                        {
+                            pendingt += allsales.Where(k => k.OrderID == x.OrderNo).Sum(p => p.Total);
+                        }
+                        foreach(var x in completed)
+                        {
+                            complt += allsales.Where(k => k.OrderID == x.OrderNo).Sum(p => p.Total);
+                        }
+                        foreach(var x in voided)
+                        {
+                            voidt += allsales.Where(k => k.OrderID == x.OrderNo).Sum(p => p.Total);
+                        }
+                        
+                        MessageBox.Show( "c:"+complt.ToString()+"p:"+pendingt.ToString()+"v:"+voidt.ToString());
+                        Datagrid_PendingTickets.ItemsSource = pending;
                     }
                 }
             }

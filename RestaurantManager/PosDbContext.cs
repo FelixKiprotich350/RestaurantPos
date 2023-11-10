@@ -19,6 +19,7 @@ using DatabaseModels.Vouchers;
 using DatabaseModels.CRM;
 using RestaurantManager.ActivityLogs;
 using DatabaseModels.Accounts;
+using DatabaseModels.HROffice;
 
 namespace RestaurantManager
 {

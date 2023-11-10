@@ -75,9 +75,9 @@ namespace RestaurantManager.UserInterface.Security
                         }
                     }
                     PasswordBox_UserPin.Focus();
-#if DEBUG
-                    PasswordBox_UserPin.Password = "36945194";
-#endif
+//#if DEBUG
+//                    PasswordBox_UserPin.Password = "36945194";
+//#endif
                 }
 
                 catch (Exception ex)
@@ -164,12 +164,29 @@ namespace RestaurantManager.UserInterface.Security
                 //
                 if (user.IsBackendUser)
                 {
-                    MainWindow main = new MainWindow();
-                    main.Show();
+                    if (user.IsPosUser)
+                    {
+                        if (MessageBox.Show("Your Default Dashboard is Admin. Do you want to view SalesPoint?"+"\nSelect Yes to view SalesPoint.", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question,MessageBoxResult.No) == MessageBoxResult.Yes)
+                        {
+                            POSMainWindow main = new POSMainWindow();
+                            main.Show();
+                        }
+
+                        else
+                        {
+                            BackOfficeMainWindow main = new BackOfficeMainWindow();
+                            main.Show();
+                        }
+                    }
+                    else
+                    {
+                        BackOfficeMainWindow main = new BackOfficeMainWindow();
+                        main.Show();
+                    }
                 }
                 else if (user.IsPosUser)
                 {
-                    POSMainContainer main = new POSMainContainer();
+                    POSMainWindow main = new POSMainWindow();
                     main.Show();
                 }
                 else
@@ -426,6 +443,11 @@ namespace RestaurantManager.UserInterface.Security
         private void Border_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Button_Clear_Click(null, new RoutedEventArgs());
+        }
+
+        private void Imale_Logo_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+             
         }
     }
 }
