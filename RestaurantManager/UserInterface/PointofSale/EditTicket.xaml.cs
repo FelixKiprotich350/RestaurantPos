@@ -25,6 +25,7 @@ using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
 using winformdrawing = System.Drawing;
 using System.Drawing.Printing;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -423,7 +424,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                       
                         db.SaveChanges();
                         MessageBox.Show("Order Sent Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                         
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Updated Ticket Items", "Ticket number="+existingorder.OrderNo );
+
                     }
                     OrderItems.Clear();
                     ResetForm();

@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.Security;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace RestaurantManager.UserInterface.Security
     /// </summary>
     public partial class AddNewUser : Window
     {
-        readonly Random Rand = new Random();
+       // readonly Random Rand = new Random();
         public AddNewUser()
         {
             InitializeComponent(); 
@@ -95,14 +97,16 @@ namespace RestaurantManager.UserInterface.Security
                     };
                     db.PosUser.Add(user);
                     int x = db.SaveChanges();
-                    if (x != 1)
+                    if (x < 1)
                     {
                         MessageBox.Show("Failed to save the new User!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                     else
                     {
                         MessageBox.Show("Successfully Saved The default PIN is " + user.UserPIN + "\nLogin and change your PIN now!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added a new User", "New User account ID is:" + user.UserName );
                         Close();
+
                     }
                 }
             }

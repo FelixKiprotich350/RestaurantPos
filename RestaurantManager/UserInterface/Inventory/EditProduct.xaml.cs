@@ -1,7 +1,10 @@
 ﻿using DatabaseModels.Inventory;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,9 +133,10 @@ namespace RestaurantManager.UserInterface.Inventory
                         item.SellingPrice = price;
                         item.PackagingCost = packagingprice;
                         item.TotalCost = price + packagingprice;
-                        item.Department = pc.Department;
+                        item.Department = pc.Department; 
                         db.SaveChanges();
                         MessageBox.Show("Product Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Updated Product", "Product code=" +item.ProductGuid);
                         Close();
                     }
                 } 

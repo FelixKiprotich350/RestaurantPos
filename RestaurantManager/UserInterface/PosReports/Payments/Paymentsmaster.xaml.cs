@@ -1,6 +1,7 @@
 ﻿using DatabaseModels.Inventory;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
@@ -161,49 +162,6 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        void LoadPayments1(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
-        {
-            try
-            {
-                decimal total = 0;
-                decimal cash = 0;
-                decimal mpesa = 0;
-                decimal cards = 0;
-                decimal invoice = 0;
-                var db = new PosDbContext();
-                var final = db.TicketPaymentItem.AsNoTracking().ToList();
-                if (wp != null)
-                {
-                    final.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
-                }
-                if (startdate != null)
-                {
-                    final.RemoveAll(w => w.PaymentDate <startdate);
-                }
-                if (enddate != null)
-                {
-                    final.RemoveAll(w => w.PaymentDate > enddate);
-                }
-                payments = new ObservableCollection<TicketPaymentItem>(final);
-                var forsum = final;
-                total = forsum.Sum(t => t.AmountPaid);
-                cash = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountPaid);
-                mpesa = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountPaid);
-                cards = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountPaid);
-                invoice = forsum.Where(k=>k.Method==PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountPaid);
-                TextBox_Total.Text = total.ToString();
-                TextBox_Cards.Text = cards.ToString();
-                TextBox_Mpesa.Text = mpesa.ToString();
-                TextBox_Cash.Text = cash.ToString();
-                TextBox_Invoice.Text = invoice.ToString();
-                Datagrid_PaymentItems.ItemsSource = payments;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
          
         private void Button_ClearFilters_Click(object sender, RoutedEventArgs e)
         {
@@ -281,7 +239,7 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                     enddate = Datepicker_Enddate.SelectedDate;
                 }
                 LoadPayments(wperiod, startdate, enddate);
-                
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(),"Viewed Payments Report ","Filtered by workperiod ="+wperiod?.WorkperiodName+",startdate="+startdate?.ToString()+", enddate="+enddate?.ToString());
 
             }
             catch (Exception ex)
@@ -322,6 +280,8 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                                 PaymentTransactionDetails P = new PaymentTransactionDetails(master);
 
                                 P.ShowDialog();
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Payment Details ", "Reference number="+master.TransNo+",RecordID="+master.PaymentMasterGuid);
+
                             }
                         }
 
@@ -338,6 +298,8 @@ namespace RestaurantManager.UserInterface.PosReports.Payments
                                 TicketDetails P = new TicketDetails(master);
 
                                 P.ShowDialog();
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Order Details ", "Reference number=" + master.OrderNo + ",RecordID=" + master.OrderGuid);
+
                             }
                         }
 

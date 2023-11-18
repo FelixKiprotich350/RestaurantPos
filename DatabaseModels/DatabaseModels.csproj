@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounts\InvoicePaymentItem.cs" />
-    <Compile Include="HROffice\EmployeeAccount.cs" />
+    <Compile Include="Payroll\Employee.cs" />
+    <Compile Include="Accounts\InvoicableAccount.cs" />
+    <Compile Include="Payroll\SalaryCard.cs" />
     <Compile Include="CRM\CustomerAccount.cs" />
     <Compile Include="CRM\CustomerPointsAccount.cs" />
     <Compile Include="CRM\PersonalAccount.cs" />
@@ -82,6 +84,8 @@
     <Compile Include="Security\PermissionMaster.cs" />
     <Compile Include="Security\PosUser.cs" />
     <Compile Include="Security\UserRoles.cs" />
+    <Compile Include="SystemLogs\UserActivityLog.cs" />
+    <Compile Include="SystemLogs\DBChangeLog.cs" />
     <Compile Include="Vouchers\DiscountVoucher.cs" />
     <Compile Include="Vouchers\VoucherCard.cs" />
     <Compile Include="Inventory\StockFlowTransaction.cs" />

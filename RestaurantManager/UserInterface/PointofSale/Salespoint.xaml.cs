@@ -25,7 +25,9 @@ using DatabaseModels.CRM;
 using DatabaseModels.WorkPeriod;
 using winformdrawing = System.Drawing;
 using System.Drawing.Printing;
-using DatabaseModels.HROffice;
+using DatabaseModels.Payroll;
+using DatabaseModels.Accounts;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -389,7 +391,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     }
                 }
                 string ordno = "T" + SharedVariables.CurrentDate().ToString("ddmmyy") + "-" + R.Next(0, 999).ToString();
-                EmployeeAccount cust = GetCustomer();
+                InvoicableAccount cust = GetCustomer();
                 if (cust == null)
                 {
                     MessageBox.Show("There is No Waiter Selected!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -428,6 +430,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 TicketNo = om.OrderNo;
                 await PrintKitchenOrder();
                 MessageBox.Show("Order Sent Successfully! Ticket Number : " + om.OrderNo, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added new Bill", "Ticketnumber=" + om.OrderNo + ", Waiter=" + om.CustomerRefference);
                 OrderItems.Clear();
                 ResetForm();
             }
@@ -437,13 +440,13 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         } 
 
-        private EmployeeAccount GetCustomer()
+        private InvoicableAccount GetCustomer()
         {
             try
             {
                 if (LabelCustomer.Tag!=null)
                 {
-                    if (LabelCustomer.Tag is EmployeeAccount emp)
+                    if (LabelCustomer.Tag is InvoicableAccount emp)
                     {
                         return emp;
                     }

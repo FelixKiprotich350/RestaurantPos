@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.Security;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,8 +99,9 @@ namespace RestaurantManager.UserInterface.Security
                             {
                                 PosUser r = db.PosUser.Where(a => a.UserName == o.UserName).First();
                                 r.UserWorkingStatus = "Disabled";
-                                db.SaveChanges();
-                                MessageBox.Show("User Deleted Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                db.SaveChanges(); 
+                                MessageBox.Show("User Disabled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Disabled User Status", "Disabled account ID:"+r.UserName+"-"+r.UserFullName);
 
                             }
                         }
@@ -115,6 +118,7 @@ namespace RestaurantManager.UserInterface.Security
                                 r.UserWorkingStatus = "Active";
                                 db.SaveChanges();
                                 MessageBox.Show("User Restored Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Restored User Account Status", "Restored account ID:" + r.UserName + "-" + r.UserFullName);
 
                             }
                         }
@@ -127,6 +131,7 @@ namespace RestaurantManager.UserInterface.Security
                                 r.UserRole = er.ComboBox_Roles.Text;
                                 db.SaveChanges();
                                 MessageBox.Show("User Role Updated Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Changed User Role", "New Role:"   + r.UserRole);
                             }
                         }
                         RefreshUsers();
@@ -172,6 +177,7 @@ namespace RestaurantManager.UserInterface.Security
                         db.PosUser.Where(k => k.UserName == user.UserName).First().UserRights = rights;
                         db.SaveChanges();
                         MessageBox.Show("Success . Rights Updated!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Changed User Rights", "Affected user account :" + user.UserName);
                     }
                 }
                 else

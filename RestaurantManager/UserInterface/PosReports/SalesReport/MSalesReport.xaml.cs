@@ -30,6 +30,7 @@ using System.Globalization;
 using winforms=System.Windows.Forms;
 using System.Threading;
 using CsvHelper.Configuration;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PosReports.SalesReport
 {
@@ -181,7 +182,7 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                     t = t.Where(a => a.om.OrderDate >= startdate && a.om.OrderDate <= enddate).ToList();
                 }
                 MainList.AddRange(t);
-                //MessageBox.Show("Loading Done!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Sales Report", "WorkPeriod=" + wp.WorkperiodName + ",startdate=" + startdate.ToString() + ", enddate=" + enddate.ToString());
             }
             catch (Exception ex)
             {
@@ -467,6 +468,7 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                 }
                  
                 MessageBox.Show("Data Exported Successfully!\n" + "File Path: " + path, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Exported sales (prouctwise)", "Destination File=" + path);
 
             }
             catch (Exception ex)

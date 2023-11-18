@@ -5,8 +5,7 @@ using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.CustomersManagemnt;
-using RestaurantManager.UserInterface.Security;
-using RestaurantManager.UserInterface.Payments;
+using RestaurantManager.UserInterface.Security; 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +28,7 @@ using System.Windows.Shapes;
 using winformdrawing = System.Drawing;
 using DatabaseModels.Accounts;
 using RestaurantManager.Printing;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -548,15 +548,17 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
 
-                InvoiceSalesBill inv = new InvoiceSalesBill();
+                SelectInvoicableAccount inv = new SelectInvoicableAccount();
 
                 if (!(bool)inv.ShowDialog())
                 {
                     return;
                 }
-                CustomerAccount billacc = (CustomerAccount)inv.Textbox_SelectedCustomerPhone.Tag;
+                InvoicableAccount billacc = (InvoicableAccount)inv.Textbox_SelectedCustomerPhone.Tag;
                 Textbox_SelectedAccount.Text = billacc.PersonAccNo + " - " + billacc.FullName;
                 Textbox_SelectedAccount.Tag = billacc;
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Select Invoice Account for Ticket", "Selected account=" + billacc.PersonAccNo);
+
             }
             catch (Exception ex)
             {
@@ -741,17 +743,17 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
                 else if (pp.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                 {
-                    CustomerAccount cust = (CustomerAccount)Textbox_SelectedAccount.Tag;
+                    InvoicableAccount cust = (InvoicableAccount)Textbox_SelectedAccount.Tag;
                     if (cust == null)
                     {
                         MessageBox.Show("The Customer Account Does Not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return;
                     }
-                    if (cust.InvoiceLimit < AmountUsednow)
-                    {
-                        MessageBox.Show("The Amount invoiced Exceeds the Limit !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return;
-                    }
+                    //if (cust.InvoiceLimit < AmountUsednow)
+                    //{
+                    //    MessageBox.Show("The Amount invoiced Exceeds the Limit !", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    //    return;
+                    //}
                     var newno = SharedVariables.GenerateInvoiceNumber();
                     if (newno < 1)
                     {
@@ -793,8 +795,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 db.TicketPaymentItem.Add(pp);
                 db.SaveChanges();
                 MessageBox.Show("Payment Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-
-
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added Payment for Ticket", "Ticket number=" + tpm.TicketNo + ",AmountPaid=" + Amountpaidnow.ToString() + ", Method=" + pp.Method);
             }
             catch (Exception ex)
             {
@@ -942,7 +943,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                             MessageBox.Show("No WorkPeriod Open!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                             return;
                         }
-                        PromptAdminPin p = new PromptAdminPin();
+                        PromptAdminPin p = new PromptAdminPin("Cancel Payment of the following amount : "+selected_payment.AmountPaid.ToString());
                         if ((bool)p.ShowDialog())
                         {
                             using (var db = new PosDbContext())
@@ -991,6 +992,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                                 db.SaveChanges();
                                 MessageBox.Show("Payment Cancelled Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                                 GetPartialPayments();
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Cancelled Payment", "Payment ID=" + selected_payment.PaymentGuid + ",AmountPaid=" + selected_payment.AmountPaid.ToString() + ", Method=" + selected_payment.Method);
+
                             }
 
                         }
@@ -1067,7 +1070,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     return;
                 }
                 //customer service
-                DatabaseModels.CRM.CustomerAccount cust = GetCustomer(om.CustomerRefference);
+               CustomerAccount cust = GetCustomer(om.CustomerRefference);
                 CustomerPointsAccount ca = null;
 
                 //saving data
@@ -1141,12 +1144,16 @@ namespace RestaurantManager.UserInterface.PointofSale
                             R_balance = FinalTPM.TicketBalanceReturned;
 
                             MessageBox.Show("Checkout Completed Successfuly!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                            if (MessageBox.Show("Print Payment Receipt?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                             if (MessageBox.Show("Print Payment Receipt?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                             {
                                 await PrintReceipt();
                             }
+
                             Button_Discard_Click(new object(), new RoutedEventArgs());
+
                             SwitchView(true);
+                            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Checked out Ticket", "Ticket number=" + FinalTPM.TicketNo + ",AmountPaid=" + FinalTPM.TotalAmountPaid.ToString() );
+
                             RefreshTicketList();
                         }
                         else

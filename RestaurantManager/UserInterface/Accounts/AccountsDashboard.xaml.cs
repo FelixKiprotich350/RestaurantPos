@@ -1,7 +1,7 @@
 ﻿using DatabaseModels.OrderTicket;
 using DatabaseModels.Payments;
 using DatabaseModels.Security;
-using DatabaseModels.WorkPeriod;
+using DatabaseModels.WorkPeriod;  
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Accounts.ReportModels;
@@ -42,16 +42,14 @@ namespace RestaurantManager.UserInterface.Accounts
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
-            { 
-                
+            {
                  
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
+        } 
         /// <summary>
         /// Get top summaries
         /// </summary> 
@@ -157,6 +155,9 @@ namespace RestaurantManager.UserInterface.Accounts
                     //sales department
                     GridPanel_Departmentsales.Visibility = Visibility.Visible;
                     Datagrid_DepartmentsSalesSummary.Visibility = Visibility.Collapsed;
+                    //sales department
+                    GridPanel_Ticketsales.Visibility = Visibility.Visible;
+                    Datagrid_TicketsSales.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -169,6 +170,9 @@ namespace RestaurantManager.UserInterface.Accounts
                     //sales department
                     GridPanel_Departmentsales.Visibility = Visibility.Collapsed;
                     Datagrid_DepartmentsSalesSummary.Visibility = Visibility.Visible;
+                    //sales department
+                    GridPanel_Ticketsales.Visibility = Visibility.Collapsed;
+                    Datagrid_TicketsSales.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)
@@ -180,63 +184,46 @@ namespace RestaurantManager.UserInterface.Accounts
         void LoadUIData(WorkPeriod wp, DateTime? startdate, DateTime? enddate)
         {
             try
-            { 
-                  var db = new PosDbContext();
+            {
+                var db = new PosDbContext();
                 var paylist = db.TicketPaymentItem.AsNoTracking().ToList();
+                var paymaster = new PosDbContext().TicketPaymentMaster.AsNoTracking().ToList();
+                var ticketmaster = new PosDbContext().OrderMaster.AsNoTracking().ToList();
+                var orderitems = new PosDbContext().OrderItem.AsNoTracking().ToList();
+
                 var sales = from item in db.OrderItem.AsNoTracking()
-                            join master in db.OrderMaster.AsNoTracking().Where(p=>p.OrderStatus!=PosEnums.OrderTicketStatuses.Voided.ToString()) on item.OrderID equals master.OrderNo  
+                            join master in db.OrderMaster.AsNoTracking().Where(p => p.OrderStatus != PosEnums.OrderTicketStatuses.Voided.ToString()) on item.OrderID equals master.OrderNo
                             join inventory in db.MenuProductItem.AsNoTracking() on item.ProductItemGuid equals inventory.ProductGuid
-                            select new { master.Workperiod, inventory.Department, item.PostDate, item.Total,item.BuyingPriceTotal,item.ProductItemGuid,item.Quantity };
+                            select new { master.Workperiod, inventory.Department, item.PostDate, item.Total, item.BuyingPriceTotal, item.ProductItemGuid, item.Quantity };
                 var allsales = sales.ToList();
                 if (wp != null)
                 {
                     paylist.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
                     allsales.RemoveAll(w => w.Workperiod != wp.WorkperiodName);
+                    paymaster.RemoveAll(w => w.WorkPeriod != wp.WorkperiodName);
                 }
                 if (startdate != null)
                 {
                     paylist.RemoveAll(w => w.PaymentDate < startdate);
                     allsales.RemoveAll(w => w.PostDate < startdate);
+                    paymaster.RemoveAll(w => w.PaymentDate < startdate);
 
                 }
                 if (enddate != null)
                 {
                     paylist.RemoveAll(w => w.PaymentDate > enddate);
                     allsales.RemoveAll(w => w.PostDate > enddate);
+                    paymaster.RemoveAll(w => w.PaymentDate > startdate);
                 }
-                
+
 
                 GetSalesPayment(paylist.Where(k => k.PayForSource == PosEnums.PaymentForSources.SalesBill.ToString()).ToList());
                 GetInvoicePayments(paylist.Where(k => k.PayForSource == PosEnums.PaymentForSources.InvoicePay.ToString()).ToList());
                 GetSalesSummary(allsales);
+                GetSalesTickets();
                 GetTopSellingProducts(allsales);
                 GetWeekDaySales(allsales);
                 GetMonthlySales(allsales);
-                var pending = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString());
-                var completed = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString());
-                var voided = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Voided.ToString());
-                var orderotems = new PosDbContext().OrderItem.AsNoTracking().ToList();
-                var paymaster = new PosDbContext().TicketPaymentMaster.AsNoTracking().ToList();
-                decimal pendingt = 0;
-                decimal complt = 0;
-                decimal pendingpaid = 0; 
-                decimal pendingreal = 0;
-                foreach (var x in pending)
-                {
-                    pendingt += orderotems.Where(k => k.OrderID == x.OrderNo).Sum(p => p.Total);
-                }
-                foreach (var x in completed)
-                {
-                    complt += orderotems.Where(k => k.OrderID == x.OrderNo).Sum(p => p.Total);
-                }
-                foreach (var x in pending)
-                {
-                   pendingpaid += paylist.Where(k => k.ParentSourceRef == x.OrderNo).Sum(k=>k.AmountUsed);
-                   pendingreal += orderotems.Where(k => k.OrderID == x.OrderNo).Sum(k=>k.Total);
-                     
-                }
-
-                MessageBox.Show("c:" + complt.ToString() + "p:" + pendingt.ToString() + "--real:" + pendingreal.ToString()+"--paidpend"+pendingpaid.ToString());
             }
             catch (Exception ex)
             {
@@ -259,12 +246,14 @@ namespace RestaurantManager.UserInterface.Accounts
                 mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountUsed);
                 cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountUsed);
                 invoice = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Invoice.ToString()).Sum(t => t.AmountUsed);
-                List<RowRecordObject> rowRecords = new List<RowRecordObject>();
-                rowRecords.Add(new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Invoices", DecimalValue1 = invoice });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>
+                {
+                    new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash },
+                    new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa },
+                    new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards },
+                    new RowRecordObject() { VariableName = "Invoices", DecimalValue1 = invoice },
+                    new RowRecordObject() { VariableName = "Total", DecimalValue1 = total }
+                };
                 Datagrid_SalesPaymentsSummary.ItemsSource = rowRecords;
                 //charts
                 var plt = Plot_Receivedpayments.Plot;
@@ -275,8 +264,9 @@ namespace RestaurantManager.UserInterface.Accounts
                 pie.SliceLabels = labels;
                 pie.ShowPercentages = true;
                 pie.ShowValues = false;
-                pie.ShowLabels = true;
-                 plt.Legend().UpdateLegendItems(plt,false);  
+                pie.ShowLabels = true; 
+                Plot_Receivedpayments.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
+                plt.Legend().UpdateLegendItems(plt,false);  
                 Plot_Receivedpayments.Refresh();
             }
             catch (Exception ex)
@@ -298,11 +288,13 @@ namespace RestaurantManager.UserInterface.Accounts
                 cash = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Cash.ToString()).Sum(t => t.AmountUsed);
                 mpesa = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString()).Sum(t => t.AmountUsed);
                 cards = forsum.Where(k => k.Method == PosEnums.TicketPaymentMethods.Card.ToString()).Sum(t => t.AmountUsed);
-                 List<RowRecordObject> rowRecords = new List<RowRecordObject>();
-                rowRecords.Add(new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards }); 
-                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>
+                {
+                    new RowRecordObject() { VariableName = "Cash", DecimalValue1 = cash },
+                    new RowRecordObject() { VariableName = "Mpesa", DecimalValue1 = mpesa },
+                    new RowRecordObject() { VariableName = "Cards", DecimalValue1 = cards },
+                    new RowRecordObject() { VariableName = "Total", DecimalValue1 = total }
+                };
                 Datagrid_InvoicePaymentsSummary.ItemsSource = rowRecords;
                 //charts
                 var plt = Plot_Invoicepayments.Plot;
@@ -314,6 +306,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 pie.ShowPercentages = true; 
                 pie.ShowValues = false;
                 pie.ShowLabels = true;
+                Plot_Invoicepayments.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
                 plt.Legend();
 
                 Plot_Invoicepayments.Refresh();
@@ -333,11 +326,13 @@ namespace RestaurantManager.UserInterface.Accounts
                 decimal restaurant = salesitems.Where(k => k.Department == PosEnums.Departments.Restaurant.ToString()).Sum(t => Convert.ToInt32(t.Total));
                 decimal bar = salesitems.Where(k => k.Department == PosEnums.Departments.Bar.ToString()).Sum(t => Convert.ToInt32(t.Total));
                 decimal services = salesitems.Where(k => k.Department == PosEnums.Departments.Services.ToString()).Sum(t => Convert.ToInt32(t.Total));
-                List<RowRecordObject> rowRecords = new List<RowRecordObject>();
-                rowRecords.Add(new RowRecordObject() { VariableName = "Restaurant", DecimalValue1 = restaurant });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Bar", DecimalValue1 = bar });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Services", DecimalValue1 = services });
-                rowRecords.Add(new RowRecordObject() { VariableName = "Total", DecimalValue1 = total });
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>
+                {
+                    new RowRecordObject() { VariableName = "Restaurant", DecimalValue1 = restaurant },
+                    new RowRecordObject() { VariableName = "Bar", DecimalValue1 = bar },
+                    new RowRecordObject() { VariableName = "Services", DecimalValue1 = services },
+                    new RowRecordObject() { VariableName = "Total", DecimalValue1 = total }
+                };
                 Datagrid_DepartmentsSalesSummary.ItemsSource = rowRecords;
                 //charts
                 var plt = Plot_departmentsales.Plot;  
@@ -349,6 +344,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 pie.ShowPercentages = true;
                 pie.ShowValues = false;
                 pie.ShowLabels = true;
+                Plot_departmentsales.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
                 plt.Legend(); 
                 Plot_departmentsales.Refresh();
             }
@@ -357,8 +353,62 @@ namespace RestaurantManager.UserInterface.Accounts
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        
+        void GetSalesTickets()
+        {
+            try
+            {
+                var db = new PosDbContext();
+                var completedtickets = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Completed.ToString()).ToList();
+                var pendingtickets = db.OrderMaster.AsNoTracking().Where(k => k.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()).ToList();
+                var orderitems = db.OrderItem.AsNoTracking().ToList();
+                var payments = db.TicketPaymentItem.AsNoTracking().ToList();
+                decimal total = 0;
+                decimal pending = 0;
+                decimal pendingpaid = 0;
+                foreach (var x in completedtickets)
+                {
+                    total += orderitems.Where(k => k.OrderID == x.OrderNo).Sum(k => k.Total);
+                }
+                foreach (var x in pendingtickets)
+                {
+                    pending += orderitems.Where(k => k.OrderID == x.OrderNo).Sum(k => k.Total);
+                }   
+                
+                foreach (var x in pendingtickets)
+                {
+                    pendingpaid += payments.Where(k => k.ParentSourceRef == x.OrderNo).Sum(k => k.AmountUsed);
+                }
+                decimal balance = pendingpaid - pending;
+                List<RowRecordObject> rowRecords = new List<RowRecordObject>
+                {
+                    new RowRecordObject() { VariableName = "Checked Out", DecimalValue1 = total },
+                    new RowRecordObject() { VariableName = "Pending Total", DecimalValue1 = pending },
+                    new RowRecordObject() { VariableName = "Partially Paid", DecimalValue1 = pendingpaid },
+                    new RowRecordObject() { VariableName = "Pending Balance", DecimalValue1 = balance < 0 ? balance : 0 }
+                };
+                Datagrid_TicketsSales.ItemsSource = rowRecords;
+                //charts
+                var plt = Plot_Ticketsales.Plot;  
+                plt.Clear();
+                double[] values = { Convert.ToDouble(total), Convert.ToDouble(pending), Convert.ToDouble(pendingpaid),Convert.ToDouble(balance) };
+                string[] labels = { "Checked Out", "Pending Total", "Partially Paid","Balance"};
+                var pie = plt.AddPie(values);
+                pie.SliceLabels = labels;
+                pie.ShowPercentages = true;
+                pie.ShowValues = false;
+                pie.ShowLabels = true;
+                Plot_Ticketsales.Configuration.Quality = ScottPlot.Control.QualityMode.Low;
+                plt.Legend();
+                Plot_Ticketsales.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
-
+          
         /// <summary>
         /// General division data
         /// </summary> 
@@ -460,7 +510,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     pos.Add(totaldays);
                     totaldays++;
                 }
-                Func<double, string> customFormatter = y => $"%={y * Convert.ToDouble(100 / weektotal):N2}";
+                string customFormatter(double y) => $"%={y * Convert.ToDouble(100 / weektotal):N2}";
                 double[] positions = pos.ToArray();
                var bar= plt.AddBar(TotalX.ToArray(), positions);
                 bar.ValueFormatter = customFormatter;
@@ -524,7 +574,7 @@ namespace RestaurantManager.UserInterface.Accounts
                     pos.Add(totaldays);
                     totaldays++;
                 }
-                Func<double, string> customFormatter = y => $"%={y * Convert.ToDouble(100 / monthlytotal):N2}";
+                string customFormatter(double y) => $"%={y * Convert.ToDouble(100 / monthlytotal):N2}";
                 double[] positions = pos.ToArray();
                 var bar = plt.AddBar(TotalX.ToArray(), positions);
                 bar.ValueFormatter = customFormatter;
@@ -615,18 +665,12 @@ namespace RestaurantManager.UserInterface.Accounts
             }
         }
 
-        private void GetKeyFactors(dynamic sales)
-        {
-            try
-            {
-                 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-    } 
+        
+    }
+    public class PlotDataModel
+    {
+        public double[] XData { get; set; }
+        public double[] YData { get; set; }
+    }
 
 }

@@ -162,12 +162,12 @@ namespace RestaurantManager.UserInterface.Accounts
 
         private void Button_SelectProducts_Click(object sender, RoutedEventArgs e)
         {
-            SelectDiscountProducts s = new SelectDiscountProducts();
-            s.ShowDialog();
-            if ((bool)s.DialogResult)
-            {
-                ListView_ProductstoDiscount.ItemsSource = s.Products.Where(k=>k.IsSelected);
-            }
+            //SelectDiscountProducts s = new SelectDiscountProducts();
+            //s.ShowDialog();
+            //if ((bool)s.DialogResult)
+            //{
+            //    ListView_ProductstoDiscount.ItemsSource = s.Products.Where(k=>k.IsSelected);
+            //}
         }
     }
 }

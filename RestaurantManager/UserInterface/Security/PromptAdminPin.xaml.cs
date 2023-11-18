@@ -1,4 +1,5 @@
 ﻿using DatabaseModels.Security;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using System;
@@ -24,11 +25,12 @@ namespace RestaurantManager.UserInterface.Security
     public partial class PromptAdminPin : Window
     {
         public string ApprovingAdmin = "";
-        public PromptAdminPin()
+        public PromptAdminPin(string  message)
         {
             InitializeComponent();
+            Textbloc_ActionDescription.Text = message;
         }
-        public void Button_Login_Click(object sender, RoutedEventArgs e)
+        public void Button_Accept_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -45,6 +47,8 @@ namespace RestaurantManager.UserInterface.Security
                             {
                                 ApprovingAdmin = user.UserName;
                                 DialogResult = true;
+                                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Approve specific action as Admin", Textbloc_ActionDescription.Text);
+
                             }
                             else
                             {
@@ -234,6 +238,6 @@ namespace RestaurantManager.UserInterface.Security
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             PasswordBox_UserPin.Focus();
-        }
+        } 
     }
 }

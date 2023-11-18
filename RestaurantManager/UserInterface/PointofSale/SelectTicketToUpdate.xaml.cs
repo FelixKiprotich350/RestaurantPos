@@ -1,4 +1,5 @@
 ﻿using DatabaseModels.OrderTicket;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,7 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            RefreshMenuProducts();
+            RefreshOrderTickets();
         }
 
         private void Button_Continue_Click(object sender, RoutedEventArgs e)
@@ -58,16 +59,26 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         }
 
-        private void RefreshMenuProducts()
+        private void RefreshOrderTickets()
         {
             try
             {
-                List<OrderMaster> item = new List<OrderMaster>();
+                List<OrderMaster> items = new List<OrderMaster>();
+                List<OrderMaster> finalitems = new List<OrderMaster>();
                 using (var db = new PosDbContext())
                 {
-                    item = db.OrderMaster.AsNoTracking().Where(k=>k.OrderStatus==GlobalVariables.PosEnums.OrderTicketStatuses.Pending.ToString()).ToList();
+                    var WP = SharedVariables.CurrentOpenWorkPeriod();
+                    items = db.OrderMaster.AsNoTracking().Where(k=>k.OrderStatus==GlobalVariables.PosEnums.OrderTicketStatuses.Pending.ToString()&& k.Workperiod==WP.WorkperiodName).ToList();
                 }
-                Datagrid_TicketsList.ItemsSource = item;
+                foreach(var x in items)
+                {
+                    var anypayment = new PosDbContext().TicketPaymentItem.AsNoTracking().FirstOrDefault(k => k.ParentSourceRef == x.OrderNo);
+                    if (anypayment == null)
+                    {
+                        finalitems.Add(x);
+                    }
+                }
+                Datagrid_TicketsList.ItemsSource = finalitems;
             }
             catch (Exception ex)
             {

@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.Inventory;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +67,7 @@ namespace RestaurantManager.UserInterface.Inventory
                 category = productCategory.CategoryGuid; 
                 using (var db = new PosDbContext())
                 {
-                    db.MenuProductItem.Add(new MenuProductItem()
+                    var prod = new MenuProductItem()
                     {
                         ProductGuid = Guid.NewGuid().ToString(),
                         ProductName = Textbox_ProductName.Text,
@@ -76,9 +78,12 @@ namespace RestaurantManager.UserInterface.Inventory
                         CategoryGuid = category,
                         BuyingPrice = buyingprice,
                         TotalCost = packagingprice + productprice
-                    });
+                    };
+                    db.MenuProductItem.Add(prod);
                     db.SaveChanges();
-                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information); 
+                    MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added new Product", "Product Code=" + prod.ProductGuid + ", Name=" + prod.ProductName);
+
                 }
                 returnvalue = true;
                 this.Close();

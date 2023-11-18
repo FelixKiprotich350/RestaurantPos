@@ -1,6 +1,7 @@
 ﻿using DatabaseModels.Inventory;
 using DatabaseModels.OrderTicket;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.Printing;
@@ -87,6 +88,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 }
                 OrderMaster om = (OrderMaster)Lv.SelectedItem;
                 LoadTicketDetails(om);
+              
                 Lv.SelectedItem = null;
                 Button_VoidTicket.IsEnabled = true;
             }
@@ -138,20 +140,22 @@ namespace RestaurantManager.UserInterface.PointofSale
                     MessageBox.Show("Select a Ticket To Manage!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-                PromptAdminPin p = new PromptAdminPin();
+                PromptAdminPin p = new PromptAdminPin("Void ticket of the following Number : "+ TextBlock_TicketNo.Text.Trim());
 
                 if ((bool)p.ShowDialog())
-                {
+                { 
                     using (var db = new PosDbContext())
                     {
                         db.OrderMaster.Where(o => o.OrderNo == TextBlock_TicketNo.Text.Trim()).First().OrderStatus = PosEnums.OrderTicketStatuses.Voided.ToString();
                         foreach (var K in db.OrderItem.Where(m=>m.OrderID== TextBlock_TicketNo.Text.Trim()).ToList())
                         {
                             db.OrderItem.Remove(K);
+                          
                         }
                         db.SaveChanges();
                     }
                     MessageBox.Show("Completed.Ticket Void Success!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Voided Ticket", "ticket number=" + TextBlock_TicketNo.Text);
                     RefreshTicketList();
                     ResetForm();
                 }
@@ -251,7 +255,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         return;
                     }
 
-                    PromptAdminPin p = new PromptAdminPin();
+                    PromptAdminPin p = new PromptAdminPin("Void Item in the following Ticket Number : "+TextBlock_TicketNo.Text);
                     if ((bool)p.ShowDialog())
                     {
                         WorkPeriod wp = GlobalVariables.SharedVariables.CurrentOpenWorkPeriod();
@@ -287,8 +291,10 @@ namespace RestaurantManager.UserInterface.PointofSale
                             };
                             db.OrderItemVoided.Add(ov);
                             db.SaveChanges();
+                             
                         }
                         MessageBox.Show("Item Voided Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Voided item in a ticket", "Item name=" + o.ItemName + ",Itemcode=" + o.ProductItemGuid);
                         ResetForm();
                     }
                 }

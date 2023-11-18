@@ -1,4 +1,6 @@
 ﻿using DatabaseModels.Inventory;
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +31,8 @@ namespace RestaurantManager.UserInterface.PointofSale
 
         private void Button_Refresh_Click(object sender, RoutedEventArgs e)
         {
+            RefreshMenuProducts();
+            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Price List", "No Filter" );
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using DatabaseModels.OrderTicket;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using System;
@@ -121,6 +122,7 @@ namespace RestaurantManager.UserInterface.PosReports
                 }
                 MainList = t;
                 MessageBox.Show("Loading Done!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Tickets Report", "WorkPeriod=" + wp.WorkperiodName + ",startdate=" + startdate.ToString() + ", enddate=" + enddate.ToString());
             }
             catch (Exception ex)
             {

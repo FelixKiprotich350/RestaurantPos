@@ -22,6 +22,8 @@ using CsvHelper.Configuration;
 using System.IO;
 using System.Globalization;
 using CsvHelper;
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.GlobalVariables;
 
 namespace RestaurantManager.UserInterface.Inventory
 {
@@ -214,11 +216,7 @@ namespace RestaurantManager.UserInterface.Inventory
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Button_EditClick(object sender, RoutedEventArgs e)
-        {
-
-        }
+ 
         private void Button_ExportProducts_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -269,6 +267,7 @@ namespace RestaurantManager.UserInterface.Inventory
                 }
 
                 MessageBox.Show("Products List Exported Successfully!\n" + "File Path: " + path, "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Exported Products", "Total count=" + productwise.Count.ToString());
 
             }
             catch (Exception ex)

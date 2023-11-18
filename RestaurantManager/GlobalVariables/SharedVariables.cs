@@ -33,7 +33,6 @@ namespace RestaurantManager.GlobalVariables
         {
             return DateTime.Now;
         }
-
         public static WorkPeriod CurrentOpenWorkPeriod()
         {
             WorkPeriod w = null;
@@ -117,7 +116,7 @@ namespace RestaurantManager.GlobalVariables
 
 
         /// <summary>
-        /// database connectiion strings
+        /// database connection strings
         /// </summary>
         /// <returns></returns>
         public static string GetproductionMysqlDbConnectionString()

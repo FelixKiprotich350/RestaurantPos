@@ -15,8 +15,13 @@
             <Setter Property="IsReadOnlyCaretVisible" Value="False"/>
         </Style>
     </Page.Resources>
-    <Grid Margin="16,8,16,8">
-        <Grid>
+    <Grid Margin="4,8,4,8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" MinHeight="200" />
                 <RowDefinition Height="*" MinHeight="200"/>
@@ -65,62 +70,20 @@
                         </Grid>
                     </UniformGrid>
                 </GroupBox>
-                <Border CornerRadius="8" Background="White" Margin="0,0,0,0">
-                    <Grid >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <StackPanel>
-                                <GroupBox  Padding="5">
-                                    <GroupBox.Header>
-                                        <CheckBox x:Name="Checkbox_PaymentByDate" Content="Payment Date" Unchecked="Checkbox_PaymentByDate_Unchecked" FontSize="16"/>
-                                    </GroupBox.Header>
-                                    <GroupBox.Content >
-                                        <StackPanel>
-
-                                            <Grid>
-                                                <UniformGrid x:Name="UniformGrid_Period" Grid.Row="1" Columns="2" Rows="1" Margin="0,4,0,0">
-                                                    <StackPanel Orientation="Vertical">
-                                                        <Label Content="StartDate" FontSize="16"/>
-                                                        <DatePicker x:Name="Datepicker_From" Grid.Row="1" VerticalAlignment="Center" FontSize="16" BorderThickness="1,1,0,1" BorderBrush="Black" Focusable="False" />
-
-                                                    </StackPanel>
-                                                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                                                        <Label Content="EndDate" FontSize="16"/>
-                                                        <DatePicker x:Name="Datepicker_To" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Focusable="False" />
-
-                                                    </StackPanel>
-                                                </UniformGrid>
-                                            </Grid>
-                                        </StackPanel>
-                                    </GroupBox.Content>
-                                </GroupBox>
-                                <GroupBox x:Name="Groupbox_WorkPeriodFilter">
-                                    <GroupBox.Header>
-                                        <CheckBox x:Name="Checkbox_ByWorkPeriod" Content="Work Period"  FontSize="16"/>
-                                    </GroupBox.Header>
-                                    <GroupBox.Content>
-                                        <Button x:Name="Button_SelectWorkPeriod" Height="32" Content="All" Style="{x:Null}" Click="Button_SelectWorkPeriod_Click"/>
-
-                                    </GroupBox.Content>
-                                </GroupBox>
-                            </StackPanel>
+                <GroupBox Header="Sales Tickets">
+                    <UniformGrid>
+                        <DataGrid x:Name="Datagrid_TicketsSales"  AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Variable" Binding="{Binding VariableName}" Width="*"/>
+                                <DataGridTextColumn Header="Value"  Binding="{Binding DecimalValue1,StringFormat=N2}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid x:Name="GridPanel_Ticketsales" Visibility="Collapsed">
+                            <WpfPlot x:Name="Plot_Ticketsales" />
                         </Grid>
-                        <Grid Grid.Row="1">
-                            <UniformGrid Columns="2">
-
-                                <Button x:Name="Button_test" Visibility="Collapsed" Content="test"  Margin="2,2,2,2"  Style="{x:Null}" Click="Button_test_Click"/>
-                                <Button x:Name="Button_ToggleView" Content="Toggle"  Margin="2,2,2,2"  Style="{x:Null}" Click="Button_ToggleView_Click"/>
-                                <Button x:Name="Button_Apply" Content="Apply" Margin="2,2,2,2" Click="Button_Apply_Click"/>
-
-                            </UniformGrid>
-                        </Grid>
-
-                    </Grid>
-                </Border>
-            </UniformGrid>
+                    </UniformGrid>
+                </GroupBox>
+                 </UniformGrid>
             <GroupBox Grid.Row="1" Header="General Sales Analysis">
                 <TabControl >
                     <TabItem Header="Top 20 selling Products">
@@ -172,10 +135,10 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Variable" Binding="{Binding ProductName}" Width="*"/>
                                     <DataGridTextColumn Header="Value" Binding="{Binding SumTotal}" Width="*"/>
-                                 </DataGrid.Columns>
+                                </DataGrid.Columns>
                             </DataGrid>
                             <Grid>
-                               
+
                                 <WpfPlot  x:Name="Plot_Gen_KeyFactors" Grid.RowSpan="2" />
                             </Grid>
                         </UniformGrid>
@@ -183,5 +146,50 @@
                 </TabControl>
             </GroupBox>
         </Grid>
+        <Border Grid.Column="1" CornerRadius="4"  Width="Auto"  Background="White" Margin="0,0,0,0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackPanel>
+                        <GroupBox  Padding="5">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="Checkbox_PaymentByDate" Content="Payment Date" Unchecked="Checkbox_PaymentByDate_Unchecked" FontSize="16"/>
+                            </GroupBox.Header>
+                            <GroupBox.Content >
+                                <StackPanel>
+                                    <Label Content="StartDate" FontSize="16"/>
+                                    <DatePicker x:Name="Datepicker_From" Grid.Row="1" VerticalAlignment="Center" FontSize="16" BorderThickness="1,1,0,1" BorderBrush="Black" Focusable="False" />
+                                    <Label Content="EndDate" FontSize="16"/>
+                                    <DatePicker x:Name="Datepicker_To" Grid.Row="1" VerticalAlignment="Center" FontSize="16" Focusable="False" />
+
+                                </StackPanel>
+                            </GroupBox.Content>
+                        </GroupBox>
+                        <GroupBox x:Name="Groupbox_WorkPeriodFilter">
+                            <GroupBox.Header>
+                                <CheckBox x:Name="Checkbox_ByWorkPeriod" Content="Work Period"  FontSize="16"/>
+                            </GroupBox.Header>
+                            <GroupBox.Content>
+                                <Button x:Name="Button_SelectWorkPeriod" Height="32" Content="All" Style="{x:Null}" Click="Button_SelectWorkPeriod_Click"/>
+
+                            </GroupBox.Content>
+                        </GroupBox>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Vertical">
+                        <Button x:Name="Button_Apply" Content="Apply" Margin="2,2,2,2" Click="Button_Apply_Click"/>
+                        <Button x:Name="Button_test" Visibility="Collapsed" Content="test"  Margin="2,2,2,2"  Style="{x:Null}" Click="Button_test_Click"/>
+                        <Button x:Name="Button_ToggleView" Content="Toggle"  Margin="2,2,2,2"  Style="{x:Null}" Click="Button_ToggleView_Click" Height="32"/>
+
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+        </Border>
+
     </Grid>
 </Page>

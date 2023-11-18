@@ -1,5 +1,6 @@
 ﻿using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
@@ -111,6 +112,8 @@ namespace RestaurantManager.UserInterface.PosReports
                 }
                 MainList.AddRange(t);
                 MessageBox.Show("Loading Done!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Payments Report", "WorkPeriod=" + wp.WorkperiodName + ",startdate=" + startdate.ToString() + ", enddate=" + enddate.ToString());
+
             }
             catch (Exception ex)
             {

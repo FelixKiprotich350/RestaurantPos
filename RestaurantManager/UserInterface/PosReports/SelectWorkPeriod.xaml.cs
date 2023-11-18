@@ -1,4 +1,6 @@
 ﻿using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +56,8 @@ namespace RestaurantManager.UserInterface.PosReports
                 SelectedWorkperiod = AllWorkPeriods.FirstOrDefault(k => k.IsSelected);
                 if (SelectedWorkperiod!=null)
                 {
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Selected WorkPeriod", "Workperiod Name:" + SelectedWorkperiod.WorkperiodName);
+
                     DialogResult = true;
                 }
 
@@ -74,6 +78,7 @@ namespace RestaurantManager.UserInterface.PosReports
             try
             {
                 SelectedWorkperiod = null;
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Selected WorkPeriod", "Workperiod Name:" + "All");
                 DialogResult = true;
 
             }

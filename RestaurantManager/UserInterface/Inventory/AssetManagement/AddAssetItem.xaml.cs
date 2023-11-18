@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.Inventory;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +76,7 @@ namespace RestaurantManager.UserInterface.Inventory.AssetManagement
                             edititem.LastUpdateDate = GlobalVariables.SharedVariables.CurrentDate();
                             db.SaveChanges();
                             MessageBox.Show("Success. Item Updated.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Update Asset","Updated Asset=" +edititem.AssetItemGuid+",asset name"+edititem.AssetName);
                         }
                         else
                         {
@@ -89,19 +92,21 @@ namespace RestaurantManager.UserInterface.Inventory.AssetManagement
                     category = productCategory.GroupGuid;
                     using (var db = new PosDbContext())
                     {
-                        db.AssetItem.Add(new AssetItem()
+                        var ass = new AssetItem()
                         {
                             AssetItemGuid = Guid.NewGuid().ToString(),
                             AssetName = Textbox_Description.Text,
                             AssetDescription = Textbox_Description.Text.Trim(),
                             AssetGroupGuid = productCategory.GroupGuid,
                             UOM = ((AssetUOM)Combobox_AssetUOM.SelectedItem).UnitGuid,
-                            IsFoodMaterial = (bool)Checkbox_IsFoodMaterial.IsChecked?true:false,
+                            IsFoodMaterial = (bool)Checkbox_IsFoodMaterial.IsChecked ? true : false,
                             RegistrationDate = GlobalVariables.SharedVariables.CurrentDate(),
                             LastUpdateDate = GlobalVariables.SharedVariables.CurrentDate()
-                        });
+                        };
+                        db.AssetItem.Add(ass);
                         db.SaveChanges();
-                        MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information); 
+                        MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added new Asset", "Assetcode=" + ass.AssetItemGuid+",name="+ass.AssetName);
                     }
                     this.Close();
                 }

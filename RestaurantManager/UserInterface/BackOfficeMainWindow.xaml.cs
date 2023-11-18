@@ -1,10 +1,12 @@
 ﻿using DatabaseModels.Navigation;
 using DatabaseModels.Security;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Security;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +43,7 @@ namespace RestaurantManager.UserInterface
             dt.Tick += new EventHandler(Timer_Tick);
             dt.Interval = new TimeSpan(0, 0, 1);
             dt.Start();
-            Frame1.Content = new Accounts.AccountsDashboard2();
+            Frame1.Content = new Accounts.AccountsDashboard();
         }
 
         #region
@@ -110,25 +112,21 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //foreach (Window window in Application.Current.Windows)
-            //{
-            //    if (window != this && window.Name != "Login_Window")
-            //    { 
-            //        window.Activate();
-            //        return;
-            //    }
-            //} 
-            if (Application.Current.Windows.Count > 1)
-            {
-                Application.Current.Windows[0].Activate();
-                e.Cancel = false;
-                return;
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        { 
+            //use 2 in debug mode
+            //use 1 in prodcution mode
+            if (Application.Current.Windows.Count > 2)
+            {  
+                Application.Current.Windows[0].Activate();  
             }
-            if (MessageBox.Show("Are you sure you want to EXIT ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            else
             {
-                this.Close();
+                if (MessageBox.Show("Are you sure you want to EXIT ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -313,15 +311,19 @@ namespace RestaurantManager.UserInterface
             {
                 if (MessageBox.Show("Are you sure you want to logout ?", "Message Box", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
-                    GlobalVariables.SharedVariables.CurrentUser = null;
+
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "User logout", "Username:" + SharedVariables.CurrentUser.UserName);
+                    SharedVariables.CurrentUser = null;
                     Login Login = new Login();
                     Login.Show();
+
                     this.Close();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 
@@ -398,11 +400,6 @@ namespace RestaurantManager.UserInterface
             }
         }
 
-       
-
-        private void Window_SourceInitialized(object sender, EventArgs e)
-        {
-           
-        } 
+         
     }
 }

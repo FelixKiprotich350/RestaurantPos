@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface" 
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        Title="ERP - BackOffice Dashboard"
         mc:Ignorable="d" Background="#FFF29400" WindowStyle="SingleBorderWindow"
-        WindowState="Normal" MinHeight="600" MinWidth="1000" SourceInitialized="Window_SourceInitialized" Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
+        WindowState="Normal" MinHeight="600" MinWidth="1000"  Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Window_KeyDown">
     <!--Add the WindowChrome object-->
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="34" CornerRadius="8" UseAeroCaptionButtons="True" />
@@ -99,18 +100,13 @@
                         <Grid.Effect>
                             <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="Black"/>
                         </Grid.Effect>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                        <Grid.ColumnDefinitions> 
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="12"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/> 
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="1" x:Name="TextBox_Date" Text="" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Center" Foreground="Black"/>
+                        <TextBlock Grid.Column="0" x:Name="TextBox_Date" Text="" VerticalAlignment="Center" FontSize="14" HorizontalAlignment="Center" Foreground="Black"/>
                        
-                        <StackPanel Grid.Column="3" Orientation="Horizontal"  VerticalAlignment="Center"  Margin="2,0,32,0" HorizontalAlignment="Center">
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"  VerticalAlignment="Center"  Margin="2,0,32,0" HorizontalAlignment="Center">
                             <StackPanel x:Name="StackPanel_LoggedinUserDetails" VerticalAlignment="Center" Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Person" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                                 <TextBlock x:Name="Textbox_LoggedinUserFullName" Text="" VerticalAlignment="Center"  FontSize="14" Margin="5,0,0,0" Foreground="Black" />

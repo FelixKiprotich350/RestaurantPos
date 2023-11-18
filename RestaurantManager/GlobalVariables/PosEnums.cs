@@ -66,7 +66,12 @@ namespace RestaurantManager.GlobalVariables
         /// <summary>
         /// security module
         /// </summary>
-         public enum UserAccountsRoles
+         public enum ActivityLogType
+        {
+             System,
+             User
+        }
+        public enum UserAccountsRoles
         {
             Admin,
             Supervisor,
@@ -76,6 +81,7 @@ namespace RestaurantManager.GlobalVariables
             KitchenCook,
             StoreKeeper
         }
+
         /// <summary>
         /// customer manager module
         /// </summary>

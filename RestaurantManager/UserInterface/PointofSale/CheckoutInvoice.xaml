@@ -79,18 +79,7 @@
                                         <ComboBox x:Name="Combobos_BanksList">
 
                                         </ComboBox>
-                                    </StackPanel>
-                                    <StackPanel x:Name="Stackpanel_InvoiceGroup" Visibility="Collapsed">
-                                        <Label Content="Account Name" FontSize="14"/>
-                                        <UniformGrid Columns="2">
-                                            <TextBox  x:Name="Textbox_SelectedAccount" IsReadOnly="True" FontWeight="Bold" MinWidth="200"/>
-                                            <UniformGrid Columns="2">
-                                                
-                                                <Button  x:Name="Button_ResetInvoiceGroup" Content="Reset" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_ResetInvoiceGroup_Click"/>
-                                                <Button  x:Name="Button_SelectInvoiceAccount" Content="Select Account" VerticalAlignment="Center" Width="Auto" Height="Auto" FontSize="20"  Style="{x:Null}" HorizontalAlignment="Center" Click="Button_SelectInvoiceAccount_Click"/>
-
-                                            </UniformGrid>                                        </UniformGrid>
-                                    </StackPanel>
+                                    </StackPanel> 
                                 </StackPanel>
                             </Grid>
                             <Grid Grid.Row="2" Margin="4,0">
@@ -146,7 +135,7 @@
                             </Grid>
                             <Grid x:Name="Grid_PaymentLowerbuttonbar" Grid.Row="2" Visibility="Visible">
                                 <UniformGrid Columns="2" VerticalAlignment="Center" Margin="8">
-                                    <Button x:Name="Button_closeinvoice" Content="Close Invoice" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_closeinvoice_Click" />
+                                    <Button x:Name="Button_closeinvoice" Content="Close &amp; Back" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20" Click="Button_closeinvoice_Click" />
                                     <Button x:Name="Button_checkoutinvoice" Content="Checkout" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="Auto" FontSize="20"  Style="{DynamicResource Button_Accept}" Click="Button_checkoutinvoice_Click"/>
                                 </UniformGrid>
                             </Grid>

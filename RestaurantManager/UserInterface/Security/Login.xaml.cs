@@ -18,6 +18,7 @@ using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
 using DatabaseModels.Security;
 using DatabaseModels.GeneralSettings;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.Security
 {
@@ -155,7 +156,7 @@ namespace RestaurantManager.UserInterface.Security
                         user.User_Permissions_final = new List<PermissionMaster>();
                     }
                     SharedVariables.CurrentUser = user;
-
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "User LoggedIn:", user.UserName);
                 }
                 else
                 {
@@ -201,10 +202,7 @@ namespace RestaurantManager.UserInterface.Security
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        //private List<PermissionMaster> GetUserRights(bool IsAdmin)
-        //{
-
-        //}
+         
 
         private void Button_Exit_Click(object sender, RoutedEventArgs e)
         {
@@ -238,7 +236,7 @@ namespace RestaurantManager.UserInterface.Security
                         };
                         db.PosUser.Add(user);
                         db.SaveChanges();
-
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Initialized FirstAdmin Profile", "Admin");
                     }
 
                 }
@@ -274,7 +272,9 @@ namespace RestaurantManager.UserInterface.Security
                             ReceiptNote3 = "Note"
                         };
                         db.ClientInfo.Add(client);
-                        db.SaveChanges();
+                        db.SaveChanges(); 
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Initialized First Company Profile", "Admin");
+
                     }
 
                 }

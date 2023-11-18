@@ -5,8 +5,7 @@ using DatabaseModels.WorkPeriod;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.CustomersManagemnt;
-using RestaurantManager.UserInterface.Security;
-using RestaurantManager.UserInterface.Payments;
+using RestaurantManager.UserInterface.Security; 
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +27,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using winformdrawing = System.Drawing;
 using DatabaseModels.Accounts;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PointofSale
 {
@@ -93,24 +93,7 @@ namespace RestaurantManager.UserInterface.PointofSale
             }
         }
 
-        public int GetLoyaltyPoints(int PurchaseAmount)
-        {
-            int points;
-            try
-            {
-                //using (var db=new PosDbContext())
-                //{
-
-                //}
-                points = PurchaseAmount / 100;
-            }
-            catch(Exception ex)
-            {
-                points = -1;
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            return points;
-        }
+      
 
         private void LisTview_TicketsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -146,6 +129,8 @@ namespace RestaurantManager.UserInterface.PointofSale
                  TextBlock_TicketNo.Text = order.InvoiceNo;
                 TextBlock_TicketDate.Text = order.InvoiceDate.ToString();
                 GetPartialPayments();
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Opened Invoice Details", "Invoice number=" + order.InvoiceNo );
+
             }
             catch (Exception ex)
             {
@@ -354,39 +339,12 @@ namespace RestaurantManager.UserInterface.PointofSale
             PaymentMethodSelected(PosEnums.TicketPaymentMethods.Card.ToString());
         }
          
-        private void Button_SelectInvoiceAccount_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                InvoiceSalesBill inv = new InvoiceSalesBill();
-               
-                if (!(bool)inv.ShowDialog())
-                {
-                    return;
-                }
-                CustomerAccount billacc = (CustomerAccount)inv.Textbox_SelectedCustomerPhone.Tag;
-                Textbox_SelectedAccount.Text = billacc.PersonAccNo + " - " + billacc.FullName;
-                Textbox_SelectedAccount.Tag = billacc;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void Button_ResetInvoiceGroup_Click(object sender, RoutedEventArgs e)
-        {
-            Textbox_SelectedAccount.Text = "";
-            Textbox_SelectedAccount.Tag = null;
-        }
+        
 
         private void Button_ResetPayparameters_Click(object sender, RoutedEventArgs e)
-        {
-            Textbox_SelectedAccount.Text = "";
+        { 
             Label_SelectedModeofpayment.Content = "";
-            Textbox_AmountToAdd.Text = "";
-            Textbox_SelectedAccount.Tag = null;
+            Textbox_AmountToAdd.Text = ""; 
         }
 
         private void PaymentMethodSelected(string method)
@@ -397,30 +355,25 @@ namespace RestaurantManager.UserInterface.PointofSale
                 if (method == PosEnums.TicketPaymentMethods.Cash.ToString())
                 {
                      
-                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
+                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed; 
 
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Card.ToString())
                 { 
-                    Stackpanel_CardGroup.Visibility = Visibility.Visible;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
+                    Stackpanel_CardGroup.Visibility = Visibility.Visible; 
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
                 { 
-                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
+                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed; 
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Voucher.ToString())
                 { 
-                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Collapsed;
+                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed; 
                     Label_SelectedModeofpayment.Content = "Enter Voucher Number";
                 }
                 else if (method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                 { 
-                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed;
-                    Stackpanel_InvoiceGroup.Visibility = Visibility.Visible; 
+                    Stackpanel_CardGroup.Visibility = Visibility.Collapsed;  
                 }
                 else
                 { 
@@ -432,60 +385,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
-        private void Button_AddPayment_Click1(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-                 
-            //    if (!int.TryParse(Textbox_AmountToAdd.Text.Trim(), out int amount))
-            //    {
-            //        MessageBox.Show("Enter Valid Amount!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //        return;
-            //    }
-            //    if (Label_SelectedModeofpayment.Content.ToString() == "" | Label_SelectedModeofpayment.Content.ToString() == "Discount")
-            //    {
-            //        MessageBox.Show("Select Payment Method!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //        return;
-            //    }
-            //    GetPartialPayments();
-            //    var db = new PosDbContext(); 
-            //    TicketPaymentItem pp = new TicketPaymentItem
-            //    { 
-            //        ParentSourceRef = TextBlock_TicketNo.Text,
-            //        PaymentDate = SharedVariables.CurrentDate(),
-            //        AmountPaid = amount, 
-            //        PaymentBalance=0,
-            //        PrimaryRefference="",
-            //        AmountUsed=amount,
-            //        SecondaryRefference = "None",
-            //        PayForSource =PosEnums.PaymentForSources.InvoicePay.ToString(),
-            //        Method = Label_SelectedModeofpayment.Content.ToString(),
-            //        Workperiod = SharedVariables.CurrentOpenWorkPeriod().WorkperiodName,
-            //        MasterTransNo = TextBlock_TicketNo.Text,
-            //        ReceivingUsername = SharedVariables.CurrentUser.UserName,
-            //    };
-            //    if (pp.Method == PosEnums.TicketPaymentMethods.Card.ToString())
-            //    {
-            //        if (Combobos_BanksList.Text.Trim() == "")
-            //        {
-            //            MessageBox.Show("Select CardName!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //            return;
-            //        } 
-            //    } 
-            //    db.TicketPaymentItem.Add(pp);
-            //    db.SaveChanges();
-            //    MessageBox.Show("Payment Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information); 
-            //    Label_SelectedModeofpayment.Content = "";
-            //    Textbox_AmountToAdd.Text = "";
-            //    GetPartialPayments();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-        }
-
+         
         private void Button_AddPayment_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -604,6 +504,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 db.SaveChanges();
                 MessageBox.Show("Payment Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added Payment for Invoice", "Invoice number=" + invm.InvoiceNo+",AmountPaid="+AmountPaid.ToString()+", Method="+pp.Method);
 
             }
             catch (Exception ex)
@@ -693,7 +594,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     TicketPaymentItem selected_payment = (TicketPaymentItem)Datagrid_Payments.SelectedItem;
                     if (MessageBox.Show("Are you sure you wnat to Cancel the Payment?", "Message Box", MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
-                        PromptAdminPin p = new PromptAdminPin();
+                        PromptAdminPin p = new PromptAdminPin("Cancel Payment of the following amount : " + selected_payment.AmountPaid.ToString());
                         if ((bool)p.ShowDialog())
                         {
                             WorkPeriod wp = SharedVariables.CurrentOpenWorkPeriod();
@@ -775,6 +676,8 @@ namespace RestaurantManager.UserInterface.PointofSale
         private void Button_closeinvoice_Click(object sender, RoutedEventArgs e)
         {
             CloseInvoice();
+            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Closed Invoice Details","Back to invoice List");
+
         }
 
         private void Button_checkoutinvoice_Click(object sender, RoutedEventArgs e)
@@ -813,6 +716,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                     db1.SaveChanges();
                     PrintReceipt();
                     MessageBox.Show("Checkout Completed Successfuly!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Checked out Invoice", "Invoice number=" + om.InvoiceNo);
                     CloseInvoice();                    
                     RefreshInvoiceList();
                 }

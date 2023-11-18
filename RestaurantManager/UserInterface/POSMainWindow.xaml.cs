@@ -127,24 +127,16 @@ namespace RestaurantManager.UserInterface
                 SharedVariables.Backend_MainWindow = null;
                 if (SharedVariables.CurrentUser == null)
                 {
-                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
-                    MessageBox.Show("The current LoggedIn User is Null!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                     MessageBox.Show("The current LoggedIn User is Null!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
                 }
                 if (SharedVariables.ClientInfo() == null)
                 {
-                    StackPanel_SwitchPanels.Visibility = Visibility.Collapsed;
-                    MessageBox.Show("The Restaurant Profile does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
+                     MessageBox.Show("The Restaurant Profile does not Exist!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                     App.Current.Shutdown();
                     return;
-                }
-                if (SharedVariables.CurrentUser.IsPosUser)
-                {
-                    Textbox_SwitchTo.Text = SwitchMainWindow.SalesPoint.ToString();
-                    StackPanel_SwitchPanels.Visibility = Visibility.Visible;
-
-                }
+                } 
                 TextBox_InstitutionTitle.Text = SharedVariables.ClientInfo().ClientTitle;
                 //GlobalVariables.SharedVariables.Main_Window = this;
                 SetupUIForUser(true);
@@ -351,39 +343,7 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show("DeActivated");
             }
         }
- 
-        private void StackPanel_SwitchPanels_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to switch?","Message Box",MessageBoxButton.YesNo,MessageBoxImage.Question)==MessageBoxResult.Yes)
-            {
-                if (Textbox_SwitchTo.Text.ToString() == SwitchMainWindow.BackendSide.ToString())
-                {
-                    BackOfficeMainWindow bom = new BackOfficeMainWindow();
-                    bom.Show();
-                    SharedVariables.POS_MainWindow = null;
-                    SharedVariables.Backend_MainWindow = bom;
-                    this.Close();
-                }
-            }
-        }
-    
-
-
-        private void Button_Home_Click(object sender, RoutedEventArgs e)
-        {
-            Frame1.Content = new HomePage();
-        }
-
-       
-
-
-
-
-
-
-
-
-
-
+  
+   
     }
 }

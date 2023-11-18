@@ -93,8 +93,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 decimal cash = 0;
                 decimal cards = 0;
                 decimal voucher = 0;
-                decimal invoice = 0;
-                decimal cashbalance = 0;
+                decimal invoice = 0; 
                 decimal unknown = 0;
 
                 var db = new PosDbContext();
@@ -110,41 +109,37 @@ namespace RestaurantManager.UserInterface.WorkPeriods
 
                         if (x.t.Method == PosEnums.TicketPaymentMethods.Cash.ToString())
                         {
-                            cash += x.t.AmountPaid;
+                            cash += x.t.AmountUsed;
                         }
                         else if (x.t.Method == PosEnums.TicketPaymentMethods.Mpesa.ToString())
                         {
-                            mpesa += x.t.AmountPaid;
+                            mpesa += x.t.AmountUsed;
                         }
                         else if (x.t.Method.ToLower().Contains(PosEnums.TicketPaymentMethods.Card.ToString().ToLower()))
                         {
-                            cards += x.t.AmountPaid;
+                            cards += x.t.AmountUsed;
                         }
                         else if (x.t.Method == PosEnums.TicketPaymentMethods.Voucher.ToString())
                         {
-                            voucher += x.t.AmountPaid;
+                            voucher += x.t.AmountUsed;
                         }
                         else if (x.t.Method == PosEnums.TicketPaymentMethods.Invoice.ToString())
                         {
-                            invoice += x.t.AmountPaid;
+                            invoice += x.t.AmountUsed;
                         }
                         else
                         {
-                            unknown += x.t.AmountPaid;
+                            unknown += x.t.AmountUsed;
                         }
-                    }
-                    foreach (var y in tlist)
-                    {
-                        cashbalance += y.TicketBalanceReturned;
-                    }
+                    } 
                 }
                
 
-                Textbox_CashTotal.Text = (cash - cashbalance).ToString();
+                Textbox_CashTotal.Text = cash.ToString();
                 Textbox_Mpesa.Text = mpesa.ToString();
                 TextBox_Vouchers.Text = voucher.ToString();
                 Textbox_Cards.Text = cards.ToString();
-                Textbox_Totals.Text = (cash + mpesa + cards - cashbalance).ToString();
+                Textbox_Totals.Text = (cash + mpesa + cards ).ToString();
                 if (unknown > 0)
                 {
                     MessageBox.Show("The following amount cannot be accounted for!\n" + unknown.ToString("N2"), "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);

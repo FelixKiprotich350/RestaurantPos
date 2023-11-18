@@ -1,0 +1,79 @@
+﻿<Page x:Class="RestaurantManager.UserInterface.Security.AuditReports.LogsMaster"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RestaurantManager.UserInterface.Security.AuditReports"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Paymentsmaster">
+
+    <Grid   >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/> 
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <GroupBox Style="{x:Null}"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center">
+                <UniformGrid Columns="4">
+                    <Button x:Name="Button_ClearFilters" Content="Reset"  Style="{x:Null}" Width="60" Height="32" VerticalAlignment="Center" Margin="2,0" Click="Button_ClearFilters_Click"/>
+
+                    <StackPanel  Orientation="Vertical" Margin="5,0,0,0">
+                        <Label  Content="StartDate"/>
+                        <DatePicker x:Name="Datepicker_Startdate" Style="{x:Null}" BorderThickness="1" BorderBrush="Black"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <Label Content="EndDate"/>
+                        <DatePicker x:Name="Datepicker_Enddate" Style="{x:Null}" BorderThickness="1" BorderBrush="Black"/>
+                    </StackPanel> 
+                    <StackPanel HorizontalAlignment="Center" Margin="5,5,0,0" VerticalAlignment="Center">
+                        <Button x:Name="Button_Apply" Content="Apply"  HorizontalAlignment="Left" Cursor="Hand" FontFamily="Tw Cen MT" BorderThickness="1" FontWeight="Normal" Margin="10,0,0,0" Width="100" VerticalAlignment="Center" Click="Button_Apply_Click"/>
+                    </StackPanel>
+                    <!--</StackPanel>-->
+                </UniformGrid>
+            </GroupBox>
+
+        </Grid >
+        <Grid Grid.Row="1" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Search Parameter" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox x:Name="Textbox_SearchBox"   Grid.Column="1" Height="28" VerticalAlignment="Center" Margin="0,0,10,0" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" TextChanged="Textbox_SearchBox_TextChanged"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <TabControl x:Name="Tabcontrol_LogsContainer">
+                <TabItem Header="User Activity Log">
+                    <DataGrid    x:Name="Datagrid_UserActivityLogs" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"   >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding LogID }"  Header="LogID" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding Logtype }"  Header="Logtype" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding Description }"  Header="Description" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding Parameters}" Header="More Info" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                             <DataGridTextColumn  Binding="{Binding SystemUser}" Header="SystemUser" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding  Timmestamp}"  Header="Time " IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                          </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Data Change Logs">
+                    <DataGrid    x:Name="Datagrid_Dbchangelogs" AutoGenerateColumns="False"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"   >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id }"  Header="Id" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding LogActionType }"  Header="ActionType" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding EntityName}" Header="EntityName" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding PropertyName}" Header="PropertyName" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                            <DataGridTextColumn Binding="{Binding  PrimaryKeyValue}"  Header="PrimaryKeyValue" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding OldValue}" Header="OldValue" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding NewValue}" Header="NewValue" IsReadOnly="True" Width="*" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding SystemUser}" Header="SystemUser" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                            <DataGridTextColumn  Binding="{Binding Timestamp}" Header="Timestamp" IsReadOnly="True" Width="Auto" CanUserSort="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+
+        </Grid> 
+    </Grid>
+</Page>

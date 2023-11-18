@@ -33,7 +33,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Search : " HorizontalAlignment="Left" FontSize="14" FontFamily="MS Reference Sans Serif" Foreground="Black" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="Textbox_SearchBox" Padding="12"  FontWeight="Bold" FontFamily="MS Reference Sans Serif" Foreground="Indigo" Margin="10,5,5,5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="Auto" FontSize="16"/>
+                        <TextBox Grid.Column="1" x:Name="Textbox_SearchBox" Padding="12,4"  FontWeight="Bold" FontFamily="MS Reference Sans Serif" Foreground="Indigo" Margin="10,2,5,2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="32" FontSize="16"/>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="StudentsReportOperationPanel" >
                         <DataGrid x:Name="Datagrid_UsersList" AutoGenerateColumns="False" EnableRowVirtualization="True"  Margin="5" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionMode="Single" BorderBrush="#FFC7C7C7" GridLinesVisibility="Horizontal" CanUserAddRows="False" Foreground="Black" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}" BorderThickness="1,0,1,1" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" MouseUp="Datagrid_UsersList_MouseUp" SelectionChanged="Datagrid_UsersList_SelectionChanged">

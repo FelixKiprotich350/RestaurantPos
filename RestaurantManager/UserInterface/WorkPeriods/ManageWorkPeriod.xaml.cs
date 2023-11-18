@@ -22,6 +22,8 @@ using System.Windows.Threading;
 using System.IO;
 using RestaurantManager.ApplicationFiles;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.GlobalVariables;
 
 namespace RestaurantManager.UserInterface.WorkPeriods
 {
@@ -62,11 +64,11 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 {
                     Textbox_OpenningNote.Text = "";
                     Textbox_NewWorkperiodname.Text = "";
+                    Textbox_OpenBy.Text = SharedVariables.CurrentUser.UserFullName;
                 }
                 if (!GroupBox_ClosePeriod.IsEnabled)
                 {
-                    Textbox_PeriodName.Text = "";
-                    Textbox_OpenedBy.Text = "";
+                    Textbox_PeriodName.Text = ""; 
                     Textbox_OpeningDate.Text = "";
                     Textbox_OpenningNote_close.Text = "";
                 }
@@ -84,8 +86,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         GroupBox_ClosePeriod.IsEnabled = true;
                     }
                     GroupBox_OpenPeriod.IsEnabled = false;
-                    Textbox_PeriodName.Text = w.WorkperiodName;
-                    Textbox_OpenedBy.Text = w.Openedby;
+                    Textbox_PeriodName.Text = w.WorkperiodName; 
                     Textbox_OpeningDate.Text = w.OpeningDate.ToString();
                     Textbox_OpenningNote_close.Text = w.OpeningNote;
                     //
@@ -157,6 +158,8 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     db.SaveChanges();
                     //var x = SendMail();
                     MessageBox.Show("Success. Item Saved.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Created new WorkPeriod", "Workperiod Name:" + w.WorkperiodName);
+
                     TogglePeriodTask();
                 }
             }
@@ -209,6 +212,8 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         wp.ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName;
                         wp.ClosingDate = closetime;
                         db.SaveChanges();
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Closed WorkPeriod successfully", "Workperiod Name:" + wp.WorkperiodName);
+
                         WPClosureMessage mess = new WPClosureMessage
                         {
                             WorkPeriodName=wp.WorkperiodName,
@@ -222,7 +227,7 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                             Vouchers = summary.TextBox_Vouchers.Text,
                             Cards = summary.Textbox_Cards.Text,
                             Total = summary.Textbox_Totals.Text,
-                            ClosedBy = GlobalVariables.SharedVariables.CurrentUser.UserName,
+                            ClosedBy = SharedVariables.CurrentUser.UserName,
                             ClosingTime = closetime.ToString(),
                             OpeningNote = wp.OpeningNote,
                             ClosingNote ="Closed",
@@ -233,8 +238,11 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                         if (!xm)
                         {
                             MessageBox.Show("Failed to send the Mail. Consult the Administrator Immediately!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Error sending Closure Mail", "Mailing Failed, Message:" + mess.ClosingNote);
                         }
+
                         MessageBox.Show("Successfully closed the Work Period!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    
                     }
                 }
 
@@ -290,6 +298,11 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 MessageBox.Show(ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
                 return null;
             }
+        }
+
+        private void TabControl_WPTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -19,11 +19,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
+using System.Windows.Shapes; 
 using System.Drawing.Printing;
 using System.Diagnostics;
+using RestaurantManager.ActivityLogs;
 
 namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
 {
@@ -247,6 +246,8 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
                     
                 }
                 Label_TotalItems_Count.Content = MainList.Count.ToString();
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Stock Report", "As of Date=" +SharedVariables.CurrentDate().ToString());
+
             }
             catch (Exception ex)
             {
@@ -259,24 +260,7 @@ namespace RestaurantManager.UserInterface.PosReports.WareHouseReports
 
             try
             { 
-                // Create a new PDF document
-                PdfDocument document = new PdfDocument();
-
-                // Add a page to the document
-                PdfPage page = document.AddPage();
-
-                // Create a drawing object for the page
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-
-                // Create a font
-                XFont font = new XFont("Arial", 12);
-
-                // Draw text on the page
-                gfx.DrawString("Hello, PDFsharp!", font, XBrushes.Black,
-                    new XRect(10, 10, page.Width, page.Height), XStringFormats.TopLeft);
-
-                // Save the document to a file
-                //document.Save("D:\\example.pdf");
+                  
             }
             catch
             {

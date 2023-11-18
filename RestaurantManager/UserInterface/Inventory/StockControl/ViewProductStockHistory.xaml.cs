@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.Inventory;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +41,10 @@ namespace RestaurantManager.UserInterface.Inventory
                 }
                 Datagrid_AllProductItems.ItemsSource = AllProducts;
                 this.Title = ProductName + " Stocki IN and OUT History";
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Product stock History", "Product code=" + ProductId+",product name="+ProductName);
+
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
                 MessageBox.Show(Ex.Message,"Message Box",MessageBoxButton.OK,MessageBoxImage.Error);
             }

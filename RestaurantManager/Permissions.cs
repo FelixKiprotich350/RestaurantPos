@@ -18,6 +18,7 @@ using RestaurantManager.UserInterface.PosReports.WareHouseReports;
 using RestaurantManager.UserInterface.PosReports.SalesReport;
 using RestaurantManager.UserInterface.HR;
 using RestaurantManager.UserInterface.Inventory.AssetManagement;
+using RestaurantManager.UserInterface.Security.AuditReports;
 
 namespace RestaurantManager
 {
@@ -43,10 +44,10 @@ namespace RestaurantManager
                      new PermissionMaster() { PermissionCode = "B1", ParentModule = "B", PermissionShortName = "Periods List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewWorkPeriod() },
                      new PermissionMaster() { PermissionCode = "B2", ParentModule = "B", PermissionShortName = "Manage Period", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ManageWorkPeriod() },
                      //Accounts
-                      new PermissionMaster() {PermissionCode = "C1", ParentModule = "C", PermissionShortName = "Accounts Dashboard", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsDashboard2() },
+                      new PermissionMaster() {PermissionCode = "C1", ParentModule = "C", PermissionShortName = "Accounts Dashboard", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountsDashboard() },
                      new PermissionMaster() { PermissionCode = "C2", ParentModule = "C", PermissionShortName = "Accounts Details", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new AccountTicketsPayments() },
                      new PermissionMaster() { PermissionCode = "C3", ParentModule = "C", PermissionShortName = "Vouchers List", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new VouchersList() },
-                     new PermissionMaster() { PermissionCode = "C4", ParentModule = "C", PermissionShortName = "Discounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new DiscountsManager() },
+                     new PermissionMaster() { PermissionCode = "C4", ParentModule = "C", PermissionShortName = "Invoice Accounts", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewInvoicableAccounts() },
                      new PermissionMaster() { PermissionCode = "C5", ParentModule = "C", PermissionShortName = "Invoices Master", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewInvoicesmaster() },
                      new PermissionMaster() { PermissionCode = "C6", ParentModule = "C", PermissionShortName = "Invoice Payments", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ViewInvoicesPayments() },
                      //products
@@ -73,6 +74,7 @@ namespace RestaurantManager
                      new PermissionMaster() { PermissionCode = "G1", ParentModule = "G", PermissionShortName = "Sales Report", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new MasterReports() },
                      new PermissionMaster() { PermissionCode = "G2", ParentModule = "G", PermissionShortName = "Payments", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new Paymentsmaster() },
                      new PermissionMaster() { PermissionCode = "G3", ParentModule = "G", PermissionShortName = "Stock Report", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new WHMasterReports() },
+                     new PermissionMaster() { PermissionCode = "G4", ParentModule = "G", PermissionShortName = "System Logs", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new LogsMaster() },
                      //settings
                      new PermissionMaster() { PermissionCode = "H1", ParentModule = "H", PermissionShortName = "Tables", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new TablesEntities() },
                      new PermissionMaster() { PermissionCode = "H2", ParentModule = "H", PermissionShortName = "Client Info", PermissionFullName = "Description", PermissionLevel = "1", PageClass = new ClientInfo() },

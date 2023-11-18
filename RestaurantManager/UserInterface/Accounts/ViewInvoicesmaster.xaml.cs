@@ -4,6 +4,7 @@ using RestaurantManager.ApplicationFiles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -140,11 +141,12 @@ namespace RestaurantManager.UserInterface.PointofSale
                     var inv = db.InvoicesMaster.FirstOrDefault(k => k.InvoiceNo == Textbox_InvoiceNumber.Text);
                     if (inv != null)
                     {
+                         
                         inv.InvoiceStatus = GlobalVariables.PosEnums.InvoiceStatuses.Approved.ToString();
-                        db.SaveChanges();
+                        
+                        db.SaveChanges() ;
                         MessageBox.Show("The Invoice has been Approved Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
-                        RefreshInvoices();
-
+                        RefreshInvoices(); 
                     }
 
                 }

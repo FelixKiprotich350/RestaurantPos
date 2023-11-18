@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.WorkPeriod;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using RestaurantManager.MailingPlugin;
 using System;
 using System.Collections.Generic;
@@ -58,6 +60,8 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                 }
                 Datagrid_Workperiods.ItemsSource = workperiods;
                 TextBox_TotalCount.Text = Datagrid_Workperiods.Items.Count.ToString();
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed WorkPeriod List", "");
+
             }
             catch (Exception ex)
             {
@@ -70,20 +74,12 @@ namespace RestaurantManager.UserInterface.WorkPeriods
             try
             {
                 int count = 0;
-                if (CountAll)
+                using (var db = new PosDbContext())
                 {
-                    using (var db = new PosDbContext())
-                    {
-                        count = db.OrderMaster.Where(x => x.Workperiod == workperiod).Count();
-                    }
-                    return count;
+                    count = db.OrderMaster.Where(x => x.Workperiod == workperiod).Count();
                 }
-                
-                using (var db=new PosDbContext())
-                {
-                    count = db.OrderMaster.Where(x => x.Workperiod == workperiod & x.OrderStatus == tstatus).Count();
-                }
-                    return count;
+                return count;
+
             }
             catch
             {
@@ -120,8 +116,8 @@ namespace RestaurantManager.UserInterface.WorkPeriods
                     }
 
         private void Button_Refresh_Click(object sender, RoutedEventArgs e)
-        { 
-            
+        {
+            RefreshWorkPeriods();
         }
     }
 }

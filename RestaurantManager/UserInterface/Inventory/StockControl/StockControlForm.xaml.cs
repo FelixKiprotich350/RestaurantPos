@@ -2,6 +2,7 @@
 using DatabaseModels.OrderTicket;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables; 
 using System;
@@ -339,6 +340,7 @@ namespace RestaurantManager.UserInterface.Inventory
                 pi.RemainingQuantity += qty;
                 db.SaveChanges();
                 MessageBox.Show("Success. Item Quantity Added!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added Stock quantity", "Quantity Added=" + qty.ToString()+",Product code="+pi.ProductGuid);
                 ResetQuantityForm();
             }
             catch (Exception ex)

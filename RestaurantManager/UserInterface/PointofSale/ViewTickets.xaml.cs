@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.OrderTicket;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +39,7 @@ namespace RestaurantManager.UserInterface.PointofSale
         {
             RefreshMenuProducts();
             MessageBox.Show("Refresh Success. Done.", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+            ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Tickets", "No Filters");
 
         }
 
