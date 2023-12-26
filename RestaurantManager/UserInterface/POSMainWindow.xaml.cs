@@ -343,7 +343,10 @@ namespace RestaurantManager.UserInterface
                 MessageBox.Show("DeActivated");
             }
         }
-  
-   
+
+        private void StackPanel_LoggedinUserDetails_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("clicked");
+        }
     }
 }

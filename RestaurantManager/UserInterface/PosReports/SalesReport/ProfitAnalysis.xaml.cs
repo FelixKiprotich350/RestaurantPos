@@ -24,6 +24,7 @@ using DatabaseModels.CRM;
 using DatabaseModels.Security;
 using DatabaseModels.Payments;
 using DatabaseModels.WorkPeriod;
+using RestaurantManager.UserInterface.WorkPeriods;
 
 namespace RestaurantManager.UserInterface.PosReports
 {

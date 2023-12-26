@@ -26,13 +26,13 @@ namespace RestaurantManager.UserInterface.Accounts.InvoiceAccount
     /// <summary>
     /// Interaction logic for FullAccountStatement.xaml
     /// </summary>
-    public partial class FullAccountStatement : Window
+    public partial class FullAccountStatement1 : Window
     {
         decimal totalinvoice = 0;
         decimal totalpaid = 0;
         decimal balance = 0;
         InvoicableAccount InvAccount = null;
-        public FullAccountStatement(InvoicableAccount account)
+        public FullAccountStatement1(InvoicableAccount account)
         {
             InitializeComponent();
             InvAccount = account;
@@ -61,7 +61,7 @@ namespace RestaurantManager.UserInterface.Accounts.InvoiceAccount
                         Debit = x.InvoiceAmount,
                         Credit = 0,
                         Balance = 0
-                    }); 
+                    }); ;
                     var invpayments = db.TicketPaymentItem.AsNoTracking().Where(k => k.ParentSourceRef == x.InvoiceNo && k.PayForSource == GlobalVariables.PosEnums.PaymentForSources.InvoicePay.ToString()).ToList();
                     foreach (var y in invpayments)
                     {
@@ -78,28 +78,6 @@ namespace RestaurantManager.UserInterface.Accounts.InvoiceAccount
 
                     }
                 }
-
-                var tickets = db.OrderMaster.AsNoTracking().Where(k => k.CustomerRefference == InvAccount.PersonAccNo &&k.OrderStatus==PosEnums.OrderTicketStatuses.Pending.ToString());
-                foreach(var x in tickets)
-                {
-                    statementrecord.Add(new AccountStatementRecord()
-                    {
-                        InvNo = "Pending Ticket",
-                        PayRefNo = "N/A",
-                        ServedBy = x.UserServing,
-                        TransactionDate = x.OrderDate,
-                        Debit = getticketamount(x.OrderNo),
-                        Credit = 0,
-                        Balance = 0
-                    }); ;
-                }
-
-
-
-
-
-
-                //render the data to ui
                 statementrecord.OrderByDescending(k => k.TransactionDate);
                 foreach (var x in statementrecord)
                 {
@@ -119,25 +97,13 @@ namespace RestaurantManager.UserInterface.Accounts.InvoiceAccount
                 MessageBox.Show(exception1.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private decimal getticketamount(string ticketno)
-        {
-            try
-            {
 
-                 var db = new PosDbContext();
-                var orderitems = db.OrderItem.AsNoTracking().Where(k => k.OrderID == ticketno).ToList();
-                return orderitems.Sum(k => k.Total);
-            }
-            catch
-            {
-                return -1;
-            }
-        }
         private void Button_Print_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                 
+
+               
 
             }
             catch (Exception exception1)
@@ -156,8 +122,7 @@ namespace RestaurantManager.UserInterface.Accounts.InvoiceAccount
                 {
                     if (fb.SelectedPath != "")
                     {
-                        //filePath = fb.SelectedPath + "\\InvoiceStatement-" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
-                        filePath = fb.SelectedPath + "\\Statement-" + Textbox_AccountNumber.Text.Trim()+"-"+Textbox_FullName.Text.Trim() + ".pdf";
+                        filePath = fb.SelectedPath + "\\InvoiceStatement-" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
                     }
                     else
                     {

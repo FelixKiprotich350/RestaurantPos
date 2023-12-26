@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.CRM;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +89,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     p.BirthDate = (DateTime)DatePicker_BirthDate.SelectedDate;
                     db.SaveChanges();
                     MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "updated personal account", "account no=" + p.AccountNo);
                 }
                 else if (Button_Save.Content.ToString() == "Save")
                 {
@@ -110,6 +113,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     {
                         db.PersonalAccount.Add(c);
                         db.SaveChanges();
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added new personal account", "account no=" + c.AccountNo);
                     }
                     MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
                 }

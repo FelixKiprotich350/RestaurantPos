@@ -1,6 +1,7 @@
 ﻿using DatabaseModels.Accounts;
 using DatabaseModels.CRM;
 using DatabaseModels.Vouchers;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles;
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.PointofSale;
@@ -205,6 +206,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                         db.CustomerAccount.Add(ca);
                         db.SaveChanges();
                         MessageBox.Show("Customer Added Successfully", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Added new customer account", "account no=" + ca.PersonAccNo);
                     }
                 }
                 

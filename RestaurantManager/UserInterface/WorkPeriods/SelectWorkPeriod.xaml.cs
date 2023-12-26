@@ -3,6 +3,7 @@ using RestaurantManager.ActivityLogs;
 using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RestaurantManager.UserInterface.PosReports
+namespace RestaurantManager.UserInterface.WorkPeriods
 {
     /// <summary>
     /// Interaction logic for SelectWorkPeriod.xaml
@@ -23,7 +24,7 @@ namespace RestaurantManager.UserInterface.PosReports
     public partial class SelectWorkPeriod : Window
     { 
         public WorkPeriod SelectedWorkperiod = null;
-        public List<WorkPeriod> AllWorkPeriods = new List<WorkPeriod>();
+        public ObservableCollection<WorkPeriod> AllWorkPeriods = new ObservableCollection<WorkPeriod>();
         public SelectWorkPeriod()
         {
             InitializeComponent(); 
@@ -34,7 +35,7 @@ namespace RestaurantManager.UserInterface.PosReports
             {
                 using (var db = new PosDbContext())
                 {
-                    AllWorkPeriods = db.WorkPeriod.AsNoTracking().OrderBy(k => k.WorkperiodName).ToList();
+                    AllWorkPeriods = new ObservableCollection<WorkPeriod>(db.WorkPeriod.AsNoTracking().OrderByDescending(k => k.OpeningDate).ToList());
                 }
                 Datagrid_AllWorkPeriods.ItemsSource = AllWorkPeriods;
             }
@@ -90,6 +91,34 @@ namespace RestaurantManager.UserInterface.PosReports
             finally
             {
                 Close();
+            }
+        }
+
+        private void Datagrid_AllWorkPeriods_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                foreach (var x in AllWorkPeriods)
+                {
+                    x.IsSelected = false;
+                }
+                if (Datagrid_AllWorkPeriods.SelectedItem is WorkPeriod wp)
+                {
+
+                    if (wp.IsSelected)
+                    {
+                        wp.IsSelected = false;
+                    }
+                    else
+                    {
+                        wp.IsSelected = true;
+                    }
+                }
+                Datagrid_AllWorkPeriods.Items.Refresh();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message, "Message Box", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace RestaurantManager
         private static extern Boolean ShowWindow(IntPtr hWnd, Int32 nCmdShow);
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            ActivityLogger.LogFileAction(GlobalVariables.PosEnums.ActivityLogType.System.ToString(), "Application Started", "N/A");
+             ActivityLogger.LogFileAction(GlobalVariables.PosEnums.ActivityLogType.System.ToString(), "Application Started", "N/A");
             App.Current.ShutdownMode = ShutdownMode.OnLastWindowClose;
             SetUpDatabase();
             ActivityLogger.LogDBAction(GlobalVariables.PosEnums.ActivityLogType.System.ToString(), "Application Started", "N/A");
@@ -64,7 +64,7 @@ namespace RestaurantManager
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            const string appName = "MyAppName";
+            const string appName = "LaxcoPOS";
 
             _mutex = new Mutex(true, appName, out bool createdNew);
 
@@ -74,8 +74,7 @@ namespace RestaurantManager
  
                 //app is already running! Exiting the application
                 Application.Current.Shutdown();
-            }
-
+            }  
             base.OnStartup(e);
         }
 

@@ -1,5 +1,7 @@
 ﻿using DatabaseModels.CRM;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +65,7 @@ namespace RestaurantManager.UserInterface.CustomersManagemnt
                     p.InvoiceLimit = newlimit;
                     db.SaveChanges();
                     MessageBox.Show("Successfully Saved!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Edited Invoice Limit", "account no=" + p.PersonAccNo); 
                     DialogResult = true;
                 }
                 else

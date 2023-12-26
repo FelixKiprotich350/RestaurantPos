@@ -1,6 +1,8 @@
 ﻿using DatabaseModels.Accounts;
 using DatabaseModels.OrderTicket;
-using RestaurantManager.ApplicationFiles; 
+using RestaurantManager.ActivityLogs;
+using RestaurantManager.ApplicationFiles;
+using RestaurantManager.GlobalVariables;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,6 +121,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         inv.InvoiceStatus = GlobalVariables.PosEnums.InvoiceStatuses.Rejected.ToString();
                         db.SaveChanges();
                         MessageBox.Show("The Invoice has been Rejected Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Rejected invoice", "invoice no=" + inv.InvoiceNo);
                         RefreshInvoices();
 
                     }
@@ -146,6 +149,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                         
                         db.SaveChanges() ;
                         MessageBox.Show("The Invoice has been Approved Successfully!", "Message Box", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Approved Invoice", "invoice no=" + inv.InvoiceNo); 
                         RefreshInvoices(); 
                     }
 

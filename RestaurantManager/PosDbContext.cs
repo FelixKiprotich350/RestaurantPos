@@ -56,7 +56,7 @@ namespace RestaurantManager
             try
             {
                 var modifiedEntities = ChangeTracker.Entries()
-              .Where(p => (p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted) && p.GetType().Name != typeof(DBChangeLog).Name).ToList();
+              .Where(p => (p.State == EntityState.Added || p.State == EntityState.Modified || p.State == EntityState.Deleted) && p.GetType().Name != typeof(DBChangeLog).Name&& p.GetType().Name != typeof(StockFlowTransaction).Name).ToList();
                 var now = DateTime.Now;
                 string currentuser = GlobalVariables.SharedVariables.CurrentUser == null ? "N/A" : GlobalVariables.SharedVariables.CurrentUser.UserName;
                

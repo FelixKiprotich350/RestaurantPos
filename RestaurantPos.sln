@@ -11,6 +11,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "RestaurantPosInstaller", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseModels", "DatabaseModels\DatabaseModels.csproj", "{FDD69BEF-3452-49F0-8577-A3F65406B92E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketClient", "WebSocketClient\WebSocketClient.csproj", "{A3AD9837-4740-4AE5-82D0-6A7FF0D32612}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FDD69BEF-3452-49F0-8577-A3F65406B92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD69BEF-3452-49F0-8577-A3F65406B92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD69BEF-3452-49F0-8577-A3F65406B92E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AD9837-4740-4AE5-82D0-6A7FF0D32612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AD9837-4740-4AE5-82D0-6A7FF0D32612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AD9837-4740-4AE5-82D0-6A7FF0D32612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AD9837-4740-4AE5-82D0-6A7FF0D32612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

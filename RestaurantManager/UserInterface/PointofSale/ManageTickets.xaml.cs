@@ -45,9 +45,20 @@ namespace RestaurantManager.UserInterface.PointofSale
             try
             {
                 List<OrderMaster> items = new List<OrderMaster>();
-                using (var db = new PosDbContext())
+                var db = new PosDbContext();
+                items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString() && p.OrderStatus != PosEnums.OrderTicketStatuses.Completed.ToString()).OrderByDescending(m => m.OrderDate).ToList();
+                 
+                foreach (var x in items)
                 {
-                    items = db.OrderMaster.Where(p => p.OrderStatus == PosEnums.OrderTicketStatuses.Pending.ToString()&& p.OrderStatus!=PosEnums.OrderTicketStatuses.Completed.ToString()).OrderByDescending(m=>m.OrderDate).ToList();
+                    var t = db.PersonalAccount.AsNoTracking().SingleOrDefault(k => k.AccountNo == x.CustomerRefference);
+                    if (t != null)
+                    {
+                        x.WaiterName = t.FullName.Split(' ')[0];
+                    }
+                    else
+                    {
+                        x.WaiterName = "None";
+                    }
                 }
                 if (SharedVariables.CurrentUser.UserRole == PosEnums.UserAccountsRoles.Admin.ToString())
                 {

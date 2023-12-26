@@ -228,6 +228,7 @@ namespace RestaurantManager.UserInterface.PointofSale
                 Textbox_TaxAmount.Text = (total * SharedVariables.ClientInfo().TaxPercentage / 100).ToString("N2");
                 TextBlock_TicketNo.Text = order.OrderNo;
                 TextBlock_TicketDate.Text = order.OrderDate.ToString();
+                PaymentMethodSelected("");
             }
             catch (Exception ex)
             {

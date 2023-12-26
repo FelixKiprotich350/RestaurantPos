@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantManager.UserInterface.PointofSale"
         mc:Ignorable="d"
-        Title="SelectTicketToUpdate" Height="400" Width="600" Loaded="Window_Loaded" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+        Title="SelectTicketToUpdate" Height="500" Width="600" Loaded="Window_Loaded" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions> 
             <RowDefinition Height="*"/>

@@ -31,6 +31,7 @@ using winforms=System.Windows.Forms;
 using System.Threading;
 using CsvHelper.Configuration;
 using RestaurantManager.ActivityLogs;
+using RestaurantManager.UserInterface.WorkPeriods;
 
 namespace RestaurantManager.UserInterface.PosReports.SalesReport
 {
@@ -182,7 +183,7 @@ namespace RestaurantManager.UserInterface.PosReports.SalesReport
                     t = t.Where(a => a.om.OrderDate >= startdate && a.om.OrderDate <= enddate).ToList();
                 }
                 MainList.AddRange(t);
-                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Sales Report", "WorkPeriod=" + wp.WorkperiodName + ",startdate=" + startdate.ToString() + ", enddate=" + enddate.ToString());
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Sales Report", "WorkPeriod=" + wp?.WorkperiodName + ",startdate=" + startdate?.ToString() + ", enddate=" + enddate?.ToString());
             }
             catch (Exception ex)
             {

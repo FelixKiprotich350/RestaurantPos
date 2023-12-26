@@ -1,11 +1,13 @@
 ﻿using DatabaseModels.OrderTicket;
 using DatabaseModels.Payments;
 using DatabaseModels.Security;
-using DatabaseModels.WorkPeriod;  
+using DatabaseModels.WorkPeriod;
+using RestaurantManager.ActivityLogs;
 using RestaurantManager.ApplicationFiles; 
 using RestaurantManager.GlobalVariables;
 using RestaurantManager.UserInterface.Accounts.ReportModels;
 using RestaurantManager.UserInterface.PosReports;
+using RestaurantManager.UserInterface.WorkPeriods;
 using ScottPlot;
 using System;
 using System.Collections.Generic;
@@ -224,6 +226,7 @@ namespace RestaurantManager.UserInterface.Accounts
                 GetTopSellingProducts(allsales);
                 GetWeekDaySales(allsales);
                 GetMonthlySales(allsales);
+                ActivityLogger.LogDBAction(PosEnums.ActivityLogType.User.ToString(), "Viewed Dashboard Accounts", "Workperiod==" + wp.WorkperiodName?.ToString()+",startdate="+startdate?.ToString()+",enddate="+enddate?.ToString());
             }
             catch (Exception ex)
             {
